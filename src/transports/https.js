@@ -9,6 +9,12 @@ const PATH = '/frames';
 const CONTENT_TYPE = 'application/msgpack';
 const USER_AGENT = `Timber Node HTTPS Stream/${require('../../package.json').version}`;
 
+
+// For debugging purposes, writes to /timber.log
+import fs from 'fs';
+import path from 'path';
+var logger = fs.createWriteStream('timber.log', { flags: 'a' });
+
 /**
  * A highly efficient stream for sending logs to Timber via HTTPS. It uses batches,
  * keep-alive connections, and msgpack to deliver logs with high-throughput and little overhead.
@@ -66,35 +72,37 @@ class HTTPSStream extends Writable {
   //       'User-Agent': USER_AGENT
   //     }
   //   };
-  _writev(chunks, callback) {
-    const messages = chunks.map((chunk) => { return chunk.chunk; });
-    const body = msgpack.pack(messages);
-    let options = {
-      headers: {
-        'Content-Type': CONTENT_TYPE,
-        'Content-Length': Buffer.byteLength(body),
-        'User-Agent': USER_AGENT
-      },
-      hostname: 'localhost',
-      port: 8080,
-      path: '/',
-      agent: false,
-      method: 'POST'
-    };
+  // _writev(chunks, callback) {
+  //   const messages = chunks.map((chunk) => { return chunk.chunk; });
+  //   logger.write(messages);
+  //   // const body = msgpack.pack(messages);
+  //   // let options = {
+  //   //   headers: {
+  //   //     'Content-Type': CONTENT_TYPE,
+  //   //     'Content-Length': Buffer.byteLength(body),
+  //   //     'User-Agent': USER_AGENT
+  //   //   },
+  //   //   hostname: 'localhost',
+  //   //   port: 8080,
+  //   //   path: '/',
+  //   //   agent: false,
+  //   //   method: 'POST'
+  //   // };
 
-    let req = this.httpsClient.request(options);
+  //   // let req = this.httpsClient.request(options);
 
-    req.on('error', (e) => {
-      console.log(e);
-      console.log(`Timber request error: ${e.message}`);
-    });
+  //   // req.on('error', (e) => {
+  //   //   console.log(e);
+  //   //   console.log(`Timber request error: ${e.message}`);
+  //   // });
 
-    req.write(body);
-    req.end();
-  }
+  //   // req.write(body);
+  //   // req.end();
+  // }
 
   _write(chunk, encoding = 'utf8', cb) {
-    this._writev([{chunk: chunk, encoding: encoding}], cb);
+    logger.write(chunk);
+    // this._writev([{chunk: chunk, encoding: encoding}], cb);
   }
 
   /**
@@ -112,7 +120,7 @@ class HTTPSStream extends Writable {
    */
   _startFlusher() {
     let that = this;
-    setInterval(() => { that._flush() }, this.flushInterval);
+    setInterval(() => { that._flush() }, 100);
   }
 }
 

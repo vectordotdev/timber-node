@@ -1,52 +1,56 @@
 'use strict';
+import https from 'http';
 
-// import fs from 'fs';
-// import path from 'path';
-// var appDir = path.dirname(require.main.filename);
-// fs.writeFile(`${appDir}/timber.log`, string);
+function testRequest() {
+  const body = "hello";
+  let options = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(body),
+    },
+    hostname: 'localhost',
+    port: 8080,
+    path: '/',
+    agent: false,
+    method: 'POST'
+  };
 
-import intercept from 'intercept-stdout';
+  let req = https.request(options);
+
+  req.on('error', (e) => {
+    console.log(e);
+    console.log(`Timber request error: ${e.message}`);
+  });
+
+  req.write(body);
+  req.end();
+}
 
 function connect(stream) {
-  // var stdoutHandler = function(txt) {
-  //       stream.write(txt);
-  //       return txt;
-  //   };
-   
-  //   var stderrHandler = function(txt) {
-  //       stream.write(txt);
-  //       return txt;
-  //   };
-
-  //   intercept(stdoutHandler, stderrHandler);
-  // const oldOutWrite = process.stdout.write;
+  const oldOutWrite = process.stdout.write;
 
   process.stdout.write = (function(write) {
     return function(string, encoding, fd) {
-      write.apply(process.stdout, arguments);
       stream.write(string, encoding, fd);
+      // logger.write(string);
+      write.apply(process.stdout, arguments);
     }
   })(process.stdout.write);
   
-  
-  // process.stdout.write = () => (...args) => {
-  //   // stream.write(...args);
-  //   oldOutWrite.apply(process.stdout, args);
-  // }
+  const oldErrWrite = process.stderr.write;
 
-  // var oldErrWrite = process.stderr.write;
+  process.stderr.write = (function(write) {
+    return function(string, encoding, fd) {
+      stream.write(string, encoding, fd);
+      // logger.write(string);
+      write.apply(process.stderr, arguments);
+    }
+  })(process.stderr.write);
 
-  // process.stderr.write = (function(write) {
-  //   return function(string, encoding, fd) {
-  //     write.apply(process.stderr, arguments);
-  //     stream.write(string, encoding, fd);
-  //   }
-  // })(process.stderr.write);
-
-  // return function() {
-  //   process.stdout.write = oldOutWrite;
-  //   process.stderr.write = oldErrWrite;
-  // };
+  return function() {
+    process.stdout.write = oldOutWrite;
+    process.stderr.write = oldErrWrite;
+  };
 }
 
 module.exports = connect;
