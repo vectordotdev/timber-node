@@ -1,0 +1,76 @@
+{
+  "name": "timber",
+  "version": "0.1.0",
+  "description": "Timber.io node client.",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/timber/timber-node.git"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "maintainers": [
+    "Ben Johnson <ben@timber.com>",
+    "Zach Sherman <zach@timber.io>",
+    "David Antaramian <david@timber.io>"
+  ],
+  "author": {
+    "name": "Zach Sherman <zach@timber.io>",
+    "url": "https://github.com/zsherman"
+  },
+  "scripts": {
+    "watch": "node_modules/.bin/babel src -d lib --experimental -w",
+    "clean": "rimraf lib dist coverage",
+    "lint": "eslint src",
+    "ci": "babel-node test/*.test.js",
+    "compile": "babel --stage 0 -d lib/ src/",
+    "build": "npm run clean && babel --optional runtime -d dist src",
+    "test": "babel-node node_modules/.bin/blue-tape test/*.test.js | tspec",
+    "cover": "npm run compile && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./lib/*.js --report text-summary",
+    "report": "npm run compile && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./lib/*.js --report html && open ./coverage/index.html",
+    "coveralls": "npm run compile && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./lib/*.js --report lcovonly && cat ./coverage/lcov.info | coveralls",
+    "postcoveralls": "rimraf coverage",
+    "postpublish": "git push origin master --follow-tags",
+    "deploy": "git pull --rebase origin master && git push origin master"
+  },
+  "bugs": {
+    "url": "https://github.com/timberio/timber-node/issues"
+  },
+  "keywords": [
+    "es6",
+    "node",
+    "module",
+    "timber",
+    "logger",
+    "logging",
+    "structured logging",
+    "node logging",
+    "express logging",
+    "morgan logging",
+    "koa logging",
+    "framework logging",
+    "middleware"
+  ],
+  "homepage": "https://github.com/timberio/timber-node#readme",
+  "devDependencies": {
+    "babel": "5.8.23",
+    "babel-core": "5.8.33",
+    "babel-eslint": "4.1.3",
+    "babel-istanbul": "0.4.1",
+    "babelify": "6.3.0",
+    "blue-tape": "0.1.10",
+    "coveralls": "2.11.4",
+    "eslint": "1.8.0",
+    "eslint-config-xo": "0.7.1",
+    "eslint-plugin-babel": "2.1.1",
+    "rimraf": "2.4.3",
+    "tap-spec": "4.1.0"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.0.14",
+    "intercept-stdout": "^0.1.2",
+    "msgpack": "^1.0.2"
+  }
+}
