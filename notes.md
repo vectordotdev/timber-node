@@ -1,0 +1,13 @@
+- https://github.com/rvagg/through2
+- https://github.com/substack/stream-handbook
+- https://github.com/pinojs/pino/blob/master/docs/transports.md#pino-elasticsearch
+- https://www.youtube.com/watch?v=a8ThXBsg3OQ
+- https://github.com/caolan/highland
+- https://github.com/Coggle/s3-streamlogger
+- https://github.com/jasonpincin/log-stream
+- https://blog.xervo.io/aggregating-logs-with-nodejs-streams
+- https://github.com/sevko/batch-request-stream/blob/master/index.js
+- https://nodesource.com/blog/understanding-object-streams/
+- https://git.cs.duke.edu/CompSci408_2016Fall/MoneyComb/blob/spend-stats/node_modules/buffer-to-vinyl/node_modules/readable-stream/doc/stream.md
+- https://github.com/nodejitsu/godot
+- http://webdevrefinery.com/forums/topic/13697-flushwritable-how-to-stream-without-committing-suicide/

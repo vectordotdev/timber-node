@@ -2,7 +2,7 @@
 
 import https from 'http';
 import msgpack from 'msgpack';
-import { Writable } from 'stream';
+import stream, { Writable } from 'stream';
 
 const HOSTNAME = 'api.timber.io';
 const PATH = '/frames';
@@ -21,6 +21,7 @@ var logger = fs.createWriteStream('timber.log', { flags: 'a' });
  * It also implements the Stream.Writable interface so that it can be treated like a stream.
  * This is beneficial in situation like Morgan, where you can pass a custom stream.
 */
+
 class HTTPSStream extends Writable {
   /**
     * @constructor
@@ -30,7 +31,11 @@ class HTTPSStream extends Writable {
     * @param {string} [options.httpsAgent] - Your own custom https.Agent. We use agents to maintain connection pools and keep the connections alive. This avoids the initial connection overhead every time we want to communicate with Timber. See https.Agent for options.
   */
   constructor(apiKey, { flushInterval = 1000, httpsAgent, httpsClient } = {}) {
-    super();
+    super({
+      objectMode: true,
+      highWaterMark: 5
+    }); // pass {objectMode: true } ?
+    // Writable.call(this, { objectMode: true});
 
     this.apiKey = apiKey;
     this.flushInterval = flushInterval;
@@ -44,18 +49,19 @@ class HTTPSStream extends Writable {
     // Cork the stream so we can utilize the internal Buffer. We do *not* want to
     // send a request for every message. The _flusher will take care of flushing the stream
     // on an interval.
-    this.cork();
+    // this.cork();
 
-    // In the event the _flusher is not fast enough, we need to monitor the buffer size.
-    // If it fills before the next flush event, we should immediately flush.
-    this.on('drain', () => {
-      if (this.length >= state.highWaterMark) {
-        this._flush();
-      }
-    });
+    // // In the event the _flusher is not fast enough, we need to monitor the buffer size.
+    // // If it fills before the next flush event, we should immediately flush.
+    // this.on('drain', () => {
+    //   if (this.length >= state.highWaterMark) {
+    //     this._flush();
+    //   }
+    // });
 
-    if (flushInterval !== undefined && flushInterval > 0)
-      this._startFlusher();
+    // if (flushInterval !== undefined && flushInterval > 0) {
+    //   this._startFlusher();
+    // }
   }
 
   /**
@@ -72,37 +78,38 @@ class HTTPSStream extends Writable {
   //       'User-Agent': USER_AGENT
   //     }
   //   };
-  // _writev(chunks, callback) {
-  //   const messages = chunks.map((chunk) => { return chunk.chunk; });
-  //   logger.write(messages);
-  //   // const body = msgpack.pack(messages);
-  //   // let options = {
-  //   //   headers: {
-  //   //     'Content-Type': CONTENT_TYPE,
-  //   //     'Content-Length': Buffer.byteLength(body),
-  //   //     'User-Agent': USER_AGENT
-  //   //   },
-  //   //   hostname: 'localhost',
-  //   //   port: 8080,
-  //   //   path: '/',
-  //   //   agent: false,
-  //   //   method: 'POST'
-  //   // };
+  _writev(chunks, callback) {
+    // const messages = chunks.map((chunk) => { return chunk.chunk; });
+    // logger.write(messages);
+    // const body = msgpack.pack(messages);
+    // let options = {
+    //   headers: {
+    //     'Content-Type': CONTENT_TYPE,
+    //     'Content-Length': Buffer.byteLength(body),
+    //     'User-Agent': USER_AGENT
+    //   },
+    //   hostname: 'localhost',
+    //   port: 8080,
+    //   path: '/',
+    //   agent: false,
+    //   method: 'POST'
+    // };
 
-  //   // let req = this.httpsClient.request(options);
+    // let req = this.httpsClient.request(options);
 
-  //   // req.on('error', (e) => {
-  //   //   console.log(e);
-  //   //   console.log(`Timber request error: ${e.message}`);
-  //   // });
+    // req.on('error', (e) => {
+    //   console.log(e);
+    //   console.log(`Timber request error: ${e.message}`);
+    // });
 
-  //   // req.write(body);
-  //   // req.end();
-  // }
+    // req.write(body);
+    // req.end();
+  }
 
-  _write(chunk, encoding = 'utf8', cb) {
-    logger.write(chunk);
+  _write(chunk, encoding, next) {
+    logger.write(`${typeof chunk}: writing chunk: ${chunk}`);
     // this._writev([{chunk: chunk, encoding: encoding}], cb);
+    next();
   }
 
   /**
@@ -110,7 +117,8 @@ class HTTPSStream extends Writable {
    * the contents. Cork allows us to continue buffering the messages until the next flush.
    */
   _flush() {
-    this.uncork();
+    // nextTick is recommended here to allows batching of write calls I think
+    process.nextTick(() => this.uncork());
     this.cork();
   }
 
@@ -119,8 +127,7 @@ class HTTPSStream extends Writable {
    * intervals.
    */
   _startFlusher() {
-    let that = this;
-    setInterval(() => { that._flush() }, 100);
+    setInterval(() => this._flush(), this.flushInterval);
   }
 }
 
