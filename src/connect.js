@@ -13,10 +13,11 @@ function connect(stream) {
       const written = stream.write(...args);
       write.apply(process.stdout, args);
 
-      // Ben: I think we need this?
-      if (!written) {
-        stream.once('drain', () => stream.write(...args))
-      }
+      // if (!written && applyBackPressure) {
+      //   stream.once('drain', () => stream.write(...args));
+      // }
+
+      return written;
     }
   })(process.stdout.write);
   

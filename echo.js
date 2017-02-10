@@ -12,7 +12,7 @@ http.createServer(function (request, response) {
     body = Buffer
       .concat(body)
       .toString();
-    console.log(body);
+    console.log(JSON.parse(body));
   });
 
   request.pipe(response);
