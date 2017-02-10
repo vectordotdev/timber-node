@@ -13,24 +13,24 @@
   },
   "maintainers": [
     "Ben Johnson <ben@timber.com>",
-    "Zach Sherman <zach@timber.io>",
-    "David Antaramian <david@timber.io>"
+    "David Antaramian <david@timber.io>",
+    "Zach Sherman <zach@timber.io>"
   ],
   "author": {
     "name": "Zach Sherman <zach@timber.io>",
     "url": "https://github.com/zsherman"
   },
   "scripts": {
-    "watch": "node_modules/.bin/babel src -d lib --experimental -w",
-    "clean": "rimraf lib dist coverage",
+    "watch": "node_modules/.bin/babel src -d dist --experimental -w",
+    "clean": "rimraf dist coverage",
     "lint": "eslint src",
     "ci": "babel-node test/*.test.js",
-    "compile": "babel --stage 0 -d lib/ src/",
+    "compile": "babel --stage 0 -d dist/ src/",
     "build": "npm run clean && babel --optional runtime -d dist src",
-    "test": "babel-node mocha \"test/**/*.js\"",
-    "cover": "npm run compile && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./lib/*.js --report text-summary",
-    "report": "npm run compile && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./lib/*.js --report html && open ./coverage/index.html",
-    "coveralls": "npm run compile && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./lib/*.js --report lcovonly && cat ./coverage/lcov.info | coveralls",
+     "test": "babel-node node_modules/.bin/blue-tape test/**/*.test.js | tspec",
+    "cover": "npm run compile && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./dist/*.js --report text-summary",
+    "report": "npm run compile && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./dist/*.js --report html && open ./coverage/index.html",
+    "coveralls": "npm run compile && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./dist/*.js --report lcovonly && cat ./coverage/lcov.info | coveralls",
     "postcoveralls": "rimraf coverage",
     "postpublish": "git push origin master --follow-tags",
     "deploy": "git pull --rebase origin master && git push origin master"
@@ -65,13 +65,11 @@
     "eslint": "1.8.0",
     "eslint-config-xo": "0.7.1",
     "eslint-plugin-babel": "2.1.1",
-    "mocha": "^3.2.0",
     "rimraf": "2.4.3",
     "tap-spec": "4.1.0"
   },
   "dependencies": {
     "babel-runtime": "^6.0.14",
-    "intercept-stdout": "^0.1.2",
     "msgpack": "^1.0.2"
   }
 }

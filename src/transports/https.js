@@ -2,7 +2,7 @@
 
 import https from 'http';
 import msgpack from 'msgpack';
-import stream, { Writable } from 'stream';
+import { Writable } from 'stream';
 
 const HOSTNAME = 'api.timber.io';
 const PATH = '/frames';
@@ -19,7 +19,7 @@ var logger = fs.createWriteStream('timber.log', { flags: 'a' });
  * A highly efficient stream for sending logs to Timber via HTTPS. It uses batches,
  * keep-alive connections, and msgpack to deliver logs with high-throughput and little overhead.
  * It also implements the Stream.Writable interface so that it can be treated like a stream.
- * This is beneficial in situation like Morgan, where you can pass a custom stream.
+ * This is beneficial when using something like Morgan, where you can pass a custom stream.
 */
 
 class HTTPSStream extends Writable {
@@ -34,8 +34,7 @@ class HTTPSStream extends Writable {
     super({
       objectMode: true,
       highWaterMark: 5000
-    }); // pass {objectMode: true } ?
-    // Writable.call(this, { objectMode: true});
+    });
 
     this.apiKey = apiKey;
     this.flushInterval = flushInterval;
@@ -51,8 +50,8 @@ class HTTPSStream extends Writable {
     // on an interval.
     this.cork();
 
-    // // In the event the _flusher is not fast enough, we need to monitor the buffer size.
-    // // If it fills before the next flush event, we should immediately flush.
+    // In the event the _flusher is not fast enough, we need to monitor the buffer size.
+    // If it fills before the next flush event, we should immediately flush.
 
     if (flushInterval !== undefined && flushInterval > 0) {
       this._startFlusher();
