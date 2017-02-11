@@ -2,11 +2,7 @@
 import https from 'http';
 import { Writable } from 'stream';
 
-import fs from 'fs';
-import path from 'path';
-var logger = fs.createWriteStream('timber.log', { flags: 'a' });
-
-function connect(stream) {
+function connect(stream, applyBackPressure = false) {
   if(!(stream instanceof Writable)) {
     throw new Error("stream must be of type Writable");
   }
@@ -19,9 +15,11 @@ function connect(stream) {
       const written = stream.write(...args);
       write.apply(process.stdout, args);
 
-      // if (!written && applyBackPressure) {
-      //   stream.once('drain', () => stream.write(...args));
-      // }
+      // If we want to allow back pressure, listen for
+      // the drain event and try once the buffer is cleared
+      if (!written && applyBackPressure) {
+        stream.once('drain', () => stream.write(...args));
+      }
 
       return written;
     }

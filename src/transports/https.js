@@ -30,7 +30,7 @@ class HTTPSStream extends Writable {
     * @param {string} [options.flushInterval=60000] - How often, in milliseconds, the messages written to the stream should be delivered to Timber.
     * @param {string} [options.httpsAgent] - Your own custom https.Agent. We use agents to maintain connection pools and keep the connections alive. This avoids the initial connection overhead every time we want to communicate with Timber. See https.Agent for options.
   */
-  constructor(apiKey, { flushInterval = 10000, httpsAgent, httpsClient } = {}) {
+  constructor(apiKey, { flushInterval = 5000, httpsAgent, httpsClient } = {}) {
     super({
       objectMode: true,
       highWaterMark: 5000
