@@ -7,7 +7,7 @@ import path from 'path';
 var logger = fs.createWriteStream('timber.log', { flags: 'a' });
 
 function connect(stream) {
-  if(!stream instanceof Writable) {
+  if(!(stream instanceof Writable)) {
     throw new Error("stream must be of type Writable");
   }
 
