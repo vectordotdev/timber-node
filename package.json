@@ -27,7 +27,7 @@
     "ci": "babel-node test/*.test.js",
     "compile": "babel --stage 0 -d dist/ src/",
     "build": "npm run clean && babel --optional runtime -d dist src",
-     "test": "babel-node node_modules/.bin/blue-tape test/**/*.test.js | tspec",
+    "test": "babel-node node_modules/.bin/blue-tape test/*.test.js | tspec",
     "cover": "npm run compile && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./dist/*.js --report text-summary",
     "report": "npm run compile && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./dist/*.js --report html && open ./coverage/index.html",
     "coveralls": "npm run compile && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./dist/*.js --report lcovonly && cat ./coverage/lcov.info | coveralls",
@@ -66,7 +66,7 @@
     "eslint-config-xo": "0.7.1",
     "eslint-plugin-babel": "2.1.1",
     "rimraf": "2.4.3",
-    "tap-spec": "4.1.0"
+    "tap-spec": "^4.1.0"
   },
   "dependencies": {
     "babel-runtime": "^6.0.14",

@@ -8,5 +8,5 @@ export default {
   middlewares,
   transports,
   connect,
-  Timber
+  Client: Timber
 }

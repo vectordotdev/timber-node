@@ -1,12 +1,18 @@
 'use strict';
 import https from 'http';
+import { Writable } from 'stream';
 
 import fs from 'fs';
 import path from 'path';
 var logger = fs.createWriteStream('timber.log', { flags: 'a' });
 
 function connect(stream) {
+  if(!stream instanceof Writable) {
+    throw new Error("stream must be of type Writable");
+  }
+
   const oldOutWrite = process.stdout.write;
+  const oldErrWrite = process.stderr.write;
 
   process.stdout.write = (function(write) {
     return function(...args) {
@@ -20,8 +26,6 @@ function connect(stream) {
       return written;
     }
   })(process.stdout.write);
-  
-  const oldErrWrite = process.stderr.write;
 
   process.stderr.write = (function(write) {
     return function(string, encoding, fd) {
