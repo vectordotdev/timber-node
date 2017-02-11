@@ -17,9 +17,9 @@ function connect(stream, applyBackPressure = false) {
 
       // If we want to allow back pressure, listen for
       // the drain event and try once the buffer is cleared
-      if (!written && applyBackPressure) {
-        stream.once('drain', () => stream.write(...args));
-      }
+      // if (!written && applyBackPressure) {
+      //   stream.once('drain', () => stream.write(...args));
+      // }
 
       return written;
     }

@@ -1,5 +1,3 @@
-// 'use strict';
-
 // const assert = require('assert');
 // const HTTPSStream = require('../../../lib/transports/https_stream');
 // const NetworkStream = require('../../../lib/transports/network_stream');

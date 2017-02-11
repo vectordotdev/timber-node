@@ -1,64 +1,77 @@
-// 'use strict';
+'use strict';
 
-// const assert = require('assert');
-// const EventEmitter = require('events');
-// const HTTPSStream = require('../../../lib/transports/https_stream');
-// const msgpack = require('msgpack');
+import EventEmitter from 'events';
+import HTTPSStream from '../../src/transports/https';
+import msgpack from 'msgpack';
 
-// // Mimics http.Request behavior so that we can assert usage below.
-// class FakeRequest extends EventEmitter {
-//   constructor(options = {}) {
-//     super();
-//     this.endCallCount = 0;
-//     this.options = options;
-//     this.writtenMessages = [];
-//   }
+jest.useFakeTimers();
 
-//   end() {
-//     this.endCallCount++;
-//   }
+// Mimics http.Request behavior so that we can assert usage below.
+class FakeRequest extends EventEmitter {
+  constructor(options = {}) {
+    super();
+    this.endCallCount = 0;
+    this.options = options;
+    this.writtenMessages = [];
+  }
 
-//   write(message) {
-//     this.writtenMessages.push(message);
-//   }
-// }
+  end() {
+    this.endCallCount++;
+  }
 
-// // Mimics https behavior so that we can assert usage below.
-// class FakeHTTPSClient {
-//   constructor(fakeRequest) {
-//     this.fakeRequest = null;
-//     this.requestCallCount = 0;
-//   }
+  write(message) {
+    this.writtenMessages.push(message);
+  }
+}
 
-//   request(options) {
-//     this.requestCallCount++;
-//     return this.fakeRequest = new FakeRequest(options);
-//   }
-// }
+// Mimics https behavior so that we can assert usage below.
+class FakeHTTPSClient {
+  constructor(fakeRequest) {
+    this.fakeRequest = null;
+    this.requestCallCount = 0;
+  }
 
-// describe("HTTPSStream", () => {
-//   describe(".constructor", () => {
-//     it("sets the apiKey", () => {
-//       let httpsStream = new HTTPSStream('my_api_key', {});
-//       assert.equal(httpsStream.apiKey, 'my_api_key');
-//     });
+  request(options) {
+    this.requestCallCount++;
+    return this.fakeRequest = new FakeRequest(options);
+  }
+}
 
-//     it("sets the flushInterval default", () => {
-//       let httpsStream = new HTTPSStream('my_api_key');
-//       assert.equal(httpsStream.flushInterval, 1000);
-//     });
+describe("HTTPS Transport", () => {
+  
+  describe("constructor", () => {
+    
+    it("sets the apiKey", () => {
+      let httpsStream = new HTTPSStream('my_api_key', {});
+      expect(httpsStream.apiKey).toBe('my_api_key');
+    });
 
-//     it("starts the flusher and flushes messages", (done) => {
-//       let fakeHTTPSClient = new FakeHTTPSClient();
-//       let httpsStream = new HTTPSStream('my_api_key', {httpsClient: fakeHTTPSClient, flushInterval: 1});
-//       httpsStream.write('message 1');
-//       httpsStream.write('message 2');
-//       setTimeout(() => {
-//         assert.equal(fakeHTTPSClient.requestCallCount, 1);
-//         done()
-//       }, 10);
-//     });
-//   });
+    it("sets the flushInterval default", () => {
+      let httpsStream = new HTTPSStream('my_api_key');
+      expect(httpsStream.flushInterval).toBe(2500);
+    });
+
+    it("starts the flusher and flushes messages", () => {
+      // Create new HTTPS Stream and pass in client
+      let fakeHTTPSClient = new FakeHTTPSClient();
+      let httpsStream = new HTTPSStream('my_api_key', {
+          httpsClient: fakeHTTPSClient,
+          flushInterval: 2500
+      });
+
+      expect(fakeHTTPSClient.requestCallCount).toBe(0);
+
+      // Send a few messages
+      httpsStream.write('message 1');
+      httpsStream.write('message 2');
+
+      jest.runOnlyPendingTimers();
+      jest.runAllTicks();
+
+      expect(fakeHTTPSClient.requestCallCount).toBe(1);
+    });
+
+  });
 
 //   describe("write", function() {
 //     it("sends a bulk HTTP request to Timber with 1 message", () => {
@@ -113,4 +126,4 @@
 //       assert.equal(fakeRequest.endCallCount, 1);
 //     });
 //   });
-// });
+});

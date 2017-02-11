@@ -27,7 +27,7 @@
     "ci": "babel test/*.test.js",
     "compile": "babel -d dist src",
     "build": "npm run clean && babel -d dist src",
-    "test": "jest test/*.test.js",
+    "test": "jest --coverage",
     "cover": "npm run compile && babel node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./dist/*.js --report text-summary",
     "report": "npm run compile && babel node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./dist/*.js --report html && open ./coverage/index.html",
     "coveralls": "npm run compile && babel node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./dist/*.js --report lcovonly && cat ./coverage/lcov.info | coveralls",
@@ -72,5 +72,9 @@
   "dependencies": {
     "babel-runtime": "^6.22.0",
     "msgpack": "^1.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": "src/**/*.js"
   }
 }
