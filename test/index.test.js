@@ -1,21 +1,21 @@
-// import { Client } from '../src/index';
-// import test from 'blue-tape';
+import Index from '../src/index';
 
-// test('exports a class', t => {
-//   t.equal(typeof Client, 'function');
-//   t.end();
-// });
+describe('Entry File', () => {
 
-// test('throws if instantiated improperly', t => {
-//   t.throws(() => {
-//     Client();
-//   });
-//   t.end();
-// });
+  it('exports middlewares', () => {
+    expect(typeof Index.middlewares).not.toBeUndefined();
+  });
 
-// test('does not throw if instantiated properly', t => {
-//   t.doesNotThrow(() => {
-//     new Client();
-//   });
-//   t.end();
-// });
+  it('exports a client', () => {
+    expect(typeof Index.Client).not.toBeUndefined();
+  });
+
+  it('exports transport methods', () => {
+    expect(typeof Index.transports).not.toBeUndefined();
+  });
+
+  it('exports stdout connect', () => {
+    expect(typeof Index.connect).not.toBeUndefined();
+  });
+
+});
