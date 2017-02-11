@@ -4,7 +4,7 @@ import transports from './transports';
 import connect from './connect';
 import Timber from './timber';
 
-export default {
+module.exports = {
   middlewares,
   transports,
   connect,

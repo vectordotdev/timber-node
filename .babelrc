@@ -1,5 +1,4 @@
 {
-  "stage": 0,
-  "loose": "all",
-  "presets": ["es2015"]
+  "presets": ["stage-0", "es2015"],
+  "plugins": ["transform-runtime"]
 }

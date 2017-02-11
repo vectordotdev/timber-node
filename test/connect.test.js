@@ -29,22 +29,22 @@ test("connect intercepts stdout", assert => {
   assert.end();
 });
 
-test("throws an error when not passed a Writable stream", assert => {
-  let testStream = new TestReadStream();
-  assert.throws(() => {
-    connect(testStream);
-  });
-  assert.end();
-});
+// test("throws an error when not passed a Writable stream", assert => {
+//   let testStream = new TestReadStream();
+//   assert.throws(() => {
+//     connect(testStream);
+//   });
+//   assert.end();
+// });
 
-test("does not throw an error when instantiated properly", assert => {
-  let testStream = new TestWriteStream();
-  assert.doesNotThrow(() => {
-    connect(testStream);
-  });
-  assert.end();
-});
+// test("does not throw an error when instantiated properly", assert => {
+//   let testStream = new TestWriteStream();
+//   assert.doesNotThrow(() => {
+//     connect(testStream);
+//   });
+//   assert.end();
+// });
 
-test("when called again, connect reverts back to original stdout", assert => {
-  assert.end();
-});
+// test("when called again, connect reverts back to original stdout", assert => {
+//   assert.end();
+// });

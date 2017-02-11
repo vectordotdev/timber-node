@@ -11,3 +11,4 @@
 - https://git.cs.duke.edu/CompSci408_2016Fall/MoneyComb/blob/spend-stats/node_modules/buffer-to-vinyl/node_modules/readable-stream/doc/stream.md
 - https://github.com/nodejitsu/godot
 - http://webdevrefinery.com/forums/topic/13697-flushwritable-how-to-stream-without-committing-suicide/
+- https://www.npmjs.com/package/outbound-http-logger
