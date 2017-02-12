@@ -63,45 +63,26 @@ class HTTPSStream extends Writable {
     }
   }
 
-  // write(...args) {
-  //   if (this.length >= this.highWaterMark) {
-  //     logger.write("flushing, buffer is full")
-  //     if this.httpsAgent.freeSockets == 0 {
-  //       return false
-  //     } else {
-  //       this._flush();
-  //     }
-  //   } else {
-  //     logger.write("writing, buffer is not full")
-  //   }
-  //   super(...args);
-  // }
-
   /**
    * _writev is a Stream.Writeable methods that, if present, will write multiple chunks of
    * data off of the buffer. Defining it means we do not need to define _write.
    */
-  // let options = {
-  //     agent: this.httpsAgent,
-  //     auth: this.apiKey,
-  //     hostname: HOSTNAME,
-  //     path: PATH,
-  //     headers: {
-  //       'Content-Type': CONTENT_TYPE,
-  //       'User-Agent': USER_AGENT
-  //     }
-  //   };
   _writev(chunks, next) {
-    const messages = chunks.map((chunk) => { return chunk.chunk; });
-    logger.write(`${typeof chunks}: sending: ${messages.length} messages \n`);
+    const messages = chunks.map((chunk) => {
+      return { data: chunk.chunk }
+    });
+
+    logger.write(`sending: ${typeof messages}: ${JSON.stringify(messages)} \n`);
 
     const body = JSON.stringify(messages); //msgpack.pack(messages);
     let options = {
       headers: {
-        'Content-Type': CONTENT_TYPE,
+        'Content-Type': "application/json",
         'Content-Length': Buffer.byteLength(body),
         'User-Agent': USER_AGENT
       },
+      agent: this.httpsAgent,
+      auth: this.apiKey,
       hostname: 'localhost',
       port: 8080,
       path: '/',

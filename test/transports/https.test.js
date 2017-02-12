@@ -32,14 +32,14 @@ class FakeHTTPSClient {
   }
 
   request(options) {
-    this.requestCallCount++;
+    this.requestCallCount += 1;
     return this.fakeRequest = new FakeRequest(options);
   }
 }
 
-describe("HTTPS Transport", () => {
+describe("HTTPS Stream", () => {
   
-  describe("constructor", () => {
+  describe("initialization", () => {
     
     it("sets the apiKey", () => {
       let httpsStream = new HTTPSStream('my_api_key', {});
@@ -52,7 +52,6 @@ describe("HTTPS Transport", () => {
     });
 
     it("starts the flusher and flushes messages", () => {
-      // Create new HTTPS Stream and pass in client
       let fakeHTTPSClient = new FakeHTTPSClient();
       let httpsStream = new HTTPSStream('my_api_key', {
           httpsClient: fakeHTTPSClient,
@@ -70,60 +69,52 @@ describe("HTTPS Transport", () => {
 
       expect(fakeHTTPSClient.requestCallCount).toBe(1);
     });
-
   });
 
-//   describe("write", function() {
-//     it("sends a bulk HTTP request to Timber with 1 message", () => {
-//       let fakeHTTPSClient = new FakeHTTPSClient();
-//       let httpsStream = new HTTPSStream('my_api_key', {httpsClient: fakeHTTPSClient, flushInterval: 0});
-//       httpsStream.write('message 1');
-//       httpsStream._flush();
+  describe("transport", function() {
+    it("sends a bulk HTTP request to Timber with 1 message", () => {
+      let fakeHTTPSClient = new FakeHTTPSClient();
+      let httpsStream = new HTTPSStream('my_api_key', { httpsClient: fakeHTTPSClient, flushInterval: 2500 });
 
-//       assert.equal(fakeHTTPSClient.requestCallCount, 1);
+      // Write the message and flush it
+      httpsStream.write('message 1');
+      httpsStream._flush();
+      jest.runAllTicks();
 
-//       let fakeRequest = fakeHTTPSClient.fakeRequest;
+      expect(fakeHTTPSClient.requestCallCount).toBe(1);
 
-//       let requestOptions = fakeRequest.options;
-//       assert(requestOptions.agent);
-//       assert.equal(requestOptions.auth, 'my_api_key');
-//       assert.equal(requestOptions.hostname, 'api.timber.io');
-//       assert.equal(requestOptions.path, '/frames');
-//       assert.equal(requestOptions.headers['Content-Type'], 'application/msgpack');
-//       assert(requestOptions.headers['User-Agent'].startsWith('Timber Node HTTPS Stream'));
+      let fakeRequest = fakeHTTPSClient.fakeRequest;
+      const messages = fakeRequest.writtenMessages;
 
-//       const messages = msgpack.unpack(fakeRequest.writtenMessages[0]);
-//       assert.equal(messages.length, 1);
-//       assert.equal(messages[0].toString(), 'message 1');
+      expect(messages.length).toBe(1);
+      expect(JSON.parse(messages[0])[0].data).toBe('message 1');
+      expect(fakeRequest.endCallCount).toBe(1);
+    });
 
-//       assert.equal(fakeRequest.endCallCount, 1);
-//     });
+    it("sends a bulk HTTP request to Timber with multiple messages", () => {
+      let fakeHTTPSClient = new FakeHTTPSClient();
+      let httpsStream = new HTTPSStream('my_api_key', {httpsClient: fakeHTTPSClient, flushInterval: 0});
+      httpsStream.write('message 1');
+      httpsStream.write('message 2');
+      httpsStream._flush();
+      jest.runAllTicks();
+      
+      expect(fakeHTTPSClient.requestCallCount).toBe(1);
 
-//     it("sends a bulk HTTP request to Timber with multiple messages", () => {
-//       let fakeHTTPSClient = new FakeHTTPSClient();
-//       let httpsStream = new HTTPSStream('my_api_key', {httpsClient: fakeHTTPSClient, flushInterval: 0});
-//       httpsStream.write('message 1');
-//       httpsStream.write('message 2');
-//       httpsStream._flush();
+      let fakeRequest = fakeHTTPSClient.fakeRequest;
+      const messages = fakeRequest.writtenMessages;
 
-//       assert.equal(fakeHTTPSClient.requestCallCount, 1);
-
-//       let fakeRequest = fakeHTTPSClient.fakeRequest;
-
-//       let requestOptions = fakeRequest.options;
-//       assert(requestOptions.agent);
-//       assert.equal(requestOptions.auth, 'my_api_key');
-//       assert.equal(requestOptions.hostname, 'api.timber.io');
-//       assert.equal(requestOptions.path, '/frames');
-//       assert.equal(requestOptions.headers['Content-Type'], 'application/msgpack');
-//       assert(requestOptions.headers['User-Agent'].startsWith('Timber Node HTTPS Stream'));
-
-//       const messages = msgpack.unpack(fakeRequest.writtenMessages[0]);
-//       assert.equal(messages.length, 2);
-//       assert.equal(messages[0].toString(), 'message 1');
-//       assert.equal(messages[1].toString(), 'message 2');
-
-//       assert.equal(fakeRequest.endCallCount, 1);
-//     });
-//   });
+      expect(messages.length).toBe(1);
+      expect(JSON.parse(messages[0])[0].data).toBe('message 1');
+      expect(JSON.parse(messages[0])[1].data).toBe('message 2');
+      expect(fakeRequest.endCallCount).toBe(1);
+    });
+  });
 });
+
+// assert(requestOptions.agent);
+// assert.equal(requestOptions.auth, 'my_api_key');
+// assert.equal(requestOptions.hostname, 'api.timber.io');
+// assert.equal(requestOptions.path, '/frames');
+// assert.equal(requestOptions.headers['Content-Type'], 'application/msgpack');
+// assert(requestOptions.headers['User-Agent'].startsWith('Timber Node HTTPS Stream'));
