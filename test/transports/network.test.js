@@ -1,16 +1,15 @@
-// const assert = require('assert');
-// const HTTPSStream = require('../../../lib/transports/https_stream');
-// const NetworkStream = require('../../../lib/transports/network_stream');
+import NetworkStream from '../../src/transports/network';
+import HTTPSStream from '../../src/transports/https';
 
-// describe("NetworkStream", () => {
-//   describe(".constructor", () => {
-//     it("extends HTTPSStream", () => {
-//       assert(NetworkStream.prototype instanceof HTTPSStream);
-//     })
+describe("NetworkStream", () => {
+  describe("constructor", () => {
+    it("extends HTTPSStream", () => {
+      expect(NetworkStream.prototype).toBeInstanceOf(HTTPSStream);
+    })
 
-//     it("instantiates properly", () => {
-//       let stream = new NetworkStream('api_key');
-//       assert.equal(stream.apiKey, 'api_key');
-//     });
-//   });
-// });
+    it("instantiates properly", () => {
+      let stream = new NetworkStream('api_key');
+      expect(stream.apiKey).toBe('api_key');
+    });
+  });
+});

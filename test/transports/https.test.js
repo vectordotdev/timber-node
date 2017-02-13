@@ -2,8 +2,8 @@
 
 import EventEmitter from 'events';
 import HTTPSStream from '../../src/transports/https';
-import msgpack from 'msgpack';
 
+// Allows time travel for ticks/timeouts/intervals
 jest.useFakeTimers();
 
 // Mimics http.Request behavior so that we can assert usage below.
@@ -109,6 +109,11 @@ describe("HTTPS Stream", () => {
       expect(JSON.parse(messages[0])[1].data).toBe('message 2');
       expect(fakeRequest.endCallCount).toBe(1);
     });
+
+    // it("handles logs sent as strings", () => {});
+    // it("handles logs sent as objects", () => {});
+    // it("throws a warning when the buffer is full", () => {});
+    
   });
 });
 
