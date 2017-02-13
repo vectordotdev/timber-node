@@ -32,6 +32,7 @@
     "report": "npm run compile && babel node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./dist/*.js --report html && open ./coverage/index.html",
     "coveralls": "npm run compile && babel node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./dist/*.js --report lcovonly && cat ./coverage/lcov.info | coveralls",
     "postcoveralls": "rimraf coverage",
+    "prepublish": "npm run build",
     "postpublish": "git push origin master --follow-tags",
     "deploy": "git pull --rebase origin master && git push origin master"
   },
@@ -70,6 +71,7 @@
     "tap-spec": "^4.1.0"
   },
   "dependencies": {
+    "babel-eslint": "^7.1.1",
     "babel-runtime": "^6.22.0",
     "msgpack": "^1.0.2"
   },

@@ -2,11 +2,11 @@
 import middlewares from './middlewares';
 import transports from './transports';
 import connect from './connect';
-import Timber from './timber';
+import install from './timber';
 
 module.exports = {
   middlewares,
   transports,
   connect,
-  Client: Timber
+  install
 }

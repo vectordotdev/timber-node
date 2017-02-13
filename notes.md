@@ -12,3 +12,9 @@
 - https://github.com/nodejitsu/godot
 - http://webdevrefinery.com/forums/topic/13697-flushwritable-how-to-stream-without-committing-suicide/
 - https://www.npmjs.com/package/outbound-http-logger
+- https://blog.yld.io/2016/01/13/using-streams/
+
+- https://github.com/voldern/elasticsearch-writable-stream
+- https://github.com/hmalphettes/elasticsearch-streams
+- https://github.com/littlstar/s3-lambda
+- https://github.com/nodejs/node/blob/master/lib/_stream_writable.js

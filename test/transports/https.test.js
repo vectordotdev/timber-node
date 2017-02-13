@@ -113,6 +113,8 @@ describe("HTTPS Stream", () => {
     // it("handles logs sent as strings", () => {});
     // it("handles logs sent as objects", () => {});
     // it("throws a warning when the buffer is full", () => {});
+    // it("does not crash when the /frames endpoint times out", () => {});
+    // it("retries requests when backPressure is allowed", () => {});
     
   });
 });

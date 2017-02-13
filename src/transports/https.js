@@ -1,7 +1,6 @@
 'use strict';
 
 import https from 'http';
-import msgpack from 'msgpack';
 import { Writable } from 'stream';
 
 const HOSTNAME = 'api.timber.io';
@@ -17,16 +16,16 @@ var logger = fs.createWriteStream('timber.log', { flags: 'a' });
 
 /**
  * A highly efficient stream for sending logs to Timber via HTTPS. It uses batches,
- * keep-alive connections, and msgpack to deliver logs with high-throughput and little overhead.
- * It also implements the Stream.Writable interface so that it can be treated like a stream.
- * This is beneficial when using something like Morgan, where you can pass a custom stream.
+ * keep-alive connections (and in the future maybe msgpack) to deliver logs with high-throughput
+ * and little overhead. It also implements the Stream.Writable interface so that it can be treated
+ * like a stream. This is beneficial when using something like Morgan, where you can pass a custom stream.
 */
 
 class HTTPSStream extends Writable {
   /**
     * @constructor
     * @param {string} apiKey - Timber API Key
-    * @param {Object} [options] - Various opptions to adjust the stream behavior.
+    * @param {Object} [options] - Various options to adjust the stream behavior.
     * @param {string} [options.flushInterval=60000] - How often, in milliseconds, the messages written to the stream should be delivered to Timber.
     * @param {string} [options.httpsAgent] - Your own custom https.Agent. We use agents to maintain connection pools and keep the connections alive. This avoids the initial connection overhead every time we want to communicate with Timber. See https.Agent for options.
   */
@@ -45,7 +44,7 @@ class HTTPSStream extends Writable {
     this.flushInterval = flushInterval;
     this.httpsAgent = httpsAgent || new https.Agent({
       keepAlive: true,
-      maxSockets: 1,
+      maxSockets: 3,
       keepAliveMsecs: (1000 * 60) // Keeps the connection open for 1 minute, avoiding reconnects
     });
     this.httpsClient = httpsClient || https;
@@ -74,8 +73,8 @@ class HTTPSStream extends Writable {
 
     logger.write(`sending: ${typeof messages}: ${JSON.stringify(messages)} \n`);
 
-    const body = JSON.stringify(messages); //msgpack.pack(messages);
-    let options = {
+    const body = JSON.stringify(messages);
+    const options = {
       headers: {
         'Content-Type': "application/json",
         'Content-Length': Buffer.byteLength(body),
@@ -90,16 +89,11 @@ class HTTPSStream extends Writable {
       method: 'POST'
     };
 
-    let req = this.httpsClient.request(options, (res) => {
-      next();
-    });
-
-    req.on('error', (e) => {
-      logger.write(`Timber request error: ${e.message}`);
-    });
-
+    const req = this.httpsClient.request(options, (res) => {});
+    req.on('error', (e) => {});
     req.write(body);
     req.end();
+    next();
   }
 
   _write(chunk, encoding, next) {
