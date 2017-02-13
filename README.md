@@ -1,5 +1,5 @@
 # Timber Node
- [![Build Status](https://travis-ci.org/timberio/timber-node.svg)](https://travis-ci.org/timberio/timber-node) [![Coverage Status](https://coveralls.io/repos/timberio/timber-node/badge.svg?branch=master&service=github)](https://coveralls.io/github/timberio/timber-node?branch=master)
+[![CircleCI](https://circleci.com/gh/timberio/timber-node.svg?style=svg)](https://circleci.com/gh/timberio/timber-node)(https://travis-ci.org/timberio/timber-node) [![Coverage Status](https://coveralls.io/repos/timberio/timber-node/badge.svg?branch=master&service=github)](https://coveralls.io/github/timberio/timber-node?branch=master)
 
 ## Usage
 
@@ -34,8 +34,6 @@ var logger = new Timber('API Key');
 
 - [**babel-istanbul**](https://github.com/ambitioninc/babel-istanbul) - excellent coverage tool
 
-- [**blue-tape**](https://github.com/spion/blue-tape) - substack's tape test runner with promise support
-
 - [**coveralls**](https://github.com/nickmerwin/node-coveralls) - test coverage and history statistics support for node.js
 
 - [**eslint**](https://github.com/eslint/eslint) - A fully pluggable tool for identifying and reporting on patterns in JavaScript.
@@ -47,21 +45,6 @@ var logger = new Timber('API Key');
 - [**nsp**](https://github.com/nodesecurity/nsp) - check for vulnerabilities
 
 - [**rimraf**](https://github.com/isaacs/rimraf) - remove stuff
-
-- [**tap-spec**](https://github.com/scottcorgan/tap-spec) - formatted TAP output
-
-- [**zuul**](https://github.com/defunctzombie/zuul) - multi-framework javascript browser testing
-
-
-## Travis CI / Sauce Connect Configuration
-
-[**Sauce Connect**](https://docs.saucelabs.com/reference/sauce-connect/) -  Used to create tunnel allowing [Travis CI](https://travis-ci.org/) to utilize [Sauce Labs](https://saucelabs.com), a browser and mobile testing platform.
-
-If you plan to use Sauce Connect in your new module, be sure to [sign up](https://saucelabs.com/signup) with Sauce Labs if you haven’t already (it’s free for Open Source projects), and get your access key from your account page.
-
-Then you'll want to replace the secured access key in `.travis.yml` with your own. See the [Getting Started](https://docs.saucelabs.com/ci-integrations/travis-ci/) guide on Travis for more info on setting this up.
-
-Best bet if you're a new Travis and/or Sauce Labs user is to follow their steps to create a new `.travis.yml` file.
 
 ## Publishing
 When you are ready to publish a new version of your module, the following steps can be used:
