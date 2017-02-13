@@ -1,21 +1,16 @@
-import Timber from '../src/timber';
+import { install, Timber } from '../src/timber';
+import { Readable, Writable } from 'stream';
+import utils from 'util';
 
-describe('Timber Client', () => {
-
-  it('exports a class', () => {
-    expect(typeof Timber).toBe('function');
+describe('Install', () => {
+  it('exports a function', () => {
+    expect(typeof install).toBe('function');
   });
 
-  it('throws if instantiated improperly', () => {
-    expect(() => {
-      Timber();
-    }).toThrow();
+  it('returns a Timber client instance', () => {
+    const client = install({});
+    expect(client).toBeInstanceOf(Timber);
   });
-
-  it('does not throw if instantiated properly', () => {
-    expect(() => {
-      new Timber();
-    }).not.toThrow();
-  });
-
 });
+
+describe('Timber Client', () => {});
