@@ -34,8 +34,6 @@ var logger = new Timber('API Key');
 
 - [**babel-istanbul**](https://github.com/ambitioninc/babel-istanbul) - excellent coverage tool
 
-- [**babelify**](https://github.com/babel/babelify) - Browserify transform for Babel. Used in multi-framework testing with zuul.
-
 - [**blue-tape**](https://github.com/spion/blue-tape) - substack's tape test runner with promise support
 
 - [**coveralls**](https://github.com/nickmerwin/node-coveralls) - test coverage and history statistics support for node.js

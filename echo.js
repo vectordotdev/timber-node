@@ -9,10 +9,8 @@ http.createServer(function (request, response) {
     body.push(chunk);
   })
   .on('end', function () {
-    body = Buffer
-      .concat(body)
-      .toString();
-    console.log(body);
+    body = Buffer.concat(body);
+    console.log(JSON.parse(body));
   });
 
   request.pipe(response);

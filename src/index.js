@@ -2,11 +2,11 @@
 import middlewares from './middlewares';
 import transports from './transports';
 import connect from './connect';
-import timber from './timber';
+import Timber from './timber';
 
-export default {
+module.exports = {
   middlewares,
   transports,
   connect,
-  client: timber
+  Client: Timber
 }

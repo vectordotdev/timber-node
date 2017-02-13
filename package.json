@@ -13,24 +13,24 @@
   },
   "maintainers": [
     "Ben Johnson <ben@timber.com>",
-    "Zach Sherman <zach@timber.io>",
-    "David Antaramian <david@timber.io>"
+    "David Antaramian <david@timber.io>",
+    "Zach Sherman <zach@timber.io>"
   ],
   "author": {
     "name": "Zach Sherman <zach@timber.io>",
     "url": "https://github.com/zsherman"
   },
   "scripts": {
-    "watch": "node_modules/.bin/babel src -d lib --experimental -w",
-    "clean": "rimraf lib dist coverage",
+    "watch": "babel src -d dist --experimental -w",
+    "clean": "rimraf dist coverage",
     "lint": "eslint src",
-    "ci": "babel-node test/*.test.js",
-    "compile": "babel --stage 0 -d lib/ src/",
-    "build": "npm run clean && babel --optional runtime -d dist src",
-    "test": "babel-node mocha \"test/**/*.js\"",
-    "cover": "npm run compile && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./lib/*.js --report text-summary",
-    "report": "npm run compile && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./lib/*.js --report html && open ./coverage/index.html",
-    "coveralls": "npm run compile && babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./lib/*.js --report lcovonly && cat ./coverage/lcov.info | coveralls",
+    "ci": "babel test/*.test.js",
+    "compile": "babel -d dist src",
+    "build": "npm run clean && babel -d dist src",
+    "test": "jest --coverage",
+    "cover": "npm run compile && babel node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./dist/*.js --report text-summary",
+    "report": "npm run compile && babel node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./dist/*.js --report html && open ./coverage/index.html",
+    "coveralls": "npm run compile && babel node_modules/.bin/babel-istanbul cover node_modules/.bin/blue-tape ./dist/*.js --report lcovonly && cat ./coverage/lcov.info | coveralls",
     "postcoveralls": "rimraf coverage",
     "postpublish": "git push origin master --follow-tags",
     "deploy": "git pull --rebase origin master && git push origin master"
@@ -55,23 +55,26 @@
   ],
   "homepage": "https://github.com/timberio/timber-node#readme",
   "devDependencies": {
-    "babel": "5.8.23",
-    "babel-core": "5.8.33",
-    "babel-eslint": "4.1.3",
-    "babel-istanbul": "0.4.1",
-    "babelify": "6.3.0",
-    "blue-tape": "0.1.10",
+    "babel-cli": "^6.22.2",
+    "babel-jest": "^18.0.0",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-polyfill": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-stage-0": "^6.22.0",
     "coveralls": "2.11.4",
     "eslint": "1.8.0",
     "eslint-config-xo": "0.7.1",
     "eslint-plugin-babel": "2.1.1",
-    "mocha": "^3.2.0",
+    "jest-cli": "^18.1.0",
     "rimraf": "2.4.3",
-    "tap-spec": "4.1.0"
+    "tap-spec": "^4.1.0"
   },
   "dependencies": {
-    "babel-runtime": "^6.0.14",
-    "intercept-stdout": "^0.1.2",
+    "babel-runtime": "^6.22.0",
     "msgpack": "^1.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": "src/**/*.js"
   }
 }
