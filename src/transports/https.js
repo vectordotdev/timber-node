@@ -8,7 +8,6 @@ const PATH = '/frames';
 const CONTENT_TYPE = 'application/msgpack';
 const USER_AGENT = `Timber Node HTTPS Stream/${require('../../package.json').version}`;
 
-
 // For debugging purposes, writes to /timber.log
 import fs from 'fs';
 import path from 'path';
@@ -67,9 +66,7 @@ class HTTPSStream extends Writable {
    * data off of the buffer. Defining it means we do not need to define _write.
    */
   _writev(chunks, next) {
-    const messages = chunks.map((chunk) => {
-      return { data: chunk.chunk }
-    });
+    const messages = chunks.map(chunk => chunk.chunk);
 
     logger.write(`sending: ${typeof messages}: ${JSON.stringify(messages)} \n`);
 

@@ -87,13 +87,13 @@ describe("HTTPS Stream", () => {
       const messages = fakeRequest.writtenMessages;
 
       expect(messages.length).toBe(1);
-      expect(JSON.parse(messages[0])[0].data).toBe('message 1');
+      expect(JSON.parse(messages[0])[0]).toBe('message 1');
       expect(fakeRequest.endCallCount).toBe(1);
     });
 
     it("sends a bulk HTTP request to Timber with multiple messages", () => {
       let fakeHTTPSClient = new FakeHTTPSClient();
-      let httpsStream = new HTTPSStream('my_api_key', {httpsClient: fakeHTTPSClient, flushInterval: 0});
+      let httpsStream = new HTTPSStream('my_api_key', { httpsClient: fakeHTTPSClient, flushInterval: 2500 });
       httpsStream.write('message 1');
       httpsStream.write('message 2');
       httpsStream._flush();
@@ -105,8 +105,8 @@ describe("HTTPS Stream", () => {
       const messages = fakeRequest.writtenMessages;
 
       expect(messages.length).toBe(1);
-      expect(JSON.parse(messages[0])[0].data).toBe('message 1');
-      expect(JSON.parse(messages[0])[1].data).toBe('message 2');
+      expect(JSON.parse(messages[0])[0]).toBe('message 1');
+      expect(JSON.parse(messages[0])[1]).toBe('message 2');
       expect(fakeRequest.endCallCount).toBe(1);
     });
 
