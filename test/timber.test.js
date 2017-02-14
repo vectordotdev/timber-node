@@ -1,6 +1,5 @@
 import { install, Timber } from '../src/timber';
 import { Readable, Writable } from 'stream';
-import utils from 'util';
 
 describe('Install', () => {
   it('exports a function', () => {

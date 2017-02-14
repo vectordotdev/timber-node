@@ -2,6 +2,7 @@
 
 import https from 'http';
 import { Writable } from 'stream';
+import transform from '../transformer';
 
 const HOSTNAME = 'api.timber.io';
 const PATH = '/frames';
@@ -67,9 +68,7 @@ class HTTPSStream extends Writable {
    * data off of the buffer. Defining it means we do not need to define _write.
    */
   _writev(chunks, next) {
-    const messages = chunks.map((chunk) => {
-      return { data: chunk.chunk }
-    });
+    const messages = chunks.map(chunk => transform(chunk.chunk));
 
     logger.write(`sending: ${typeof messages}: ${JSON.stringify(messages)} \n`);
 

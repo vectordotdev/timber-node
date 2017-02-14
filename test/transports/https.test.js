@@ -87,7 +87,7 @@ describe("HTTPS Stream", () => {
       const messages = fakeRequest.writtenMessages;
 
       expect(messages.length).toBe(1);
-      expect(JSON.parse(messages[0])[0].data).toBe('message 1');
+      expect(JSON.parse(messages[0])[0].message).toBe('message 1');
       expect(fakeRequest.endCallCount).toBe(1);
     });
 
@@ -105,8 +105,8 @@ describe("HTTPS Stream", () => {
       const messages = fakeRequest.writtenMessages;
 
       expect(messages.length).toBe(1);
-      expect(JSON.parse(messages[0])[0].data).toBe('message 1');
-      expect(JSON.parse(messages[0])[1].data).toBe('message 2');
+      expect(JSON.parse(messages[0])[0].message).toBe('message 1');
+      expect(JSON.parse(messages[0])[1].message).toBe('message 2');
       expect(fakeRequest.endCallCount).toBe(1);
     });
 
