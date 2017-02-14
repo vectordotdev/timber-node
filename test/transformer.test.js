@@ -1,4 +1,4 @@
-import transform from '../src/transformer';
+import transform from '../src/transform';
 
 describe('transform', () => {
   it('exports a function', () => {
