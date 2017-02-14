@@ -1,5 +1,5 @@
 # Timber Node
-[![CircleCI](https://circleci.com/gh/timberio/timber-node.svg?style=svg)](https://circleci.com/gh/timberio/timber-node)(https://travis-ci.org/timberio/timber-node) [![Coverage Status](https://coveralls.io/repos/timberio/timber-node/badge.svg?branch=master&service=github)](https://coveralls.io/github/timberio/timber-node?branch=master)
+[![CircleCI](https://circleci.com/gh/timberio/timber-node.svg?style=svg)](https://circleci.com/gh/timberio/timber-node) [![Coverage Status](https://coveralls.io/repos/timberio/timber-node/badge.svg?branch=master&service=github)](https://coveralls.io/github/timberio/timber-node?branch=master)
 
 ## Usage
 
