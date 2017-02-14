@@ -1,12 +1,26 @@
 import connect from '../src/connect.js';
 import { Writable, Readable } from 'stream';
+import util from 'util';
 
-class TestWriteStream extends Writable { _write(){} }
+// Stub console.log and console.warn to be what the are in node by default
+// https://github.com/nodejs/node/blob/master/lib/console.js#L42
+console.log = function log(...args) {
+  process.stdout.write(`${util.format.apply(null, args)}\n`);
+};
+
+console.warn = function log(...args) {
+  process.stderr.write(`${util.format.apply(null, args)}\n`);
+};
+
+class TestWriteStream extends Writable {
+  constructor() { super({ objectMode: true }) }
+  _write(){}
+}
 class TestReadStream extends Readable {}
 
 describe('Connect STDOUT', () => {
 
-  it('intercepts stdout', () => {
+  it('intercepts stdout write', () => {
     const log = 'test log...';
     
     // Create a new write stream and cork it
@@ -25,8 +39,34 @@ describe('Connect STDOUT', () => {
     process.stdout.write("\n");
 
     // Check that the buffered content is correct
-    const written = testStream._writableState.getBuffer().pop().chunk.toString('utf8');
+    const written = testStream._writableState.getBuffer().pop().chunk.message;
     expect(written).toBe(log);
+  });
+
+  it('sets the proper level for console.log', () => {
+    const log = 'console log test';
+    let testStream = new TestWriteStream();
+    connect(testStream);
+    testStream.cork();
+
+    console.log(log);
+
+    const chunk = testStream._writableState.getBuffer().pop().chunk;
+    expect(chunk.message).toBe(`${log}\n`);
+    expect(chunk.level).toBe('info');
+  });
+
+  it('sets the proper level for console.warn', () => {
+    const log = 'console log test';
+    let testStream = new TestWriteStream();
+    connect(testStream);
+    testStream.cork();
+
+    console.warn(log);
+
+    const chunk = testStream._writableState.getBuffer().pop().chunk;
+    expect(chunk.message).toBe(`${log}\n`);
+    expect(chunk.level).toBe('error');
   });
 
   it("throws an error when not passed a Writable stream", () => {
