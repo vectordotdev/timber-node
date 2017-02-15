@@ -5,13 +5,14 @@ import { Writable } from 'stream';
 
 const HOSTNAME = 'api.timber.io';
 const PATH = '/frames';
-const CONTENT_TYPE = 'application/msgpack';
+const CONTENT_TYPE = 'application/json';
 const USER_AGENT = `Timber Node HTTPS Stream/${require('../../package.json').version}`;
+const PORT = 443;
 
 // For debugging purposes, writes to /timber.log
-import fs from 'fs';
-import path from 'path';
-var logger = fs.createWriteStream('timber.log', { flags: 'a' });
+// import fs from 'fs';
+// import path from 'path';
+// var logger = fs.createWriteStream('timber.log', { flags: 'a' });
 
 /**
  * A highly efficient stream for sending logs to Timber via HTTPS. It uses batches,
@@ -29,17 +30,21 @@ class HTTPSStream extends Writable {
     * @param {string} [options.httpsAgent] - Your own custom https.Agent. We use agents to maintain connection pools and keep the connections alive. This avoids the initial connection overhead every time we want to communicate with Timber. See https.Agent for options.
   */
   constructor(apiKey, {
-      flushInterval = 2500,
-      httpsAgent,
-      httpsClient
-    } = {})
-  {
-    super({
-      objectMode: true,
-      highWaterMark: 5000
-    });
+    flushInterval = 2500,
+    highWaterMark = 5000,
+    httpsAgent,
+    httpsClient,
+    hostName = HOSTNAME,
+    path = PATH,
+    port = PORT
+  } = {}) {
+    // Ensure we use object mode and set a default highWaterMark
+    super({ objectMode: true, highWaterMark });
 
     this.apiKey = apiKey;
+    this.hostName = hostName;
+    this.path = path;
+    this.port = port;
     this.flushInterval = flushInterval;
     this.httpsAgent = httpsAgent || new https.Agent({
       keepAlive: true,
@@ -67,26 +72,22 @@ class HTTPSStream extends Writable {
    */
   _writev(chunks, next) {
     const messages = chunks.map(chunk => chunk.chunk);
-
-    logger.write(`sending: ${typeof messages}: ${JSON.stringify(messages)} \n`);
-
     const body = JSON.stringify(messages);
     const options = {
       headers: {
-        'Content-Type': "application/json",
+        'Content-Type': CONTENT_TYPE,
         'Content-Length': Buffer.byteLength(body),
         'User-Agent': USER_AGENT
       },
       agent: this.httpsAgent,
       auth: this.apiKey,
-      hostname: 'localhost',
-      port: 8080,
-      path: '/',
-      agent: false,
+      hostname: this.hostName,
+      port: this.port,
+      path: this.path,
       method: 'POST'
     };
 
-    const req = this.httpsClient.request(options, (res) => {});
+    const req = this.httpsClient.request(options);
     req.on('error', (e) => {});
     req.write(body);
     req.end();
@@ -94,8 +95,7 @@ class HTTPSStream extends Writable {
   }
 
   _write(chunk, encoding, next) {
-    logger.write(`${typeof chunk}: writing chunk: ${chunk}`);
-    this._writev([{chunk: chunk, encoding: encoding}], next);
+    this._writev([{ chunk: chunk, encoding: encoding }], next);
   }
 
   /**
@@ -103,8 +103,7 @@ class HTTPSStream extends Writable {
    * the contents. Cork allows us to continue buffering the messages until the next flush.
    */
   _flush() {
-    logger.write(`Flushing buffer after ${this.flushInterval}ms \n`);
-    // nextTick is recommended here to allows batching of write calls I think
+    // nextTick is recommended here to allow batching of write calls I think
     process.nextTick(() => {
       this.uncork();
       this.cork();
