@@ -9,7 +9,6 @@ class TestWriteStream extends Writable {
 class TestReadStream extends Readable {}
 
 describe('Winston', () => {
-
   it('captures Winston info logs', () => {
     const log = 'test winston log...';
     const level = 'info';
@@ -28,5 +27,4 @@ describe('Winston', () => {
     const written = testStream._writableState.getBuffer().pop().chunk.message;
     expect(written).toBe(`${level}: ${log}\n`);
   });
-  
 });
