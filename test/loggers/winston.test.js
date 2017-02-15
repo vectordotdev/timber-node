@@ -23,7 +23,6 @@ describe('Winston', () => {
     winston.log(level, log);
 
     // Check that the buffered content is correct
-    console.log(testStream._writableState.getBuffer())
     const written = testStream._writableState.getBuffer().pop().chunk.message;
     expect(written).toBe(`${level}: ${log}\n`);
   });

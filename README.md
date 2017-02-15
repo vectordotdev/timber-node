@@ -4,8 +4,8 @@
 ## Usage
 
 ```
-var Timber = require('timber');
-var logger = new Timber('API Key');
+var timber = require('timber');
+timber.install({ apiKey: 'your-api-key', ...options });
 ```
 
 ## npm scripts
@@ -14,37 +14,9 @@ var logger = new Timber('API Key');
 
 `lint` - runs eslint on `/src`
 
-`test` - runs tests and formats piped TAP output with [tap-spec](https://github.com/scottcorgan/tap-spec).
+`test` - runs tests and formats piped output with Jest.
 
-`ci` - Travis CI integration + zuul multi-framework & browser tests
-
-`cover` - generates code coverage text-summary report in terminal
-
-`report` - generates code coverage html report and opens it in browser
-
-`coveralls` - runs code coverage and sends report to coveralls
-
-`zuul` - runs browser tests via zuul at `http://localhost:9966/__zuul`
-
-## devDependencies:
-
-- [**babel**](https://github.com/babel/babel) - compiler for writing next generation JavaScript
-
-- [**babel-eslint**](https://github.com/babel/babel-eslint) - ESLint using Babel as the parser
-
-- [**babel-istanbul**](https://github.com/ambitioninc/babel-istanbul) - excellent coverage tool
-
-- [**coveralls**](https://github.com/nickmerwin/node-coveralls) - test coverage and history statistics support for node.js
-
-- [**eslint**](https://github.com/eslint/eslint) - A fully pluggable tool for identifying and reporting on patterns in JavaScript.
-
-- [**eslint-config-xo**](https://github.com/sindresorhus/eslint-config-xo) - ESLint shareable config for XO
-
-- [**eslint-plugin-babel**](https://github.com/babel/eslint-plugin-babel) - an eslint rule plugin companion to babel-eslint
-
-- [**nsp**](https://github.com/nodesecurity/nsp) - check for vulnerabilities
-
-- [**rimraf**](https://github.com/isaacs/rimraf) - remove stuff
+`build` - compiles src files into the dist folder, consumable by npm.
 
 ## Publishing
 When you are ready to publish a new version of your module, the following steps can be used:
@@ -55,8 +27,6 @@ When you are ready to publish a new version of your module, the following steps 
 If publish is a success, the `postpublish` npm script will run `git push origin master --follow-tags`, pushing up and tagging your code properly.
 
 If you run `npm version patch` before committing your changes, you'll get a message like `npm ERR! Git working directory not clean.`. Commit and retry.
-
-
 
 ## Timber Specific
 # :evergreen_tree: Timber - Master your Node apps with structured logging
