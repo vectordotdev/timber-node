@@ -4,10 +4,9 @@ import { Writable } from 'stream';
 import transform from './transform';
 
 function connect(stream, applyBackPressure = false) {
-
   // Ensure the stream is Writable
-  if(!(stream instanceof Writable)) {
-    throw new Error("stream must be of type Writable");
+  if (!(stream instanceof Writable)) {
+    throw new Error('stream must be of type Writable');
   }
 
   // Store refs to standard logging utilities
@@ -31,7 +30,7 @@ function connect(stream, applyBackPressure = false) {
 
       return written;
     }
-  })(process.stdout.write);
+  })(process.stdout.write)
 
   process.stderr.write = (function(write) {
     return function(log, encoding, fd) {
@@ -50,7 +49,7 @@ function connect(stream, applyBackPressure = false) {
 
       return written;
     }
-  })(process.stderr.write);
+  })(process.stderr.write)
 
   return function() {
     process.stdout.write = oldOutWrite;

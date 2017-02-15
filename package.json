@@ -68,7 +68,7 @@
     "eslint-plugin-babel": "2.1.1",
     "jest-cli": "^18.1.0",
     "rimraf": "2.4.3",
-    "tap-spec": "^4.1.0"
+    "winston": "^2.3.1"
   },
   "dependencies": {
     "babel-eslint": "^7.1.1",

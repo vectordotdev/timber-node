@@ -18,7 +18,7 @@ class Timber {
     this.source = options.source || 'stdout'; // could be winston, bunyan, etc.
 
     if (this.transport === 'https') {
-      this.transportStream = new HTTPSStream(...options);
+      this.transportStream = new HTTPSStream(options.apiKey, options);
       connect(this.transportStream);
     }
   }
