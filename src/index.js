@@ -2,7 +2,7 @@
 import middlewares from './middlewares';
 import transports from './transports';
 import connect from './connect';
-import { install } from './timber';
+import install from './install';
 
 module.exports = {
   middlewares,

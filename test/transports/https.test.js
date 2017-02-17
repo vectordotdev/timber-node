@@ -48,14 +48,14 @@ describe("HTTPS Stream", () => {
 
     it("sets the flushInterval default", () => {
       let httpsStream = new HTTPSStream('my_api_key');
-      expect(httpsStream.flushInterval).toBe(2500);
+      expect(httpsStream.flushInterval).toBe(1000);
     });
 
     it("starts the flusher and flushes messages", () => {
       let fakeHTTPSClient = new FakeHTTPSClient();
       let httpsStream = new HTTPSStream('my_api_key', {
           httpsClient: fakeHTTPSClient,
-          flushInterval: 2500
+          flushInterval: 1000
       });
 
       expect(fakeHTTPSClient.requestCallCount).toBe(0);

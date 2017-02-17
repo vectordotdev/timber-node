@@ -30,7 +30,7 @@ class HTTPSStream extends Writable {
     * @param {string} [options.httpsAgent] - Your own custom https.Agent. We use agents to maintain connection pools and keep the connections alive. This avoids the initial connection overhead every time we want to communicate with Timber. See https.Agent for options.
   */
   constructor(apiKey, {
-    flushInterval = 2500,
+    flushInterval = 1000,
     highWaterMark = 5000,
     httpsAgent,
     httpsClient,
