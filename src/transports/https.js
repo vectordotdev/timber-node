@@ -1,9 +1,9 @@
 'use strict';
 
-import https from 'http';
+import https from 'https';
 import { Writable } from 'stream';
 
-const HOSTNAME = 'api.timber.io';
+const HOSTNAME = 'logs-staging.timber.io';
 const PATH = '/frames';
 const CONTENT_TYPE = 'application/json';
 const USER_AGENT = `Timber Node HTTPS Stream/${require('../../package.json').version}`;
@@ -87,7 +87,8 @@ class HTTPSStream extends Writable {
       method: 'POST'
     };
 
-    const req = this.httpsClient.request(options);
+    const req = this.httpsClient.request(options, (resp) => {});
+
     req.on('error', (e) => {});
     req.write(body);
     req.end();

@@ -3,6 +3,6 @@
 
 
 export default {
-  $schema: "https://raw.githubusercontent.com/timberio/log-event-json-schema/1.2.0/schema.json",
+  $schema: "https://raw.githubusercontent.com/timberio/log-event-json-schema/1.2.3/schema.json",
   message: ''
 };
