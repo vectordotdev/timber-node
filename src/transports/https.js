@@ -3,7 +3,7 @@
 import https from 'https';
 import { Writable } from 'stream';
 
-const HOSTNAME = 'logs-staging.timber.io';
+const HOSTNAME = 'logs.timber.io';
 const PATH = '/frames';
 const CONTENT_TYPE = 'application/json';
 const USER_AGENT = `Timber Node HTTPS Stream/${require('../../package.json').version}`;
