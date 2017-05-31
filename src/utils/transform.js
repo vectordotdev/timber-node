@@ -1,5 +1,5 @@
 import schema from '../schema'
-import {metadata_delimiter} from './formatter'
+import { metadata_delimiter } from './formatter'
 /**
  * Transforms a log message or object into a format
  * that timber expects, ex 'log message' @timber.io {"dt": "…", "level": "info", "context": {…}}
@@ -21,10 +21,10 @@ export default function transform(raw) {
   }
 
   // append data to the end of the log object
-  log.append = data => ({...log, ...data})
+  log.append = data => ({ ...log, ...data })
 
   // convenience function for setting the log's level
-  log.setLevel = level => log.append({level})
+  log.setLevel = level => log.append({ level })
 
   return log
 }
