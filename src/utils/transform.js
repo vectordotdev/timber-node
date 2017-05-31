@@ -1,5 +1,5 @@
 import schema from '../schema'
-import {metadata_delimiter} from './formatter';
+import {metadata_delimiter} from './formatter'
 /**
  * Transforms a log message or object into a format
  * that timber expects, ex 'log message' @timber.io {"dt": "…", "level": "info", "context": {…}}

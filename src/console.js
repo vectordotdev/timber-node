@@ -1,5 +1,5 @@
-import util from 'util';
-import transform from './transform';
+// import util from 'util'
+// import transform from './transform'
 
 // Console overrides
 // FYI: Would need to override every console method since the prototype
@@ -25,4 +25,4 @@ import transform from './transform';
 //   stdout.write(transform(enhanced));
 // }
 
-export default console;
+export default console

@@ -1,9 +1,9 @@
-import connect from './connect';
-import HTTPSStream from './transports/https';
+import connect from './connect'
+import HTTPSStream from './transports/https'
 
 function install(options) {
-  const transportStream = new HTTPSStream(options.apiKey, options);
-  connect(transportStream);
+  const transportStream = new HTTPSStream(options.apiKey, options)
+  connect(transportStream)
 }
 
-module.exports = install;
+module.exports = install

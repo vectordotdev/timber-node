@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-import HTTPS from './https';
+import HTTPS from './https'
 
 /**
  * A protocol ambiguous stream for sending logs to Timber over the network.
@@ -12,4 +12,4 @@ import HTTPS from './https';
  */
 class Network extends HTTPS {}
 
-export default Network;
+export default Network

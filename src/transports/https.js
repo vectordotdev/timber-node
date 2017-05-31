@@ -1,13 +1,13 @@
-'use strict';
+'use strict'
 
-import https from 'https';
-import { Writable } from 'stream';
+import https from 'https'
+import { Writable } from 'stream'
 
-const HOSTNAME = 'logs.timber.io';
-const PATH = '/frames';
-const CONTENT_TYPE = 'application/json';
-const USER_AGENT = `Timber Node HTTPS Stream/${require('../../package.json').version}`;
-const PORT = 443;
+const HOSTNAME = 'logs.timber.io'
+const PATH = '/frames'
+const CONTENT_TYPE = 'application/json'
+const USER_AGENT = `Timber Node HTTPS Stream/${require('../../package.json').version}`
+const PORT = 443
 
 // For debugging purposes, writes to /timber.log
 // import fs from 'fs';
@@ -39,30 +39,31 @@ class HTTPSStream extends Writable {
     port = PORT
   } = {}) {
     // Ensure we use object mode and set a default highWaterMark
-    super({ objectMode: true, highWaterMark });
+    super({ objectMode: true, highWaterMark })
 
-    this.apiKey = apiKey;
-    this.hostName = hostName;
-    this.path = path;
-    this.port = port;
-    this.flushInterval = flushInterval;
+    this.apiKey = apiKey
+    this.hostName = hostName
+    this.path = path
+    this.port = port
+    this.flushInterval = flushInterval
     this.httpsAgent = httpsAgent || new https.Agent({
       keepAlive: true,
       maxSockets: 3,
-      keepAliveMsecs: (1000 * 60) // Keeps the connection open for 1 minute, avoiding reconnects
-    });
-    this.httpsClient = httpsClient || https;
+      // Keep the connection open for 1 minute, avoiding reconnects
+      keepAliveMsecs: (1000 * 60)
+    })
+    this.httpsClient = httpsClient || https
 
     // Cork the stream so we can utilize the internal Buffer. We do *not* want to
     // send a request for every message. The _flusher will take care of flushing the stream
     // on an interval.
-    this.cork();
+    this.cork()
 
     // In the event the _flusher is not fast enough, we need to monitor the buffer size.
     // If it fills before the next flush event, we should immediately flush.
 
     if (flushInterval !== undefined && flushInterval > 0) {
-      this._startFlusher();
+      this._startFlusher()
     }
   }
 
@@ -71,8 +72,8 @@ class HTTPSStream extends Writable {
    * data off of the buffer. Defining it means we do not need to define _write.
    */
   _writev(chunks, next) {
-    const messages = chunks.map(chunk => chunk.chunk);
-    const body = JSON.stringify(messages);
+    const messages = chunks.map(chunk => chunk.chunk)
+    const body = JSON.stringify(messages)
     const options = {
       headers: {
         'Content-Type': CONTENT_TYPE,
@@ -85,18 +86,18 @@ class HTTPSStream extends Writable {
       port: this.port,
       path: this.path,
       method: 'POST'
-    };
+    }
 
-    const req = this.httpsClient.request(options, (resp) => {});
+    const req = this.httpsClient.request(options, resp => {})
 
-    req.on('error', (e) => {});
-    req.write(body);
-    req.end();
-    next();
+    req.on('error', e => {})
+    req.write(body)
+    req.end()
+    next()
   }
 
   _write(chunk, encoding, next) {
-    this._writev([{ chunk: chunk, encoding: encoding }], next);
+    this._writev([{ chunk, encoding }], next)
   }
 
   /**
@@ -106,9 +107,9 @@ class HTTPSStream extends Writable {
   _flush() {
     // nextTick is recommended here to allow batching of write calls I think
     process.nextTick(() => {
-      this.uncork();
-      this.cork();
-    });
+      this.uncork()
+      this.cork()
+    })
   }
 
   /**
@@ -116,8 +117,8 @@ class HTTPSStream extends Writable {
    * intervals.
    */
   _startFlusher() {
-    setInterval(() => this._flush(), this.flushInterval);
+    setInterval(() => this._flush(), this.flushInterval)
   }
 }
 
-module.exports = HTTPSStream;
+module.exports = HTTPSStream
