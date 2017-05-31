@@ -70,7 +70,9 @@
   },
   "dependencies": {
     "babel-eslint": "^7.1.1",
-    "babel-runtime": "^6.22.0"
+    "babel-runtime": "^6.22.0",
+    "composable-middleware": "^0.3.0",
+    "express-request-id": "^1.4.0"
   },
   "jest": {
     "testEnvironment": "node",

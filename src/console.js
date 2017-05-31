@@ -1,3 +1,6 @@
+import util from 'util';
+import transform from './transform';
+
 // Console overrides
 // FYI: Would need to override every console method since the prototype
 // is bound to the original Console instance, for now we're treating
@@ -5,14 +8,14 @@
 
 // console.log = (...args) => {
 //   const original = `${util.format.apply(null, args)}\n`;
-//   const enhanced = transform(original, { level: 'info' });
-//   stdout.write(transform(enhanced));
+//   const enhanced = transform(original).setLevel('info');
+//   process.stdout.write(enhanced);
 // }
 
 // console.warn = (...args) => {
 //   const original = `${util.format.apply(null, args)}\n`;
-//   const enhanced = tranform(original, { level: 'warn' });
-//   stderr.write(transform(enhanced));
+//   const enhanced = transform(original).setLevel('warn');
+//   process.stdout.write(transform(enhanced));
 // }
 
 // console.dir = (object, options) => {
@@ -21,3 +24,5 @@
 //   const enhanced = transform(original, { level: 'info' });
 //   stdout.write(transform(enhanced));
 // }
+
+export default console;
