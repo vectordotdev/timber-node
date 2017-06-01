@@ -19,15 +19,19 @@ const TimberExpress = (req, res, next) => {
   req.start_time = (new Date()).getTime()
 
   // destructure the request object for ease of use
-  const { headers, method, id: request_id, path } = req
+  const {
+    headers: { host, ...headers },
+    method,
+    id: request_id, path,
+    protocol: scheme
+  } = req
 
   // determine the ip address of the client
   // https://stackoverflow.com/a/10849772
   const remote_addr = headers['x-forwarded-for'] || req.connection.remoteAddress
 
-  // add the context object to the request object so that
-  // it gets passed down through the middleware chain
-  req.context = {
+  // add the http context information to the metadata object
+  const metadata = {
     context: {
       http: {
         method,
@@ -38,29 +42,43 @@ const TimberExpress = (req, res, next) => {
     }
   }
 
+  // add the http_server_request event to the metadata object
+  metadata.event = {
+    server_side_app: {
+      http_server_request: {
+        method,
+        request_id,
+        path,
+        host,
+        scheme
+      }
+    }
+  }
+
   // add an event to get  triggered when the request finishes
   // this event will send the http_client_response event to timber
   req.on('end', () => {
     // calculate the duration of the http request
     const time_ms = ((new Date()).getTime() - req.start_time)
-    req.context.event = {
+
+    // add the http_server_response event to the metadata object
+    metadata.event = {
       server_side_app: {
-        http_client_response: {
+        http_server_response: {
           request_id,
           time_ms,
           status: res.statusCode,
-          service_name: 'flybot_api',
           body: res.body
         }
       }
     }
-
-    // log the http response with context
-    console.info(formatter(`Outgoing HTTP response ${res.statusCode} in ${time_ms}ms ${req.path}`, req.context))
+    console.info(JSON.stringify(metadata));
+    // log the http response with metadata
+    console.info(formatter(`Outgoing HTTP response ${res.statusCode} in ${time_ms}ms ${req.path}`, metadata))
   })
 
-  // log the http request with context
-  console.info(formatter(`Outgoing HTTP request [${req.method}] ${req.path}`, req.context))
+  // log the http request with metadata
+  console.info(formatter(`Outgoing HTTP request [${req.method}] ${req.path}`, metadata))
   next()
 }
 
