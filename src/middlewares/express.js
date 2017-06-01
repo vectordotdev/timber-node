@@ -2,7 +2,7 @@
 import compose from 'composable-middleware'
 import addRequestId from 'express-request-id'
 import formatter from '../utils/formatter'
-// import console from 'console';
+import config from '../config'
 
 /*
  * The TimberExpress middleware takes care of automatically logging
@@ -23,12 +23,16 @@ const TimberExpress = (req, res, next) => {
     headers: { host, ...headers },
     method,
     id: request_id, path,
-    protocol: scheme
+    protocol: scheme,
+    body: reqBody
   } = req
 
   // determine the ip address of the client
   // https://stackoverflow.com/a/10849772
   const remote_addr = headers['x-forwarded-for'] || req.connection.remoteAddress
+
+  // send the request body if the capture_reequest_body flag is true (off by default)
+  let body = config.capture_request_body ? JSON.stringify(reqBody) : undefined
 
   // add the http context information to the metadata object
   const metadata = {
@@ -50,7 +54,8 @@ const TimberExpress = (req, res, next) => {
         request_id,
         path,
         host,
-        scheme
+        scheme,
+        body
       }
     }
   }
@@ -58,8 +63,14 @@ const TimberExpress = (req, res, next) => {
   // add an event to get  triggered when the request finishes
   // this event will send the http_client_response event to timber
   req.on('end', () => {
+    // destructure the response object for ease of use
+    const { body: resBody, statusCode: status } = res
+
     // calculate the duration of the http request
     const time_ms = ((new Date()).getTime() - req.start_time)
+
+    // send the response body if the capture_response_body flag is true (off by default)
+    body = config.capture_response_body ? JSON.stringify(resBody) : undefined
 
     // add the http_server_response event to the metadata object
     metadata.event = {
@@ -67,12 +78,12 @@ const TimberExpress = (req, res, next) => {
         http_server_response: {
           request_id,
           time_ms,
-          status: res.statusCode,
-          body: res.body
+          status,
+          body
         }
       }
     }
-    console.info(JSON.stringify(metadata));
+
     // log the http response with metadata
     console.info(formatter(`Outgoing HTTP response ${res.statusCode} in ${time_ms}ms ${req.path}`, metadata))
   })
