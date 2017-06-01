@@ -10,12 +10,9 @@ export default function transform(raw) {
 
   const context = rawContext ? JSON.parse(rawContext) : {}
 
-  // append a newline to the end of a log if it doesn't already end with one
-  const format = str => str.endsWith('\n') ? str : `${str}\n`
-
   const log = {
     ...schema,
-    message: typeof message === 'string' ? format(message) : JSON.stringify(message),
+    message: typeof message === 'string' ? message : JSON.stringify(message),
     dt: new Date(),
     ...context
   }
