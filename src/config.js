@@ -1,7 +1,8 @@
 import path from 'path'
 import finder from 'find-package-json'
 
-const projectPath = path.dirname(require.main.filename)
+const filename = (require.main && require.main.filename) || __dirname
+const projectPath = path.dirname(filename)
 const userConfig = finder(projectPath).next().value.timber
 
 const config = {
