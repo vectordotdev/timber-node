@@ -3,6 +3,7 @@ import compose from 'composable-middleware'
 import addRequestId from 'express-request-id'
 import formatter from '../utils/formatter'
 import config from '../config'
+import HTTP from '../contexts/http'
 
 /**
  * The express middleware takes care of automatically logging
@@ -39,15 +40,18 @@ const expressMiddleware = compose(
     // send the request body if the capture_reequest_body flag is true (off by default)
     let body = config.capture_request_body ? JSON.stringify(reqBody) : undefined
 
+    // create the HTTP context item
+    const http = new HTTP({
+      method,
+      path,
+      request_id,
+      remote_addr
+    })
+
     // add the http context information to the metadata object
     const metadata = {
       context: {
-        http: {
-          method,
-          request_id,
-          remote_addr,
-          path
-        }
+        http
       }
     }
 
