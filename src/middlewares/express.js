@@ -5,6 +5,7 @@ import formatter from '../utils/formatter'
 import config from '../config'
 import HTTP from '../contexts/http'
 import HTTPServerRequest from '../events/http_server_request'
+import HTTPServerResponse from '../events/http_server_response'
 
 /**
  * The express middleware takes care of automatically logging
@@ -27,12 +28,12 @@ const expressMiddleware = compose(
 
     // destructure the request object for ease of use
     const {
-    headers: { host, ...headers },
+      headers: { host, ...headers },
       method,
       id: request_id, path,
       protocol: scheme,
       body: reqBody
-  } = req
+    } = req
 
     // determine the ip address of the client
     // https://stackoverflow.com/a/10849772
@@ -80,24 +81,22 @@ const expressMiddleware = compose(
       // send the response body if the capture_response_body flag is true (off by default)
       body = config.capture_response_body ? JSON.stringify(resBody) : undefined
 
+      const http_server_response = new HTTPServerResponse({
+        request_id,
+        time_ms,
+        status,
+        body
+      })
+
       // add the http_server_response event to the metadata object
-      metadata.event = {
-        server_side_app: {
-          http_server_response: {
-            request_id,
-            time_ms,
-            status,
-            body
-          }
-        }
-      }
+      metadata.event = { server_side_app: { http_server_response } }
 
       // log the http response with metadata
-      console.info(formatter(`Outgoing HTTP response ${res.statusCode} in ${time_ms}ms ${req.path}`, metadata))
+      console.info(formatter(http_server_response.message(), metadata))
     })
 
     // log the http request with metadata
-    console.info(formatter(`Outgoing HTTP request [${req.method}] ${req.path}`, metadata))
+    console.info(formatter(http_server_request.message(), metadata))
     next()
   }
 )
