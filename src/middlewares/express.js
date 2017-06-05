@@ -13,6 +13,8 @@ import config from '../config'
  * - `expressMiddleware` automatically logs http events to timber
  *
  * @param {object} req - the request object
+ * @param {object} res - the response object
+ * @param {function} next - the next middleware to run
 */
 const expressMiddleware = compose(
   addRequestId(),
