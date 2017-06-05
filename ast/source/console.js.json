@@ -1,0 +1,1591 @@
+{
+  "type": "File",
+  "start": 0,
+  "end": 975,
+  "loc": {
+    "start": {
+      "line": 1,
+      "column": 0
+    },
+    "end": {
+      "line": 29,
+      "column": 0
+    }
+  },
+  "program": {
+    "type": "Program",
+    "start": 0,
+    "end": 975,
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 0
+      },
+      "end": {
+        "line": 29,
+        "column": 0
+      }
+    },
+    "sourceType": "module",
+    "body": [
+      {
+        "type": "ExportDefaultDeclaration",
+        "start": 952,
+        "end": 974,
+        "loc": {
+          "start": {
+            "line": 28,
+            "column": 0
+          },
+          "end": {
+            "line": 28,
+            "column": 22
+          }
+        },
+        "declaration": {
+          "type": "Identifier",
+          "start": 967,
+          "end": 974,
+          "loc": {
+            "start": {
+              "line": 28,
+              "column": 15
+            },
+            "end": {
+              "line": 28,
+              "column": 22
+            },
+            "identifierName": "console"
+          },
+          "name": "console",
+          "leadingComments": [
+            {
+              "type": "CommentLine",
+              "value": " import util from 'util'",
+              "start": 0,
+              "end": 26,
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 26
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": " import transform from './transform'",
+              "start": 27,
+              "end": 65,
+              "loc": {
+                "start": {
+                  "line": 2,
+                  "column": 0
+                },
+                "end": {
+                  "line": 2,
+                  "column": 38
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": " Console overrides",
+              "start": 67,
+              "end": 87,
+              "loc": {
+                "start": {
+                  "line": 4,
+                  "column": 0
+                },
+                "end": {
+                  "line": 4,
+                  "column": 20
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": " FYI: Would need to override every console method since the prototype",
+              "start": 88,
+              "end": 159,
+              "loc": {
+                "start": {
+                  "line": 5,
+                  "column": 0
+                },
+                "end": {
+                  "line": 5,
+                  "column": 71
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": " is bound to the original Console instance, for now we're treating",
+              "start": 160,
+              "end": 228,
+              "loc": {
+                "start": {
+                  "line": 6,
+                  "column": 0
+                },
+                "end": {
+                  "line": 6,
+                  "column": 68
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": " everything that's not 'error' as 'info'",
+              "start": 229,
+              "end": 271,
+              "loc": {
+                "start": {
+                  "line": 7,
+                  "column": 0
+                },
+                "end": {
+                  "line": 7,
+                  "column": 42
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": " console.log = (...args) => {",
+              "start": 273,
+              "end": 304,
+              "loc": {
+                "start": {
+                  "line": 9,
+                  "column": 0
+                },
+                "end": {
+                  "line": 9,
+                  "column": 31
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": "   const original = `${util.format.apply(null, args)}\\n`;",
+              "start": 305,
+              "end": 364,
+              "loc": {
+                "start": {
+                  "line": 10,
+                  "column": 0
+                },
+                "end": {
+                  "line": 10,
+                  "column": 59
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": "   const enhanced = transform(original).setLevel('info');",
+              "start": 365,
+              "end": 424,
+              "loc": {
+                "start": {
+                  "line": 11,
+                  "column": 0
+                },
+                "end": {
+                  "line": 11,
+                  "column": 59
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": "   process.stdout.write(enhanced);",
+              "start": 425,
+              "end": 461,
+              "loc": {
+                "start": {
+                  "line": 12,
+                  "column": 0
+                },
+                "end": {
+                  "line": 12,
+                  "column": 36
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": " }",
+              "start": 462,
+              "end": 466,
+              "loc": {
+                "start": {
+                  "line": 13,
+                  "column": 0
+                },
+                "end": {
+                  "line": 13,
+                  "column": 4
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": " console.warn = (...args) => {",
+              "start": 468,
+              "end": 500,
+              "loc": {
+                "start": {
+                  "line": 15,
+                  "column": 0
+                },
+                "end": {
+                  "line": 15,
+                  "column": 32
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": "   const original = `${util.format.apply(null, args)}\\n`;",
+              "start": 501,
+              "end": 560,
+              "loc": {
+                "start": {
+                  "line": 16,
+                  "column": 0
+                },
+                "end": {
+                  "line": 16,
+                  "column": 59
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": "   const enhanced = transform(original).setLevel('warn');",
+              "start": 561,
+              "end": 620,
+              "loc": {
+                "start": {
+                  "line": 17,
+                  "column": 0
+                },
+                "end": {
+                  "line": 17,
+                  "column": 59
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": "   process.stdout.write(transform(enhanced));",
+              "start": 621,
+              "end": 668,
+              "loc": {
+                "start": {
+                  "line": 18,
+                  "column": 0
+                },
+                "end": {
+                  "line": 18,
+                  "column": 47
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": " }",
+              "start": 669,
+              "end": 673,
+              "loc": {
+                "start": {
+                  "line": 19,
+                  "column": 0
+                },
+                "end": {
+                  "line": 19,
+                  "column": 4
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": " console.dir = (object, options) => {",
+              "start": 675,
+              "end": 714,
+              "loc": {
+                "start": {
+                  "line": 21,
+                  "column": 0
+                },
+                "end": {
+                  "line": 21,
+                  "column": 39
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": "   const options = Object.assign({customInspect: false}, options);",
+              "start": 715,
+              "end": 783,
+              "loc": {
+                "start": {
+                  "line": 22,
+                  "column": 0
+                },
+                "end": {
+                  "line": 22,
+                  "column": 68
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": "   const original = `${util.inspect(object, options)}\\n`;",
+              "start": 784,
+              "end": 843,
+              "loc": {
+                "start": {
+                  "line": 23,
+                  "column": 0
+                },
+                "end": {
+                  "line": 23,
+                  "column": 59
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": "   const enhanced = transform(original, { level: 'info' });",
+              "start": 844,
+              "end": 905,
+              "loc": {
+                "start": {
+                  "line": 24,
+                  "column": 0
+                },
+                "end": {
+                  "line": 24,
+                  "column": 61
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": "   stdout.write(transform(enhanced));",
+              "start": 906,
+              "end": 945,
+              "loc": {
+                "start": {
+                  "line": 25,
+                  "column": 0
+                },
+                "end": {
+                  "line": 25,
+                  "column": 39
+                }
+              }
+            },
+            {
+              "type": "CommentLine",
+              "value": " }",
+              "start": 946,
+              "end": 950,
+              "loc": {
+                "start": {
+                  "line": 26,
+                  "column": 0
+                },
+                "end": {
+                  "line": 26,
+                  "column": 4
+                }
+              }
+            }
+          ],
+          "trailingComments": []
+        },
+        "leadingComments": [
+          {
+            "type": "CommentLine",
+            "value": " import util from 'util'",
+            "start": 0,
+            "end": 26,
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 26
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": " import transform from './transform'",
+            "start": 27,
+            "end": 65,
+            "loc": {
+              "start": {
+                "line": 2,
+                "column": 0
+              },
+              "end": {
+                "line": 2,
+                "column": 38
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": " Console overrides",
+            "start": 67,
+            "end": 87,
+            "loc": {
+              "start": {
+                "line": 4,
+                "column": 0
+              },
+              "end": {
+                "line": 4,
+                "column": 20
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": " FYI: Would need to override every console method since the prototype",
+            "start": 88,
+            "end": 159,
+            "loc": {
+              "start": {
+                "line": 5,
+                "column": 0
+              },
+              "end": {
+                "line": 5,
+                "column": 71
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": " is bound to the original Console instance, for now we're treating",
+            "start": 160,
+            "end": 228,
+            "loc": {
+              "start": {
+                "line": 6,
+                "column": 0
+              },
+              "end": {
+                "line": 6,
+                "column": 68
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": " everything that's not 'error' as 'info'",
+            "start": 229,
+            "end": 271,
+            "loc": {
+              "start": {
+                "line": 7,
+                "column": 0
+              },
+              "end": {
+                "line": 7,
+                "column": 42
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": " console.log = (...args) => {",
+            "start": 273,
+            "end": 304,
+            "loc": {
+              "start": {
+                "line": 9,
+                "column": 0
+              },
+              "end": {
+                "line": 9,
+                "column": 31
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": "   const original = `${util.format.apply(null, args)}\\n`;",
+            "start": 305,
+            "end": 364,
+            "loc": {
+              "start": {
+                "line": 10,
+                "column": 0
+              },
+              "end": {
+                "line": 10,
+                "column": 59
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": "   const enhanced = transform(original).setLevel('info');",
+            "start": 365,
+            "end": 424,
+            "loc": {
+              "start": {
+                "line": 11,
+                "column": 0
+              },
+              "end": {
+                "line": 11,
+                "column": 59
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": "   process.stdout.write(enhanced);",
+            "start": 425,
+            "end": 461,
+            "loc": {
+              "start": {
+                "line": 12,
+                "column": 0
+              },
+              "end": {
+                "line": 12,
+                "column": 36
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": " }",
+            "start": 462,
+            "end": 466,
+            "loc": {
+              "start": {
+                "line": 13,
+                "column": 0
+              },
+              "end": {
+                "line": 13,
+                "column": 4
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": " console.warn = (...args) => {",
+            "start": 468,
+            "end": 500,
+            "loc": {
+              "start": {
+                "line": 15,
+                "column": 0
+              },
+              "end": {
+                "line": 15,
+                "column": 32
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": "   const original = `${util.format.apply(null, args)}\\n`;",
+            "start": 501,
+            "end": 560,
+            "loc": {
+              "start": {
+                "line": 16,
+                "column": 0
+              },
+              "end": {
+                "line": 16,
+                "column": 59
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": "   const enhanced = transform(original).setLevel('warn');",
+            "start": 561,
+            "end": 620,
+            "loc": {
+              "start": {
+                "line": 17,
+                "column": 0
+              },
+              "end": {
+                "line": 17,
+                "column": 59
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": "   process.stdout.write(transform(enhanced));",
+            "start": 621,
+            "end": 668,
+            "loc": {
+              "start": {
+                "line": 18,
+                "column": 0
+              },
+              "end": {
+                "line": 18,
+                "column": 47
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": " }",
+            "start": 669,
+            "end": 673,
+            "loc": {
+              "start": {
+                "line": 19,
+                "column": 0
+              },
+              "end": {
+                "line": 19,
+                "column": 4
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": " console.dir = (object, options) => {",
+            "start": 675,
+            "end": 714,
+            "loc": {
+              "start": {
+                "line": 21,
+                "column": 0
+              },
+              "end": {
+                "line": 21,
+                "column": 39
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": "   const options = Object.assign({customInspect: false}, options);",
+            "start": 715,
+            "end": 783,
+            "loc": {
+              "start": {
+                "line": 22,
+                "column": 0
+              },
+              "end": {
+                "line": 22,
+                "column": 68
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": "   const original = `${util.inspect(object, options)}\\n`;",
+            "start": 784,
+            "end": 843,
+            "loc": {
+              "start": {
+                "line": 23,
+                "column": 0
+              },
+              "end": {
+                "line": 23,
+                "column": 59
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": "   const enhanced = transform(original, { level: 'info' });",
+            "start": 844,
+            "end": 905,
+            "loc": {
+              "start": {
+                "line": 24,
+                "column": 0
+              },
+              "end": {
+                "line": 24,
+                "column": 61
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": "   stdout.write(transform(enhanced));",
+            "start": 906,
+            "end": 945,
+            "loc": {
+              "start": {
+                "line": 25,
+                "column": 0
+              },
+              "end": {
+                "line": 25,
+                "column": 39
+              }
+            }
+          },
+          {
+            "type": "CommentLine",
+            "value": " }",
+            "start": 946,
+            "end": 950,
+            "loc": {
+              "start": {
+                "line": 26,
+                "column": 0
+              },
+              "end": {
+                "line": 26,
+                "column": 4
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "directives": []
+  },
+  "comments": [
+    {
+      "type": "CommentLine",
+      "value": " import util from 'util'",
+      "start": 0,
+      "end": 26,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 26
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " import transform from './transform'",
+      "start": 27,
+      "end": 65,
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 0
+        },
+        "end": {
+          "line": 2,
+          "column": 38
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " Console overrides",
+      "start": 67,
+      "end": 87,
+      "loc": {
+        "start": {
+          "line": 4,
+          "column": 0
+        },
+        "end": {
+          "line": 4,
+          "column": 20
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " FYI: Would need to override every console method since the prototype",
+      "start": 88,
+      "end": 159,
+      "loc": {
+        "start": {
+          "line": 5,
+          "column": 0
+        },
+        "end": {
+          "line": 5,
+          "column": 71
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " is bound to the original Console instance, for now we're treating",
+      "start": 160,
+      "end": 228,
+      "loc": {
+        "start": {
+          "line": 6,
+          "column": 0
+        },
+        "end": {
+          "line": 6,
+          "column": 68
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " everything that's not 'error' as 'info'",
+      "start": 229,
+      "end": 271,
+      "loc": {
+        "start": {
+          "line": 7,
+          "column": 0
+        },
+        "end": {
+          "line": 7,
+          "column": 42
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " console.log = (...args) => {",
+      "start": 273,
+      "end": 304,
+      "loc": {
+        "start": {
+          "line": 9,
+          "column": 0
+        },
+        "end": {
+          "line": 9,
+          "column": 31
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   const original = `${util.format.apply(null, args)}\\n`;",
+      "start": 305,
+      "end": 364,
+      "loc": {
+        "start": {
+          "line": 10,
+          "column": 0
+        },
+        "end": {
+          "line": 10,
+          "column": 59
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   const enhanced = transform(original).setLevel('info');",
+      "start": 365,
+      "end": 424,
+      "loc": {
+        "start": {
+          "line": 11,
+          "column": 0
+        },
+        "end": {
+          "line": 11,
+          "column": 59
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   process.stdout.write(enhanced);",
+      "start": 425,
+      "end": 461,
+      "loc": {
+        "start": {
+          "line": 12,
+          "column": 0
+        },
+        "end": {
+          "line": 12,
+          "column": 36
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " }",
+      "start": 462,
+      "end": 466,
+      "loc": {
+        "start": {
+          "line": 13,
+          "column": 0
+        },
+        "end": {
+          "line": 13,
+          "column": 4
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " console.warn = (...args) => {",
+      "start": 468,
+      "end": 500,
+      "loc": {
+        "start": {
+          "line": 15,
+          "column": 0
+        },
+        "end": {
+          "line": 15,
+          "column": 32
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   const original = `${util.format.apply(null, args)}\\n`;",
+      "start": 501,
+      "end": 560,
+      "loc": {
+        "start": {
+          "line": 16,
+          "column": 0
+        },
+        "end": {
+          "line": 16,
+          "column": 59
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   const enhanced = transform(original).setLevel('warn');",
+      "start": 561,
+      "end": 620,
+      "loc": {
+        "start": {
+          "line": 17,
+          "column": 0
+        },
+        "end": {
+          "line": 17,
+          "column": 59
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   process.stdout.write(transform(enhanced));",
+      "start": 621,
+      "end": 668,
+      "loc": {
+        "start": {
+          "line": 18,
+          "column": 0
+        },
+        "end": {
+          "line": 18,
+          "column": 47
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " }",
+      "start": 669,
+      "end": 673,
+      "loc": {
+        "start": {
+          "line": 19,
+          "column": 0
+        },
+        "end": {
+          "line": 19,
+          "column": 4
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " console.dir = (object, options) => {",
+      "start": 675,
+      "end": 714,
+      "loc": {
+        "start": {
+          "line": 21,
+          "column": 0
+        },
+        "end": {
+          "line": 21,
+          "column": 39
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   const options = Object.assign({customInspect: false}, options);",
+      "start": 715,
+      "end": 783,
+      "loc": {
+        "start": {
+          "line": 22,
+          "column": 0
+        },
+        "end": {
+          "line": 22,
+          "column": 68
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   const original = `${util.inspect(object, options)}\\n`;",
+      "start": 784,
+      "end": 843,
+      "loc": {
+        "start": {
+          "line": 23,
+          "column": 0
+        },
+        "end": {
+          "line": 23,
+          "column": 59
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   const enhanced = transform(original, { level: 'info' });",
+      "start": 844,
+      "end": 905,
+      "loc": {
+        "start": {
+          "line": 24,
+          "column": 0
+        },
+        "end": {
+          "line": 24,
+          "column": 61
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   stdout.write(transform(enhanced));",
+      "start": 906,
+      "end": 945,
+      "loc": {
+        "start": {
+          "line": 25,
+          "column": 0
+        },
+        "end": {
+          "line": 25,
+          "column": 39
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " }",
+      "start": 946,
+      "end": 950,
+      "loc": {
+        "start": {
+          "line": 26,
+          "column": 0
+        },
+        "end": {
+          "line": 26,
+          "column": 4
+        }
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "type": "CommentLine",
+      "value": " import util from 'util'",
+      "start": 0,
+      "end": 26,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 26
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " import transform from './transform'",
+      "start": 27,
+      "end": 65,
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 0
+        },
+        "end": {
+          "line": 2,
+          "column": 38
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " Console overrides",
+      "start": 67,
+      "end": 87,
+      "loc": {
+        "start": {
+          "line": 4,
+          "column": 0
+        },
+        "end": {
+          "line": 4,
+          "column": 20
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " FYI: Would need to override every console method since the prototype",
+      "start": 88,
+      "end": 159,
+      "loc": {
+        "start": {
+          "line": 5,
+          "column": 0
+        },
+        "end": {
+          "line": 5,
+          "column": 71
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " is bound to the original Console instance, for now we're treating",
+      "start": 160,
+      "end": 228,
+      "loc": {
+        "start": {
+          "line": 6,
+          "column": 0
+        },
+        "end": {
+          "line": 6,
+          "column": 68
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " everything that's not 'error' as 'info'",
+      "start": 229,
+      "end": 271,
+      "loc": {
+        "start": {
+          "line": 7,
+          "column": 0
+        },
+        "end": {
+          "line": 7,
+          "column": 42
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " console.log = (...args) => {",
+      "start": 273,
+      "end": 304,
+      "loc": {
+        "start": {
+          "line": 9,
+          "column": 0
+        },
+        "end": {
+          "line": 9,
+          "column": 31
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   const original = `${util.format.apply(null, args)}\\n`;",
+      "start": 305,
+      "end": 364,
+      "loc": {
+        "start": {
+          "line": 10,
+          "column": 0
+        },
+        "end": {
+          "line": 10,
+          "column": 59
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   const enhanced = transform(original).setLevel('info');",
+      "start": 365,
+      "end": 424,
+      "loc": {
+        "start": {
+          "line": 11,
+          "column": 0
+        },
+        "end": {
+          "line": 11,
+          "column": 59
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   process.stdout.write(enhanced);",
+      "start": 425,
+      "end": 461,
+      "loc": {
+        "start": {
+          "line": 12,
+          "column": 0
+        },
+        "end": {
+          "line": 12,
+          "column": 36
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " }",
+      "start": 462,
+      "end": 466,
+      "loc": {
+        "start": {
+          "line": 13,
+          "column": 0
+        },
+        "end": {
+          "line": 13,
+          "column": 4
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " console.warn = (...args) => {",
+      "start": 468,
+      "end": 500,
+      "loc": {
+        "start": {
+          "line": 15,
+          "column": 0
+        },
+        "end": {
+          "line": 15,
+          "column": 32
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   const original = `${util.format.apply(null, args)}\\n`;",
+      "start": 501,
+      "end": 560,
+      "loc": {
+        "start": {
+          "line": 16,
+          "column": 0
+        },
+        "end": {
+          "line": 16,
+          "column": 59
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   const enhanced = transform(original).setLevel('warn');",
+      "start": 561,
+      "end": 620,
+      "loc": {
+        "start": {
+          "line": 17,
+          "column": 0
+        },
+        "end": {
+          "line": 17,
+          "column": 59
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   process.stdout.write(transform(enhanced));",
+      "start": 621,
+      "end": 668,
+      "loc": {
+        "start": {
+          "line": 18,
+          "column": 0
+        },
+        "end": {
+          "line": 18,
+          "column": 47
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " }",
+      "start": 669,
+      "end": 673,
+      "loc": {
+        "start": {
+          "line": 19,
+          "column": 0
+        },
+        "end": {
+          "line": 19,
+          "column": 4
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " console.dir = (object, options) => {",
+      "start": 675,
+      "end": 714,
+      "loc": {
+        "start": {
+          "line": 21,
+          "column": 0
+        },
+        "end": {
+          "line": 21,
+          "column": 39
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   const options = Object.assign({customInspect: false}, options);",
+      "start": 715,
+      "end": 783,
+      "loc": {
+        "start": {
+          "line": 22,
+          "column": 0
+        },
+        "end": {
+          "line": 22,
+          "column": 68
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   const original = `${util.inspect(object, options)}\\n`;",
+      "start": 784,
+      "end": 843,
+      "loc": {
+        "start": {
+          "line": 23,
+          "column": 0
+        },
+        "end": {
+          "line": 23,
+          "column": 59
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   const enhanced = transform(original, { level: 'info' });",
+      "start": 844,
+      "end": 905,
+      "loc": {
+        "start": {
+          "line": 24,
+          "column": 0
+        },
+        "end": {
+          "line": 24,
+          "column": 61
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "   stdout.write(transform(enhanced));",
+      "start": 906,
+      "end": 945,
+      "loc": {
+        "start": {
+          "line": 25,
+          "column": 0
+        },
+        "end": {
+          "line": 25,
+          "column": 39
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " }",
+      "start": 946,
+      "end": 950,
+      "loc": {
+        "start": {
+          "line": 26,
+          "column": 0
+        },
+        "end": {
+          "line": 26,
+          "column": 4
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "export",
+        "keyword": "export",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "export",
+      "start": 952,
+      "end": 958,
+      "loc": {
+        "start": {
+          "line": 28,
+          "column": 0
+        },
+        "end": {
+          "line": 28,
+          "column": 6
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "default",
+        "keyword": "default",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "default",
+      "start": 959,
+      "end": 966,
+      "loc": {
+        "start": {
+          "line": 28,
+          "column": 7
+        },
+        "end": {
+          "line": 28,
+          "column": 14
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "console",
+      "start": 967,
+      "end": 974,
+      "loc": {
+        "start": {
+          "line": 28,
+          "column": 15
+        },
+        "end": {
+          "line": 28,
+          "column": 22
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "eof",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 975,
+      "end": 975,
+      "loc": {
+        "start": {
+          "line": 29,
+          "column": 0
+        },
+        "end": {
+          "line": 29,
+          "column": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,1681 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "name": "src/config.js",
+    "content": "import path from 'path'\nimport finder from 'find-package-json'\n\nconst filename = (require.main && require.main.filename) || __dirname\nconst projectPath = path.dirname(filename)\nconst userConfig = finder(projectPath).next().value.timber\n\nconst config = {\n  debug_logger: undefined,\n  capture_request_body: false,\n  capture_response_body: false,\n  ...userConfig\n}\n\nexport default config\n",
+    "static": true,
+    "longname": "src/config.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 1,
+    "kind": "variable",
+    "name": "filename",
+    "memberof": "src/config.js",
+    "static": true,
+    "longname": "src/config.js~filename",
+    "access": null,
+    "export": false,
+    "importPath": "timber/src/config.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 4,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 2,
+    "kind": "variable",
+    "name": "projectPath",
+    "memberof": "src/config.js",
+    "static": true,
+    "longname": "src/config.js~projectPath",
+    "access": null,
+    "export": false,
+    "importPath": "timber/src/config.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 3,
+    "kind": "variable",
+    "name": "userConfig",
+    "memberof": "src/config.js",
+    "static": true,
+    "longname": "src/config.js~userConfig",
+    "access": null,
+    "export": false,
+    "importPath": "timber/src/config.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 4,
+    "kind": "variable",
+    "name": "config",
+    "memberof": "src/config.js",
+    "static": true,
+    "longname": "src/config.js~config",
+    "access": null,
+    "export": true,
+    "importPath": "timber/src/config.js",
+    "importStyle": "config",
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "{\"debug_logger\": *, \"capture_request_body\": *, \"capture_response_body\": *, ...userConfig: Object}"
+      ]
+    }
+  },
+  {
+    "__docId__": 5,
+    "kind": "file",
+    "name": "src/connect.js",
+    "content": "'use strict'\n// import https from 'http'\n// import util from 'util'\nimport { Writable } from 'stream'\nimport transform from './utils/transform'\n\nfunction connect(stream, applyBackPressure = false) {\n  // Ensure the stream is Writable\n  if (!(stream instanceof Writable)) {\n    throw new Error('stream must be of type Writable')\n  }\n\n  // Store refs to standard logging utilities\n  const oldOutWrite = process.stdout.write\n  const oldErrWrite = process.stderr.write\n\n  process.stdout.write = (function(write) {\n    return function(message, encoding, fd) {\n      // transform the message string into a schema adhering object\n      const log = transform(message).append({level: 'info'})\n      const written = stream.write(\n        log,\n        encoding,\n        fd\n      )\n      // write.apply(process.stdout, [log]);\n      // write.apply(process.stdout, [JSON.stringify(arguments)])\n      write.apply(process.stdout, [log.message])\n\n      // If we want to allow back pressure, listen for\n      // the drain event and try once the buffer is cleared\n      if (!written && applyBackPressure) {\n        stream.once('drain', () => stream.write(...arguments))\n      }\n\n      return written\n    }\n  })(process.stdout.write)\n\n  process.stderr.write = (function(write) {\n    return function(log, encoding, fd) {\n      const written = stream.write(\n        transform(log).append({ level: 'error' }),\n        encoding,\n        fd\n      )\n      write.apply(process.stderr, arguments)\n\n      // If we want to allow back pressure, listen for\n      // the drain event and try once the buffer is cleared\n      if (!written && applyBackPressure) {\n        stream.once('drain', () => stream.write(...arguments))\n      }\n\n      return written\n    }\n  })(process.stderr.write)\n\n  return function() {\n    process.stdout.write = oldOutWrite\n    process.stderr.write = oldErrWrite\n  }\n}\n\nmodule.exports = connect\n",
+    "static": true,
+    "longname": "src/connect.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 6,
+    "kind": "function",
+    "name": "connect",
+    "memberof": "src/connect.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/connect.js~connect",
+    "access": null,
+    "export": false,
+    "importPath": "timber/src/connect.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "stream",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "applyBackPressure",
+        "optional": true,
+        "types": [
+          "boolean"
+        ],
+        "defaultRaw": false,
+        "defaultValue": "false"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 7,
+    "kind": "file",
+    "name": "src/console.js",
+    "content": "// import util from 'util'\n// import transform from './transform'\n\n// Console overrides\n// FYI: Would need to override every console method since the prototype\n// is bound to the original Console instance, for now we're treating\n// everything that's not 'error' as 'info'\n\n// console.log = (...args) => {\n//   const original = `${util.format.apply(null, args)}\\n`;\n//   const enhanced = transform(original).setLevel('info');\n//   process.stdout.write(enhanced);\n// }\n\n// console.warn = (...args) => {\n//   const original = `${util.format.apply(null, args)}\\n`;\n//   const enhanced = transform(original).setLevel('warn');\n//   process.stdout.write(transform(enhanced));\n// }\n\n// console.dir = (object, options) => {\n//   const options = Object.assign({customInspect: false}, options);\n//   const original = `${util.inspect(object, options)}\\n`;\n//   const enhanced = transform(original, { level: 'info' });\n//   stdout.write(transform(enhanced));\n// }\n\nexport default console\n",
+    "static": true,
+    "longname": "src/console.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 8,
+    "kind": "file",
+    "name": "src/context.js",
+    "content": "// https://github.com/othiym23/node-continuation-local-storage\n// https://github.com/michaelkrone/request-context\n// https://github.com/nodejs/node-v0.x-archive/issues/3733\n",
+    "static": true,
+    "longname": "src/context.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 9,
+    "kind": "file",
+    "name": "src/index.js",
+    "content": "// This is the main file that gets referenced by node\nimport middlewares from './middlewares'\nimport transports from './transports'\nimport connect from './connect'\nimport install from './install'\n\nmodule.exports = {\n  middlewares,\n  transports,\n  connect,\n  install\n}\n",
+    "static": true,
+    "longname": "src/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 10,
+    "kind": "file",
+    "name": "src/install.js",
+    "content": "import connect from './connect'\nimport HTTPSStream from './transports/https'\n\nfunction install({ apiKey, debug_logger, ...options }) {\n  global.debug_logger = debug_logger\n\n  const transportStream = new HTTPSStream(apiKey, options)\n  connect(transportStream)\n}\n\nmodule.exports = install\n",
+    "static": true,
+    "longname": "src/install.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 11,
+    "kind": "function",
+    "name": "install",
+    "memberof": "src/install.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/install.js~install",
+    "access": null,
+    "export": false,
+    "importPath": "timber/src/install.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 4,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "objectPattern",
+        "types": [
+          "{\"apiKey\": *, \"debug_logger\": *, ...options: Object}"
+        ],
+        "defaultRaw": {
+          "apiKey": null,
+          "debug_logger": null,
+          "options": {}
+        },
+        "defaultValue": "{\"apiKey\":null,\"debug_logger\":null,\"options\":{}}"
+      }
+    ]
+  },
+  {
+    "__docId__": 12,
+    "kind": "file",
+    "name": "src/middlewares/express.js",
+    "content": "// import transform from '../transform'\nimport compose from 'composable-middleware'\nimport addRequestId from 'express-request-id'\nimport formatter from '../utils/formatter'\nimport config from '../config'\n\n/**\n * The express middleware takes care of automatically logging\n * each http event with the appropriate context events attached.\n *\n * This middleware is composed of two separate middlewares:\n * - `addRequestId` automatically attaches a unique uuid to every request\n * - `expressMiddleware` automatically logs http events to timber\n *\n * @param {object} req - the request object\n*/\nconst expressMiddleware = compose(\n  addRequestId(),\n  (req, res, next) => {\n    // save a reference of the start time so that we can determine\n    // the amount of time each http request takes\n    req.start_time = (new Date()).getTime()\n\n    // destructure the request object for ease of use\n    const {\n    headers: { host, ...headers },\n      method,\n      id: request_id, path,\n      protocol: scheme,\n      body: reqBody\n  } = req\n\n    // determine the ip address of the client\n    // https://stackoverflow.com/a/10849772\n    const remote_addr = headers['x-forwarded-for'] || req.connection.remoteAddress\n\n    // send the request body if the capture_reequest_body flag is true (off by default)\n    let body = config.capture_request_body ? JSON.stringify(reqBody) : undefined\n\n    // add the http context information to the metadata object\n    const metadata = {\n      context: {\n        http: {\n          method,\n          request_id,\n          remote_addr,\n          path\n        }\n      }\n    }\n\n    // add the http_server_request event to the metadata object\n    metadata.event = {\n      server_side_app: {\n        http_server_request: {\n          method,\n          request_id,\n          path,\n          host,\n          scheme,\n          body\n        }\n      }\n    }\n\n    // add an event to get  triggered when the request finishes\n    // this event will send the http_client_response event to timber\n    req.on('end', () => {\n      // destructure the response object for ease of use\n      const { body: resBody, statusCode: status } = res\n\n      // calculate the duration of the http request\n      const time_ms = ((new Date()).getTime() - req.start_time)\n\n      // send the response body if the capture_response_body flag is true (off by default)\n      body = config.capture_response_body ? JSON.stringify(resBody) : undefined\n\n      // add the http_server_response event to the metadata object\n      metadata.event = {\n        server_side_app: {\n          http_server_response: {\n            request_id,\n            time_ms,\n            status,\n            body\n          }\n        }\n      }\n\n      // log the http response with metadata\n      console.info(formatter(`Outgoing HTTP response ${res.statusCode} in ${time_ms}ms ${req.path}`, metadata))\n    })\n\n    // log the http request with metadata\n    console.info(formatter(`Outgoing HTTP request [${req.method}] ${req.path}`, metadata))\n    next()\n  }\n)\n\nexport default expressMiddleware\n",
+    "static": true,
+    "longname": "src/middlewares/express.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 13,
+    "kind": "variable",
+    "name": "expressMiddleware",
+    "memberof": "src/middlewares/express.js",
+    "static": true,
+    "longname": "src/middlewares/express.js~expressMiddleware",
+    "access": null,
+    "export": true,
+    "importPath": "timber/src/middlewares/express.js",
+    "importStyle": "expressMiddleware",
+    "description": "The express middleware takes care of automatically logging\neach http event with the appropriate context events attached.\n\nThis middleware is composed of two separate middlewares:\n- `addRequestId` automatically attaches a unique uuid to every request\n- `expressMiddleware` automatically logs http events to timber",
+    "lineNumber": 17,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "req",
+        "description": "the request object"
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 14,
+    "kind": "file",
+    "name": "src/middlewares/index.js",
+    "content": "import express from './express'\nimport koa from './koa'\n\nexport default { express, koa }\n",
+    "static": true,
+    "longname": "src/middlewares/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 15,
+    "kind": "file",
+    "name": "src/middlewares/koa.js",
+    "content": "",
+    "static": true,
+    "longname": "src/middlewares/koa.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 16,
+    "kind": "file",
+    "name": "src/schema.js",
+    "content": "// look into https://github.com/jquense/yup or\n// http://epoberezkin.github.io/ajv/#performancefor schema normalization/coercion\n\n\nexport default {\n  $schema: 'https://raw.githubusercontent.com/timberio/log-event-json-schema/1.2.3/schema.json',\n  message: ''\n}\n",
+    "static": true,
+    "longname": "src/schema.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 17,
+    "kind": "file",
+    "name": "src/timber.js",
+    "content": "/**\n *\n */\nclass Timber {\n\n}\n",
+    "static": true,
+    "longname": "src/timber.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 18,
+    "kind": "class",
+    "name": "Timber",
+    "memberof": "src/timber.js",
+    "static": true,
+    "longname": "src/timber.js~Timber",
+    "access": null,
+    "export": false,
+    "importPath": "timber/src/timber.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 4,
+    "interface": false
+  },
+  {
+    "__docId__": 19,
+    "kind": "file",
+    "name": "src/transports/https.js",
+    "content": "'use strict'\n\nimport https from 'https'\nimport { Writable } from 'stream'\n\nconst HOSTNAME = 'logs.timber.io'\nconst PATH = '/frames'\nconst CONTENT_TYPE = 'application/json'\nconst USER_AGENT = `Timber Node HTTPS Stream/${require('../../package.json').version}`\nconst PORT = 443\n\n// For debugging purposes, writes to /timber.log\n// import fs from 'fs';\n// import path from 'path';\n// var logger = fs.createWriteStream('timber.log', { flags: 'a' });\n\n/**\n * A highly efficient stream for sending logs to Timber via HTTPS. It uses batches,\n * keep-alive connections (and in the future maybe msgpack) to deliver logs with high-throughput\n * and little overhead. It also implements the Stream.Writable interface so that it can be treated\n * like a stream. This is beneficial when using something like Morgan, where you can pass a custom stream.\n*/\n\nclass HTTPSStream extends Writable {\n  /**\n    * @constructor\n    * @param {string} apiKey - Timber API Key\n    * @param {Object} [options] - Various options to adjust the stream behavior.\n    * @param {string} [options.flushInterval=1000] - How often, in milliseconds, the messages written to the stream should be delivered to Timber.\n    * @param {string} [options.httpsAgent] - Your own custom https.Agent. We use agents to maintain connection pools and keep the connections alive. This avoids the initial connection overhead every time we want to communicate with Timber. See https.Agent for options.\n  */\n  constructor(apiKey, {\n    flushInterval = 1000,\n    highWaterMark = 5000,\n    httpsAgent,\n    httpsClient,\n    hostName = HOSTNAME,\n    path = PATH,\n    port = PORT\n  } = {}) {\n    // Ensure we use object mode and set a default highWaterMark\n    super({ objectMode: true, highWaterMark })\n\n    this.apiKey = apiKey\n    this.hostName = hostName\n    this.path = path\n    this.port = port\n    this.flushInterval = flushInterval\n    this.httpsAgent = httpsAgent || new https.Agent({\n      keepAlive: true,\n      maxSockets: 3,\n      // Keep the connection open for 1 minute, avoiding reconnects\n      keepAliveMsecs: (1000 * 60)\n    })\n    this.httpsClient = httpsClient || https\n\n    // Cork the stream so we can utilize the internal Buffer. We do *not* want to\n    // send a request for every message. The _flusher will take care of flushing the stream\n    // on an interval.\n    this.cork()\n\n    // In the event the _flusher is not fast enough, we need to monitor the buffer size.\n    // If it fills before the next flush event, we should immediately flush.\n\n    if (flushInterval !== undefined && flushInterval > 0) {\n      this._startFlusher()\n    }\n  }\n\n  /**\n   * _writev is a Stream.Writeable methods that, if present, will write multiple chunks of\n   * data off of the buffer. Defining it means we do not need to define _write.\n   */\n  _writev(chunks, next) {\n    const messages = chunks.map(chunk => chunk.chunk)\n    const body = JSON.stringify(messages)\n    const options = {\n      headers: {\n        'Content-Type': CONTENT_TYPE,\n        'Content-Length': Buffer.byteLength(body),\n        'User-Agent': USER_AGENT\n      },\n      agent: this.httpsAgent,\n      auth: this.apiKey,\n      hostname: this.hostName,\n      port: this.port,\n      path: this.path,\n      method: 'POST'\n    }\n\n    const req = this.httpsClient.request(options, resp => {})\n\n    req.on('error', e => {})\n    req.write(body)\n    req.end()\n    next()\n  }\n\n  _write(chunk, encoding, next) {\n    this._writev([{ chunk, encoding }], next)\n  }\n\n  /**\n   * Expressive function to flush the buffer contents. uncork flushes the buffer and write\n   * the contents. Cork allows us to continue buffering the messages until the next flush.\n   */\n  _flush() {\n    // nextTick is recommended here to allow batching of write calls I think\n    process.nextTick(() => {\n      this.uncork()\n      this.cork()\n    })\n  }\n\n  /**\n   * Interval to call _flush continuously. This ensures log lines get sent on this.flushInterval\n   * intervals.\n   */\n  _startFlusher() {\n    setInterval(() => this._flush(), this.flushInterval)\n  }\n}\n\nmodule.exports = HTTPSStream\n",
+    "static": true,
+    "longname": "src/transports/https.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 20,
+    "kind": "variable",
+    "name": "HOSTNAME",
+    "memberof": "src/transports/https.js",
+    "static": true,
+    "longname": "src/transports/https.js~HOSTNAME",
+    "access": null,
+    "export": false,
+    "importPath": "timber/src/transports/https.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 21,
+    "kind": "variable",
+    "name": "PATH",
+    "memberof": "src/transports/https.js",
+    "static": true,
+    "longname": "src/transports/https.js~PATH",
+    "access": null,
+    "export": false,
+    "importPath": "timber/src/transports/https.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 22,
+    "kind": "variable",
+    "name": "CONTENT_TYPE",
+    "memberof": "src/transports/https.js",
+    "static": true,
+    "longname": "src/transports/https.js~CONTENT_TYPE",
+    "access": null,
+    "export": false,
+    "importPath": "timber/src/transports/https.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 23,
+    "kind": "variable",
+    "name": "USER_AGENT",
+    "memberof": "src/transports/https.js",
+    "static": true,
+    "longname": "src/transports/https.js~USER_AGENT",
+    "access": null,
+    "export": false,
+    "importPath": "timber/src/transports/https.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 24,
+    "kind": "variable",
+    "name": "PORT",
+    "memberof": "src/transports/https.js",
+    "static": true,
+    "longname": "src/transports/https.js~PORT",
+    "access": null,
+    "export": false,
+    "importPath": "timber/src/transports/https.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 10,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "number"
+      ]
+    }
+  },
+  {
+    "__docId__": 25,
+    "kind": "class",
+    "name": "HTTPSStream",
+    "memberof": "src/transports/https.js",
+    "static": true,
+    "longname": "src/transports/https.js~HTTPSStream",
+    "access": null,
+    "export": false,
+    "importPath": "timber/src/transports/https.js",
+    "importStyle": null,
+    "description": "A highly efficient stream for sending logs to Timber via HTTPS. It uses batches,\nkeep-alive connections (and in the future maybe msgpack) to deliver logs with high-throughput\nand little overhead. It also implements the Stream.Writable interface so that it can be treated\nlike a stream. This is beneficial when using something like Morgan, where you can pass a custom stream.",
+    "lineNumber": 24,
+    "interface": false,
+    "extends": [
+      "stream~Writable"
+    ]
+  },
+  {
+    "__docId__": 26,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/transports/https.js~HTTPSStream",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/transports/https.js~HTTPSStream#constructor",
+    "access": null,
+    "description": "",
+    "lineNumber": 32,
+    "unknown": [
+      {
+        "tagName": "@constructor",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "apiKey",
+        "description": "Timber API Key"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options",
+        "description": "Various options to adjust the stream behavior."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "1000",
+        "defaultRaw": 1000,
+        "name": "options.flushInterval",
+        "description": "How often, in milliseconds, the messages written to the stream should be delivered to Timber."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.httpsAgent",
+        "description": "Your own custom https.Agent. We use agents to maintain connection pools and keep the connections alive. This avoids the initial connection overhead every time we want to communicate with Timber. See https.Agent for options."
+      }
+    ]
+  },
+  {
+    "__docId__": 27,
+    "kind": "member",
+    "name": "apiKey",
+    "memberof": "src/transports/https.js~HTTPSStream",
+    "static": false,
+    "longname": "src/transports/https.js~HTTPSStream#apiKey",
+    "access": null,
+    "description": null,
+    "lineNumber": 44,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 28,
+    "kind": "member",
+    "name": "hostName",
+    "memberof": "src/transports/https.js~HTTPSStream",
+    "static": false,
+    "longname": "src/transports/https.js~HTTPSStream#hostName",
+    "access": null,
+    "description": null,
+    "lineNumber": 45,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 29,
+    "kind": "member",
+    "name": "path",
+    "memberof": "src/transports/https.js~HTTPSStream",
+    "static": false,
+    "longname": "src/transports/https.js~HTTPSStream#path",
+    "access": null,
+    "description": null,
+    "lineNumber": 46,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 30,
+    "kind": "member",
+    "name": "port",
+    "memberof": "src/transports/https.js~HTTPSStream",
+    "static": false,
+    "longname": "src/transports/https.js~HTTPSStream#port",
+    "access": null,
+    "description": null,
+    "lineNumber": 47,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 31,
+    "kind": "member",
+    "name": "flushInterval",
+    "memberof": "src/transports/https.js~HTTPSStream",
+    "static": false,
+    "longname": "src/transports/https.js~HTTPSStream#flushInterval",
+    "access": null,
+    "description": null,
+    "lineNumber": 48,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 32,
+    "kind": "member",
+    "name": "httpsAgent",
+    "memberof": "src/transports/https.js~HTTPSStream",
+    "static": false,
+    "longname": "src/transports/https.js~HTTPSStream#httpsAgent",
+    "access": null,
+    "description": null,
+    "lineNumber": 49,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 33,
+    "kind": "member",
+    "name": "httpsClient",
+    "memberof": "src/transports/https.js~HTTPSStream",
+    "static": false,
+    "longname": "src/transports/https.js~HTTPSStream#httpsClient",
+    "access": null,
+    "description": null,
+    "lineNumber": 55,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 34,
+    "kind": "method",
+    "name": "_writev",
+    "memberof": "src/transports/https.js~HTTPSStream",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/transports/https.js~HTTPSStream#_writev",
+    "access": null,
+    "description": "_writev is a Stream.Writeable methods that, if present, will write multiple chunks of\ndata off of the buffer. Defining it means we do not need to define _write.",
+    "lineNumber": 74,
+    "params": [
+      {
+        "name": "chunks",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "next",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 35,
+    "kind": "method",
+    "name": "_write",
+    "memberof": "src/transports/https.js~HTTPSStream",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/transports/https.js~HTTPSStream#_write",
+    "access": null,
+    "description": null,
+    "lineNumber": 99,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "chunk",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "encoding",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "next",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 36,
+    "kind": "method",
+    "name": "_flush",
+    "memberof": "src/transports/https.js~HTTPSStream",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/transports/https.js~HTTPSStream#_flush",
+    "access": null,
+    "description": "Expressive function to flush the buffer contents. uncork flushes the buffer and write\nthe contents. Cork allows us to continue buffering the messages until the next flush.",
+    "lineNumber": 107,
+    "params": []
+  },
+  {
+    "__docId__": 37,
+    "kind": "method",
+    "name": "_startFlusher",
+    "memberof": "src/transports/https.js~HTTPSStream",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/transports/https.js~HTTPSStream#_startFlusher",
+    "access": null,
+    "description": "Interval to call _flush continuously. This ensures log lines get sent on this.flushInterval\nintervals.",
+    "lineNumber": 119,
+    "params": []
+  },
+  {
+    "__docId__": 38,
+    "kind": "file",
+    "name": "src/transports/index.js",
+    "content": "import Https from './https'\nimport Network from './network'\n\nmodule.exports = { Https, Network }\n",
+    "static": true,
+    "longname": "src/transports/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 39,
+    "kind": "file",
+    "name": "src/utils/debug.js",
+    "content": "import util from 'util'\n\n/**\n * Convenience function for retrieving a reference to\n * the debug_logger stream.\n *\n * @private\n */\nexport const debug_logger = () => global.debug_logger\n\n/**\n * Convenience function for logging debug messages\n * to the configured debug_logger\n *\n * This works much like the builtin console.log function,\n * accepting any amount of mixed arguments and concatenating\n * them into a single string to be sent to the debug_logger stream\n *\n * @private\n * @param {...*} args\n */\nconst debug = (...args) => {\n  if (debug_logger()) {\n    debug_logger().write(`${util.format.apply(null, args)}\\n`)\n  }\n}\n\nexport default debug\n",
+    "static": true,
+    "longname": "src/utils/debug.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 40,
+    "kind": "function",
+    "name": "debug_logger",
+    "memberof": "src/utils/debug.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/utils/debug.js~debug_logger",
+    "access": "private",
+    "export": true,
+    "importPath": "timber/src/utils/debug.js",
+    "importStyle": "{debug_logger}",
+    "description": "Convenience function for retrieving a reference to\nthe debug_logger stream.",
+    "lineNumber": 9,
+    "params": []
+  },
+  {
+    "__docId__": 41,
+    "kind": "function",
+    "name": "debug",
+    "memberof": "src/utils/debug.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/utils/debug.js~debug",
+    "access": "private",
+    "export": true,
+    "importPath": "timber/src/utils/debug.js",
+    "importStyle": "debug",
+    "description": "Convenience function for logging debug messages\nto the configured debug_logger\n\nThis works much like the builtin console.log function,\naccepting any amount of mixed arguments and concatenating\nthem into a single string to be sent to the debug_logger stream",
+    "lineNumber": 22,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "args",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 42,
+    "kind": "file",
+    "name": "src/utils/formatter.js",
+    "content": "export const metadata_delimiter = '@metadata'\n\nconst format = (message, metadata) => {\n  const stringify = obj => {\n    return JSON.stringify(obj || {})\n  }\n\n  return `${message} ${metadata_delimiter} ${stringify(metadata)}`\n}\n\nexport default format\n",
+    "static": true,
+    "longname": "src/utils/formatter.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 43,
+    "kind": "variable",
+    "name": "metadata_delimiter",
+    "memberof": "src/utils/formatter.js",
+    "static": true,
+    "longname": "src/utils/formatter.js~metadata_delimiter",
+    "access": null,
+    "export": true,
+    "importPath": "timber/src/utils/formatter.js",
+    "importStyle": "{metadata_delimiter}",
+    "description": null,
+    "lineNumber": 1,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 44,
+    "kind": "function",
+    "name": "format",
+    "memberof": "src/utils/formatter.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/utils/formatter.js~format",
+    "access": null,
+    "export": true,
+    "importPath": "timber/src/utils/formatter.js",
+    "importStyle": "format",
+    "description": null,
+    "lineNumber": 3,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "message",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "metadata",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 45,
+    "kind": "file",
+    "name": "src/utils/transform.js",
+    "content": "import schema from '../schema'\nimport { metadata_delimiter } from './formatter'\n/**\n * Transforms a log message or object into a format\n * that timber expects, ex 'log message' @timber.io {\"dt\": \"…\", \"level\": \"info\", \"context\": {…}}\n * see https://github.com/timberio/log-event-json-schema for specs\n */\nexport default function transform(raw) {\n  const [message, rawContext] = raw.split(metadata_delimiter)\n\n  const context = rawContext ? JSON.parse(rawContext) : {}\n\n  const log = {\n    ...schema,\n    message: typeof message === 'string' ? message : JSON.stringify(message),\n    dt: new Date(),\n    ...context\n  }\n\n  // append data to the end of the log object\n  log.append = data => ({ ...log, ...data })\n\n  // convenience function for setting the log's level\n  log.setLevel = level => log.append({ level })\n\n  return log\n}\n\n",
+    "static": true,
+    "longname": "src/utils/transform.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 46,
+    "kind": "function",
+    "name": "transform",
+    "memberof": "src/utils/transform.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/utils/transform.js~transform",
+    "access": null,
+    "export": true,
+    "importPath": "timber/src/utils/transform.js",
+    "importStyle": "transform",
+    "description": "Transforms a log message or object into a format\nthat timber expects, ex 'log message' @timber.io {\"dt\": \"…\", \"level\": \"info\", \"context\": {…}}\nsee https://github.com/timberio/log-event-json-schema for specs",
+    "lineNumber": 8,
+    "params": [
+      {
+        "name": "raw",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 48,
+    "kind": "external",
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 49,
+    "kind": "external",
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 50,
+    "kind": "external",
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 51,
+    "kind": "external",
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 52,
+    "kind": "external",
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 53,
+    "kind": "external",
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 54,
+    "kind": "external",
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 55,
+    "kind": "external",
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 56,
+    "kind": "external",
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 57,
+    "kind": "external",
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 58,
+    "kind": "external",
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 59,
+    "kind": "external",
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 60,
+    "kind": "external",
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 61,
+    "kind": "external",
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 62,
+    "kind": "external",
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 63,
+    "kind": "external",
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 64,
+    "kind": "external",
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 65,
+    "kind": "external",
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 66,
+    "kind": "external",
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 67,
+    "kind": "external",
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 68,
+    "kind": "external",
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 69,
+    "kind": "external",
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 70,
+    "kind": "external",
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 71,
+    "kind": "external",
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 72,
+    "kind": "external",
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 73,
+    "kind": "external",
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 74,
+    "kind": "external",
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 75,
+    "kind": "external",
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 76,
+    "kind": "external",
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 77,
+    "kind": "external",
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 78,
+    "kind": "external",
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 79,
+    "kind": "external",
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 80,
+    "kind": "external",
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 81,
+    "kind": "external",
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 82,
+    "kind": "external",
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 83,
+    "kind": "external",
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 84,
+    "kind": "external",
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 85,
+    "kind": "external",
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 86,
+    "kind": "external",
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 87,
+    "kind": "external",
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 88,
+    "kind": "external",
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 89,
+    "kind": "external",
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 90,
+    "kind": "external",
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 91,
+    "kind": "external",
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 92,
+    "kind": "external",
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 93,
+    "kind": "external",
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 94,
+    "kind": "external",
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
+    "access": null,
+    "description": "",
+    "lineNumber": 193,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 96,
+    "kind": "external",
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 97,
+    "kind": "external",
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 98,
+    "kind": "external",
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 99,
+    "kind": "external",
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 100,
+    "kind": "external",
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 101,
+    "kind": "external",
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 102,
+    "kind": "external",
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 103,
+    "kind": "external",
+    "name": "AudioContext",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~AudioContext",
+    "access": null,
+    "description": "",
+    "lineNumber": 34,
+    "builtinExternal": true
+  }
+]
