@@ -12,7 +12,7 @@ class Event {
    */
   required(attributes) {
     for (const attribute in attributes) {
-      if (!attributes[attribute]) {
+      if (!attributes[attribute] && attributes[attribute] !== 0) {
         throw new Error(`${attribute} is required`)
       }
     }
