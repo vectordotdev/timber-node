@@ -4,6 +4,7 @@ import addRequestId from 'express-request-id'
 import formatter from '../utils/formatter'
 import config from '../config'
 import HTTP from '../contexts/http'
+import HTTPServerRequest from '../events/http_server_request'
 
 /**
  * The express middleware takes care of automatically logging
@@ -55,19 +56,17 @@ const expressMiddleware = compose(
       }
     }
 
+    const http_server_request = new HTTPServerRequest({
+      body,
+      host,
+      path,
+      request_id,
+      scheme,
+      method
+    })
+
     // add the http_server_request event to the metadata object
-    metadata.event = {
-      server_side_app: {
-        http_server_request: {
-          method,
-          request_id,
-          path,
-          host,
-          scheme,
-          body
-        }
-      }
-    }
+    metadata.event = { server_side_app: { http_server_request } }
 
     // add an event to get  triggered when the request finishes
     // this event will send the http_client_response event to timber
