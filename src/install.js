@@ -1,5 +1,4 @@
 import connect from './connect'
-import { setGlobals } from './config'
 import debug from './utils/debug'
 
 /**
@@ -7,12 +6,8 @@ import debug from './utils/debug'
  *
  * @param {Stream} transport - the stream that all logs will go through
  */
-function install({ transport, debug_logger }) {
+function install({ transport }) {
   if (!transport) throw Error('No transport was provided.')
-
-  // setup the debug logger
-  setGlobals({ debug_logger })
-  debug('debug logger installed')
 
   // connect our transport stream to stdout
   connect(transport)

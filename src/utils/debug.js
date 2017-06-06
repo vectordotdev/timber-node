@@ -1,5 +1,5 @@
 import util from 'util'
-import { globals } from '../config'
+import config from '../config'
 
 /**
  * Convenience function for retrieving a reference to
@@ -7,7 +7,14 @@ import { globals } from '../config'
  *
  * @private
  */
-export const debug_logger = () => globals().debug_logger
+export const debug_logger = () => config.debug_logger
+
+/**
+ * Generate a timestamp string to use in debug lines
+ *
+ * @private
+ */
+const timestamp = () => new Date().toISOString()
 
 /**
  * Convenience function for logging debug messages
@@ -22,7 +29,9 @@ export const debug_logger = () => globals().debug_logger
  */
 const debug = (...args) => {
   if (debug_logger()) {
-    debug_logger().write(`${util.format.apply(null, args)}\n`)
+    debug_logger().write(
+      `Timber [${timestamp()}]: ${util.format.apply(null, args)}\n`
+    )
   }
 }
 

@@ -6,6 +6,7 @@ const projectPath = path.dirname(filename)
 const userConfig = finder(projectPath).next().value.timber
 
 const config = {
+  debug_logger: undefined,
   capture_request_body: false,
   capture_response_body: false,
   ...userConfig,
