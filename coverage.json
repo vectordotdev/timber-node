@@ -1,8 +1,58 @@
 {
-  "coverage": "40%",
-  "expectCount": 5,
-  "actualCount": 2,
+  "coverage": "26.47%",
+  "expectCount": 34,
+  "actualCount": 9,
   "files": {
+    "src/context.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/event.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/contexts/http.js": {
+      "expectCount": 7,
+      "actualCount": 1,
+      "undocumentLines": [
+        11,
+        9,
+        18,
+        19,
+        20,
+        21
+      ]
+    },
+    "src/events/http_server_request.js": {
+      "expectCount": 12,
+      "actualCount": 2,
+      "undocumentLines": [
+        40,
+        41,
+        42,
+        8,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "src/events/http_server_response.js": {
+      "expectCount": 8,
+      "actualCount": 2,
+      "undocumentLines": [
+        30,
+        31,
+        37,
+        32,
+        33,
+        34
+      ]
+    },
     "src/config.js": {
       "expectCount": 1,
       "actualCount": 0,

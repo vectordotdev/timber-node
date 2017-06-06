@@ -33,7 +33,8 @@
     "postcoveralls": "rimraf coverage",
     "prepublish": "npm run build",
     "postpublish": "git push origin master --follow-tags",
-    "deploy": "git pull --rebase origin master && git push origin master"
+    "deploy": "git pull --rebase origin master && git push origin master",
+    "deploy:docs": "gh-pages -d docs"
   },
   "bugs": {
     "url": "https://github.com/timberio/timber-node/issues"
@@ -66,6 +67,7 @@
     "eslint": "1.8.0",
     "eslint-config-xo": "0.7.1",
     "eslint-plugin-babel": "2.1.1",
+    "gh-pages": "^1.0.0",
     "jest-cli": "^18.1.0",
     "rimraf": "2.4.3",
     "winston": "^2.3.1"

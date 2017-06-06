@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/utils/formatter.js | API Document</title>
+  <title data-ice="title">src/contexts/http.js | API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -46,18 +46,32 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/utils/formatter.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">export const metadata_delimiter = &apos;@metadata&apos;
+<div class="content" data-ice="content"><h1 data-ice="title">src/contexts/http.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Context from &apos;../context&apos;
 
-const format = (message, metadata) =&gt; {
-  const stringify = obj =&gt; {
-    return JSON.stringify(obj || {})
+/**
+ * The HTTP context adds data about the current HTTP request being processed
+ * to your logs.This allows you to tail and filter by this data.
+ */
+class HTTP extends Context {
+
+  static keyspace = &apos;http&apos;
+
+  constructor({ method, path, remote_addr, request_id } = {}) {
+    super()
+
+    // check for required attributes
+    this.required({ method, path })
+
+    // bind context attributes to the class
+    this.method = method
+    this.path = path
+    this.remote_addr = remote_addr
+    this.request_id = request_id
   }
-
-  return `${message} ${metadata_delimiter} ${stringify(metadata)}`
 }
 
-export default format
+export default HTTP
 </code></pre>
 
 </div>

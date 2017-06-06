@@ -32,7 +32,12 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/context.js~Context.html">Context</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/event.js~Event.html">Event</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">contexts</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/contexts/http.js~HTTP.html">HTTP</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">events</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_server_request.js~HTTPServerRequest.html">HTTPServerRequest</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_server_response.js~HTTPServerResponse.html">HTTPServerResponse</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-expressMiddleware">expressMiddleware</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-format">format</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-transform">transform</a></span></span></li>
@@ -47,6 +52,9 @@ import compose from &apos;composable-middleware&apos;
 import addRequestId from &apos;express-request-id&apos;
 import formatter from &apos;../utils/formatter&apos;
 import config from &apos;../config&apos;
+import HTTP from &apos;../contexts/http&apos;
+import HTTPServerRequest from &apos;../events/http_server_request&apos;
+import HTTPServerResponse from &apos;../events/http_server_response&apos;
 
 /**
  * The express middleware takes care of automatically logging
@@ -57,6 +65,8 @@ import config from &apos;../config&apos;
  * - `expressMiddleware` automatically logs http events to timber
  *
  * @param {object} req - the request object
+ * @param {object} res - the response object
+ * @param {function} next - the next middleware to run
 */
 const expressMiddleware = compose(
   addRequestId(),
@@ -67,12 +77,12 @@ const expressMiddleware = compose(
 
     // destructure the request object for ease of use
     const {
-    headers: { host, ...headers },
+      headers: { host, ...headers },
       method,
       id: request_id, path,
       protocol: scheme,
       body: reqBody
-  } = req
+    } = req
 
     // determine the ip address of the client
     // https://stackoverflow.com/a/10849772
@@ -81,31 +91,32 @@ const expressMiddleware = compose(
     // send the request body if the capture_reequest_body flag is true (off by default)
     let body = config.capture_request_body ? JSON.stringify(reqBody) : undefined
 
+    // create the HTTP context item
+    const http = new HTTP({
+      method,
+      path,
+      request_id,
+      remote_addr
+    })
+
     // add the http context information to the metadata object
     const metadata = {
       context: {
-        http: {
-          method,
-          request_id,
-          remote_addr,
-          path
-        }
+        http
       }
     }
 
+    const http_server_request = new HTTPServerRequest({
+      body,
+      host,
+      path,
+      request_id,
+      scheme,
+      method
+    })
+
     // add the http_server_request event to the metadata object
-    metadata.event = {
-      server_side_app: {
-        http_server_request: {
-          method,
-          request_id,
-          path,
-          host,
-          scheme,
-          body
-        }
-      }
-    }
+    metadata.event = { server_side_app: { http_server_request } }
 
     // add an event to get  triggered when the request finishes
     // this event will send the http_client_response event to timber
@@ -119,24 +130,22 @@ const expressMiddleware = compose(
       // send the response body if the capture_response_body flag is true (off by default)
       body = config.capture_response_body ? JSON.stringify(resBody) : undefined
 
+      const http_server_response = new HTTPServerResponse({
+        request_id,
+        time_ms,
+        status,
+        body
+      })
+
       // add the http_server_response event to the metadata object
-      metadata.event = {
-        server_side_app: {
-          http_server_response: {
-            request_id,
-            time_ms,
-            status,
-            body
-          }
-        }
-      }
+      metadata.event = { server_side_app: { http_server_response } }
 
       // log the http response with metadata
-      console.info(formatter(`Outgoing HTTP response ${res.statusCode} in ${time_ms}ms ${req.path}`, metadata))
+      console.info(formatter(http_server_response.message(), metadata))
     })
 
     // log the http request with metadata
-    console.info(formatter(`Outgoing HTTP request [${req.method}] ${req.path}`, metadata))
+    console.info(formatter(http_server_request.message(), metadata))
     next()
   }
 )
