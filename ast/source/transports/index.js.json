@@ -70,9 +70,9 @@
                   "line": 1,
                   "column": 12
                 },
-                "identifierName": "Https"
+                "identifierName": "HTTPS"
               },
-              "name": "Https"
+              "name": "HTTPS"
             }
           }
         ],
@@ -221,9 +221,9 @@
                       "line": 3,
                       "column": 24
                     },
-                    "identifierName": "Https"
+                    "identifierName": "HTTPS"
                   },
-                  "name": "Https"
+                  "name": "HTTPS"
                 },
                 "value": {
                   "type": "Identifier",
@@ -238,9 +238,9 @@
                       "line": 3,
                       "column": 24
                     },
-                    "identifierName": "Https"
+                    "identifierName": "HTTPS"
                   },
-                  "name": "Https"
+                  "name": "HTTPS"
                 },
                 "extra": {
                   "shorthand": true
@@ -295,7 +295,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "Https",
+      "value": "HTTPS",
       "start": 7,
       "end": 12,
       "loc": {
@@ -504,7 +504,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "Https",
+      "value": "HTTPS",
       "start": 48,
       "end": 53,
       "loc": {

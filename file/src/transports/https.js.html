@@ -34,11 +34,13 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/context.js~Context.html">Context</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/event.js~Event.html">Event</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-install">install</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">contexts</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/contexts/http.js~HTTP.html">HTTP</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">events</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_server_request.js~HTTPServerRequest.html">HTTPServerRequest</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_server_response.js~HTTPServerResponse.html">HTTPServerResponse</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-expressMiddleware">expressMiddleware</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">transports</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html">HTTPS</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-format">format</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-transform">transform</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-metadata_delimiter">metadata_delimiter</a></span></span></li>
@@ -47,15 +49,15 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/transports/https.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use strict&apos;
-
-import https from &apos;https&apos;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import https from &apos;https&apos;
 import { Writable } from &apos;stream&apos;
+import debug from &apos;../utils/debug&apos;
 
 const HOSTNAME = &apos;logs.timber.io&apos;
 const PATH = &apos;/frames&apos;
 const CONTENT_TYPE = &apos;application/json&apos;
-const USER_AGENT = `Timber Node HTTPS Stream/${require(&apos;../../package.json&apos;).version}`
+const USER_AGENT = `Timber Node HTTPS Stream/${require(&apos;../../package.json&apos;)
+  .version}`
 const PORT = 443
 
 // For debugging purposes, writes to /timber.log
@@ -68,39 +70,43 @@ const PORT = 443
  * keep-alive connections (and in the future maybe msgpack) to deliver logs with high-throughput
  * and little overhead. It also implements the Stream.Writable interface so that it can be treated
  * like a stream. This is beneficial when using something like Morgan, where you can pass a custom stream.
-*/
-
-class HTTPSStream extends Writable {
+ */
+class HTTPS extends Writable {
   /**
-    * @constructor
-    * @param {string} apiKey - Timber API Key
-    * @param {Object} [options] - Various options to adjust the stream behavior.
-    * @param {string} [options.flushInterval=1000] - How often, in milliseconds, the messages written to the stream should be delivered to Timber.
-    * @param {string} [options.httpsAgent] - Your own custom https.Agent. We use agents to maintain connection pools and keep the connections alive. This avoids the initial connection overhead every time we want to communicate with Timber. See https.Agent for options.
-  */
-  constructor(apiKey, {
-    flushInterval = 1000,
-    highWaterMark = 5000,
-    httpsAgent,
-    httpsClient,
-    hostName = HOSTNAME,
-    path = PATH,
-    port = PORT
-  } = {}) {
+   * @param {string} apiKey - Timber API Key
+   * @param {Object} [options] - Various options to adjust the stream behavior.
+   * @param {string} [options.flushInterval=1000] - How often, in milliseconds, the messages written to the stream should be delivered to Timber.
+   * @param {string} [options.httpsAgent] - Your own custom https.Agent. We use agents to maintain connection pools and keep the connections alive. This avoids the initial connection overhead every time we want to communicate with Timber. See https.Agent for options.
+   */
+  constructor(
+    apiKey,
+    {
+      flushInterval = 1000,
+      highWaterMark = 5000,
+      httpsAgent,
+      httpsClient,
+      hostName = HOSTNAME,
+      path = PATH,
+      port = PORT,
+    } = {}
+  ) {
     // Ensure we use object mode and set a default highWaterMark
     super({ objectMode: true, highWaterMark })
+    debug(&apos;Initializing HTTPS transport stream&apos;)
 
     this.apiKey = apiKey
     this.hostName = hostName
     this.path = path
     this.port = port
     this.flushInterval = flushInterval
-    this.httpsAgent = httpsAgent || new https.Agent({
-      keepAlive: true,
-      maxSockets: 3,
-      // Keep the connection open for 1 minute, avoiding reconnects
-      keepAliveMsecs: (1000 * 60)
-    })
+    this.httpsAgent =
+      httpsAgent ||
+      new https.Agent({
+        keepAlive: true,
+        maxSockets: 3,
+        // Keep the connection open for 1 minute, avoiding reconnects
+        keepAliveMsecs: 1000 * 60,
+      })
     this.httpsClient = httpsClient || https
 
     // Cork the stream so we can utilize the internal Buffer. We do *not* want to
@@ -127,19 +133,19 @@ class HTTPSStream extends Writable {
       headers: {
         &apos;Content-Type&apos;: CONTENT_TYPE,
         &apos;Content-Length&apos;: Buffer.byteLength(body),
-        &apos;User-Agent&apos;: USER_AGENT
+        &apos;User-Agent&apos;: USER_AGENT,
       },
       agent: this.httpsAgent,
       auth: this.apiKey,
       hostname: this.hostName,
       port: this.port,
       path: this.path,
-      method: &apos;POST&apos;
+      method: &apos;POST&apos;,
     }
 
-    const req = this.httpsClient.request(options, resp =&gt; {})
+    const req = this.httpsClient.request(options, () =&gt; {})
 
-    req.on(&apos;error&apos;, e =&gt; {})
+    req.on(&apos;error&apos;, () =&gt; {})
     req.write(body)
     req.end()
     next()
@@ -170,7 +176,7 @@ class HTTPSStream extends Writable {
   }
 }
 
-module.exports = HTTPSStream
+export default HTTPS
 </code></pre>
 
 </div>

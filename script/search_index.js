@@ -18,6 +18,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "timber/src/transports/https.js~https",
+    "class/src/transports/https.js~HTTPS.html",
+    "<span>HTTPS</span> <span class=\"search-result-import-path\">timber/src/transports/https.js</span>",
+    "class"
+  ],
+  [
     "timber/src/events/http_server_request.js~httpserverrequest",
     "class/src/events/http_server_request.js~HTTPServerRequest.html",
     "<span>HTTPServerRequest</span> <span class=\"search-result-import-path\">timber/src/events/http_server_request.js</span>",
@@ -45,6 +51,12 @@ window.esdocSearchIndex = [
     "timber/src/utils/formatter.js~format",
     "function/index.html#static-function-format",
     "<span>format</span> <span class=\"search-result-import-path\">timber/src/utils/formatter.js</span>",
+    "function"
+  ],
+  [
+    "timber/src/install.js~install",
+    "function/index.html#static-function-install",
+    "<span>install</span> <span class=\"search-result-import-path\">timber/src/install.js</span>",
     "function"
   ],
   [
@@ -628,6 +640,54 @@ window.esdocSearchIndex = [
     "file/src/transports/https.js.html",
     "src/transports/https.js",
     "file"
+  ],
+  [
+    "src/transports/https.js~https#apikey",
+    "class/src/transports/https.js~HTTPS.html#instance-member-apiKey",
+    "src/transports/https.js~HTTPS#apiKey",
+    "member"
+  ],
+  [
+    "src/transports/https.js~https#constructor",
+    "class/src/transports/https.js~HTTPS.html#instance-constructor-constructor",
+    "src/transports/https.js~HTTPS#constructor",
+    "method"
+  ],
+  [
+    "src/transports/https.js~https#flushinterval",
+    "class/src/transports/https.js~HTTPS.html#instance-member-flushInterval",
+    "src/transports/https.js~HTTPS#flushInterval",
+    "member"
+  ],
+  [
+    "src/transports/https.js~https#hostname",
+    "class/src/transports/https.js~HTTPS.html#instance-member-hostName",
+    "src/transports/https.js~HTTPS#hostName",
+    "member"
+  ],
+  [
+    "src/transports/https.js~https#httpsagent",
+    "class/src/transports/https.js~HTTPS.html#instance-member-httpsAgent",
+    "src/transports/https.js~HTTPS#httpsAgent",
+    "member"
+  ],
+  [
+    "src/transports/https.js~https#httpsclient",
+    "class/src/transports/https.js~HTTPS.html#instance-member-httpsClient",
+    "src/transports/https.js~HTTPS#httpsClient",
+    "member"
+  ],
+  [
+    "src/transports/https.js~https#path",
+    "class/src/transports/https.js~HTTPS.html#instance-member-path",
+    "src/transports/https.js~HTTPS#path",
+    "member"
+  ],
+  [
+    "src/transports/https.js~https#port",
+    "class/src/transports/https.js~HTTPS.html#instance-member-port",
+    "src/transports/https.js~HTTPS#port",
+    "member"
   ],
   [
     "src/transports/index.js",

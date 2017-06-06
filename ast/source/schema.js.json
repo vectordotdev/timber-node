@@ -1,7 +1,7 @@
 {
   "type": "File",
   "start": 0,
-  "end": 261,
+  "end": 265,
   "loc": {
     "start": {
       "line": 1,
@@ -15,7 +15,7 @@
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 261,
+    "end": 265,
     "loc": {
       "start": {
         "line": 1,
@@ -30,11 +30,11 @@
     "body": [
       {
         "type": "ExportDefaultDeclaration",
-        "start": 131,
-        "end": 260,
+        "start": 130,
+        "end": 264,
         "loc": {
           "start": {
-            "line": 5,
+            "line": 4,
             "column": 0
           },
           "end": {
@@ -44,11 +44,11 @@
         },
         "declaration": {
           "type": "ObjectExpression",
-          "start": 146,
-          "end": 260,
+          "start": 145,
+          "end": 264,
           "loc": {
             "start": {
-              "line": 5,
+              "line": 4,
               "column": 15
             },
             "end": {
@@ -59,16 +59,16 @@
           "properties": [
             {
               "type": "ObjectProperty",
-              "start": 150,
-              "end": 243,
+              "start": 149,
+              "end": 246,
               "loc": {
                 "start": {
-                  "line": 6,
+                  "line": 5,
                   "column": 2
                 },
                 "end": {
                   "line": 6,
-                  "column": 95
+                  "column": 88
                 }
               },
               "method": false,
@@ -76,15 +76,15 @@
               "computed": false,
               "key": {
                 "type": "Identifier",
-                "start": 150,
-                "end": 157,
+                "start": 149,
+                "end": 156,
                 "loc": {
                   "start": {
-                    "line": 6,
+                    "line": 5,
                     "column": 2
                   },
                   "end": {
-                    "line": 6,
+                    "line": 5,
                     "column": 9
                   },
                   "identifierName": "$schema"
@@ -94,16 +94,16 @@
               },
               "value": {
                 "type": "StringLiteral",
-                "start": 159,
-                "end": 243,
+                "start": 162,
+                "end": 246,
                 "loc": {
                   "start": {
                     "line": 6,
-                    "column": 11
+                    "column": 4
                   },
                   "end": {
                     "line": 6,
-                    "column": 95
+                    "column": 88
                   }
                 },
                 "extra": {
@@ -116,8 +116,8 @@
             },
             {
               "type": "ObjectProperty",
-              "start": 247,
-              "end": 258,
+              "start": 250,
+              "end": 261,
               "loc": {
                 "start": {
                   "line": 7,
@@ -133,8 +133,8 @@
               "computed": false,
               "key": {
                 "type": "Identifier",
-                "start": 247,
-                "end": 254,
+                "start": 250,
+                "end": 257,
                 "loc": {
                   "start": {
                     "line": 7,
@@ -150,8 +150,8 @@
               },
               "value": {
                 "type": "StringLiteral",
-                "start": 256,
-                "end": 258,
+                "start": 259,
+                "end": 261,
                 "loc": {
                   "start": {
                     "line": 7,
@@ -326,15 +326,15 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 131,
-      "end": 137,
+      "start": 130,
+      "end": 136,
       "loc": {
         "start": {
-          "line": 5,
+          "line": 4,
           "column": 0
         },
         "end": {
-          "line": 5,
+          "line": 4,
           "column": 6
         }
       }
@@ -354,15 +354,15 @@
         "updateContext": null
       },
       "value": "default",
-      "start": 138,
-      "end": 145,
+      "start": 137,
+      "end": 144,
       "loc": {
         "start": {
-          "line": 5,
+          "line": 4,
           "column": 7
         },
         "end": {
-          "line": 5,
+          "line": 4,
           "column": 14
         }
       }
@@ -379,15 +379,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 146,
-      "end": 147,
+      "start": 145,
+      "end": 146,
       "loc": {
         "start": {
-          "line": 5,
+          "line": 4,
           "column": 15
         },
         "end": {
-          "line": 5,
+          "line": 4,
           "column": 16
         }
       }
@@ -405,15 +405,15 @@
         "binop": null
       },
       "value": "$schema",
-      "start": 150,
-      "end": 157,
+      "start": 149,
+      "end": 156,
       "loc": {
         "start": {
-          "line": 6,
+          "line": 5,
           "column": 2
         },
         "end": {
-          "line": 6,
+          "line": 5,
           "column": 9
         }
       }
@@ -431,15 +431,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 157,
-      "end": 158,
+      "start": 156,
+      "end": 157,
       "loc": {
         "start": {
-          "line": 6,
+          "line": 5,
           "column": 9
         },
         "end": {
-          "line": 6,
+          "line": 5,
           "column": 10
         }
       }
@@ -458,16 +458,16 @@
         "updateContext": null
       },
       "value": "https://raw.githubusercontent.com/timberio/log-event-json-schema/1.2.3/schema.json",
-      "start": 159,
-      "end": 243,
+      "start": 162,
+      "end": 246,
       "loc": {
         "start": {
           "line": 6,
-          "column": 11
+          "column": 4
         },
         "end": {
           "line": 6,
-          "column": 95
+          "column": 88
         }
       }
     },
@@ -484,16 +484,16 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 243,
-      "end": 244,
+      "start": 246,
+      "end": 247,
       "loc": {
         "start": {
           "line": 6,
-          "column": 95
+          "column": 88
         },
         "end": {
           "line": 6,
-          "column": 96
+          "column": 89
         }
       }
     },
@@ -510,8 +510,8 @@
         "binop": null
       },
       "value": "message",
-      "start": 247,
-      "end": 254,
+      "start": 250,
+      "end": 257,
       "loc": {
         "start": {
           "line": 7,
@@ -536,8 +536,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 254,
-      "end": 255,
+      "start": 257,
+      "end": 258,
       "loc": {
         "start": {
           "line": 7,
@@ -563,8 +563,8 @@
         "updateContext": null
       },
       "value": "",
-      "start": 256,
-      "end": 258,
+      "start": 259,
+      "end": 261,
       "loc": {
         "start": {
           "line": 7,
@@ -573,6 +573,32 @@
         "end": {
           "line": 7,
           "column": 13
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ",",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 261,
+      "end": 262,
+      "loc": {
+        "start": {
+          "line": 7,
+          "column": 13
+        },
+        "end": {
+          "line": 7,
+          "column": 14
         }
       }
     },
@@ -588,8 +614,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 259,
-      "end": 260,
+      "start": 263,
+      "end": 264,
       "loc": {
         "start": {
           "line": 8,
@@ -614,8 +640,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 261,
-      "end": 261,
+      "start": 265,
+      "end": 265,
       "loc": {
         "start": {
           "line": 9,
