@@ -11,4 +11,22 @@ const config = {
   ...userConfig,
 }
 
+/**
+ * Retrieves the global settings
+ *
+ * TODO: use a better storage method than global object
+ */
+export const globals = () => global.timber_config
+
+/**
+ * Appends the provided settings object to the end of the global
+ * settings object. It will override any existing settings using
+ * the same key name.
+ *
+ * @param {Object} settings - appends settings object to globals
+ */
+export const setGlobals = settings => {
+  global.timber_config = { ...globals(), ...settings }
+}
+
 export default config
