@@ -12,7 +12,7 @@
     "prefer-reflect": 0,
     "semi": [1, "never"],
     "space-before-function-paren": [2, "never"],
-    "capitalized-comments": 1
+    "capitalized-comments": 0
   },
   "parser": "babel-eslint",
   "env": {
