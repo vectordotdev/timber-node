@@ -10,19 +10,14 @@ class HTTPServerResponse extends Event {
    *
    * @param {String} [body] - the body of the request
    * @param {Array} [headers] - the headers of the request
-   * @param {String} host - the server's hostname
-   * @param {String} method - `CONNECT` `DELETE` `GET` `HEAD` `OPTIONS` `PATCH` `POST` `PUT` `TRACE`
-   * @param {String} [path] - the path of the request
-   * @param {Number} [port] - the port of the request
-   * @param {String} [query_string] - the query parameters present on the url
-   * @param {String} [request_id] - the uuid attached to the rest
-   * @param {String} scheme - `HTTP` or `HTTPS`
+   * @param {String} [request_id] - the uuid of the request
+   * @param {String} status - the HTTP status code
+   * @param {String} time_ms - the total duration of the request in milliseconds
    */
   constructor({
     body,
     headers,
     request_id,
-    service_name,
     status,
     time_ms
    } = {}) {
@@ -35,7 +30,6 @@ class HTTPServerResponse extends Event {
     this.body = body
     this.headers = headers
     this.request_id = request_id
-    this.service_name = service_name
     this.status = status
     this.time_ms = time_ms
   }
