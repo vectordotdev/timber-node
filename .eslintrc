@@ -1,7 +1,7 @@
 {
   "extends": [
-    "prettier",
-    "xo/esnext"
+    "xo/esnext",
+    "prettier"
   ],
   "rules": {
     "camelcase": 0,
@@ -12,7 +12,7 @@
     "prefer-reflect": 0,
     "semi": [1, "never"],
     "space-before-function-paren": [2, "never"],
-    "babel/object-curly-spacing": [2, "always"]
+    "capitalized-comments": 1
   },
   "parser": "babel-eslint",
   "env": {
