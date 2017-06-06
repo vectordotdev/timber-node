@@ -4,7 +4,6 @@ import Event from '../event'
  * The HTTP server request event tracks incoming HTTP requests to your HTTP server.
  */
 class HTTPServerResponse extends Event {
-
   /**
    * The HTTP server request event tracks incoming HTTP requests to your HTTP server.
    *
@@ -14,13 +13,7 @@ class HTTPServerResponse extends Event {
    * @param {String} status - the HTTP status code
    * @param {String} time_ms - the total duration of the request in milliseconds
    */
-  constructor({
-    body,
-    headers,
-    request_id,
-    status,
-    time_ms
-   } = {}) {
+  constructor({ body, headers, request_id, status, time_ms } = {}) {
     super()
 
     // check for required attributes

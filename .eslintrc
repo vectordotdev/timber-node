@@ -1,5 +1,8 @@
 {
-  "extends": "xo/esnext",
+  "extends": [
+    "prettier",
+    "xo/esnext"
+  ],
   "rules": {
     "camelcase": 0,
     "consistent-return": 0,

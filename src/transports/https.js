@@ -6,7 +6,8 @@ import { Writable } from 'stream'
 const HOSTNAME = 'logs.timber.io'
 const PATH = '/frames'
 const CONTENT_TYPE = 'application/json'
-const USER_AGENT = `Timber Node HTTPS Stream/${require('../../package.json').version}`
+const USER_AGENT = `Timber Node HTTPS Stream/${require('../../package.json')
+  .version}`
 const PORT = 443
 
 // For debugging purposes, writes to /timber.log
@@ -29,15 +30,18 @@ class HTTPSStream extends Writable {
     * @param {string} [options.flushInterval=1000] - How often, in milliseconds, the messages written to the stream should be delivered to Timber.
     * @param {string} [options.httpsAgent] - Your own custom https.Agent. We use agents to maintain connection pools and keep the connections alive. This avoids the initial connection overhead every time we want to communicate with Timber. See https.Agent for options.
   */
-  constructor(apiKey, {
-    flushInterval = 1000,
-    highWaterMark = 5000,
-    httpsAgent,
-    httpsClient,
-    hostName = HOSTNAME,
-    path = PATH,
-    port = PORT
-  } = {}) {
+  constructor(
+    apiKey,
+    {
+      flushInterval = 1000,
+      highWaterMark = 5000,
+      httpsAgent,
+      httpsClient,
+      hostName = HOSTNAME,
+      path = PATH,
+      port = PORT,
+    } = {}
+  ) {
     // Ensure we use object mode and set a default highWaterMark
     super({ objectMode: true, highWaterMark })
 
@@ -46,12 +50,14 @@ class HTTPSStream extends Writable {
     this.path = path
     this.port = port
     this.flushInterval = flushInterval
-    this.httpsAgent = httpsAgent || new https.Agent({
-      keepAlive: true,
-      maxSockets: 3,
-      // Keep the connection open for 1 minute, avoiding reconnects
-      keepAliveMsecs: (1000 * 60)
-    })
+    this.httpsAgent =
+      httpsAgent ||
+      new https.Agent({
+        keepAlive: true,
+        maxSockets: 3,
+        // Keep the connection open for 1 minute, avoiding reconnects
+        keepAliveMsecs: 1000 * 60,
+      })
     this.httpsClient = httpsClient || https
 
     // Cork the stream so we can utilize the internal Buffer. We do *not* want to
@@ -78,14 +84,14 @@ class HTTPSStream extends Writable {
       headers: {
         'Content-Type': CONTENT_TYPE,
         'Content-Length': Buffer.byteLength(body),
-        'User-Agent': USER_AGENT
+        'User-Agent': USER_AGENT,
       },
       agent: this.httpsAgent,
       auth: this.apiKey,
       hostname: this.hostName,
       port: this.port,
       path: this.path,
-      method: 'POST'
+      method: 'POST',
     }
 
     const req = this.httpsClient.request(options, resp => {})

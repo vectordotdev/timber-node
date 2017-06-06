@@ -8,5 +8,5 @@ module.exports = {
   middlewares,
   transports,
   connect,
-  install
+  install,
 }

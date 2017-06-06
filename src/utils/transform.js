@@ -14,7 +14,7 @@ export default function transform(raw) {
     ...schema,
     message: typeof message === 'string' ? message : JSON.stringify(message),
     dt: new Date(),
-    ...context
+    ...context,
   }
 
   // append data to the end of the log object
@@ -25,4 +25,3 @@ export default function transform(raw) {
 
   return log
 }
-

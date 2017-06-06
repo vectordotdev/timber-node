@@ -17,12 +17,8 @@ function connect(stream, applyBackPressure = false) {
   process.stdout.write = (function(write) {
     return function(message, encoding, fd) {
       // transform the message string into a schema adhering object
-      const log = transform(message).append({level: 'info'})
-      const written = stream.write(
-        log,
-        encoding,
-        fd
-      )
+      const log = transform(message).append({ level: 'info' })
+      const written = stream.write(log, encoding, fd)
       // write.apply(process.stdout, [log]);
       // write.apply(process.stdout, [JSON.stringify(arguments)])
       write.apply(process.stdout, [log.message])

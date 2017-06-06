@@ -2,7 +2,6 @@
  * This is the base class for all context types
  */
 class Context {
-
   /**
    * required checks for the existence of the given attributes.
    * If any of the values provided are undefined, an error will be thrown

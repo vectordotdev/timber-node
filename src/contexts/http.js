@@ -5,7 +5,6 @@ import Context from '../context'
  * to your logs.This allows you to tail and filter by this data.
  */
 class HTTP extends Context {
-
   static keyspace = 'http'
 
   constructor({ method, path, remote_addr, request_id } = {}) {

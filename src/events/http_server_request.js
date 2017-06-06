@@ -4,7 +4,6 @@ import Event from '../event'
  * The HTTP server request event tracks incoming HTTP requests to your HTTP server.
  */
 class HTTPServerRequest extends Event {
-
   /**
    * The HTTP server request event tracks incoming HTTP requests to your HTTP server.
    *
@@ -18,17 +17,19 @@ class HTTPServerRequest extends Event {
    * @param {String} [request_id] - the uuid attached to the request
    * @param {String} scheme - `HTTP` or `HTTPS`
    */
-  constructor({
-    body,
-    headers,
-    host,
-    method,
-    path,
-    port,
-    query_string,
-    request_id,
-    scheme
-   } = {}) {
+  constructor(
+    {
+      body,
+      headers,
+      host,
+      method,
+      path,
+      port,
+      query_string,
+      request_id,
+      scheme,
+    } = {}
+  ) {
     super()
 
     // check for required attributes
