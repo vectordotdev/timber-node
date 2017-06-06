@@ -17,7 +17,7 @@ class HTTPServerRequest extends Event {
    * @param {String} [path] - the path of the request
    * @param {Number} [port] - the port of the request
    * @param {String} [query_string] - the query parameters present on the url
-   * @param {String} [request_id] - the uuid attached to the rest
+   * @param {String} [request_id] - the uuid attached to the request
    * @param {String} scheme - `HTTP` or `HTTPS`
    */
   constructor({
