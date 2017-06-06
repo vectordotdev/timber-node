@@ -94,9 +94,9 @@ class HTTPSStream extends Writable {
       method: 'POST',
     }
 
-    const req = this.httpsClient.request(options, resp => {})
+    const req = this.httpsClient.request(options, () => {})
 
-    req.on('error', e => {})
+    req.on('error', () => {})
     req.write(body)
     req.end()
     next()
