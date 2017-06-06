@@ -5,8 +5,6 @@ import Event from '../event'
  */
 class HTTPServerRequest extends Event {
   /**
-   * The HTTP server request event tracks incoming HTTP requests to your HTTP server.
-   *
    * @param {String} [body] - the body of the request
    * @param {Array} [headers] - the headers of the request
    * @param {String} host - the server's hostname
