@@ -1,7 +1,6 @@
-'use strict'
-
 import https from 'https'
 import { Writable } from 'stream'
+import debug from '../utils/debug'
 
 const HOSTNAME = 'logs.timber.io'
 const PATH = '/frames'
@@ -20,16 +19,14 @@ const PORT = 443
  * keep-alive connections (and in the future maybe msgpack) to deliver logs with high-throughput
  * and little overhead. It also implements the Stream.Writable interface so that it can be treated
  * like a stream. This is beneficial when using something like Morgan, where you can pass a custom stream.
-*/
-
-class HTTPSStream extends Writable {
+ */
+class HTTPS extends Writable {
   /**
-    * @constructor
-    * @param {string} apiKey - Timber API Key
-    * @param {Object} [options] - Various options to adjust the stream behavior.
-    * @param {string} [options.flushInterval=1000] - How often, in milliseconds, the messages written to the stream should be delivered to Timber.
-    * @param {string} [options.httpsAgent] - Your own custom https.Agent. We use agents to maintain connection pools and keep the connections alive. This avoids the initial connection overhead every time we want to communicate with Timber. See https.Agent for options.
-  */
+   * @param {string} apiKey - Timber API Key
+   * @param {Object} [options] - Various options to adjust the stream behavior.
+   * @param {string} [options.flushInterval=1000] - How often, in milliseconds, the messages written to the stream should be delivered to Timber.
+   * @param {string} [options.httpsAgent] - Your own custom https.Agent. We use agents to maintain connection pools and keep the connections alive. This avoids the initial connection overhead every time we want to communicate with Timber. See https.Agent for options.
+   */
   constructor(
     apiKey,
     {
@@ -44,6 +41,7 @@ class HTTPSStream extends Writable {
   ) {
     // Ensure we use object mode and set a default highWaterMark
     super({ objectMode: true, highWaterMark })
+    debug('Initializing HTTPS transport stream')
 
     this.apiKey = apiKey
     this.hostName = hostName
@@ -127,4 +125,4 @@ class HTTPSStream extends Writable {
   }
 }
 
-module.exports = HTTPSStream
+export default HTTPS

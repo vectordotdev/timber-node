@@ -1,3 +1,3 @@
-import Https from './https'
+import HTTPS from './https'
 
-module.exports = { Https }
+module.exports = { HTTPS }
