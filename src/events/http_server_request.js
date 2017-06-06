@@ -5,8 +5,6 @@ import Event from '../event'
  */
 class HTTPServerRequest extends Event {
 
-  message = () => `Started ${this.method} "${this.path}"`
-
   /**
    * The HTTP server request event tracks incoming HTTP requests to your HTTP server.
    *
@@ -47,6 +45,8 @@ class HTTPServerRequest extends Event {
     this.request_id = request_id
     this.scheme = scheme
   }
+
+  message = () => `Started ${this.method} "${this.path}"`
 }
 
 export default HTTPServerRequest

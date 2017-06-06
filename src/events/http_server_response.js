@@ -45,8 +45,6 @@ class HTTPServerResponse extends Event {
 
     return parts.join(' ')
   }
-
-
 }
 
 export default HTTPServerResponse
