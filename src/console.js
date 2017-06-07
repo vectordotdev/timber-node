@@ -1,42 +1,39 @@
 import util from 'util'
-import debug from './utils/debug'
 import Log from './utils/log'
 
-// Console overrides
-// FYI: Would need to override every console method since the prototype
-// is bound to the original Console instance, for now we're treating
-// everything that's not 'error' as 'info'
-
-console.info = (...args) => {
+/**
+ * Transforms an ordinary console.log message into a structured Log object
+ * It also allows you to pass a Log object directly to a console.log function
+ * It will automatically detect whether or not you are passing a structured
+ * log into the console before attempting to transform it.
+ *
+ * This is also what is responsible for assigning the correct level to the log
+ *
+ * @param {Array} args - argument list passed to console
+ * @param {String} level - `info` `warn` `error` `debug` `fatal`
+ */
+const transformConsoleLog = ({ args, level }) => {
   const log = args[0] instanceof Log
     ? args[0]
     : new Log(`${util.format.apply(null, args)}\n`)
-  log.setLevel('info')
-  process.stdout.write(log)
+  log.setLevel(level)
+  return log
+}
+
+console.info = (...args) => {
+  process.stdout.write(transformConsoleLog({ args, level: 'info' }))
 }
 
 console.log = (...args) => {
-  const log = args[0] instanceof Log
-    ? args[0]
-    : new Log(`${util.format.apply(null, args)}\n`)
-  log.setLevel('info')
-  process.stdout.write(log)
+  process.stdout.write(transformConsoleLog({ args, level: 'info' }))
 }
 
 console.warn = (...args) => {
-  const log = args[0] instanceof Log
-    ? args[0]
-    : new Log(`${util.format.apply(null, args)}\n`)
-  log.setLevel('warn')
-  process.stdout.write(log)
+  process.stdout.write(transformConsoleLog({ args, level: 'warn' }))
 }
 
 console.error = (...args) => {
-  const log = args[0] instanceof Log
-    ? args[0]
-    : new Log(`${util.format.apply(null, args)}\n`)
-  log.setLevel('error')
-  process.stdout.write(log)
+  process.stderr.write(transformConsoleLog({ args, level: 'error' }))
 }
 
 export default console
