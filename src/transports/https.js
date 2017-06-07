@@ -67,6 +67,7 @@ class HTTPS extends Writable {
     // If it fills before the next flush event, we should immediately flush.
 
     if (flushInterval !== undefined && flushInterval > 0) {
+      debug('Starting stream flusher')
       this._startFlusher()
     }
   }
@@ -76,6 +77,7 @@ class HTTPS extends Writable {
    * data off of the buffer. Defining it means we do not need to define _write.
    */
   _writev(chunks, next) {
+    debug(`Sending ${chunks.length} log to stream`)
     const messages = chunks.map(chunk => chunk.chunk)
     const body = JSON.stringify(messages)
     const options = {
@@ -94,7 +96,11 @@ class HTTPS extends Writable {
 
     const req = this.httpsClient.request(options, () => {})
 
-    req.on('error', () => {})
+    req.on('response', res => {
+      debug(`${this.hostName} responded with ${res.statusCode}`)
+    })
+
+    req.on('error', e => debug(`Error: ${e}`))
     req.write(body)
     req.end()
     next()
