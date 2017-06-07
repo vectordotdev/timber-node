@@ -2,7 +2,7 @@
 // import https from 'http'
 // import util from 'util'
 import { Writable } from 'stream'
-import transform from './utils/transform'
+import Log from './utils/log'
 
 function connect(stream, applyBackPressure = false) {
   // Ensure the stream is Writable
@@ -17,8 +17,9 @@ function connect(stream, applyBackPressure = false) {
   process.stdout.write = (function(write) {
     return function(message, encoding, fd) {
       // transform the message string into a schema adhering object
-      const log = transform(message).append({ level: 'info' })
-      const written = stream.write(log, encoding, fd)
+      const log = new Log(message)
+      log.setLevel('info')
+      const written = stream.write(log.data, encoding, fd)
       // write.apply(process.stdout, [log]);
       // write.apply(process.stdout, [JSON.stringify(arguments)])
       write.apply(process.stdout, [log.message])
@@ -34,9 +35,11 @@ function connect(stream, applyBackPressure = false) {
   })(process.stdout.write)
 
   process.stderr.write = (function(write) {
-    return function(log, encoding, fd) {
+    return function(message, encoding, fd) {
+      const log = new Log(message)
+      log.setLevel('error')
       const written = stream.write(
-        transform(log).append({ level: 'error' }),
+        log.data,
         encoding,
         fd
       )
