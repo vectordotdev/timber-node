@@ -2,11 +2,11 @@
 import compose from 'composable-middleware'
 import addRequestId from 'express-request-id'
 import bodyParser from 'body-parser'
-import formatter from '../utils/formatter'
 import config from '../config'
 import HTTP from '../contexts/http'
 import HTTPServerRequest from '../events/http_server_request'
 import HTTPServerResponse from '../events/http_server_response'
+import Log from '../utils/log'
 
 /**
  * The express middleware takes care of automatically logging
@@ -100,11 +100,11 @@ const expressMiddleware = compose(
       metadata.event = { server_side_app: { http_server_response } }
 
       // log the http response with metadata
-      console.info(formatter(http_server_response.message(), metadata))
+      console.info(new Log(http_server_response.message(), metadata).format())
     })
 
     // log the http request with metadata
-    console.info(formatter(http_server_request.message(), metadata))
+    console.info(new Log(http_server_request.message(), metadata).format())
     next()
   }
 )

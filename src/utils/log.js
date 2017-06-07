@@ -1,5 +1,5 @@
 import schema from '../schema'
-import { metadata_delimiter } from './formatter'
+import config from '../config'
 
 /**
  * Transforms a log message or object into a rich structured format
@@ -8,14 +8,15 @@ import { metadata_delimiter } from './formatter'
  */
 class Log {
   /**
-   * @param {String} raw - the log message before transforming
+   * @param {String} message - the log message before transforming
+   * @param {Object} context - context to be attached to message
    */
-  constructor(raw) {
+  constructor(message, context = {}) {
     /**
      * Reference to original log message
      * @type {String}
      */
-    this.raw = raw
+    this.raw = message
 
     /**
      * Structured log data
@@ -23,10 +24,10 @@ class Log {
      */
     this.data = {
       ...schema,
+      message,
       dt: new Date(),
+      ...context,
     }
-
-    this.parse(raw)
   }
 
   /**
@@ -42,44 +43,20 @@ class Log {
   }
 
   /**
-   * Parses a raw log message into a rich structured log.
-   * If there's any context attached to the line via @metadata,
-   * it will be extracted, parsed, and appended to the structured log.
-   *
-   * @param {String} raw - the raw log message
-   */
-  parse(raw) {
-    // parse the metadata from the log line
-    const [message, context] = raw.split(metadata_delimiter)
-
-    // This ensures there's a newline at the end of the message
-    // when a log line contained @metadata, it will be split
-    // meaning that it will no longer end in a newline.
-    const format = str => (context ? `${str}\n` : str)
-
-    /**
-     * Parsed log message
-     * @private
-     * @type {String}
-     */
-    this.message = typeof message === 'string'
-      ? format(message)
-      : JSON.stringify(message)
-
-    // Append the message and context (if there is any) to the structured log
-    this.append({
-      message: this.message,
-      ...(context ? JSON.parse(context) : {}),
-    })
-  }
-
-  /**
    * Convenience function for setting the log level
    *
    * @param {String} level - `info` `warn` `error` `debug`
    */
   setLevel(level) {
     this.append({ level })
+  }
+
+  /**
+   * Transforms the structured log into a string
+   * i.e. `Log message @metadata { ... }`
+   */
+  format() {
+    return [this.raw, config.metadata_delimiter, JSON.stringify(this.data)].join(' ')
   }
 }
 
