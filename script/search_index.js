@@ -738,12 +738,6 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/utils/log.js~log#message",
-    "class/src/utils/log.js~Log.html#instance-member-message",
-    "src/utils/log.js~Log#message",
-    "member"
-  ],
-  [
     "src/utils/log.js~log#parse",
     "class/src/utils/log.js~Log.html#instance-method-parse",
     "src/utils/log.js~Log#parse",

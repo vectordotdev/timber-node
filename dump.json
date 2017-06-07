@@ -1886,7 +1886,7 @@
     "__docId__": 81,
     "kind": "file",
     "name": "src/utils/log.js",
-    "content": "import schema from '../schema'\nimport { metadata_delimiter } from './formatter'\n\n/**\n * Transforms a log message or object into a rich structured format\n * that timber expects, ex 'log message' @timber.io {\"dt\": \"…\", \"level\": \"info\", \"context\": {…}}\n * see https://github.com/timberio/log-event-json-schema for specs\n */\nclass Log {\n  /**\n   * @param {String} raw - the log message before transforming\n   */\n  constructor(raw) {\n    // save a reference of the raw input message\n    this.raw = raw\n\n    // assemble the structured log\n    this.data = {\n      ...schema,\n      dt: new Date(),\n    }\n\n    this.parse(raw)\n  }\n\n  /**\n   * Appends data to the end of the structured log object\n   *\n   * @param {Object} data\n   */\n  append(data) {\n    this.data = {\n      ...this.data,\n      ...data,\n    }\n  }\n\n  /**\n   * Parses a raw log message into a rich structured log.\n   * If there's any context attached to the line via @metadata,\n   * it will be extracted, parsed, and appended to the structured log.\n   *\n   * @param {String} raw - the raw log message\n   */\n  parse(raw) {\n    // parse the metadata from the log line\n    const [message, context] = raw.split(metadata_delimiter)\n\n    // This ensures there's a newline at the end of the message\n    // when a log line contained @metadata, it will be split\n    // meaning that it will no longer end in a newline.\n    const format = str => (str.endsWith('\\n') ? str : `${str}\\n`)\n\n    this.message = typeof message === 'string'\n      ? format(message)\n      : JSON.stringify(message)\n\n    // Append the message and context (if there is any) to the structured log\n    this.append({\n      message: this.message,\n      ...(context ? JSON.parse(context) : {}),\n    })\n  }\n\n  /**\n   * Convenience function for setting the log level\n   *\n   * @param {String} level - `info` `warn` `error` `debug`\n   */\n  setLevel(level) {\n    this.append({ level })\n  }\n}\n\nexport default Log\n",
+    "content": "import schema from '../schema'\nimport { metadata_delimiter } from './formatter'\n\n/**\n * Transforms a log message or object into a rich structured format\n * that timber expects, ex 'log message' @timber.io {\"dt\": \"…\", \"level\": \"info\", \"context\": {…}}\n * see https://github.com/timberio/log-event-json-schema for specs\n */\nclass Log {\n  /**\n   * @param {String} raw - the log message before transforming\n   */\n  constructor(raw) {\n    /**\n     * Reference to original log message\n     * @type {String}\n     */\n    this.raw = raw\n\n    /**\n     * Structured log data\n     * @type {Date}\n     */\n    this.data = {\n      ...schema,\n      dt: new Date(),\n    }\n\n    this.parse(raw)\n  }\n\n  /**\n   * Appends data to the end of the structured log object\n   *\n   * @param {Object} data\n   */\n  append(data) {\n    this.data = {\n      ...this.data,\n      ...data,\n    }\n  }\n\n  /**\n   * Parses a raw log message into a rich structured log.\n   * If there's any context attached to the line via @metadata,\n   * it will be extracted, parsed, and appended to the structured log.\n   *\n   * @param {String} raw - the raw log message\n   */\n  parse(raw) {\n    // parse the metadata from the log line\n    const [message, context] = raw.split(metadata_delimiter)\n\n    // This ensures there's a newline at the end of the message\n    // when a log line contained @metadata, it will be split\n    // meaning that it will no longer end in a newline.\n    const format = str => (str.endsWith('\\n') ? str : `${str}\\n`)\n\n    /**\n     * Parsed log message\n     * @private\n     * @type {String}\n     */\n    this.message = typeof message === 'string'\n      ? format(message)\n      : JSON.stringify(message)\n\n    // Append the message and context (if there is any) to the structured log\n    this.append({\n      message: this.message,\n      ...(context ? JSON.parse(context) : {}),\n    })\n  }\n\n  /**\n   * Convenience function for setting the log level\n   *\n   * @param {String} level - `info` `warn` `error` `debug`\n   */\n  setLevel(level) {\n    this.append({ level })\n  }\n}\n\nexport default Log\n",
     "static": true,
     "longname": "src/utils/log.js",
     "access": null,
@@ -1941,19 +1941,15 @@
     "static": false,
     "longname": "src/utils/log.js~Log#raw",
     "access": null,
-    "description": null,
-    "lineNumber": 15,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "description": "Reference to original log message",
+    "lineNumber": 18,
     "type": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "String"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -1964,19 +1960,15 @@
     "static": false,
     "longname": "src/utils/log.js~Log#data",
     "access": null,
-    "description": null,
-    "lineNumber": 18,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "description": "Structured log data",
+    "lineNumber": 24,
     "type": {
+      "nullable": null,
       "types": [
-        "{...schema: Object, \"dt\": *}"
-      ]
+        "Date"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -1990,7 +1982,7 @@
     "longname": "src/utils/log.js~Log#append",
     "access": null,
     "description": "Appends data to the end of the structured log object",
-    "lineNumber": 31,
+    "lineNumber": 37,
     "params": [
       {
         "nullable": null,
@@ -2013,7 +2005,7 @@
     "longname": "src/utils/log.js~Log#data",
     "access": null,
     "description": null,
-    "lineNumber": 32,
+    "lineNumber": 38,
     "undocument": true,
     "unknown": [
       {
@@ -2038,7 +2030,7 @@
     "longname": "src/utils/log.js~Log#parse",
     "access": null,
     "description": "Parses a raw log message into a rich structured log.\nIf there's any context attached to the line via @metadata,\nit will be extracted, parsed, and appended to the structured log.",
-    "lineNumber": 45,
+    "lineNumber": 51,
     "params": [
       {
         "nullable": null,
@@ -2059,20 +2051,16 @@
     "memberof": "src/utils/log.js~Log",
     "static": false,
     "longname": "src/utils/log.js~Log#message",
-    "access": null,
-    "description": null,
-    "lineNumber": 54,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "access": "private",
+    "description": "Parsed log message",
+    "lineNumber": 65,
     "type": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "String"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -2086,7 +2074,7 @@
     "longname": "src/utils/log.js~Log#setLevel",
     "access": null,
     "description": "Convenience function for setting the log level",
-    "lineNumber": 70,
+    "lineNumber": 81,
     "params": [
       {
         "nullable": null,
