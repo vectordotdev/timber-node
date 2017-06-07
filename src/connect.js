@@ -36,7 +36,7 @@ function connect(stream, applyBackPressure = false) {
     return function(message, encoding, fd) {
       const log = message instanceof Log ? message : new Log(message)
       const written = stream.write(log.data, encoding, fd)
-      write.apply(process.stderr, arguments)
+      write.apply(process.stderr, [log.format()])
 
       // If we want to allow back pressure, listen for
       // the drain event and try once the buffer is cleared

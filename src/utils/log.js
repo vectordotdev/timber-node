@@ -60,6 +60,7 @@ class Log {
       this.raw,
       config.metadata_delimiter,
       JSON.stringify(this.data),
+      '\n',
     ].join(' ')
   }
 }
