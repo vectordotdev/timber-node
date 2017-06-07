@@ -55,7 +55,7 @@ class Log {
     // This ensures there's a newline at the end of the message
     // when a log line contained @metadata, it will be split
     // meaning that it will no longer end in a newline.
-    const format = str => (str.endsWith('\n') ? str : `${str}\n`)
+    const format = str => (context ? `${str}\n` : str)
 
     /**
      * Parsed log message
