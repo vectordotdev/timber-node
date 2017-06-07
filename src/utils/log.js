@@ -11,10 +11,16 @@ class Log {
    * @param {String} raw - the log message before transforming
    */
   constructor(raw) {
-    // save a reference of the raw input message
+    /**
+     * Reference to original log message
+     * @type {String}
+     */
     this.raw = raw
 
-    // assemble the structured log
+    /**
+     * Structured log data
+     * @type {Date}
+     */
     this.data = {
       ...schema,
       dt: new Date(),
@@ -51,6 +57,11 @@ class Log {
     // meaning that it will no longer end in a newline.
     const format = str => (str.endsWith('\n') ? str : `${str}\n`)
 
+    /**
+     * Parsed log message
+     * @private
+     * @type {String}
+     */
     this.message = typeof message === 'string'
       ? format(message)
       : JSON.stringify(message)
