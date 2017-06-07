@@ -56,7 +56,11 @@ class Log {
    * i.e. `Log message @metadata { ... }`
    */
   format() {
-    return [this.raw, config.metadata_delimiter, JSON.stringify(this.data)].join(' ')
+    return [
+      this.raw,
+      config.metadata_delimiter,
+      JSON.stringify(this.data),
+    ].join(' ')
   }
 }
 
