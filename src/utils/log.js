@@ -55,11 +55,14 @@ class Log {
    * Transforms the structured log into a string
    * i.e. `Log message @metadata { ... }`
    */
-  format() {
+  format({ withMetadata = true } = {}) {
     return [
-      this.raw,
-      config.metadata_delimiter,
-      JSON.stringify(this.data),
+      this.raw.endsWith('\n')
+        ? this.raw.substring(0, this.raw.length - 2)
+        : this.raw,
+      ...(withMetadata
+        ? [config.metadata_delimiter, JSON.stringify(this.data)]
+        : []),
       '\n',
     ].join(' ')
   }

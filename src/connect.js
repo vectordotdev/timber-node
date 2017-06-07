@@ -3,6 +3,7 @@
 // import util from 'util'
 import { Writable } from 'stream'
 import Log from './utils/log'
+import config from './config'
 
 function connect(stream, applyBackPressure = false) {
   // Ensure the stream is Writable
@@ -20,7 +21,11 @@ function connect(stream, applyBackPressure = false) {
       // transform the message string into a schema adhering object
       const written = stream.write(log.data, encoding, fd)
 
-      write.apply(process.stdout, [log.format()])
+      write.apply(process.stdout, [
+        log.format({
+          withMetadata: config.environment === 'production',
+        }),
+      ])
 
       // If we want to allow back pressure, listen for
       // the drain event and try once the buffer is cleared
