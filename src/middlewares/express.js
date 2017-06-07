@@ -100,11 +100,11 @@ const expressMiddleware = compose(
       metadata.event = { server_side_app: { http_server_response } }
 
       // log the http response with metadata
-      console.info(new Log(http_server_response.message(), metadata).format())
+      console.info(new Log(http_server_response.message(), metadata))
     })
 
     // log the http request with metadata
-    console.info(new Log(http_server_request.message(), metadata).format())
+    console.info(new Log(http_server_request.message(), metadata))
     next()
   }
 )

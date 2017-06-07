@@ -4,6 +4,7 @@ import connect from './connect'
 import install from './install'
 import middlewares from './middlewares'
 import transports from './transports'
+import './console'
 
 module.exports = {
   config,

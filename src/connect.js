@@ -16,11 +16,11 @@ function connect(stream, applyBackPressure = false) {
 
   process.stdout.write = (function(write) {
     return function(message, encoding, fd) {
-      const log = new Log(message)
+      const log = message instanceof Log ? message : new Log(message)
       // transform the message string into a schema adhering object
       const written = stream.write(log.data, encoding, fd)
 
-      write.apply(process.stdout, [JSON.stringify(log.data)])
+      write.apply(process.stdout, [log.format()])
 
       // If we want to allow back pressure, listen for
       // the drain event and try once the buffer is cleared
@@ -34,12 +34,8 @@ function connect(stream, applyBackPressure = false) {
 
   process.stderr.write = (function(write) {
     return function(message, encoding, fd) {
-      const log = new Log(message)
-      const written = stream.write(
-        log.data,
-        encoding,
-        fd
-      )
+      const log = message instanceof Log ? message : new Log(message)
+      const written = stream.write(log.data, encoding, fd)
       write.apply(process.stderr, arguments)
 
       // If we want to allow back pressure, listen for
