@@ -34,6 +34,8 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/context.js~Context.html">Context</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/event.js~Event.html">Event</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-globals">globals</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setGlobals">setGlobals</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-install">install</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">contexts</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/contexts/http.js~HTTP.html">HTTP</a></span></span></li>
@@ -41,8 +43,8 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_server_response.js~HTTPServerResponse.html">HTTPServerResponse</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-expressMiddleware">expressMiddleware</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">transports</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html">HTTPS</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-format">format</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-transform">transform</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/log.js~Log.html">Log</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-format">format</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-metadata_delimiter">metadata_delimiter</a></span></span></li>
 </ul>
 </div>
@@ -53,7 +55,7 @@
 // import https from &apos;http&apos;
 // import util from &apos;util&apos;
 import { Writable } from &apos;stream&apos;
-import transform from &apos;./utils/transform&apos;
+import Log from &apos;./utils/log&apos;
 
 function connect(stream, applyBackPressure = false) {
   // Ensure the stream is Writable
@@ -68,8 +70,9 @@ function connect(stream, applyBackPressure = false) {
   process.stdout.write = (function(write) {
     return function(message, encoding, fd) {
       // transform the message string into a schema adhering object
-      const log = transform(message).append({ level: &apos;info&apos; })
-      const written = stream.write(log, encoding, fd)
+      const log = new Log(message)
+      log.setLevel(&apos;info&apos;)
+      const written = stream.write(log.data, encoding, fd)
       // write.apply(process.stdout, [log]);
       // write.apply(process.stdout, [JSON.stringify(arguments)])
       write.apply(process.stdout, [log.message])
@@ -85,9 +88,11 @@ function connect(stream, applyBackPressure = false) {
   })(process.stdout.write)
 
   process.stderr.write = (function(write) {
-    return function(log, encoding, fd) {
+    return function(message, encoding, fd) {
+      const log = new Log(message)
+      log.setLevel(&apos;error&apos;)
       const written = stream.write(
-        transform(log).append({ level: &apos;error&apos; }),
+        log.data,
         encoding,
         fd
       )

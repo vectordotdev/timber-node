@@ -1,7 +1,7 @@
 {
-  "coverage": "25%",
-  "expectCount": 44,
-  "actualCount": 11,
+  "coverage": "33.96%",
+  "expectCount": 53,
+  "actualCount": 18,
   "files": {
     "src/context.js": {
       "expectCount": 1,
@@ -66,9 +66,18 @@
         25
       ]
     },
+    "src/utils/log.js": {
+      "expectCount": 8,
+      "actualCount": 5,
+      "undocumentLines": [
+        18,
+        54,
+        15
+      ]
+    },
     "src/config.js": {
-      "expectCount": 1,
-      "actualCount": 0,
+      "expectCount": 3,
+      "actualCount": 2,
       "undocumentLines": [
         8
       ]
@@ -87,13 +96,6 @@
       ]
     },
     "src/install.js": {
-      "expectCount": 1,
-      "actualCount": 0,
-      "undocumentLines": [
-        3
-      ]
-    },
-    "src/utils/transform.js": {
       "expectCount": 1,
       "actualCount": 1,
       "undocumentLines": []

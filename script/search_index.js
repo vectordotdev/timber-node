@@ -36,6 +36,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "timber/src/utils/log.js~log",
+    "class/src/utils/log.js~Log.html",
+    "<span>Log</span> <span class=\"search-result-import-path\">timber/src/utils/log.js</span>",
+    "class"
+  ],
+  [
     "timber/src/config.js~config",
     "variable/index.html#static-variable-config",
     "<span>config</span> <span class=\"search-result-import-path\">timber/src/config.js</span>",
@@ -54,6 +60,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "timber/src/config.js~globals",
+    "function/index.html#static-function-globals",
+    "<span>globals</span> <span class=\"search-result-import-path\">timber/src/config.js</span>",
+    "function"
+  ],
+  [
     "timber/src/install.js~install",
     "function/index.html#static-function-install",
     "<span>install</span> <span class=\"search-result-import-path\">timber/src/install.js</span>",
@@ -66,9 +78,9 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
-    "timber/src/utils/transform.js~transform",
-    "function/index.html#static-function-transform",
-    "<span>transform</span> <span class=\"search-result-import-path\">timber/src/utils/transform.js</span>",
+    "timber/src/config.js~setglobals",
+    "function/index.html#static-function-setGlobals",
+    "<span>setGlobals</span> <span class=\"search-result-import-path\">timber/src/config.js</span>",
     "function"
   ],
   [
@@ -630,12 +642,6 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/timber.js",
-    "file/src/timber.js.html",
-    "src/timber.js",
-    "file"
-  ],
-  [
     "src/transports/https.js",
     "file/src/transports/https.js.html",
     "src/transports/https.js",
@@ -708,9 +714,51 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/utils/transform.js",
-    "file/src/utils/transform.js.html",
-    "src/utils/transform.js",
+    "src/utils/log.js",
+    "file/src/utils/log.js.html",
+    "src/utils/log.js",
     "file"
+  ],
+  [
+    "src/utils/log.js~log#append",
+    "class/src/utils/log.js~Log.html#instance-method-append",
+    "src/utils/log.js~Log#append",
+    "method"
+  ],
+  [
+    "src/utils/log.js~log#constructor",
+    "class/src/utils/log.js~Log.html#instance-constructor-constructor",
+    "src/utils/log.js~Log#constructor",
+    "method"
+  ],
+  [
+    "src/utils/log.js~log#data",
+    "class/src/utils/log.js~Log.html#instance-member-data",
+    "src/utils/log.js~Log#data",
+    "member"
+  ],
+  [
+    "src/utils/log.js~log#message",
+    "class/src/utils/log.js~Log.html#instance-member-message",
+    "src/utils/log.js~Log#message",
+    "member"
+  ],
+  [
+    "src/utils/log.js~log#parse",
+    "class/src/utils/log.js~Log.html#instance-method-parse",
+    "src/utils/log.js~Log#parse",
+    "method"
+  ],
+  [
+    "src/utils/log.js~log#raw",
+    "class/src/utils/log.js~Log.html#instance-member-raw",
+    "src/utils/log.js~Log#raw",
+    "member"
+  ],
+  [
+    "src/utils/log.js~log#setlevel",
+    "class/src/utils/log.js~Log.html#instance-method-setLevel",
+    "src/utils/log.js~Log#setLevel",
+    "method"
   ]
 ]
