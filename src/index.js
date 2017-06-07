@@ -1,12 +1,15 @@
 // This is the main file that gets referenced by node
-import middlewares from './middlewares';
-import transports from './transports';
-import connect from './connect';
-import install from './install';
+import config from './config'
+import connect from './connect'
+import install from './install'
+import middlewares from './middlewares'
+import transports from './transports'
+import './console'
 
 module.exports = {
+  config,
+  connect,
+  install,
   middlewares,
   transports,
-  connect,
-  install
 }
