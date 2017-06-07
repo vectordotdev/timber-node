@@ -1,16 +1,17 @@
 import connect from '../src/connect.js';
+import '../src/console.js';
 import { Writable, Readable } from 'stream';
 import util from 'util';
 
 // Stub console.log and console.warn to be what the are in node by default
 // https://github.com/nodejs/node/blob/master/lib/console.js#L42
-console.log = function log(...args) {
-  process.stdout.write(`${util.format.apply(null, args)}\n`);
-};
+// console.log = function log(...args) {
+//   process.stdout.write(`${util.format.apply(null, args)}\n`);
+// };
 
-console.warn = function log(...args) {
-  process.stderr.write(`${util.format.apply(null, args)}\n`);
-};
+// console.warn = function log(...args) {
+//   process.stderr.write(`${util.format.apply(null, args)}\n`);
+// };
 
 class TestWriteStream extends Writable {
   constructor() { super({ objectMode: true }) }
@@ -22,7 +23,7 @@ describe('Connect STDOUT', () => {
 
   it('intercepts stdout write', () => {
     const log = 'test log...';
-    
+
     // Create a new write stream and cork it
     // to keep the data in the buffer
     let testStream = new TestWriteStream();
@@ -65,6 +66,21 @@ describe('Connect STDOUT', () => {
     console.warn(log);
 
     const chunk = testStream._writableState.getBuffer().pop().chunk;
+
+    expect(chunk.message).toBe(`${log}\n`);
+    expect(chunk.level).toBe('warn');
+  });
+
+  it('sets the proper level for console.error', () => {
+    const log = 'console log test';
+    let testStream = new TestWriteStream();
+    connect(testStream);
+    testStream.cork();
+
+    console.error(log);
+
+    const chunk = testStream._writableState.getBuffer().pop().chunk;
+
     expect(chunk.message).toBe(`${log}\n`);
     expect(chunk.level).toBe('error');
   });
@@ -82,5 +98,5 @@ describe('Connect STDOUT', () => {
       connect(testStream);
     }).not.toThrow();
   });
-  
+
 });
