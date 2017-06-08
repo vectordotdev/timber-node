@@ -30,7 +30,7 @@ const timestamp = () => new Date().toISOString()
 const debug = (...args) => {
   if (debug_logger()) {
     debug_logger().write(
-      `Timber [${timestamp()}]: ${util.format.apply(null, args)}\n`
+      `[${timestamp()}]: ${util.format.apply(null, args)}\n`
     )
   }
 }
