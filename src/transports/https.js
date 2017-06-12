@@ -1,7 +1,6 @@
 import https from 'https'
 import { Writable } from 'stream'
 import debug from '../utils/debug'
-
 const HOSTNAME = 'logs.timber.io'
 const PATH = '/frames'
 const CONTENT_TYPE = 'application/json'
@@ -51,10 +50,7 @@ class HTTPS extends Writable {
     this.httpsAgent =
       httpsAgent ||
       new https.Agent({
-        keepAlive: true,
-        maxSockets: 3,
-        // Keep the connection open for 1 minute, avoiding reconnects
-        keepAliveMsecs: 1000 * 60,
+        maxSockets: 5,
       })
     this.httpsClient = httpsClient || https
 
@@ -83,7 +79,6 @@ class HTTPS extends Writable {
     const options = {
       headers: {
         'Content-Type': CONTENT_TYPE,
-        'Content-Length': Buffer.byteLength(body),
         'User-Agent': USER_AGENT,
       },
       agent: this.httpsAgent,
@@ -94,13 +89,33 @@ class HTTPS extends Writable {
       method: 'POST',
     }
 
-    const req = this.httpsClient.request(options, () => {})
-
-    req.on('response', res => {
+    // Add debug outputs for every possible request event
+    // This should help debugging network related issues
+    debug(`Instantiating req object`)
+    const req = this.httpsClient.request(options, res => {
       debug(`${this.hostName} responded with ${res.statusCode}`)
+      res.on('aborted', () => debug('Response event: aborted'))
+      res.on('close', () => debug('Response event: close'))
     })
 
-    req.on('error', e => debug(`Error: ${e}`))
+    req.on('abort', () => debug('Request event: abort'))
+    req.on('aborted', () => debug('Request event: aborted'))
+    req.on('connect', () => debug('Request event: connect'))
+    req.on('continue', () => debug('Request event: continue'))
+    req.on('response', () => debug('Request event: response'))
+    req.on('socket', sock => {
+      debug('Request event: socket')
+      sock.on('close', () => debug('Socket event: close'))
+      sock.on('connect', () => debug('Socket event: connect'))
+      sock.on('data', () => sock.end())
+      sock.on('drain', () => debug('Socket event: drain'))
+      sock.on('end', () => debug('Socket event: end'))
+      sock.on('error', () => debug('Socket event: error'))
+      sock.on('lookup', () => debug('Socket event: lookup'))
+      sock.on('drain', () => debug('Socket event: drain'))
+    })
+    req.on('upgrade', () => debug('Request event: upgrade'))
+
     req.write(body)
     req.end()
     next()
