@@ -58,7 +58,7 @@ class Log {
   format({ withMetadata = true } = {}) {
     return [
       this.raw.endsWith('\n')
-        ? this.raw.substring(0, this.raw.length - 2)
+        ? this.raw.substring(0, this.raw.length - 1)
         : this.raw,
       ...(withMetadata
         ? [config.metadata_delimiter, JSON.stringify(this.data)]
