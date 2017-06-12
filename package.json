@@ -24,7 +24,7 @@
     "watch": "babel src -d dist --experimental -w",
     "clean": "rimraf dist coverage",
     "lint": "eslint src",
-    "format": "prettier --single-quote --trailing-comma es5 --no-semi --write src/**/*.js",
+    "format": "prettier --single-quote --trailing-comma es5 --no-semi --write src/**/*.js src/*.js",
     "compile": "babel -d dist src",
     "build": "npm run clean && babel -d dist src",
     "build:docs": "esdoc",
