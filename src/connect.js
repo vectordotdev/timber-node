@@ -1,15 +1,16 @@
-'use strict'
-// import https from 'http'
-// import util from 'util'
 import { Writable } from 'stream'
 import Log from './utils/log'
 import config from './config'
 
 function connect(stream, applyBackPressure = false) {
+  // console.info('writeable', stream instanceof Writable)
   // Ensure the stream is Writable
   if (!(stream instanceof Writable)) {
     throw new Error('stream must be of type Writable')
   }
+
+  // prevent infinite loop when receiving stdout as a stream
+  if (stream === process.stdout) return stream
 
   // Store refs to standard logging utilities
   const oldOutWrite = process.stdout.write
@@ -21,11 +22,9 @@ function connect(stream, applyBackPressure = false) {
       // transform the message string into a schema adhering object
       const written = stream.write(log.data, encoding, fd)
 
-      write.apply(process.stdout, [
-        log.format({
-          withMetadata: config.environment === 'production',
-        }),
-      ])
+      if (config.environment === 'development') {
+        write.apply(process.stdout, [log.format({ withMetadata: false })])
+      }
 
       // If we want to allow back pressure, listen for
       // the drain event and try once the buffer is cleared
@@ -41,7 +40,10 @@ function connect(stream, applyBackPressure = false) {
     return function(message, encoding, fd) {
       const log = message instanceof Log ? message : new Log(message)
       const written = stream.write(log.data, encoding, fd)
-      write.apply(process.stderr, [log.format()])
+
+      if (config.environment === 'development') {
+        write.apply(process.stderr, [log.format({ withMetadata: false })])
+      }
 
       // If we want to allow back pressure, listen for
       // the drain event and try once the buffer is cleared
