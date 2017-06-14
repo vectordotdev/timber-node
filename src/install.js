@@ -6,7 +6,8 @@ import debug from './utils/debug'
  *
  * @param {Stream} transport - the stream that all logs will go through
  */
-function install({ transport }) {
+function install(transport) {
+  // console.info('transport')
   if (!transport) throw Error('No transport was provided.')
 
   // connect our transport stream to stdout
