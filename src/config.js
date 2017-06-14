@@ -6,7 +6,6 @@ const projectPath = path.dirname(filename)
 const userConfig = finder(projectPath).next().value.timber
 
 const config = {
-  environment: 'production',
   metadata_delimiter: '@metadata',
   debug_logger: undefined,
   capture_request_body: false,

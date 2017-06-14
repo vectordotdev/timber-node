@@ -1,6 +1,6 @@
 import { Writable } from 'stream'
 import Log from './utils/log'
-import config from './config'
+import debug from './utils/debug'
 
 function connect(stream, applyBackPressure = false) {
   // console.info('writeable', stream instanceof Writable)
@@ -22,9 +22,7 @@ function connect(stream, applyBackPressure = false) {
       // transform the message string into a schema adhering object
       const written = stream.write(log.data, encoding, fd)
 
-      if (config.environment === 'development') {
-        write.apply(process.stdout, [log.format({ withMetadata: false })])
-      }
+      debug(`Logged: ${log.raw}`)
 
       // If we want to allow back pressure, listen for
       // the drain event and try once the buffer is cleared
@@ -41,9 +39,7 @@ function connect(stream, applyBackPressure = false) {
       const log = message instanceof Log ? message : new Log(message)
       const written = stream.write(log.data, encoding, fd)
 
-      if (config.environment === 'development') {
-        write.apply(process.stderr, [log.format({ withMetadata: false })])
-      }
+      debug(`Logged: ${log.raw}`)
 
       // If we want to allow back pressure, listen for
       // the drain event and try once the buffer is cleared
