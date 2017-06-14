@@ -29,9 +29,7 @@ const timestamp = () => new Date().toISOString()
  */
 const debug = (...args) => {
   if (debug_logger()) {
-    debug_logger().write(
-      `[${timestamp()}]: ${util.format.apply(null, args)}\n`
-    )
+    debug_logger().write(`[${timestamp()}]: ${util.format.apply(null, args)}\n`)
   }
 }
 
