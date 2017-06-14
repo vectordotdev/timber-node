@@ -32,12 +32,10 @@ console.log = (...args) => {
 }
 
 console.warn = (...args) => {
-  // process.stdout.write(`length ${typeof args}`)
   process.stdout.write(transformConsoleLog({ args, level: 'warn' }))
 }
 
 console.error = (...args) => {
-  // process.stdout.write(`length ${typeof args}`)
   process.stderr.write(transformConsoleLog({ args, level: 'error' }))
 }
 
