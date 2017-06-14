@@ -1,5 +1,6 @@
 import util from 'util'
 import Log from './utils/log'
+import config from './config'
 
 /**
  * Transforms an ordinary console.log message into a structured Log object
@@ -17,7 +18,9 @@ const transformConsoleLog = ({ args, level }) => {
     ? args[0]
     : new Log(`${util.format.apply(null, args)}\n`)
   log.setLevel(level)
-  return log
+  return log.format({
+    withMetadata: config.environment === 'production',
+  })
 }
 
 console.info = (...args) => {
@@ -29,10 +32,12 @@ console.log = (...args) => {
 }
 
 console.warn = (...args) => {
+  // process.stdout.write(`length ${typeof args}`)
   process.stdout.write(transformConsoleLog({ args, level: 'warn' }))
 }
 
 console.error = (...args) => {
+  // process.stdout.write(`length ${typeof args}`)
   process.stderr.write(transformConsoleLog({ args, level: 'error' }))
 }
 
