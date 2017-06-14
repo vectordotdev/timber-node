@@ -1,11 +1,32 @@
-# Timber Node
-[![CircleCI](https://circleci.com/gh/timberio/timber-node.svg?style=svg)](https://circleci.com/gh/timberio/timber-node) [![Coverage Status](https://coveralls.io/repos/github/timberio/timber-node/badge.svg?branch=master)](https://coveralls.io/github/timberio/timber-node?branch=master) [![npm version](https://badge.fury.io/js/timber.svg)](https://badge.fury.io/js/timber) [![ISC License](https://img.shields.io/badge/license-ISC-ff69b4.svg)](LICENSE.md)
+# 🌲 Timber - Simple Ruby Structured Logging
+
+[![CircleCI](https://circleci.com/gh/timberio/timber-node.svg?style=svg)](https://circleci.com/gh/timberio/timber-node)
+[![Coverage Status](https://coveralls.io/repos/github/timberio/timber-node/badge.svg?branch=master)](https://coveralls.io/github/timberio/timber-node?branch=master)
+[![npm version](https://badge.fury.io/js/timber.svg)](https://badge.fury.io/js/timber)
+[![ISC License](https://img.shields.io/badge/license-ISC-ff69b4.svg)](LICENSE.md)
+
+* [Timber website](https://timber.io)
+* [Timber docs](https://timber.io/docs)
+* [Library docs](https://timberio.github.io/timber-node/)
+* [Support](mailto:support@timber.io)
+
+
+## Installation
+
+Use `npm` or `yarn` to install Timber on your project:
+
+```bash
+npm install --save timber
+```
+```bash
+yarn add timber
+```
 
 ## Usage
 
 ```
 var timber = require('timber');
-timber.install({ apiKey: 'your-api-key', ...options });
+timber.install(new timber.transports.HTTPS('your-api-key'));
 ```
 
 ## npm scripts
