@@ -56,15 +56,15 @@ class Log {
    * i.e. `Log message @metadata { ... }`
    */
   format({ withMetadata = true } = {}) {
-    return [
-      this.raw.endsWith('\n')
-        ? this.raw.substring(0, this.raw.length - 1)
-        : this.raw,
-      ...(withMetadata
-        ? [config.metadata_delimiter, JSON.stringify(this.data)]
-        : []),
-      '\n',
-    ].join(' ')
+    let message = this.raw.endsWith('\n')
+      ? this.raw.substring(0, this.raw.length - 1)
+      : this.raw
+
+    if (withMetadata) {
+      message += ` ${config.metadata_delimiter} ${JSON.stringify(this.data)}`
+    }
+
+    return `${message}\n`
   }
 }
 
