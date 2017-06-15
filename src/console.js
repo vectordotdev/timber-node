@@ -18,9 +18,7 @@ const transformConsoleLog = ({ args, level }) => {
     ? args[0]
     : new Log(`${util.format.apply(null, args)}\n`)
   log.setLevel(level)
-  return log.format({
-    withMetadata: config.append_metadata,
-  })
+  return log
 }
 
 console.info = (...args) => {
