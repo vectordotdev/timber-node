@@ -1,17 +1,9 @@
+import config from '../src/config.js';
 import connect from '../src/connect.js';
 import '../src/console.js';
 import { Writable, Readable } from 'stream';
-import util from 'util';
 
-// Stub console.log and console.warn to be what the are in node by default
-// https://github.com/nodejs/node/blob/master/lib/console.js#L42
-// console.log = function log(...args) {
-//   process.stdout.write(`${util.format.apply(null, args)}\n`);
-// };
-
-// console.warn = function log(...args) {
-//   process.stderr.write(`${util.format.apply(null, args)}\n`);
-// };
+config.append_metadata = false
 
 class TestWriteStream extends Writable {
   constructor() { super({ objectMode: true }) }
