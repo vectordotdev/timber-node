@@ -7,6 +7,7 @@ const userConfig = finder(projectPath).next().value.timber
 
 const config = {
   metadata_delimiter: '@metadata',
+  append_metadata: true,
   debug_logger: undefined,
   capture_request_body: false,
   capture_response_body: false,

@@ -19,7 +19,7 @@ const transformConsoleLog = ({ args, level }) => {
     : new Log(`${util.format.apply(null, args)}\n`)
   log.setLevel(level)
   return log.format({
-    withMetadata: true,
+    withMetadata: config.append_metadata,
   })
 }
 
