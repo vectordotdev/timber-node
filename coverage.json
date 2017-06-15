@@ -1,7 +1,7 @@
 {
-  "coverage": "38.46%",
-  "expectCount": 52,
-  "actualCount": 20,
+  "coverage": "39.58%",
+  "expectCount": 48,
+  "actualCount": 19,
   "files": {
     "src/context.js": {
       "expectCount": 1,
@@ -29,13 +29,13 @@
       "expectCount": 9,
       "actualCount": 2,
       "undocumentLines": [
+        45,
+        49,
         46,
         50,
+        55,
         47,
-        51,
-        59,
-        48,
-        49
+        48
       ]
     },
     "src/events/http_server_request.js": {
@@ -72,24 +72,14 @@
       "undocumentLines": []
     },
     "src/config.js": {
-      "expectCount": 3,
-      "actualCount": 2,
-      "undocumentLines": [
-        8
-      ]
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
     },
     "src/middlewares/express.js": {
       "expectCount": 1,
       "actualCount": 1,
       "undocumentLines": []
-    },
-    "src/utils/formatter.js": {
-      "expectCount": 2,
-      "actualCount": 0,
-      "undocumentLines": [
-        3,
-        1
-      ]
     },
     "src/install.js": {
       "expectCount": 1,

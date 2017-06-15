@@ -34,8 +34,6 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/context.js~Context.html">Context</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/event.js~Event.html">Event</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-globals">globals</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setGlobals">setGlobals</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-install">install</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">contexts</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/contexts/http.js~HTTP.html">HTTP</a></span></span></li>
@@ -44,8 +42,6 @@
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-expressMiddleware">expressMiddleware</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">transports</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html">HTTPS</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/log.js~Log.html">Log</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-format">format</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-metadata_delimiter">metadata_delimiter</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -111,7 +107,7 @@ see <a href="https://github.com/timberio/log-event-json-schema">https://github.c
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/utils/log.js~Log.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(raw: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>)</span>
+          <span data-ice="name"><span><a href="class/src/utils/log.js~Log.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, context: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
         </p>
       </div>
       <div>
@@ -236,13 +232,14 @@ see <a href="https://github.com/timberio/log-event-json-schema">https://github.c
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/utils/log.js~Log.html#instance-method-parse">parse</a></span></span><span data-ice="signature">(raw: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>)</span>
+          <span data-ice="name"><span><a href="class/src/utils/log.js~Log.html#instance-method-format">format</a></span></span><span data-ice="signature">(objectPattern: {&quot;withMetadata&quot;: <span>*</span>}): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Parses a raw log message into a rich structured log.</p>
+        <div data-ice="description"><p>Transforms the structured log into a string
+i.e.</p>
 </div>
       </div>
     </td>
@@ -297,11 +294,11 @@ see <a href="https://github.com/timberio/log-event-json-schema">https://github.c
     
     
     
-    <span data-ice="name">constructor</span><span data-ice="signature">(raw: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>)</span>
+    <span data-ice="name">constructor</span><span data-ice="signature">(message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, context: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/log.js.html#lineNumber13">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/log.js.html#lineNumber14">source</a></span></span>
     </span>
   </h3>
 
@@ -321,10 +318,17 @@ see <a href="https://github.com/timberio/log-event-json-schema">https://github.c
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">raw</td>
+      <td data-ice="name" data-depth="0">message</td>
       <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>the log message before transforming</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">context</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>context to be attached to message</p>
 </td>
     </tr>
 </tbody>
@@ -364,7 +368,7 @@ see <a href="https://github.com/timberio/log-event-json-schema">https://github.c
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/log.js.html#lineNumber24">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/log.js.html#lineNumber28">source</a></span></span>
     </span>
   </h3>
 
@@ -408,7 +412,7 @@ see <a href="https://github.com/timberio/log-event-json-schema">https://github.c
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/log.js.html#lineNumber18">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/log.js.html#lineNumber22">source</a></span></span>
     </span>
   </h3>
 
@@ -455,7 +459,7 @@ see <a href="https://github.com/timberio/log-event-json-schema">https://github.c
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/log.js.html#lineNumber37">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/log.js.html#lineNumber41">source</a></span></span>
     </span>
   </h3>
 
@@ -504,27 +508,26 @@ see <a href="https://github.com/timberio/log-event-json-schema">https://github.c
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-parse">
+  <h3 data-ice="anchor" id="instance-method-format">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">parse</span><span data-ice="signature">(raw: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>)</span>
+    <span data-ice="name">format</span><span data-ice="signature">(objectPattern: {&quot;withMetadata&quot;: <span>*</span>}): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/log.js.html#lineNumber51">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/log.js.html#lineNumber61">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Parses a raw log message into a rich structured log.
-If there&apos;s any context attached to the line via @metadata,
-it will be extracted, parsed, and appended to the structured log.</p>
+  <div data-ice="description"><p>Transforms the structured log into a string
+i.e. <code>Log message @metadata { ... }</code></p>
 </div>
 
   
@@ -538,18 +541,30 @@ it will be extracted, parsed, and appended to the structured log.</p>
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">raw</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><p>the raw log message</p>
-</td>
+      <td data-ice="name" data-depth="0">objectPattern</td>
+      <td data-ice="type">{&quot;withMetadata&quot;: <span>*</span>}</td>
+      <td data-ice="appendix"><ul><li>optional</li>
+<li>default: {}</li></ul></td>
+      <td data-ice="description"></td>
     </tr>
 </tbody>
   </table>
 </div>
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -578,7 +593,7 @@ it will be extracted, parsed, and appended to the structured log.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/log.js.html#lineNumber81">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/log.js.html#lineNumber53">source</a></span></span>
     </span>
   </h3>
 

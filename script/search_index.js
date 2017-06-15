@@ -54,33 +54,9 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
-    "timber/src/utils/formatter.js~format",
-    "function/index.html#static-function-format",
-    "<span>format</span> <span class=\"search-result-import-path\">timber/src/utils/formatter.js</span>",
-    "function"
-  ],
-  [
-    "timber/src/config.js~globals",
-    "function/index.html#static-function-globals",
-    "<span>globals</span> <span class=\"search-result-import-path\">timber/src/config.js</span>",
-    "function"
-  ],
-  [
     "timber/src/install.js~install",
     "function/index.html#static-function-install",
     "<span>install</span> <span class=\"search-result-import-path\">timber/src/install.js</span>",
-    "function"
-  ],
-  [
-    "timber/src/utils/formatter.js~metadata_delimiter",
-    "variable/index.html#static-variable-metadata_delimiter",
-    "<span>metadata_delimiter</span> <span class=\"search-result-import-path\">timber/src/utils/formatter.js</span>",
-    "variable"
-  ],
-  [
-    "timber/src/config.js~setglobals",
-    "function/index.html#static-function-setGlobals",
-    "<span>setGlobals</span> <span class=\"search-result-import-path\">timber/src/config.js</span>",
     "function"
   ],
   [
@@ -708,12 +684,6 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/utils/formatter.js",
-    "file/src/utils/formatter.js.html",
-    "src/utils/formatter.js",
-    "file"
-  ],
-  [
     "src/utils/log.js",
     "file/src/utils/log.js.html",
     "src/utils/log.js",
@@ -738,9 +708,9 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/utils/log.js~log#parse",
-    "class/src/utils/log.js~Log.html#instance-method-parse",
-    "src/utils/log.js~Log#parse",
+    "src/utils/log.js~log#format",
+    "class/src/utils/log.js~Log.html#instance-method-format",
+    "src/utils/log.js~Log#format",
     "method"
   ],
   [

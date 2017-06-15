@@ -34,8 +34,6 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/context.js~Context.html">Context</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/event.js~Event.html">Event</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-globals">globals</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setGlobals">setGlobals</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-install">install</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">contexts</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/contexts/http.js~HTTP.html">HTTP</a></span></span></li>
@@ -44,17 +42,30 @@
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-expressMiddleware">expressMiddleware</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">transports</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html">HTTPS</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/log.js~Log.html">Log</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-format">format</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-metadata_delimiter">metadata_delimiter</a></span></span></li>
 </ul>
 </div>
 </nav>
 
-<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="timber-node">Timber Node</h1>
-<p><a href="https://circleci.com/gh/timberio/timber-node"><img src="https://circleci.com/gh/timberio/timber-node.svg?style=svg" alt="CircleCI"></a> <a href="https://coveralls.io/github/timberio/timber-node?branch=master"><img src="https://coveralls.io/repos/github/timberio/timber-node/badge.svg?branch=master" alt="Coverage Status"></a> <a href="https://badge.fury.io/js/timber"><img src="https://badge.fury.io/js/timber.svg" alt="npm version"></a> <a href="LICENSE.md"><img src="https://img.shields.io/badge/license-ISC-ff69b4.svg" alt="ISC License"></a></p>
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="-timber-simple-ruby-structured-logging">&#x1F332; Timber - Simple Ruby Structured Logging</h1>
+<p><a href="https://circleci.com/gh/timberio/timber-node"><img src="https://circleci.com/gh/timberio/timber-node.svg?style=svg" alt="CircleCI"></a>
+<a href="https://coveralls.io/github/timberio/timber-node?branch=master"><img src="https://coveralls.io/repos/github/timberio/timber-node/badge.svg?branch=master" alt="Coverage Status"></a>
+<a href="https://badge.fury.io/js/timber"><img src="https://badge.fury.io/js/timber.svg" alt="npm version"></a>
+<a href="LICENSE.md"><img src="https://img.shields.io/badge/license-ISC-ff69b4.svg" alt="ISC License"></a></p>
+<ul>
+<li><a href="https://timber.io">Timber website</a></li>
+<li><a href="https://timber.io/docs">Timber docs</a></li>
+<li><a href="https://timberio.github.io/timber-node/">Library docs</a></li>
+<li><a href="mailto:support@timber.io">Support</a></li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>Use <code>npm</code> or <code>yarn</code> to install Timber on your project:</p>
+<pre><code class="lang-bash"><code class="source-code prettyprint">npm install --save timber</code>
+</code></pre>
+<pre><code class="lang-bash"><code class="source-code prettyprint">yarn add timber</code>
+</code></pre>
 <h2 id="usage">Usage</h2>
 <pre><code><code class="source-code prettyprint">var timber = require(&apos;timber&apos;);
-timber.install({ apiKey: &apos;your-api-key&apos;, ...options });</code>
+timber.install(new timber.transports.HTTPS(&apos;your-api-key&apos;));</code>
 </code></pre><h2 id="npm-scripts">npm scripts</h2>
 <p><code>watch</code> - starts file watcher</p>
 <p><code>lint</code> - runs eslint on <code>/src</code></p>
@@ -73,7 +84,8 @@ timber.install({ apiKey: &apos;your-api-key&apos;, ...options });</code>
 <h1 id="-evergreen_tree-timber-master-your-node-apps-with-structured-logging">:evergreen_tree: Timber - Master your Node apps with structured logging</h1>
 <p></p><p>
 <a href="http://github.com/timberio/timber-elixir"><img src="http://files.timber.io/images/ruby-library-readme-header.gif" height="469"></a>
-</p><p></p>
+</p>
+<p></p>
 </div>
 </div>
 

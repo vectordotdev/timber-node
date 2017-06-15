@@ -34,8 +34,6 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/context.js~Context.html">Context</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/event.js~Event.html">Event</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-globals">globals</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setGlobals">setGlobals</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-install">install</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">contexts</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/contexts/http.js~HTTP.html">HTTP</a></span></span></li>
@@ -44,39 +42,49 @@
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-expressMiddleware">expressMiddleware</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">transports</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html">HTTPS</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/log.js~Log.html">Log</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-format">format</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-metadata_delimiter">metadata_delimiter</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/console.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">// import util from &apos;util&apos;
-// import transform from &apos;./transform&apos;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import util from &apos;util&apos;
+import Log from &apos;./utils/log&apos;
+import config from &apos;./config&apos;
 
-// Console overrides
-// FYI: Would need to override every console method since the prototype
-// is bound to the original Console instance, for now we&apos;re treating
-// everything that&apos;s not &apos;error&apos; as &apos;info&apos;
+/**
+ * Transforms an ordinary console.log message into a structured Log object
+ * It also allows you to pass a Log object directly to a console.log function
+ * It will automatically detect whether or not you are passing a structured
+ * log into the console before attempting to transform it.
+ *
+ * This is also what is responsible for assigning the correct level to the log
+ *
+ * @param {Array} args - argument list passed to console
+ * @param {String} level - `info` `warn` `error` `debug` `fatal`
+ */
+const transformConsoleLog = ({ args, level }) =&gt; {
+  const log = args[0] instanceof Log
+    ? args[0]
+    : new Log(`${util.format.apply(null, args)}\n`)
+  log.setLevel(level)
+  return log
+}
 
-// console.log = (...args) =&gt; {
-//   const original = `${util.format.apply(null, args)}\n`;
-//   const enhanced = transform(original).setLevel(&apos;info&apos;);
-//   process.stdout.write(enhanced);
-// }
+console.info = (...args) =&gt; {
+  process.stdout.write(transformConsoleLog({ args, level: &apos;info&apos; }))
+}
 
-// console.warn = (...args) =&gt; {
-//   const original = `${util.format.apply(null, args)}\n`;
-//   const enhanced = transform(original).setLevel(&apos;warn&apos;);
-//   process.stdout.write(transform(enhanced));
-// }
+console.log = (...args) =&gt; {
+  process.stdout.write(transformConsoleLog({ args, level: &apos;info&apos; }))
+}
 
-// console.dir = (object, options) =&gt; {
-//   const options = Object.assign({customInspect: false}, options);
-//   const original = `${util.inspect(object, options)}\n`;
-//   const enhanced = transform(original, { level: &apos;info&apos; });
-//   stdout.write(transform(enhanced));
-// }
+console.warn = (...args) =&gt; {
+  process.stdout.write(transformConsoleLog({ args, level: &apos;warn&apos; }))
+}
+
+console.error = (...args) =&gt; {
+  process.stderr.write(transformConsoleLog({ args, level: &apos;error&apos; }))
+}
 
 export default console
 </code></pre>

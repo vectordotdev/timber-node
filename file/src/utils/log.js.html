@@ -34,8 +34,6 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/context.js~Context.html">Context</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/event.js~Event.html">Event</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-globals">globals</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setGlobals">setGlobals</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-install">install</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">contexts</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/contexts/http.js~HTTP.html">HTTP</a></span></span></li>
@@ -44,15 +42,13 @@
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-expressMiddleware">expressMiddleware</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">transports</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html">HTTPS</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/log.js~Log.html">Log</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-format">format</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-metadata_delimiter">metadata_delimiter</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/utils/log.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import schema from &apos;../schema&apos;
-import { metadata_delimiter } from &apos;./formatter&apos;
+import config from &apos;../config&apos;
 
 /**
  * Transforms a log message or object into a rich structured format
@@ -61,14 +57,18 @@ import { metadata_delimiter } from &apos;./formatter&apos;
  */
 class Log {
   /**
-   * @param {String} raw - the log message before transforming
+   * @param {String} message - the log message before transforming
+   * @param {Object} [context] - context to be attached to message
    */
-  constructor(raw) {
+  constructor(message, context = {}) {
+    // Throw an error if no message is provided
+    if (!message) throw new Error(&apos;You must supply a message when creating a log&apos;)
+
     /**
      * Reference to original log message
      * @type {String}
      */
-    this.raw = raw
+    this.raw = message
 
     /**
      * Structured log data
@@ -76,10 +76,10 @@ class Log {
      */
     this.data = {
       ...schema,
+      message,
       dt: new Date(),
+      ...context,
     }
-
-    this.parse(raw)
   }
 
   /**
@@ -95,44 +95,28 @@ class Log {
   }
 
   /**
-   * Parses a raw log message into a rich structured log.
-   * If there&apos;s any context attached to the line via @metadata,
-   * it will be extracted, parsed, and appended to the structured log.
-   *
-   * @param {String} raw - the raw log message
-   */
-  parse(raw) {
-    // parse the metadata from the log line
-    const [message, context] = raw.split(metadata_delimiter)
-
-    // This ensures there&apos;s a newline at the end of the message
-    // when a log line contained @metadata, it will be split
-    // meaning that it will no longer end in a newline.
-    const format = str =&gt; (str.endsWith(&apos;\n&apos;) ? str : `${str}\n`)
-
-    /**
-     * Parsed log message
-     * @private
-     * @type {String}
-     */
-    this.message = typeof message === &apos;string&apos;
-      ? format(message)
-      : JSON.stringify(message)
-
-    // Append the message and context (if there is any) to the structured log
-    this.append({
-      message: this.message,
-      ...(context ? JSON.parse(context) : {}),
-    })
-  }
-
-  /**
    * Convenience function for setting the log level
    *
    * @param {String} level - `info` `warn` `error` `debug`
    */
   setLevel(level) {
     this.append({ level })
+  }
+
+  /**
+   * Transforms the structured log into a string
+   * i.e. `Log message @metadata { ... }`
+   */
+  format({ withMetadata = true } = {}) {
+    let message = this.raw.endsWith(&apos;\n&apos;)
+      ? this.raw.substring(0, this.raw.length - 1)
+      : this.raw
+
+    if (withMetadata) {
+      message += ` ${config.metadata_delimiter} ${JSON.stringify(this.data)}`
+    }
+
+    return `${message}\n`
   }
 }
 

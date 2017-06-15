@@ -34,8 +34,6 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/context.js~Context.html">Context</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/event.js~Event.html">Event</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-globals">globals</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setGlobals">setGlobals</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-install">install</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">contexts</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/contexts/http.js~HTTP.html">HTTP</a></span></span></li>
@@ -44,8 +42,6 @@
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-expressMiddleware">expressMiddleware</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">transports</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html">HTTPS</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/log.js~Log.html">Log</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-format">format</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-metadata_delimiter">metadata_delimiter</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -54,7 +50,6 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import https from &apos;https&apos;
 import { Writable } from &apos;stream&apos;
 import debug from &apos;../utils/debug&apos;
-
 const HOSTNAME = &apos;logs.timber.io&apos;
 const PATH = &apos;/frames&apos;
 const CONTENT_TYPE = &apos;application/json&apos;
@@ -104,10 +99,7 @@ class HTTPS extends Writable {
     this.httpsAgent =
       httpsAgent ||
       new https.Agent({
-        keepAlive: true,
-        maxSockets: 3,
-        // Keep the connection open for 1 minute, avoiding reconnects
-        keepAliveMsecs: 1000 * 60,
+        maxSockets: 5,
       })
     this.httpsClient = httpsClient || https
 
@@ -120,6 +112,7 @@ class HTTPS extends Writable {
     // If it fills before the next flush event, we should immediately flush.
 
     if (flushInterval !== undefined &amp;&amp; flushInterval &gt; 0) {
+      debug(&apos;Starting stream flusher&apos;)
       this._startFlusher()
     }
   }
@@ -129,12 +122,12 @@ class HTTPS extends Writable {
    * data off of the buffer. Defining it means we do not need to define _write.
    */
   _writev(chunks, next) {
+    debug(`Sending ${chunks.length} log to stream`)
     const messages = chunks.map(chunk =&gt; chunk.chunk)
     const body = JSON.stringify(messages)
     const options = {
       headers: {
         &apos;Content-Type&apos;: CONTENT_TYPE,
-        &apos;Content-Length&apos;: Buffer.byteLength(body),
         &apos;User-Agent&apos;: USER_AGENT,
       },
       agent: this.httpsAgent,
@@ -145,9 +138,33 @@ class HTTPS extends Writable {
       method: &apos;POST&apos;,
     }
 
-    const req = this.httpsClient.request(options, () =&gt; {})
+    // Add debug outputs for every possible request event
+    // This should help debugging network related issues
+    debug(`Instantiating req object`)
+    const req = this.httpsClient.request(options, res =&gt; {
+      debug(`${this.hostName} responded with ${res.statusCode}`)
+      res.on(&apos;aborted&apos;, () =&gt; debug(&apos;Response event: aborted&apos;))
+      res.on(&apos;close&apos;, () =&gt; debug(&apos;Response event: close&apos;))
+    })
 
-    req.on(&apos;error&apos;, () =&gt; {})
+    req.on(&apos;abort&apos;, () =&gt; debug(&apos;Request event: abort&apos;))
+    req.on(&apos;aborted&apos;, () =&gt; debug(&apos;Request event: aborted&apos;))
+    req.on(&apos;connect&apos;, () =&gt; debug(&apos;Request event: connect&apos;))
+    req.on(&apos;continue&apos;, () =&gt; debug(&apos;Request event: continue&apos;))
+    req.on(&apos;response&apos;, () =&gt; debug(&apos;Request event: response&apos;))
+    req.on(&apos;socket&apos;, sock =&gt; {
+      debug(&apos;Request event: socket&apos;)
+      sock.on(&apos;close&apos;, () =&gt; debug(&apos;Socket event: close&apos;))
+      sock.on(&apos;connect&apos;, () =&gt; debug(&apos;Socket event: connect&apos;))
+      sock.on(&apos;data&apos;, () =&gt; sock.end())
+      sock.on(&apos;drain&apos;, () =&gt; debug(&apos;Socket event: drain&apos;))
+      sock.on(&apos;end&apos;, () =&gt; debug(&apos;Socket event: end&apos;))
+      sock.on(&apos;error&apos;, () =&gt; debug(&apos;Socket event: error&apos;))
+      sock.on(&apos;lookup&apos;, () =&gt; debug(&apos;Socket event: lookup&apos;))
+      sock.on(&apos;drain&apos;, () =&gt; debug(&apos;Socket event: drain&apos;))
+    })
+    req.on(&apos;upgrade&apos;, () =&gt; debug(&apos;Request event: upgrade&apos;))
+
     req.write(body)
     req.end()
     next()

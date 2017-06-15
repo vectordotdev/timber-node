@@ -34,8 +34,6 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/context.js~Context.html">Context</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/event.js~Event.html">Event</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-globals">globals</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setGlobals">setGlobals</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-install">install</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">contexts</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/contexts/http.js~HTTP.html">HTTP</a></span></span></li>
@@ -44,8 +42,6 @@
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-expressMiddleware">expressMiddleware</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">transports</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html">HTTPS</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/log.js~Log.html">Log</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-format">format</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-metadata_delimiter">metadata_delimiter</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -68,13 +64,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span><span data-ice="signature">: {&quot;debug_logger&quot;: <span>*</span>, &quot;capture_request_body&quot;: <span>*</span>, &quot;capture_response_body&quot;: <span>*</span>, ...userConfig: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>}</span>
+          <span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span><span data-ice="signature">: {&quot;metadata_delimiter&quot;: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, &quot;append_metadata&quot;: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, &quot;debug_logger&quot;: <span>*</span>, &quot;capture_request_body&quot;: <span>*</span>, &quot;capture_response_body&quot;: <span>*</span>, ...userConfig: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>}</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>The configuration options here are use throughout the timber library.</p>
+</div>
       </div>
     </td>
     <td>
@@ -111,33 +108,6 @@ each http event with the appropriate context events attached.</p>
       
     </td>
   </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="variable/index.html#static-variable-metadata_delimiter">metadata_delimiter</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
 </tbody>
 </table>
 </div>
@@ -151,18 +121,37 @@ each http event with the appropriate context events attached.</p>
     
     
     
-    <span data-ice="name">config</span><span data-ice="signature">: {&quot;debug_logger&quot;: <span>*</span>, &quot;capture_request_body&quot;: <span>*</span>, &quot;capture_response_body&quot;: <span>*</span>, ...userConfig: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>}</span>
+    <span data-ice="name">config</span><span data-ice="signature">: {&quot;metadata_delimiter&quot;: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, &quot;append_metadata&quot;: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, &quot;debug_logger&quot;: <span>*</span>, &quot;capture_request_body&quot;: <span>*</span>, &quot;capture_response_body&quot;: <span>*</span>, ...userConfig: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>}</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/config.js.html#lineNumber8">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/config.js.html#lineNumber39">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import config from &apos;<span><a href="file/src/config.js.html#lineNumber8">timber/src/config.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import config from &apos;<span><a href="file/src/config.js.html#lineNumber39">timber/src/config.js</a></span>&apos;</code></pre></div>
   
   
-  
+  <div data-ice="description"><p>The configuration options here are use throughout the timber library.
+Any of the values can be changed in two different ways:</p>
+<h2 id="using-your-package-json">Using your package.json</h2>
+<p>To configure timber from your <code>package.json</code>, simply add a <code>timber</code>
+object at the root level containing your desired overrides:</p>
+<pre><code class="lang-json"><code class="source-code prettyprint">&quot;timber&quot;: {
+ &quot;capture_request_body&quot;: true,
+  &quot;capture_response_body&quot;: true
+},</code>
+</code></pre>
+<p><strong>Note:</strong> you cannot set the <code>debug_logger</code> option from the <code>package.json</code>.
+This is because you must set it as a writeable stream.</p>
+<h2 id="using-inline-overrides">Using inline overrides</h2>
+<p>You can also configure timber by overriding the config options inline:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">const timber = require(&apos;timber&apos;);
+timber.config.debug_logger = process.stdout;</code>
+</code></pre>
+<p><strong>Note:</strong> inline overrides will override any options you have set
+in your <code>package.json</code> file.</p>
+</div>
 
   
 
@@ -214,49 +203,6 @@ each http event with the appropriate context events attached.</p>
 <li><code>expressMiddleware</code> automatically logs http events to timber</li>
 </ul>
 </div>
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="static-variable-metadata_delimiter">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">metadata_delimiter</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/utils/formatter.js.html#lineNumber1">source</a></span></span>
-    </span>
-  </h3>
-
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {metadata_delimiter} from &apos;<span><a href="file/src/utils/formatter.js.html#lineNumber1">timber/src/utils/formatter.js</a></span>&apos;</code></pre></div>
-  
-  
-  
 
   
 
