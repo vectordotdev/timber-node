@@ -9,9 +9,12 @@ import config from '../config'
 class Log {
   /**
    * @param {String} message - the log message before transforming
-   * @param {Object} context - context to be attached to message
+   * @param {Object} [context] - context to be attached to message
    */
   constructor(message, context = {}) {
+    // Throw an error if no message is provided
+    if (!message) throw new Error('You must supply a message when creating a log')
+
     /**
      * Reference to original log message
      * @type {String}
