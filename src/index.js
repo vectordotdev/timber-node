@@ -4,6 +4,7 @@ import connect from './connect'
 import install from './install'
 import middlewares from './middlewares'
 import transports from './transports'
+import log from './log'
 import './console'
 
 module.exports = {
@@ -12,4 +13,5 @@ module.exports = {
   install,
   middlewares,
   transports,
+  log,
 }
