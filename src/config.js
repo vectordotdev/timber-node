@@ -16,7 +16,7 @@ const userConfig = finder(projectPath).next().value.timber
  *
  * ```json
  * "timber": {
- *  "capture_request_body": true,
+ *   "capture_request_body": true,
  *   "capture_response_body": true
  * },
  * ```
