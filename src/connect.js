@@ -1,9 +1,8 @@
 import { Writable } from 'stream'
-import Log from './utils/log'
+import Log from './log'
 import debug from './utils/debug'
 
 function connect(stream, applyBackPressure = false) {
-  // console.info('writeable', stream instanceof Writable)
   // Ensure the stream is Writable
   if (!(stream instanceof Writable)) {
     throw new Error('stream must be of type Writable')

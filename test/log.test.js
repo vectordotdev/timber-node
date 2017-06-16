@@ -1,4 +1,4 @@
-import Log from '../src/utils/log';
+import Log from '../src/log';
 import config from '../src/config';
 
 describe('Log Transformer', () => {

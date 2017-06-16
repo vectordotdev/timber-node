@@ -6,7 +6,7 @@ import config from '../config'
 import HTTP from '../contexts/http'
 import HTTPServerRequest from '../events/http_server_request'
 import HTTPServerResponse from '../events/http_server_response'
-import Log from '../utils/log'
+import Log from '../log'
 
 /**
  * The express middleware takes care of automatically logging

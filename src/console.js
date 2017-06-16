@@ -1,6 +1,5 @@
 import util from 'util'
-import Log from './utils/log'
-import config from './config'
+import Log from './log'
 
 /**
  * Transforms an ordinary console.log message into a structured Log object

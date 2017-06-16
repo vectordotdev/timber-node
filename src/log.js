@@ -1,5 +1,5 @@
-import schema from '../schema'
-import config from '../config'
+import schema from './schema'
+import config from './config'
 
 /**
  * Transforms a log message or object into a rich structured format
