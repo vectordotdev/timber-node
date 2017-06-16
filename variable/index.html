@@ -34,6 +34,7 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/context.js~Context.html">Context</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/event.js~Event.html">Event</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/log.js~Log.html">Log</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-install">install</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">contexts</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/contexts/http.js~HTTP.html">HTTP</a></span></span></li>
@@ -41,7 +42,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_server_response.js~HTTPServerResponse.html">HTTPServerResponse</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-expressMiddleware">expressMiddleware</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">transports</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html">HTTPS</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/log.js~Log.html">Log</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -138,7 +138,7 @@ Any of the values can be changed in two different ways:</p>
 <p>To configure timber from your <code>package.json</code>, simply add a <code>timber</code>
 object at the root level containing your desired overrides:</p>
 <pre><code class="lang-json"><code class="source-code prettyprint">&quot;timber&quot;: {
- &quot;capture_request_body&quot;: true,
+  &quot;capture_request_body&quot;: true,
   &quot;capture_response_body&quot;: true
 },</code>
 </code></pre>

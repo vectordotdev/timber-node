@@ -36,9 +36,9 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "timber/src/utils/log.js~log",
-    "class/src/utils/log.js~Log.html",
-    "<span>Log</span> <span class=\"search-result-import-path\">timber/src/utils/log.js</span>",
+    "timber/src/log.js~log",
+    "class/src/log.js~Log.html",
+    "<span>Log</span> <span class=\"search-result-import-path\">timber/src/log.js</span>",
     "class"
   ],
   [
@@ -594,6 +594,48 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/log.js",
+    "file/src/log.js.html",
+    "src/log.js",
+    "file"
+  ],
+  [
+    "src/log.js~log#append",
+    "class/src/log.js~Log.html#instance-method-append",
+    "src/log.js~Log#append",
+    "method"
+  ],
+  [
+    "src/log.js~log#constructor",
+    "class/src/log.js~Log.html#instance-constructor-constructor",
+    "src/log.js~Log#constructor",
+    "method"
+  ],
+  [
+    "src/log.js~log#data",
+    "class/src/log.js~Log.html#instance-member-data",
+    "src/log.js~Log#data",
+    "member"
+  ],
+  [
+    "src/log.js~log#format",
+    "class/src/log.js~Log.html#instance-method-format",
+    "src/log.js~Log#format",
+    "method"
+  ],
+  [
+    "src/log.js~log#raw",
+    "class/src/log.js~Log.html#instance-member-raw",
+    "src/log.js~Log#raw",
+    "member"
+  ],
+  [
+    "src/log.js~log#setlevel",
+    "class/src/log.js~Log.html#instance-method-setLevel",
+    "src/log.js~Log#setLevel",
+    "method"
+  ],
+  [
     "src/middlewares/express.js",
     "file/src/middlewares/express.js.html",
     "src/middlewares/express.js",
@@ -682,47 +724,5 @@ window.esdocSearchIndex = [
     "file/src/utils/debug.js.html",
     "src/utils/debug.js",
     "file"
-  ],
-  [
-    "src/utils/log.js",
-    "file/src/utils/log.js.html",
-    "src/utils/log.js",
-    "file"
-  ],
-  [
-    "src/utils/log.js~log#append",
-    "class/src/utils/log.js~Log.html#instance-method-append",
-    "src/utils/log.js~Log#append",
-    "method"
-  ],
-  [
-    "src/utils/log.js~log#constructor",
-    "class/src/utils/log.js~Log.html#instance-constructor-constructor",
-    "src/utils/log.js~Log#constructor",
-    "method"
-  ],
-  [
-    "src/utils/log.js~log#data",
-    "class/src/utils/log.js~Log.html#instance-member-data",
-    "src/utils/log.js~Log#data",
-    "member"
-  ],
-  [
-    "src/utils/log.js~log#format",
-    "class/src/utils/log.js~Log.html#instance-method-format",
-    "src/utils/log.js~Log#format",
-    "method"
-  ],
-  [
-    "src/utils/log.js~log#raw",
-    "class/src/utils/log.js~Log.html#instance-member-raw",
-    "src/utils/log.js~Log#raw",
-    "member"
-  ],
-  [
-    "src/utils/log.js~log#setlevel",
-    "class/src/utils/log.js~Log.html#instance-method-setLevel",
-    "src/utils/log.js~Log#setLevel",
-    "method"
   ]
 ]

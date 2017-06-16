@@ -66,7 +66,7 @@
         25
       ]
     },
-    "src/utils/log.js": {
+    "src/log.js": {
       "expectCount": 7,
       "actualCount": 7,
       "undocumentLines": []

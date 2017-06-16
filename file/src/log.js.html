@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">src/schema.js | API Document</title>
+  <title data-ice="title">src/log.js | API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -46,15 +46,82 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/schema.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">// look into https://github.com/jquense/yup or
-// http://epoberezkin.github.io/ajv/#performancefor schema normalization/coercion
+<div class="content" data-ice="content"><h1 data-ice="title">src/log.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import schema from &apos;./schema&apos;
+import config from &apos;./config&apos;
 
-export default {
-  $schema:
-    &apos;https://raw.githubusercontent.com/timberio/log-event-json-schema/1.2.3/schema.json&apos;,
-  message: &apos;&apos;,
+/**
+ * Transforms a log message or object into a rich structured format
+ * that timber expects, ex &apos;log message&apos; @timber.io {&quot;dt&quot;: &quot;&#x2026;&quot;, &quot;level&quot;: &quot;info&quot;, &quot;context&quot;: {&#x2026;}}
+ * see https://github.com/timberio/log-event-json-schema for specs
+ */
+class Log {
+  /**
+   * @param {String} message - the log message before transforming
+   * @param {Object} [context] - context to be attached to message
+   */
+  constructor(message, context = {}) {
+    // Throw an error if no message is provided
+    if (!message)
+      throw new Error(&apos;You must supply a message when creating a log&apos;)
+
+    /**
+     * Reference to original log message
+     * @type {String}
+     */
+    this.raw = message
+
+    /**
+     * Structured log data
+     * @type {Date}
+     */
+    this.data = {
+      ...schema,
+      message,
+      dt: new Date(),
+      ...context,
+    }
+  }
+
+  /**
+   * Appends data to the end of the structured log object
+   *
+   * @param {Object} data
+   */
+  append(data) {
+    this.data = {
+      ...this.data,
+      ...data,
+    }
+  }
+
+  /**
+   * Convenience function for setting the log level
+   *
+   * @param {String} level - `info` `warn` `error` `debug`
+   */
+  setLevel(level) {
+    this.append({ level })
+  }
+
+  /**
+   * Transforms the structured log into a string
+   * i.e. `Log message @metadata { ... }`
+   */
+  format({ withMetadata = true } = {}) {
+    let message = this.raw.endsWith(&apos;\n&apos;)
+      ? this.raw.substring(0, this.raw.length - 1)
+      : this.raw
+
+    if (withMetadata) {
+      message += ` ${config.metadata_delimiter} ${JSON.stringify(this.data)}`
+    }
+
+    return `${message}\n`
+  }
 }
+
+export default Log
 </code></pre>
 
 </div>

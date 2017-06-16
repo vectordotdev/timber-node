@@ -34,6 +34,7 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/context.js~Context.html">Context</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/event.js~Event.html">Event</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/log.js~Log.html">Log</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-install">install</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">contexts</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/contexts/http.js~HTTP.html">HTTP</a></span></span></li>
@@ -41,12 +42,11 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_server_response.js~HTTPServerResponse.html">HTTPServerResponse</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-expressMiddleware">expressMiddleware</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">transports</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html">HTTPS</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/log.js~Log.html">Log</a></span></span></li>
 </ul>
 </div>
 </nav>
 
-<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="-timber-simple-ruby-structured-logging">&#x1F332; Timber - Simple Ruby Structured Logging</h1>
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="-timber-simple-node-structured-logging">&#x1F332; Timber - Simple Node Structured Logging</h1>
 <p><a href="https://circleci.com/gh/timberio/timber-node"><img src="https://circleci.com/gh/timberio/timber-node.svg?style=svg" alt="CircleCI"></a>
 <a href="https://coveralls.io/github/timberio/timber-node?branch=master"><img src="https://coveralls.io/repos/github/timberio/timber-node/badge.svg?branch=master" alt="Coverage Status"></a>
 <a href="https://badge.fury.io/js/timber"><img src="https://badge.fury.io/js/timber.svg" alt="npm version"></a>
@@ -57,33 +57,128 @@
 <li><a href="https://timberio.github.io/timber-node/">Library docs</a></li>
 <li><a href="mailto:support@timber.io">Support</a></li>
 </ul>
+<h2 id="overview">Overview</h2>
+<p>Timber for Node is an optional upgrade you can install for your Node apps. Instead of completely replacing your log messages, this library automatically augments your logs with JSON metadata. Essentially turning them into rich JSON events with context. This preserves the readability of your logs while still dramatically improving the quality of your data. The end result: better logging and faster problem solving.</p>
+<h2 id="how-it-works">How it works</h2>
+<p>For example, Timber turns this raw text log:</p>
+<pre><code><code class="source-code prettyprint">Sent 200 in 45.ms</code>
+</code></pre><p>Into a rich <a href="https://timber.io/docs/node/events-and-context/http-server-response-event/"><code>http_server_response</code> event</a>.</p>
+<pre><code><code class="source-code prettyprint">Sent 200 in 45.2ms @metadata {&quot;dt&quot;: &quot;2017-02-02T01:33:21.154345Z&quot;, &quot;level&quot;: &quot;info&quot;, &quot;context&quot;: {&quot;http&quot;: {&quot;method&quot;: &quot;GET&quot;, &quot;host&quot;: &quot;timber.io&quot;, &quot;path&quot;: &quot;/path&quot;, &quot;request_id&quot;: &quot;abcd1234&quot;}}, &quot;event&quot;: {&quot;http_response&quot;: {&quot;status&quot;: 200, &quot;time_ms&quot;: 45.2}}}</code>
+</code></pre><p>In the <a href="https://app.timber.io">Timber console</a> simply
+<a href="https://timber.io/docs/app/tutorials/view-metadata/">click the line to view this metdata</a>.
+Moreover, this data allows you to run powerful queries like:</p>
+<ol>
+<li><code>context.request_id:abcd1234</code> - View all logs generated for a specific request.</li>
+<li><code>type:http_response</code> - View specific events (exceptions, sql queries, etc)</li>
+<li><code>http_server_response.time_ms:&gt;=1000</code> - View slow responses with the ability to zoom out and view them in context (request, user, etc).</li>
+<li><code>level:error</code> - Levels in your logs!</li>
+</ol>
+<p>For a complete overview, see the <a href="https://timber.io/docs/node/overview/">Timber for Node docs</a>.</p>
 <h2 id="installation">Installation</h2>
-<p>Use <code>npm</code> or <code>yarn</code> to install Timber on your project:</p>
 <pre><code class="lang-bash"><code class="source-code prettyprint">npm install --save timber</code>
 </code></pre>
-<pre><code class="lang-bash"><code class="source-code prettyprint">yarn add timber</code>
+<h2 id="usage">Usage</h2>
+<pre><code class="lang-js"><code class="source-code prettyprint">var timber = require(&apos;timber&apos;);
+
+// first we create a writeable stream that the logs will get sent to
+const transport = new timber.transports.HTTPS(&apos;your-timber-api-key&apos;);
+
+// attach the stream to stdout
+timber.install(transport);</code>
 </code></pre>
 <h2 id="usage">Usage</h2>
-<pre><code><code class="source-code prettyprint">var timber = require(&apos;timber&apos;);
-timber.install(new timber.transports.HTTPS(&apos;your-api-key&apos;));</code>
-</code></pre><h2 id="npm-scripts">npm scripts</h2>
-<p><code>watch</code> - starts file watcher</p>
-<p><code>lint</code> - runs eslint on <code>/src</code></p>
-<p><code>test</code> - runs tests and formats piped output with Jest.</p>
-<p><code>build</code> - compiles src files into the dist folder, consumable by npm.</p>
-<h2 id="publishing">Publishing</h2>
-<p>When you are ready to publish a new version of your module, the following steps can be used:</p>
-<ol>
-<li>add and commit your changes via git</li>
-<li><code>npm version patch -m &quot;Ugrade message...&quot;</code></li>
-<li><code>npm publish</code></li>
-</ol>
-<p>If publish is a success, the <code>postpublish</code> npm script will run <code>git push origin master --follow-tags</code>, pushing up and tagging your code properly.</p>
-<p>If you run <code>npm version patch</code> before committing your changes, you&apos;ll get a message like <code>npm ERR! Git working directory not clean.</code>. Commit and retry.</p>
-<h2 id="timber-specific">Timber Specific</h2>
-<h1 id="-evergreen_tree-timber-master-your-node-apps-with-structured-logging">:evergreen_tree: Timber - Master your Node apps with structured logging</h1>
+<p>&lt;details&gt;&lt;summary&gt;&lt;strong&gt;Basic logging&lt;/strong&gt;&lt;/summary&gt;</p><p>
+
+No special API, Timber works directly with <code>console.log</code>:
+
+<code>js
+console.log(&quot;My log message&quot;)
+
+// =&gt; My log message @metadata {&quot;level&quot;: &quot;info&quot;, &quot;context&quot;: {...}}
+
+console.info(&quot;My log message&quot;)
+
+// =&gt; My log message @metadata {&quot;level&quot;: &quot;info&quot;, &quot;context&quot;: {...}}
+
+console.warn(&quot;My log message&quot;)
+
+// =&gt; My log message @metadata {&quot;level&quot;: &quot;warn&quot;, &quot;context&quot;: {...}}
+
+console.error(&quot;My log message&quot;)
+
+// =&gt; My log message @metadata {&quot;level&quot;: &quot;error&quot;, &quot;context&quot;: {...}}</code>
+
+---
+
+</p>&lt;/details&gt;
+
+<p></p>
+<p>&lt;details&gt;&lt;summary&gt;&lt;strong&gt;Custom events&lt;/strong&gt;&lt;/summary&gt;</p><p>
+
+Custom events are currently not supported in the current version of the Node library. We are planning to add support for them soon!
+
+---
+
+</p>&lt;/details&gt;
+
+<p></p>
+<p>&lt;details&gt;&lt;summary&gt;&lt;strong&gt;Custom contexts&lt;/strong&gt;&lt;/summary&gt;</p><p>
+
+Custom contexts are currently not supported in the current version of the Node library. We are planning to add support for them soon!
+
+
+</p>&lt;/details&gt;
+
+
+<p></p>
+<h2 id="jibber-jabber">Jibber-Jabber</h2>
+<p>&lt;details&gt;&lt;summary&gt;&lt;strong&gt;Which log events does Timber structure for me?&lt;/strong&gt;&lt;/summary&gt;</p><p>
+
+Out of the box you get everything in the <a href="src/events"><code>timber.events</code></a> namespace.
+
+We also add context to every log, everything in the <a href="src/contexts"><code>timber.contexts</code></a>
+namespace. Context is structured data representing the current environment when the log line
+was written. It is included in every log line. Think of it like join data for your logs.
+
+---
+
+</p>&lt;/details&gt;
+
+<p></p>
+<p>&lt;details&gt;&lt;summary&gt;&lt;strong&gt;What about my current log statements?&lt;/strong&gt;&lt;/summary&gt;</p><p>
+
+They&apos;ll continue to work as expected. Timber adheres strictly to the default <code>console</code> interface
+and will never deviate in <em>any</em> way.
+
+</p>&lt;/details&gt;
+
+<p></p>
+<p>&lt;details&gt;&lt;summary&gt;&lt;strong&gt;How is Timber different?&lt;/strong&gt;&lt;/summary&gt;</p><p>
+
+1. <strong>It&apos;s just <em>better</em> logging</strong>. Nothing beats well structured raw data. And that&apos;s exactly
+   what Timber aims to provide. There are no agents, special APIs, or proprietary data
+   sets that you can&apos;t access.
+2. <strong>Improved log data quality.</strong> Instead of relying on parsing alone, Timber ships libraries that
+   structure and augment your logs from <em>within</em> your application. Improving your log data at the
+   source.
+3. <strong>Human readability.</strong> Timber <em>augments</em> your logs without sacrificing human readability. For
+   example: <code>log message @metadata {...}</code>. And when you view your logs in the
+   <a href="https://app.timber.io">Timber console</a>, you&apos;ll see the human friendly messages
+   with the ability to view the associated metadata.
+4. <strong>Long retention</strong>. Logging is notoriously expensive with low retention. Timber
+   offers <em>6 months</em> of retention by default with sane prices.
+5. <strong>Normalized schema.</strong> Have multiple apps? All of Timber&apos;s libraries adhere to our
+   <a href="https://github.com/timberio/log-event-json-schema">JSON schema</a>. This means queries, alerts,
+   and graphs for your ruby app can also be applied to your js app (for example).
+
+---
+
+</p>&lt;/details&gt;
+
+<p></p>
+<hr>
 <p></p><p>
-<a href="http://github.com/timberio/timber-elixir"><img src="http://files.timber.io/images/ruby-library-readme-header.gif" height="469"></a>
+<a href="http://github.com/timberio/timber-js"><img src="http://files.timber.io/images/ruby-library-readme-log-truth.png" height="947"></a>
 </p>
 <p></p>
 </div>

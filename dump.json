@@ -3,7 +3,7 @@
     "__docId__": 0,
     "kind": "file",
     "name": "src/config.js",
-    "content": "import path from 'path'\nimport finder from 'find-package-json'\n\nconst filename = (require.main && require.main.filename) || __dirname\nconst projectPath = path.dirname(filename)\nconst userConfig = finder(projectPath).next().value.timber\n\n/**\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *  \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n */\nconst config = {\n  metadata_delimiter: '@metadata',\n  append_metadata: true,\n  debug_logger: undefined,\n  capture_request_body: false,\n  capture_response_body: false,\n  ...userConfig,\n}\n\nexport default config\n",
+    "content": "import path from 'path'\nimport finder from 'find-package-json'\n\nconst filename = (require.main && require.main.filename) || __dirname\nconst projectPath = path.dirname(filename)\nconst userConfig = finder(projectPath).next().value.timber\n\n/**\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *   \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n */\nconst config = {\n  metadata_delimiter: '@metadata',\n  append_metadata: true,\n  debug_logger: undefined,\n  capture_request_body: false,\n  capture_response_body: false,\n  ...userConfig,\n}\n\nexport default config\n",
     "static": true,
     "longname": "src/config.js",
     "access": null,
@@ -99,7 +99,7 @@
     "export": true,
     "importPath": "timber/src/config.js",
     "importStyle": "config",
-    "description": "The configuration options here are use throughout the timber library.\nAny of the values can be changed in two different ways:\n\n## Using your package.json\n\nTo configure timber from your `package.json`, simply add a `timber`\nobject at the root level containing your desired overrides:\n\n```json\n\"timber\": {\n \"capture_request_body\": true,\n  \"capture_response_body\": true\n},\n```\n\n__Note:__ you cannot set the `debug_logger` option from the `package.json`.\nThis is because you must set it as a writeable stream.\n\n## Using inline overrides\n\nYou can also configure timber by overriding the config options inline:\n\n```js\nconst timber = require('timber');\ntimber.config.debug_logger = process.stdout;\n```\n\n__Note:__ inline overrides will override any options you have set\nin your `package.json` file.",
+    "description": "The configuration options here are use throughout the timber library.\nAny of the values can be changed in two different ways:\n\n## Using your package.json\n\nTo configure timber from your `package.json`, simply add a `timber`\nobject at the root level containing your desired overrides:\n\n```json\n\"timber\": {\n  \"capture_request_body\": true,\n  \"capture_response_body\": true\n},\n```\n\n__Note:__ you cannot set the `debug_logger` option from the `package.json`.\nThis is because you must set it as a writeable stream.\n\n## Using inline overrides\n\nYou can also configure timber by overriding the config options inline:\n\n```js\nconst timber = require('timber');\ntimber.config.debug_logger = process.stdout;\n```\n\n__Note:__ inline overrides will override any options you have set\nin your `package.json` file.",
     "lineNumber": 39,
     "type": {
       "types": [
@@ -111,7 +111,7 @@
     "__docId__": 5,
     "kind": "file",
     "name": "src/connect.js",
-    "content": "import { Writable } from 'stream'\nimport Log from './utils/log'\nimport debug from './utils/debug'\n\nfunction connect(stream, applyBackPressure = false) {\n  // console.info('writeable', stream instanceof Writable)\n  // Ensure the stream is Writable\n  if (!(stream instanceof Writable)) {\n    throw new Error('stream must be of type Writable')\n  }\n\n  // prevent infinite loop when receiving stdout as a stream\n  if (stream === process.stdout) return stream\n\n  // Store refs to standard logging utilities\n  const oldOutWrite = process.stdout.write\n  const oldErrWrite = process.stderr.write\n\n  process.stdout.write = (function(write) {\n    return function(message, encoding, fd) {\n      const log = message instanceof Log ? message : new Log(message)\n      // transform the message string into a schema adhering object\n      const written = stream.write(log.data, encoding, fd)\n\n      debug(`Logged: ${log.raw}`)\n\n      // If we want to allow back pressure, listen for\n      // the drain event and try once the buffer is cleared\n      if (!written && applyBackPressure) {\n        stream.once('drain', () => stream.write(...arguments))\n      }\n\n      return written\n    }\n  })(process.stdout.write)\n\n  process.stderr.write = (function(write) {\n    return function(message, encoding, fd) {\n      const log = message instanceof Log ? message : new Log(message)\n      const written = stream.write(log.data, encoding, fd)\n\n      debug(`Logged: ${log.raw}`)\n\n      // If we want to allow back pressure, listen for\n      // the drain event and try once the buffer is cleared\n      if (!written && applyBackPressure) {\n        stream.once('drain', () => stream.write(...arguments))\n      }\n\n      return written\n    }\n  })(process.stderr.write)\n\n  return function() {\n    process.stdout.write = oldOutWrite\n    process.stderr.write = oldErrWrite\n  }\n}\n\nmodule.exports = connect\n",
+    "content": "import { Writable } from 'stream'\nimport Log from './log'\nimport debug from './utils/debug'\n\nfunction connect(stream, applyBackPressure = false) {\n  // Ensure the stream is Writable\n  if (!(stream instanceof Writable)) {\n    throw new Error('stream must be of type Writable')\n  }\n\n  // prevent infinite loop when receiving stdout as a stream\n  if (stream === process.stdout) return stream\n\n  // Store refs to standard logging utilities\n  const oldOutWrite = process.stdout.write\n  const oldErrWrite = process.stderr.write\n\n  process.stdout.write = (function(write) {\n    return function(message, encoding, fd) {\n      const log = message instanceof Log ? message : new Log(message)\n      // transform the message string into a schema adhering object\n      const written = stream.write(log.data, encoding, fd)\n\n      debug(`Logged: ${log.raw}`)\n\n      // If we want to allow back pressure, listen for\n      // the drain event and try once the buffer is cleared\n      if (!written && applyBackPressure) {\n        stream.once('drain', () => stream.write(...arguments))\n      }\n\n      return written\n    }\n  })(process.stdout.write)\n\n  process.stderr.write = (function(write) {\n    return function(message, encoding, fd) {\n      const log = message instanceof Log ? message : new Log(message)\n      const written = stream.write(log.data, encoding, fd)\n\n      debug(`Logged: ${log.raw}`)\n\n      // If we want to allow back pressure, listen for\n      // the drain event and try once the buffer is cleared\n      if (!written && applyBackPressure) {\n        stream.once('drain', () => stream.write(...arguments))\n      }\n\n      return written\n    }\n  })(process.stderr.write)\n\n  return function() {\n    process.stdout.write = oldOutWrite\n    process.stderr.write = oldErrWrite\n  }\n}\n\nmodule.exports = connect\n",
     "static": true,
     "longname": "src/connect.js",
     "access": null,
@@ -167,7 +167,7 @@
     "__docId__": 7,
     "kind": "file",
     "name": "src/console.js",
-    "content": "import util from 'util'\nimport Log from './utils/log'\nimport config from './config'\n\n/**\n * Transforms an ordinary console.log message into a structured Log object\n * It also allows you to pass a Log object directly to a console.log function\n * It will automatically detect whether or not you are passing a structured\n * log into the console before attempting to transform it.\n *\n * This is also what is responsible for assigning the correct level to the log\n *\n * @param {Array} args - argument list passed to console\n * @param {String} level - `info` `warn` `error` `debug` `fatal`\n */\nconst transformConsoleLog = ({ args, level }) => {\n  const log = args[0] instanceof Log\n    ? args[0]\n    : new Log(`${util.format.apply(null, args)}\\n`)\n  log.setLevel(level)\n  return log\n}\n\nconsole.info = (...args) => {\n  process.stdout.write(transformConsoleLog({ args, level: 'info' }))\n}\n\nconsole.log = (...args) => {\n  process.stdout.write(transformConsoleLog({ args, level: 'info' }))\n}\n\nconsole.warn = (...args) => {\n  process.stdout.write(transformConsoleLog({ args, level: 'warn' }))\n}\n\nconsole.error = (...args) => {\n  process.stderr.write(transformConsoleLog({ args, level: 'error' }))\n}\n\nexport default console\n",
+    "content": "import util from 'util'\nimport Log from './log'\n\n/**\n * Transforms an ordinary console.log message into a structured Log object\n * It also allows you to pass a Log object directly to a console.log function\n * It will automatically detect whether or not you are passing a structured\n * log into the console before attempting to transform it.\n *\n * This is also what is responsible for assigning the correct level to the log\n *\n * @param {Array} args - argument list passed to console\n * @param {String} level - `info` `warn` `error` `debug` `fatal`\n */\nconst transformConsoleLog = ({ args, level }) => {\n  const log = args[0] instanceof Log\n    ? args[0]\n    : new Log(`${util.format.apply(null, args)}\\n`)\n  log.setLevel(level)\n  return log\n}\n\nconsole.info = (...args) => {\n  process.stdout.write(transformConsoleLog({ args, level: 'info' }))\n}\n\nconsole.log = (...args) => {\n  process.stdout.write(transformConsoleLog({ args, level: 'info' }))\n}\n\nconsole.warn = (...args) => {\n  process.stdout.write(transformConsoleLog({ args, level: 'warn' }))\n}\n\nconsole.error = (...args) => {\n  process.stderr.write(transformConsoleLog({ args, level: 'error' }))\n}\n\nexport default console\n",
     "static": true,
     "longname": "src/console.js",
     "access": null,
@@ -188,7 +188,7 @@
     "importPath": "timber/src/console.js",
     "importStyle": null,
     "description": "Transforms an ordinary console.log message into a structured Log object\nIt also allows you to pass a Log object directly to a console.log function\nIt will automatically detect whether or not you are passing a structured\nlog into the console before attempting to transform it.\n\nThis is also what is responsible for assigning the correct level to the log",
-    "lineNumber": 16,
+    "lineNumber": 15,
     "params": [
       {
         "nullable": null,
@@ -1097,7 +1097,7 @@
     "__docId__": 45,
     "kind": "file",
     "name": "src/index.js",
-    "content": "// This is the main file that gets referenced by node\nimport config from './config'\nimport connect from './connect'\nimport install from './install'\nimport middlewares from './middlewares'\nimport transports from './transports'\nimport './console'\n\nmodule.exports = {\n  config,\n  connect,\n  install,\n  middlewares,\n  transports,\n}\n",
+    "content": "// This is the main file that gets referenced by node\nimport config from './config'\nimport connect from './connect'\nimport install from './install'\nimport middlewares from './middlewares'\nimport transports from './transports'\nimport log from './log'\nimport './console'\n\nmodule.exports = {\n  config,\n  connect,\n  install,\n  middlewares,\n  transports,\n  log,\n}\n",
     "static": true,
     "longname": "src/index.js",
     "access": null,
@@ -1146,8 +1146,209 @@
   {
     "__docId__": 48,
     "kind": "file",
+    "name": "src/log.js",
+    "content": "import schema from './schema'\nimport config from './config'\n\n/**\n * Transforms a log message or object into a rich structured format\n * that timber expects, ex 'log message' @timber.io {\"dt\": \"…\", \"level\": \"info\", \"context\": {…}}\n * see https://github.com/timberio/log-event-json-schema for specs\n */\nclass Log {\n  /**\n   * @param {String} message - the log message before transforming\n   * @param {Object} [context] - context to be attached to message\n   */\n  constructor(message, context = {}) {\n    // Throw an error if no message is provided\n    if (!message)\n      throw new Error('You must supply a message when creating a log')\n\n    /**\n     * Reference to original log message\n     * @type {String}\n     */\n    this.raw = message\n\n    /**\n     * Structured log data\n     * @type {Date}\n     */\n    this.data = {\n      ...schema,\n      message,\n      dt: new Date(),\n      ...context,\n    }\n  }\n\n  /**\n   * Appends data to the end of the structured log object\n   *\n   * @param {Object} data\n   */\n  append(data) {\n    this.data = {\n      ...this.data,\n      ...data,\n    }\n  }\n\n  /**\n   * Convenience function for setting the log level\n   *\n   * @param {String} level - `info` `warn` `error` `debug`\n   */\n  setLevel(level) {\n    this.append({ level })\n  }\n\n  /**\n   * Transforms the structured log into a string\n   * i.e. `Log message @metadata { ... }`\n   */\n  format({ withMetadata = true } = {}) {\n    let message = this.raw.endsWith('\\n')\n      ? this.raw.substring(0, this.raw.length - 1)\n      : this.raw\n\n    if (withMetadata) {\n      message += ` ${config.metadata_delimiter} ${JSON.stringify(this.data)}`\n    }\n\n    return `${message}\\n`\n  }\n}\n\nexport default Log\n",
+    "static": true,
+    "longname": "src/log.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 49,
+    "kind": "class",
+    "name": "Log",
+    "memberof": "src/log.js",
+    "static": true,
+    "longname": "src/log.js~Log",
+    "access": null,
+    "export": true,
+    "importPath": "timber/src/log.js",
+    "importStyle": "Log",
+    "description": "Transforms a log message or object into a rich structured format\nthat timber expects, ex 'log message' @timber.io {\"dt\": \"…\", \"level\": \"info\", \"context\": {…}}\nsee https://github.com/timberio/log-event-json-schema for specs",
+    "lineNumber": 9,
+    "interface": false
+  },
+  {
+    "__docId__": 50,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/log.js~Log",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/log.js~Log#constructor",
+    "access": null,
+    "description": "",
+    "lineNumber": 14,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "message",
+        "description": "the log message before transforming"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "context",
+        "description": "context to be attached to message"
+      }
+    ]
+  },
+  {
+    "__docId__": 51,
+    "kind": "member",
+    "name": "raw",
+    "memberof": "src/log.js~Log",
+    "static": false,
+    "longname": "src/log.js~Log#raw",
+    "access": null,
+    "description": "Reference to original log message",
+    "lineNumber": 23,
+    "type": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 52,
+    "kind": "member",
+    "name": "data",
+    "memberof": "src/log.js~Log",
+    "static": false,
+    "longname": "src/log.js~Log#data",
+    "access": null,
+    "description": "Structured log data",
+    "lineNumber": 29,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Date"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 53,
+    "kind": "method",
+    "name": "append",
+    "memberof": "src/log.js~Log",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/log.js~Log#append",
+    "access": null,
+    "description": "Appends data to the end of the structured log object",
+    "lineNumber": 42,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 54,
+    "kind": "member",
+    "name": "data",
+    "memberof": "src/log.js~Log",
+    "static": false,
+    "longname": "src/log.js~Log#data",
+    "access": null,
+    "description": null,
+    "lineNumber": 43,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "{...undefined: Object, ...data: Object}"
+      ]
+    }
+  },
+  {
+    "__docId__": 55,
+    "kind": "method",
+    "name": "setLevel",
+    "memberof": "src/log.js~Log",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/log.js~Log#setLevel",
+    "access": null,
+    "description": "Convenience function for setting the log level",
+    "lineNumber": 54,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "level",
+        "description": "`info` `warn` `error` `debug`"
+      }
+    ]
+  },
+  {
+    "__docId__": 56,
+    "kind": "method",
+    "name": "format",
+    "memberof": "src/log.js~Log",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/log.js~Log#format",
+    "access": null,
+    "description": "Transforms the structured log into a string\ni.e. `Log message @metadata { ... }`",
+    "lineNumber": 62,
+    "params": [
+      {
+        "name": "objectPattern",
+        "optional": true,
+        "types": [
+          "{\"withMetadata\": *}"
+        ],
+        "defaultRaw": {},
+        "defaultValue": "{}"
+      }
+    ],
+    "return": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 57,
+    "kind": "file",
     "name": "src/middlewares/express.js",
-    "content": "// import transform from '../transform'\nimport compose from 'composable-middleware'\nimport addRequestId from 'express-request-id'\nimport bodyParser from 'body-parser'\nimport config from '../config'\nimport HTTP from '../contexts/http'\nimport HTTPServerRequest from '../events/http_server_request'\nimport HTTPServerResponse from '../events/http_server_response'\nimport Log from '../utils/log'\n\n/**\n * The express middleware takes care of automatically logging\n * each http event with the appropriate context events attached.\n *\n * This middleware is composed of three separate middlewares:\n * - `addRequestId` automatically attaches a unique uuid to every request\n * - `bodyParser` allows parsing of JSON encoded request bodies\n * - `expressMiddleware` automatically logs http events to timber\n *\n * @param {object} req - the request object\n * @param {object} res - the response object\n * @param {function} next - the next middleware to run\n*/\nconst expressMiddleware = compose(\n  addRequestId(),\n  bodyParser.json(),\n  (req, res, next) => {\n    // save a reference of the start time so that we can determine\n    // the amount of time each http request takes\n    req.start_time = new Date().getTime()\n\n    // destructure the request object for ease of use\n    const {\n      headers: { host, ...headers },\n      method,\n      id: request_id,\n      path,\n      protocol: scheme,\n      body: reqBody,\n      connection,\n    } = req\n\n    // determine the ip address of the client\n    // https://stackoverflow.com/a/10849772\n    const remote_addr = headers['x-forwarded-for'] || connection.remoteAddress\n\n    // send the request body if the capture_request_body flag is true (off by default)\n    // and the request body is not empty\n    let body = config.capture_request_body && Object.keys(reqBody).length > 0\n      ? JSON.stringify(reqBody)\n      : undefined\n\n    // create the HTTP context item\n    const http = new HTTP({\n      method,\n      path,\n      request_id,\n      remote_addr,\n    })\n\n    // add the http context information to the metadata object\n    const metadata = {\n      context: {\n        http,\n      },\n    }\n\n    const http_server_request = new HTTPServerRequest({\n      body,\n      host,\n      path,\n      request_id,\n      scheme,\n      method,\n    })\n\n    // add the http_server_request event to the metadata object\n    metadata.event = { server_side_app: { http_server_request } }\n\n    // add an event to get  triggered when the request finishes\n    // this event will send the http_client_response event to timber\n    req.on('end', () => {\n      // destructure the response object for ease of use\n      const { body: resBody, statusCode: status } = res\n\n      // calculate the duration of the http request\n      const time_ms = new Date().getTime() - req.start_time\n\n      // send the response body if the capture_response_body flag is true (off by default)\n      body = config.capture_response_body ? JSON.stringify(resBody) : undefined\n\n      const http_server_response = new HTTPServerResponse({\n        request_id,\n        time_ms,\n        status,\n        body,\n      })\n\n      // add the http_server_response event to the metadata object\n      metadata.event = { server_side_app: { http_server_response } }\n\n      // log the http response with metadata\n      console.info(new Log(http_server_response.message(), metadata))\n    })\n\n    // log the http request with metadata\n    console.info(new Log(http_server_request.message(), metadata))\n    next()\n  }\n)\n\nexport default expressMiddleware\n",
+    "content": "// import transform from '../transform'\nimport compose from 'composable-middleware'\nimport addRequestId from 'express-request-id'\nimport bodyParser from 'body-parser'\nimport config from '../config'\nimport HTTP from '../contexts/http'\nimport HTTPServerRequest from '../events/http_server_request'\nimport HTTPServerResponse from '../events/http_server_response'\nimport Log from '../log'\n\n/**\n * The express middleware takes care of automatically logging\n * each http event with the appropriate context events attached.\n *\n * This middleware is composed of three separate middlewares:\n * - `addRequestId` automatically attaches a unique uuid to every request\n * - `bodyParser` allows parsing of JSON encoded request bodies\n * - `expressMiddleware` automatically logs http events to timber\n *\n * @param {object} req - the request object\n * @param {object} res - the response object\n * @param {function} next - the next middleware to run\n*/\nconst expressMiddleware = compose(\n  addRequestId(),\n  bodyParser.json(),\n  (req, res, next) => {\n    // save a reference of the start time so that we can determine\n    // the amount of time each http request takes\n    req.start_time = new Date().getTime()\n\n    // destructure the request object for ease of use\n    const {\n      headers: { host, ...headers },\n      method,\n      id: request_id,\n      path,\n      protocol: scheme,\n      body: reqBody,\n      connection,\n    } = req\n\n    // determine the ip address of the client\n    // https://stackoverflow.com/a/10849772\n    const remote_addr = headers['x-forwarded-for'] || connection.remoteAddress\n\n    // send the request body if the capture_request_body flag is true (off by default)\n    // and the request body is not empty\n    let body = config.capture_request_body && Object.keys(reqBody).length > 0\n      ? JSON.stringify(reqBody)\n      : undefined\n\n    // create the HTTP context item\n    const http = new HTTP({\n      method,\n      path,\n      request_id,\n      remote_addr,\n    })\n\n    // add the http context information to the metadata object\n    const metadata = {\n      context: {\n        http,\n      },\n    }\n\n    const http_server_request = new HTTPServerRequest({\n      body,\n      host,\n      path,\n      request_id,\n      scheme,\n      method,\n    })\n\n    // add the http_server_request event to the metadata object\n    metadata.event = { server_side_app: { http_server_request } }\n\n    // add an event to get  triggered when the request finishes\n    // this event will send the http_client_response event to timber\n    req.on('end', () => {\n      // destructure the response object for ease of use\n      const { body: resBody, statusCode: status } = res\n\n      // calculate the duration of the http request\n      const time_ms = new Date().getTime() - req.start_time\n\n      // send the response body if the capture_response_body flag is true (off by default)\n      body = config.capture_response_body ? JSON.stringify(resBody) : undefined\n\n      const http_server_response = new HTTPServerResponse({\n        request_id,\n        time_ms,\n        status,\n        body,\n      })\n\n      // add the http_server_response event to the metadata object\n      metadata.event = { server_side_app: { http_server_response } }\n\n      // log the http response with metadata\n      console.info(new Log(http_server_response.message(), metadata))\n    })\n\n    // log the http request with metadata\n    console.info(new Log(http_server_request.message(), metadata))\n    next()\n  }\n)\n\nexport default expressMiddleware\n",
     "static": true,
     "longname": "src/middlewares/express.js",
     "access": null,
@@ -1155,7 +1356,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 49,
+    "__docId__": 58,
     "kind": "variable",
     "name": "expressMiddleware",
     "memberof": "src/middlewares/express.js",
@@ -1206,7 +1407,7 @@
     }
   },
   {
-    "__docId__": 50,
+    "__docId__": 59,
     "kind": "file",
     "name": "src/middlewares/index.js",
     "content": "import express from './express'\nimport koa from './koa'\n\nexport default { express, koa }\n",
@@ -1217,7 +1418,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 51,
+    "__docId__": 60,
     "kind": "file",
     "name": "src/middlewares/koa.js",
     "content": "",
@@ -1228,7 +1429,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 52,
+    "__docId__": 61,
     "kind": "file",
     "name": "src/schema.js",
     "content": "// look into https://github.com/jquense/yup or\n// http://epoberezkin.github.io/ajv/#performancefor schema normalization/coercion\n\nexport default {\n  $schema:\n    'https://raw.githubusercontent.com/timberio/log-event-json-schema/1.2.3/schema.json',\n  message: '',\n}\n",
@@ -1239,7 +1440,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 53,
+    "__docId__": 62,
     "kind": "file",
     "name": "src/transports/https.js",
     "content": "import https from 'https'\nimport { Writable } from 'stream'\nimport debug from '../utils/debug'\nconst HOSTNAME = 'logs.timber.io'\nconst PATH = '/frames'\nconst CONTENT_TYPE = 'application/json'\nconst USER_AGENT = `Timber Node HTTPS Stream/${require('../../package.json')\n  .version}`\nconst PORT = 443\n\n// For debugging purposes, writes to /timber.log\n// import fs from 'fs';\n// import path from 'path';\n// var logger = fs.createWriteStream('timber.log', { flags: 'a' });\n\n/**\n * A highly efficient stream for sending logs to Timber via HTTPS. It uses batches,\n * keep-alive connections (and in the future maybe msgpack) to deliver logs with high-throughput\n * and little overhead. It also implements the Stream.Writable interface so that it can be treated\n * like a stream. This is beneficial when using something like Morgan, where you can pass a custom stream.\n */\nclass HTTPS extends Writable {\n  /**\n   * @param {string} apiKey - Timber API Key\n   * @param {Object} [options] - Various options to adjust the stream behavior.\n   * @param {string} [options.flushInterval=1000] - How often, in milliseconds, the messages written to the stream should be delivered to Timber.\n   * @param {string} [options.httpsAgent] - Your own custom https.Agent. We use agents to maintain connection pools and keep the connections alive. This avoids the initial connection overhead every time we want to communicate with Timber. See https.Agent for options.\n   */\n  constructor(\n    apiKey,\n    {\n      flushInterval = 1000,\n      highWaterMark = 5000,\n      httpsAgent,\n      httpsClient,\n      hostName = HOSTNAME,\n      path = PATH,\n      port = PORT,\n    } = {}\n  ) {\n    // Ensure we use object mode and set a default highWaterMark\n    super({ objectMode: true, highWaterMark })\n    debug('Initializing HTTPS transport stream')\n\n    this.apiKey = apiKey\n    this.hostName = hostName\n    this.path = path\n    this.port = port\n    this.flushInterval = flushInterval\n    this.httpsAgent =\n      httpsAgent ||\n      new https.Agent({\n        maxSockets: 5,\n      })\n    this.httpsClient = httpsClient || https\n\n    // Cork the stream so we can utilize the internal Buffer. We do *not* want to\n    // send a request for every message. The _flusher will take care of flushing the stream\n    // on an interval.\n    this.cork()\n\n    // In the event the _flusher is not fast enough, we need to monitor the buffer size.\n    // If it fills before the next flush event, we should immediately flush.\n\n    if (flushInterval !== undefined && flushInterval > 0) {\n      debug('Starting stream flusher')\n      this._startFlusher()\n    }\n  }\n\n  /**\n   * _writev is a Stream.Writeable methods that, if present, will write multiple chunks of\n   * data off of the buffer. Defining it means we do not need to define _write.\n   */\n  _writev(chunks, next) {\n    debug(`Sending ${chunks.length} log to stream`)\n    const messages = chunks.map(chunk => chunk.chunk)\n    const body = JSON.stringify(messages)\n    const options = {\n      headers: {\n        'Content-Type': CONTENT_TYPE,\n        'User-Agent': USER_AGENT,\n      },\n      agent: this.httpsAgent,\n      auth: this.apiKey,\n      hostname: this.hostName,\n      port: this.port,\n      path: this.path,\n      method: 'POST',\n    }\n\n    // Add debug outputs for every possible request event\n    // This should help debugging network related issues\n    debug(`Instantiating req object`)\n    const req = this.httpsClient.request(options, res => {\n      debug(`${this.hostName} responded with ${res.statusCode}`)\n      res.on('aborted', () => debug('Response event: aborted'))\n      res.on('close', () => debug('Response event: close'))\n    })\n\n    req.on('abort', () => debug('Request event: abort'))\n    req.on('aborted', () => debug('Request event: aborted'))\n    req.on('connect', () => debug('Request event: connect'))\n    req.on('continue', () => debug('Request event: continue'))\n    req.on('response', () => debug('Request event: response'))\n    req.on('socket', sock => {\n      debug('Request event: socket')\n      sock.on('close', () => debug('Socket event: close'))\n      sock.on('connect', () => debug('Socket event: connect'))\n      sock.on('data', () => sock.end())\n      sock.on('drain', () => debug('Socket event: drain'))\n      sock.on('end', () => debug('Socket event: end'))\n      sock.on('error', () => debug('Socket event: error'))\n      sock.on('lookup', () => debug('Socket event: lookup'))\n      sock.on('drain', () => debug('Socket event: drain'))\n    })\n    req.on('upgrade', () => debug('Request event: upgrade'))\n\n    req.write(body)\n    req.end()\n    next()\n  }\n\n  _write(chunk, encoding, next) {\n    this._writev([{ chunk, encoding }], next)\n  }\n\n  /**\n   * Expressive function to flush the buffer contents. uncork flushes the buffer and write\n   * the contents. Cork allows us to continue buffering the messages until the next flush.\n   */\n  _flush() {\n    // nextTick is recommended here to allow batching of write calls I think\n    process.nextTick(() => {\n      this.uncork()\n      this.cork()\n    })\n  }\n\n  /**\n   * Interval to call _flush continuously. This ensures log lines get sent on this.flushInterval\n   * intervals.\n   */\n  _startFlusher() {\n    setInterval(() => this._flush(), this.flushInterval)\n  }\n}\n\nexport default HTTPS\n",
@@ -1250,7 +1451,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 54,
+    "__docId__": 63,
     "kind": "variable",
     "name": "HOSTNAME",
     "memberof": "src/transports/https.js",
@@ -1276,7 +1477,7 @@
     }
   },
   {
-    "__docId__": 55,
+    "__docId__": 64,
     "kind": "variable",
     "name": "PATH",
     "memberof": "src/transports/https.js",
@@ -1302,7 +1503,7 @@
     }
   },
   {
-    "__docId__": 56,
+    "__docId__": 65,
     "kind": "variable",
     "name": "CONTENT_TYPE",
     "memberof": "src/transports/https.js",
@@ -1328,7 +1529,7 @@
     }
   },
   {
-    "__docId__": 57,
+    "__docId__": 66,
     "kind": "variable",
     "name": "USER_AGENT",
     "memberof": "src/transports/https.js",
@@ -1354,7 +1555,7 @@
     }
   },
   {
-    "__docId__": 58,
+    "__docId__": 67,
     "kind": "variable",
     "name": "PORT",
     "memberof": "src/transports/https.js",
@@ -1380,7 +1581,7 @@
     }
   },
   {
-    "__docId__": 59,
+    "__docId__": 68,
     "kind": "class",
     "name": "HTTPS",
     "memberof": "src/transports/https.js",
@@ -1398,7 +1599,7 @@
     ]
   },
   {
-    "__docId__": 60,
+    "__docId__": 69,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1455,7 +1656,7 @@
     ]
   },
   {
-    "__docId__": 61,
+    "__docId__": 70,
     "kind": "member",
     "name": "apiKey",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1478,7 +1679,7 @@
     }
   },
   {
-    "__docId__": 62,
+    "__docId__": 71,
     "kind": "member",
     "name": "hostName",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1501,7 +1702,7 @@
     }
   },
   {
-    "__docId__": 63,
+    "__docId__": 72,
     "kind": "member",
     "name": "path",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1524,7 +1725,7 @@
     }
   },
   {
-    "__docId__": 64,
+    "__docId__": 73,
     "kind": "member",
     "name": "port",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1547,7 +1748,7 @@
     }
   },
   {
-    "__docId__": 65,
+    "__docId__": 74,
     "kind": "member",
     "name": "flushInterval",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1570,7 +1771,7 @@
     }
   },
   {
-    "__docId__": 66,
+    "__docId__": 75,
     "kind": "member",
     "name": "httpsAgent",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1593,7 +1794,7 @@
     }
   },
   {
-    "__docId__": 67,
+    "__docId__": 76,
     "kind": "member",
     "name": "httpsClient",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1616,7 +1817,7 @@
     }
   },
   {
-    "__docId__": 68,
+    "__docId__": 77,
     "kind": "method",
     "name": "_writev",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1643,7 +1844,7 @@
     ]
   },
   {
-    "__docId__": 69,
+    "__docId__": 78,
     "kind": "method",
     "name": "_write",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1683,7 +1884,7 @@
     ]
   },
   {
-    "__docId__": 70,
+    "__docId__": 79,
     "kind": "method",
     "name": "_flush",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1697,7 +1898,7 @@
     "params": []
   },
   {
-    "__docId__": 71,
+    "__docId__": 80,
     "kind": "method",
     "name": "_startFlusher",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1711,7 +1912,7 @@
     "params": []
   },
   {
-    "__docId__": 72,
+    "__docId__": 81,
     "kind": "file",
     "name": "src/transports/index.js",
     "content": "import HTTPS from './https'\n\nmodule.exports = { HTTPS }\n",
@@ -1722,7 +1923,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 73,
+    "__docId__": 82,
     "kind": "file",
     "name": "src/utils/debug.js",
     "content": "import util from 'util'\nimport config from '../config'\n\n/**\n * Convenience function for retrieving a reference to\n * the debug_logger stream.\n *\n * @private\n */\nexport const debug_logger = () => config.debug_logger\n\n/**\n * Generate a timestamp string to use in debug lines\n *\n * @private\n */\nconst timestamp = () => new Date().toISOString()\n\n/**\n * Convenience function for logging debug messages\n * to the configured debug_logger\n *\n * This works much like the builtin console.log function,\n * accepting any amount of mixed arguments and concatenating\n * them into a single string to be sent to the debug_logger stream\n *\n * @private\n * @param {...*} args\n */\nconst debug = (...args) => {\n  if (debug_logger()) {\n    debug_logger().write(`[${timestamp()}]: ${util.format.apply(null, args)}\\n`)\n  }\n}\n\nexport default debug\n",
@@ -1733,7 +1934,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 74,
+    "__docId__": 83,
     "kind": "function",
     "name": "debug_logger",
     "memberof": "src/utils/debug.js",
@@ -1750,7 +1951,7 @@
     "params": []
   },
   {
-    "__docId__": 75,
+    "__docId__": 84,
     "kind": "function",
     "name": "timestamp",
     "memberof": "src/utils/debug.js",
@@ -1767,7 +1968,7 @@
     "params": []
   },
   {
-    "__docId__": 76,
+    "__docId__": 85,
     "kind": "function",
     "name": "debug",
     "memberof": "src/utils/debug.js",
@@ -1793,207 +1994,6 @@
         "description": ""
       }
     ]
-  },
-  {
-    "__docId__": 77,
-    "kind": "file",
-    "name": "src/utils/log.js",
-    "content": "import schema from '../schema'\nimport config from '../config'\n\n/**\n * Transforms a log message or object into a rich structured format\n * that timber expects, ex 'log message' @timber.io {\"dt\": \"…\", \"level\": \"info\", \"context\": {…}}\n * see https://github.com/timberio/log-event-json-schema for specs\n */\nclass Log {\n  /**\n   * @param {String} message - the log message before transforming\n   * @param {Object} [context] - context to be attached to message\n   */\n  constructor(message, context = {}) {\n    // Throw an error if no message is provided\n    if (!message) throw new Error('You must supply a message when creating a log')\n\n    /**\n     * Reference to original log message\n     * @type {String}\n     */\n    this.raw = message\n\n    /**\n     * Structured log data\n     * @type {Date}\n     */\n    this.data = {\n      ...schema,\n      message,\n      dt: new Date(),\n      ...context,\n    }\n  }\n\n  /**\n   * Appends data to the end of the structured log object\n   *\n   * @param {Object} data\n   */\n  append(data) {\n    this.data = {\n      ...this.data,\n      ...data,\n    }\n  }\n\n  /**\n   * Convenience function for setting the log level\n   *\n   * @param {String} level - `info` `warn` `error` `debug`\n   */\n  setLevel(level) {\n    this.append({ level })\n  }\n\n  /**\n   * Transforms the structured log into a string\n   * i.e. `Log message @metadata { ... }`\n   */\n  format({ withMetadata = true } = {}) {\n    let message = this.raw.endsWith('\\n')\n      ? this.raw.substring(0, this.raw.length - 1)\n      : this.raw\n\n    if (withMetadata) {\n      message += ` ${config.metadata_delimiter} ${JSON.stringify(this.data)}`\n    }\n\n    return `${message}\\n`\n  }\n}\n\nexport default Log\n",
-    "static": true,
-    "longname": "src/utils/log.js",
-    "access": null,
-    "description": null,
-    "lineNumber": 1
-  },
-  {
-    "__docId__": 78,
-    "kind": "class",
-    "name": "Log",
-    "memberof": "src/utils/log.js",
-    "static": true,
-    "longname": "src/utils/log.js~Log",
-    "access": null,
-    "export": true,
-    "importPath": "timber/src/utils/log.js",
-    "importStyle": "Log",
-    "description": "Transforms a log message or object into a rich structured format\nthat timber expects, ex 'log message' @timber.io {\"dt\": \"…\", \"level\": \"info\", \"context\": {…}}\nsee https://github.com/timberio/log-event-json-schema for specs",
-    "lineNumber": 9,
-    "interface": false
-  },
-  {
-    "__docId__": 79,
-    "kind": "constructor",
-    "name": "constructor",
-    "memberof": "src/utils/log.js~Log",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/utils/log.js~Log#constructor",
-    "access": null,
-    "description": "",
-    "lineNumber": 14,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "String"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "message",
-        "description": "the log message before transforming"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "Object"
-        ],
-        "spread": false,
-        "optional": true,
-        "name": "context",
-        "description": "context to be attached to message"
-      }
-    ]
-  },
-  {
-    "__docId__": 80,
-    "kind": "member",
-    "name": "raw",
-    "memberof": "src/utils/log.js~Log",
-    "static": false,
-    "longname": "src/utils/log.js~Log#raw",
-    "access": null,
-    "description": "Reference to original log message",
-    "lineNumber": 22,
-    "type": {
-      "nullable": null,
-      "types": [
-        "String"
-      ],
-      "spread": false,
-      "description": null
-    }
-  },
-  {
-    "__docId__": 81,
-    "kind": "member",
-    "name": "data",
-    "memberof": "src/utils/log.js~Log",
-    "static": false,
-    "longname": "src/utils/log.js~Log#data",
-    "access": null,
-    "description": "Structured log data",
-    "lineNumber": 28,
-    "type": {
-      "nullable": null,
-      "types": [
-        "Date"
-      ],
-      "spread": false,
-      "description": null
-    }
-  },
-  {
-    "__docId__": 82,
-    "kind": "method",
-    "name": "append",
-    "memberof": "src/utils/log.js~Log",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/utils/log.js~Log#append",
-    "access": null,
-    "description": "Appends data to the end of the structured log object",
-    "lineNumber": 41,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "Object"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "data",
-        "description": ""
-      }
-    ]
-  },
-  {
-    "__docId__": 83,
-    "kind": "member",
-    "name": "data",
-    "memberof": "src/utils/log.js~Log",
-    "static": false,
-    "longname": "src/utils/log.js~Log#data",
-    "access": null,
-    "description": null,
-    "lineNumber": 42,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
-    "type": {
-      "types": [
-        "{...undefined: Object, ...data: Object}"
-      ]
-    }
-  },
-  {
-    "__docId__": 84,
-    "kind": "method",
-    "name": "setLevel",
-    "memberof": "src/utils/log.js~Log",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/utils/log.js~Log#setLevel",
-    "access": null,
-    "description": "Convenience function for setting the log level",
-    "lineNumber": 53,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "String"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "level",
-        "description": "`info` `warn` `error` `debug`"
-      }
-    ]
-  },
-  {
-    "__docId__": 85,
-    "kind": "method",
-    "name": "format",
-    "memberof": "src/utils/log.js~Log",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/utils/log.js~Log#format",
-    "access": null,
-    "description": "Transforms the structured log into a string\ni.e. `Log message @metadata { ... }`",
-    "lineNumber": 61,
-    "params": [
-      {
-        "name": "objectPattern",
-        "optional": true,
-        "types": [
-          "{\"withMetadata\": *}"
-        ],
-        "defaultRaw": {},
-        "defaultValue": "{}"
-      }
-    ],
-    "return": {
-      "types": [
-        "string"
-      ]
-    }
   },
   {
     "__docId__": 87,

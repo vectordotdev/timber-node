@@ -1,7 +1,7 @@
 {
   "type": "File",
   "start": 0,
-  "end": 1324,
+  "end": 1325,
   "loc": {
     "start": {
       "line": 1,
@@ -15,7 +15,7 @@
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 1324,
+    "end": 1325,
     "loc": {
       "start": {
         "line": 1,
@@ -758,9 +758,9 @@
         "trailingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *  \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n ",
+            "value": "*\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *   \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n ",
             "start": 237,
-            "end": 1114,
+            "end": 1115,
             "loc": {
               "start": {
                 "line": 8,
@@ -776,8 +776,8 @@
       },
       {
         "type": "Identifier",
-        "start": 1115,
-        "end": 1300,
+        "start": 1116,
+        "end": 1301,
         "loc": {
           "start": {
             "line": 39,
@@ -791,8 +791,8 @@
         "declarations": [
           {
             "type": "VariableDeclarator",
-            "start": 1121,
-            "end": 1300,
+            "start": 1122,
+            "end": 1301,
             "loc": {
               "start": {
                 "line": 39,
@@ -805,8 +805,8 @@
             },
             "id": {
               "type": "Identifier",
-              "start": 1121,
-              "end": 1127,
+              "start": 1122,
+              "end": 1128,
               "loc": {
                 "start": {
                   "line": 39,
@@ -823,8 +823,8 @@
             },
             "init": {
               "type": "ObjectExpression",
-              "start": 1130,
-              "end": 1300,
+              "start": 1131,
+              "end": 1301,
               "loc": {
                 "start": {
                   "line": 39,
@@ -838,8 +838,8 @@
               "properties": [
                 {
                   "type": "ObjectProperty",
-                  "start": 1134,
-                  "end": 1165,
+                  "start": 1135,
+                  "end": 1166,
                   "loc": {
                     "start": {
                       "line": 40,
@@ -855,8 +855,8 @@
                   "computed": false,
                   "key": {
                     "type": "Identifier",
-                    "start": 1134,
-                    "end": 1152,
+                    "start": 1135,
+                    "end": 1153,
                     "loc": {
                       "start": {
                         "line": 40,
@@ -872,8 +872,8 @@
                   },
                   "value": {
                     "type": "StringLiteral",
-                    "start": 1154,
-                    "end": 1165,
+                    "start": 1155,
+                    "end": 1166,
                     "loc": {
                       "start": {
                         "line": 40,
@@ -893,8 +893,8 @@
                 },
                 {
                   "type": "ObjectProperty",
-                  "start": 1169,
-                  "end": 1190,
+                  "start": 1170,
+                  "end": 1191,
                   "loc": {
                     "start": {
                       "line": 41,
@@ -910,8 +910,8 @@
                   "computed": false,
                   "key": {
                     "type": "Identifier",
-                    "start": 1169,
-                    "end": 1184,
+                    "start": 1170,
+                    "end": 1185,
                     "loc": {
                       "start": {
                         "line": 41,
@@ -927,8 +927,8 @@
                   },
                   "value": {
                     "type": "BooleanLiteral",
-                    "start": 1186,
-                    "end": 1190,
+                    "start": 1187,
+                    "end": 1191,
                     "loc": {
                       "start": {
                         "line": 41,
@@ -944,8 +944,8 @@
                 },
                 {
                   "type": "ObjectProperty",
-                  "start": 1194,
-                  "end": 1217,
+                  "start": 1195,
+                  "end": 1218,
                   "loc": {
                     "start": {
                       "line": 42,
@@ -961,8 +961,8 @@
                   "computed": false,
                   "key": {
                     "type": "Identifier",
-                    "start": 1194,
-                    "end": 1206,
+                    "start": 1195,
+                    "end": 1207,
                     "loc": {
                       "start": {
                         "line": 42,
@@ -978,8 +978,8 @@
                   },
                   "value": {
                     "type": "Identifier",
-                    "start": 1208,
-                    "end": 1217,
+                    "start": 1209,
+                    "end": 1218,
                     "loc": {
                       "start": {
                         "line": 42,
@@ -996,8 +996,8 @@
                 },
                 {
                   "type": "ObjectProperty",
-                  "start": 1221,
-                  "end": 1248,
+                  "start": 1222,
+                  "end": 1249,
                   "loc": {
                     "start": {
                       "line": 43,
@@ -1013,8 +1013,8 @@
                   "computed": false,
                   "key": {
                     "type": "Identifier",
-                    "start": 1221,
-                    "end": 1241,
+                    "start": 1222,
+                    "end": 1242,
                     "loc": {
                       "start": {
                         "line": 43,
@@ -1030,8 +1030,8 @@
                   },
                   "value": {
                     "type": "BooleanLiteral",
-                    "start": 1243,
-                    "end": 1248,
+                    "start": 1244,
+                    "end": 1249,
                     "loc": {
                       "start": {
                         "line": 43,
@@ -1047,8 +1047,8 @@
                 },
                 {
                   "type": "ObjectProperty",
-                  "start": 1252,
-                  "end": 1280,
+                  "start": 1253,
+                  "end": 1281,
                   "loc": {
                     "start": {
                       "line": 44,
@@ -1064,8 +1064,8 @@
                   "computed": false,
                   "key": {
                     "type": "Identifier",
-                    "start": 1252,
-                    "end": 1273,
+                    "start": 1253,
+                    "end": 1274,
                     "loc": {
                       "start": {
                         "line": 44,
@@ -1081,8 +1081,8 @@
                   },
                   "value": {
                     "type": "BooleanLiteral",
-                    "start": 1275,
-                    "end": 1280,
+                    "start": 1276,
+                    "end": 1281,
                     "loc": {
                       "start": {
                         "line": 44,
@@ -1098,8 +1098,8 @@
                 },
                 {
                   "type": "SpreadProperty",
-                  "start": 1284,
-                  "end": 1297,
+                  "start": 1285,
+                  "end": 1298,
                   "loc": {
                     "start": {
                       "line": 45,
@@ -1112,8 +1112,8 @@
                   },
                   "argument": {
                     "type": "Identifier",
-                    "start": 1287,
-                    "end": 1297,
+                    "start": 1288,
+                    "end": 1298,
                     "loc": {
                       "start": {
                         "line": 45,
@@ -1140,8 +1140,8 @@
       },
       {
         "type": "Identifier",
-        "start": 1302,
-        "end": 1323,
+        "start": 1303,
+        "end": 1324,
         "loc": {
           "start": {
             "line": 48,
@@ -1154,8 +1154,8 @@
         },
         "declaration": {
           "type": "Identifier",
-          "start": 1317,
-          "end": 1323,
+          "start": 1318,
+          "end": 1324,
           "loc": {
             "start": {
               "line": 48,
@@ -1175,8 +1175,8 @@
       },
       {
         "type": "ExportDefaultDeclaration",
-        "start": 1302,
-        "end": 1323,
+        "start": 1303,
+        "end": 1324,
         "loc": {
           "start": {
             "line": 48,
@@ -1189,8 +1189,8 @@
         },
         "declaration": {
           "type": "VariableDeclaration",
-          "start": 1115,
-          "end": 1300,
+          "start": 1116,
+          "end": 1301,
           "loc": {
             "start": {
               "line": 39,
@@ -1204,8 +1204,8 @@
           "declarations": [
             {
               "type": "VariableDeclarator",
-              "start": 1121,
-              "end": 1300,
+              "start": 1122,
+              "end": 1301,
               "loc": {
                 "start": {
                   "line": 39,
@@ -1218,8 +1218,8 @@
               },
               "id": {
                 "type": "Identifier",
-                "start": 1121,
-                "end": 1127,
+                "start": 1122,
+                "end": 1128,
                 "loc": {
                   "start": {
                     "line": 39,
@@ -1236,8 +1236,8 @@
               },
               "init": {
                 "type": "ObjectExpression",
-                "start": 1130,
-                "end": 1300,
+                "start": 1131,
+                "end": 1301,
                 "loc": {
                   "start": {
                     "line": 39,
@@ -1251,8 +1251,8 @@
                 "properties": [
                   {
                     "type": "ObjectProperty",
-                    "start": 1134,
-                    "end": 1165,
+                    "start": 1135,
+                    "end": 1166,
                     "loc": {
                       "start": {
                         "line": 40,
@@ -1268,8 +1268,8 @@
                     "computed": false,
                     "key": {
                       "type": "Identifier",
-                      "start": 1134,
-                      "end": 1152,
+                      "start": 1135,
+                      "end": 1153,
                       "loc": {
                         "start": {
                           "line": 40,
@@ -1285,8 +1285,8 @@
                     },
                     "value": {
                       "type": "StringLiteral",
-                      "start": 1154,
-                      "end": 1165,
+                      "start": 1155,
+                      "end": 1166,
                       "loc": {
                         "start": {
                           "line": 40,
@@ -1306,8 +1306,8 @@
                   },
                   {
                     "type": "ObjectProperty",
-                    "start": 1169,
-                    "end": 1190,
+                    "start": 1170,
+                    "end": 1191,
                     "loc": {
                       "start": {
                         "line": 41,
@@ -1323,8 +1323,8 @@
                     "computed": false,
                     "key": {
                       "type": "Identifier",
-                      "start": 1169,
-                      "end": 1184,
+                      "start": 1170,
+                      "end": 1185,
                       "loc": {
                         "start": {
                           "line": 41,
@@ -1340,8 +1340,8 @@
                     },
                     "value": {
                       "type": "BooleanLiteral",
-                      "start": 1186,
-                      "end": 1190,
+                      "start": 1187,
+                      "end": 1191,
                       "loc": {
                         "start": {
                           "line": 41,
@@ -1357,8 +1357,8 @@
                   },
                   {
                     "type": "ObjectProperty",
-                    "start": 1194,
-                    "end": 1217,
+                    "start": 1195,
+                    "end": 1218,
                     "loc": {
                       "start": {
                         "line": 42,
@@ -1374,8 +1374,8 @@
                     "computed": false,
                     "key": {
                       "type": "Identifier",
-                      "start": 1194,
-                      "end": 1206,
+                      "start": 1195,
+                      "end": 1207,
                       "loc": {
                         "start": {
                           "line": 42,
@@ -1391,8 +1391,8 @@
                     },
                     "value": {
                       "type": "Identifier",
-                      "start": 1208,
-                      "end": 1217,
+                      "start": 1209,
+                      "end": 1218,
                       "loc": {
                         "start": {
                           "line": 42,
@@ -1409,8 +1409,8 @@
                   },
                   {
                     "type": "ObjectProperty",
-                    "start": 1221,
-                    "end": 1248,
+                    "start": 1222,
+                    "end": 1249,
                     "loc": {
                       "start": {
                         "line": 43,
@@ -1426,8 +1426,8 @@
                     "computed": false,
                     "key": {
                       "type": "Identifier",
-                      "start": 1221,
-                      "end": 1241,
+                      "start": 1222,
+                      "end": 1242,
                       "loc": {
                         "start": {
                           "line": 43,
@@ -1443,8 +1443,8 @@
                     },
                     "value": {
                       "type": "BooleanLiteral",
-                      "start": 1243,
-                      "end": 1248,
+                      "start": 1244,
+                      "end": 1249,
                       "loc": {
                         "start": {
                           "line": 43,
@@ -1460,8 +1460,8 @@
                   },
                   {
                     "type": "ObjectProperty",
-                    "start": 1252,
-                    "end": 1280,
+                    "start": 1253,
+                    "end": 1281,
                     "loc": {
                       "start": {
                         "line": 44,
@@ -1477,8 +1477,8 @@
                     "computed": false,
                     "key": {
                       "type": "Identifier",
-                      "start": 1252,
-                      "end": 1273,
+                      "start": 1253,
+                      "end": 1274,
                       "loc": {
                         "start": {
                           "line": 44,
@@ -1494,8 +1494,8 @@
                     },
                     "value": {
                       "type": "BooleanLiteral",
-                      "start": 1275,
-                      "end": 1280,
+                      "start": 1276,
+                      "end": 1281,
                       "loc": {
                         "start": {
                           "line": 44,
@@ -1511,8 +1511,8 @@
                   },
                   {
                     "type": "SpreadProperty",
-                    "start": 1284,
-                    "end": 1297,
+                    "start": 1285,
+                    "end": 1298,
                     "loc": {
                       "start": {
                         "line": 45,
@@ -1525,8 +1525,8 @@
                     },
                     "argument": {
                       "type": "Identifier",
-                      "start": 1287,
-                      "end": 1297,
+                      "start": 1288,
+                      "end": 1298,
                       "loc": {
                         "start": {
                           "line": 45,
@@ -1550,9 +1550,9 @@
           "leadingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *  \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n ",
+              "value": "*\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *   \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n ",
               "start": 237,
-              "end": 1114,
+              "end": 1115,
               "loc": {
                 "start": {
                   "line": 8,
@@ -1574,9 +1574,9 @@
   "comments": [
     {
       "type": "CommentBlock",
-      "value": "*\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *  \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n ",
+      "value": "*\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *   \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n ",
       "start": 237,
-      "end": 1114,
+      "end": 1115,
       "loc": {
         "start": {
           "line": 8,
@@ -2849,9 +2849,9 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *  \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n ",
+      "value": "*\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *   \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n ",
       "start": 237,
-      "end": 1114,
+      "end": 1115,
       "loc": {
         "start": {
           "line": 8,
@@ -2878,8 +2878,8 @@
         "updateContext": null
       },
       "value": "const",
-      "start": 1115,
-      "end": 1120,
+      "start": 1116,
+      "end": 1121,
       "loc": {
         "start": {
           "line": 39,
@@ -2904,8 +2904,8 @@
         "binop": null
       },
       "value": "config",
-      "start": 1121,
-      "end": 1127,
+      "start": 1122,
+      "end": 1128,
       "loc": {
         "start": {
           "line": 39,
@@ -2931,8 +2931,8 @@
         "updateContext": null
       },
       "value": "=",
-      "start": 1128,
-      "end": 1129,
+      "start": 1129,
+      "end": 1130,
       "loc": {
         "start": {
           "line": 39,
@@ -2956,8 +2956,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1130,
-      "end": 1131,
+      "start": 1131,
+      "end": 1132,
       "loc": {
         "start": {
           "line": 39,
@@ -2982,8 +2982,8 @@
         "binop": null
       },
       "value": "metadata_delimiter",
-      "start": 1134,
-      "end": 1152,
+      "start": 1135,
+      "end": 1153,
       "loc": {
         "start": {
           "line": 40,
@@ -3008,8 +3008,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1152,
-      "end": 1153,
+      "start": 1153,
+      "end": 1154,
       "loc": {
         "start": {
           "line": 40,
@@ -3035,8 +3035,8 @@
         "updateContext": null
       },
       "value": "@metadata",
-      "start": 1154,
-      "end": 1165,
+      "start": 1155,
+      "end": 1166,
       "loc": {
         "start": {
           "line": 40,
@@ -3061,8 +3061,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1165,
-      "end": 1166,
+      "start": 1166,
+      "end": 1167,
       "loc": {
         "start": {
           "line": 40,
@@ -3087,8 +3087,8 @@
         "binop": null
       },
       "value": "append_metadata",
-      "start": 1169,
-      "end": 1184,
+      "start": 1170,
+      "end": 1185,
       "loc": {
         "start": {
           "line": 41,
@@ -3113,8 +3113,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1184,
-      "end": 1185,
+      "start": 1185,
+      "end": 1186,
       "loc": {
         "start": {
           "line": 41,
@@ -3141,8 +3141,8 @@
         "updateContext": null
       },
       "value": "true",
-      "start": 1186,
-      "end": 1190,
+      "start": 1187,
+      "end": 1191,
       "loc": {
         "start": {
           "line": 41,
@@ -3167,8 +3167,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1190,
-      "end": 1191,
+      "start": 1191,
+      "end": 1192,
       "loc": {
         "start": {
           "line": 41,
@@ -3193,8 +3193,8 @@
         "binop": null
       },
       "value": "debug_logger",
-      "start": 1194,
-      "end": 1206,
+      "start": 1195,
+      "end": 1207,
       "loc": {
         "start": {
           "line": 42,
@@ -3219,8 +3219,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1206,
-      "end": 1207,
+      "start": 1207,
+      "end": 1208,
       "loc": {
         "start": {
           "line": 42,
@@ -3245,8 +3245,8 @@
         "binop": null
       },
       "value": "undefined",
-      "start": 1208,
-      "end": 1217,
+      "start": 1209,
+      "end": 1218,
       "loc": {
         "start": {
           "line": 42,
@@ -3271,8 +3271,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1217,
-      "end": 1218,
+      "start": 1218,
+      "end": 1219,
       "loc": {
         "start": {
           "line": 42,
@@ -3297,8 +3297,8 @@
         "binop": null
       },
       "value": "capture_request_body",
-      "start": 1221,
-      "end": 1241,
+      "start": 1222,
+      "end": 1242,
       "loc": {
         "start": {
           "line": 43,
@@ -3323,8 +3323,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1241,
-      "end": 1242,
+      "start": 1242,
+      "end": 1243,
       "loc": {
         "start": {
           "line": 43,
@@ -3351,8 +3351,8 @@
         "updateContext": null
       },
       "value": "false",
-      "start": 1243,
-      "end": 1248,
+      "start": 1244,
+      "end": 1249,
       "loc": {
         "start": {
           "line": 43,
@@ -3377,8 +3377,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1248,
-      "end": 1249,
+      "start": 1249,
+      "end": 1250,
       "loc": {
         "start": {
           "line": 43,
@@ -3403,8 +3403,8 @@
         "binop": null
       },
       "value": "capture_response_body",
-      "start": 1252,
-      "end": 1273,
+      "start": 1253,
+      "end": 1274,
       "loc": {
         "start": {
           "line": 44,
@@ -3429,8 +3429,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1273,
-      "end": 1274,
+      "start": 1274,
+      "end": 1275,
       "loc": {
         "start": {
           "line": 44,
@@ -3457,8 +3457,8 @@
         "updateContext": null
       },
       "value": "false",
-      "start": 1275,
-      "end": 1280,
+      "start": 1276,
+      "end": 1281,
       "loc": {
         "start": {
           "line": 44,
@@ -3483,8 +3483,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1280,
-      "end": 1281,
+      "start": 1281,
+      "end": 1282,
       "loc": {
         "start": {
           "line": 44,
@@ -3509,8 +3509,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1284,
-      "end": 1287,
+      "start": 1285,
+      "end": 1288,
       "loc": {
         "start": {
           "line": 45,
@@ -3535,8 +3535,8 @@
         "binop": null
       },
       "value": "userConfig",
-      "start": 1287,
-      "end": 1297,
+      "start": 1288,
+      "end": 1298,
       "loc": {
         "start": {
           "line": 45,
@@ -3561,8 +3561,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1297,
-      "end": 1298,
+      "start": 1298,
+      "end": 1299,
       "loc": {
         "start": {
           "line": 45,
@@ -3586,8 +3586,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1299,
-      "end": 1300,
+      "start": 1300,
+      "end": 1301,
       "loc": {
         "start": {
           "line": 46,
@@ -3614,8 +3614,8 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 1302,
-      "end": 1308,
+      "start": 1303,
+      "end": 1309,
       "loc": {
         "start": {
           "line": 48,
@@ -3642,8 +3642,8 @@
         "updateContext": null
       },
       "value": "default",
-      "start": 1309,
-      "end": 1316,
+      "start": 1310,
+      "end": 1317,
       "loc": {
         "start": {
           "line": 48,
@@ -3668,8 +3668,8 @@
         "binop": null
       },
       "value": "config",
-      "start": 1317,
-      "end": 1323,
+      "start": 1318,
+      "end": 1324,
       "loc": {
         "start": {
           "line": 48,
@@ -3694,8 +3694,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1324,
-      "end": 1324,
+      "start": 1325,
+      "end": 1325,
       "loc": {
         "start": {
           "line": 49,
