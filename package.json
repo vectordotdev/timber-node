@@ -58,11 +58,13 @@
   "homepage": "https://github.com/timberio/timber-node#readme",
   "devDependencies": {
     "babel-cli": "^6.22.2",
+    "babel-eslint": "^7.1.1",
     "babel-jest": "^18.0.0",
     "babel-plugin-transform-runtime": "^6.22.0",
     "babel-polyfill": "^6.22.0",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-stage-0": "^6.22.0",
+    "babel-runtime": "^6.23.0",
     "coveralls": "^2.11.4",
     "esdoc": "^0.5.2",
     "eslint": "^3.19.0",
@@ -76,8 +78,6 @@
     "winston": "^2.3.1"
   },
   "dependencies": {
-    "babel-eslint": "^7.1.1",
-    "babel-runtime": "^6.22.0",
     "body-parser": "^1.17.2",
     "composable-middleware": "^0.3.0",
     "express-request-id": "^1.4.0",
