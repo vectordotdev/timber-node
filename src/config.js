@@ -35,6 +35,12 @@ const userConfig = finder(projectPath).next().value.timber
  *
  * __Note:__ inline overrides will override any options you have set
  * in your `package.json` file.
+ *
+ * @param {String} metadata_delimiter - delimiter between log message and log data (@metadata by default)
+ * @param {boolean} append_metadata - append @metadata { ... } to all logs (on by default)
+ * @param {Writable} debug_logger - a writeable stream for internal debug messages to be sent to (disabled when underined)
+ * @param {boolean} capture_request_body - whether the http request body data will be captured (off by default)
+ * @param {boolean} capture_request_body - whether the http response body data will be captured (off by default)
  */
 const config = {
   metadata_delimiter: '@metadata',
