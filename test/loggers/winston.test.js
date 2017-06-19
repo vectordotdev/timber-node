@@ -1,4 +1,4 @@
-import connect from '../../src/connect.js';
+import attach from '../../src/utils/attach.js';
 import { Writable, Readable } from 'stream';
 import winston from 'winston';
 
@@ -12,11 +12,11 @@ describe('Winston', () => {
   it('captures Winston info logs', () => {
     const log = 'test winston log...';
     const level = 'info';
-    
+
     // Create a new write stream and cork it
     // to keep the data in the buffer
     let testStream = new TestWriteStream();
-    const detach = connect(testStream);
+    const detach = attach(testStream, process.stdout);
     testStream.cork();
 
     // Write the sample message to stdout
