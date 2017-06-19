@@ -91,6 +91,8 @@ console.error("My log message")
 
 ---
 
+</p></details>
+
 <details><summary><strong>Express middleware</strong></summary><p>
 
 If you're using express, you can use the timber middleware to automatically log
