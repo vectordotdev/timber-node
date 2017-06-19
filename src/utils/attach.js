@@ -2,6 +2,14 @@ import { Writable } from 'stream'
 import Log from '../log'
 import debug from './debug'
 
+/**
+ * Attaches a transport stream to a writeable stream.
+ *
+ * @param {Writable} stream - the transport stream
+ * @param {Writable} toStream - the stream your transport will attach to
+ * @param {Object} options - configuration options
+ * @param {boolean} options.applyBackPressure
+ */
 const attach = (stream, toStream, { applyBackPressure = false } = {}) => {
   // Ensure the stream is Writable
   if (!(stream instanceof Writable)) {
