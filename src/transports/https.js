@@ -42,6 +42,7 @@ class HTTPS extends Writable {
     super({ objectMode: true, highWaterMark })
     debug('Initializing HTTPS transport stream')
 
+    this.acceptsObject = true
     this.apiKey = apiKey
     this.hostName = hostName
     this.path = path
