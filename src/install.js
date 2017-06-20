@@ -9,8 +9,8 @@ function install(transport) {
   if (!transport) throw Error('No transport was provided.')
 
   // attach our transport stream to stdout/stderr
-  attach(transport, process.stdout)
-  attach(transport, process.stderr)
+  attach([transport], process.stdout)
+  attach([transport], process.stderr)
 }
 
 export default install
