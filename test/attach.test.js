@@ -80,7 +80,7 @@ describe('Connect STDOUT', () => {
   it("throws an error when not passed a Writable stream", () => {
     let testStream = new TestReadStream();
     expect(() => {
-      attach(['string'], process.stdout);
+      attach([testStream], process.stdout);
     }).toThrow();
   });
 
