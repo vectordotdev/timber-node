@@ -1,3 +1,4 @@
+import { Writable } from 'stream'
 import Log from '../log'
 import debug from './debug'
 
@@ -10,6 +11,13 @@ import debug from './debug'
  * @param {boolean} options.applyBackPressure
  */
 const attach = (transports, toStream, { applyBackPressure = false } = {}) => {
+  // Ensure all the streams are Writable
+  for (let i = 0; i < transports.length; i++) {
+    if (!(transports[i] instanceof Writable)) {
+      throw new Error('stream must be of type Writable')
+    }
+  }
+
   // Store refs to standard logging utilities
   const originalWrite = toStream.write
 
