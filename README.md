@@ -102,7 +102,7 @@ all http request/response events
 const express = require('express')
 const timber = require('timber')
 
-// first we create a writeable stream that the logs will get sent to
+// first we create a writeable stream that your logs will get sent to
 const transport = new timber.transports.HTTPS('your-timber-api-key');
 
 // attach the stream to stdout
@@ -121,6 +121,34 @@ app.get('/', function (req, res) {
 // Output:
 // => Started GET "/" @metadata {"level": "error", "context": {...}}
 // => Outgoing HTTP response 200 in 2ms @metadata {"level": "error", "context": {...}}
+```
+
+---
+
+</p></details>
+
+<details><summary><strong>Attaching to a custom stream</strong></summary><p>
+
+In most applications, you're going to want to attach the timber transport to `stdout` and `stderr`. This is why we supply the convenient `timber.install(transport)` function. However, it's possible to attach the transport to _any_ writeable stream using the `timber.attach()` function!
+
+```js
+const transport = timber.transports.HTTPS('timber-api-key')
+
+// This is what the install() command is doing:
+timber.attach([transport], process.stdout)
+timber.attach([transport], process.stderr)
+// => This sends all logs from stdout directly to Timber
+
+// By default, those transports are "hijacking" the output of the original stream
+// If you want to send logs to timber and also preserve their output in stdout:
+timber.attach([transport, process.stdout], process.stdout)
+timber.attach([transport, process.stderr], process.stderr)
+// => This sends all logs from stdout to Timber and stdout
+
+// You can attach multiple unique transport streams to each stream:
+const file_transport = fs.createWriteStream("./output.log", {flags: "a"})
+timber.attach([transport, file_transport], process.stdout)
+// => This sends all logs from stdout to Timber and a custom log file
 ```
 
 ---
