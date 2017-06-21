@@ -8,11 +8,6 @@ const USER_AGENT = `Timber Node HTTPS Stream/${require('../../package.json')
   .version}`
 const PORT = 443
 
-// For debugging purposes, writes to /timber.log
-// import fs from 'fs';
-// import path from 'path';
-// var logger = fs.createWriteStream('timber.log', { flags: 'a' });
-
 /**
  * A highly efficient stream for sending logs to Timber via HTTPS. It uses batches,
  * keep-alive connections (and in the future maybe msgpack) to deliver logs with high-throughput
