@@ -1,6 +1,6 @@
 {
   "name": "timber",
-  "version": "1.3.0",
+  "version": "2.0.0-beta.3",
   "description": "Timber.io node client.",
   "license": "ISC",
   "main": "dist/index.js",
@@ -24,15 +24,18 @@
     "watch": "babel src -d dist --experimental -w",
     "clean": "rimraf dist coverage",
     "lint": "eslint src",
+    "format": "prettier --single-quote --trailing-comma es5 --no-semi --write src/**/*.js src/*.js",
     "compile": "babel -d dist src",
     "build": "npm run clean && babel -d dist src",
+    "build:docs": "esdoc",
     "test": "jest --coverage",
     "cover": "jest --coverage",
     "coveralls": "npm run compile && npm test && cat ./coverage/lcov.info |  ./node_modules/coveralls/bin/coveralls.js",
     "postcoveralls": "rimraf coverage",
     "prepublish": "npm run build",
     "postpublish": "git push origin master --follow-tags",
-    "deploy": "git pull --rebase origin master && git push origin master"
+    "deploy": "git pull --rebase origin master && git push origin master",
+    "deploy:docs": "gh-pages -d docs"
   },
   "bugs": {
     "url": "https://github.com/timberio/timber-node/issues"
@@ -55,22 +58,30 @@
   "homepage": "https://github.com/timberio/timber-node#readme",
   "devDependencies": {
     "babel-cli": "^6.22.2",
+    "babel-eslint": "^7.1.1",
     "babel-jest": "^18.0.0",
     "babel-plugin-transform-runtime": "^6.22.0",
     "babel-polyfill": "^6.22.0",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-stage-0": "^6.22.0",
+    "babel-runtime": "^6.23.0",
     "coveralls": "^2.11.4",
-    "eslint": "1.8.0",
-    "eslint-config-xo": "0.7.1",
-    "eslint-plugin-babel": "2.1.1",
+    "esdoc": "^0.5.2",
+    "eslint": "^3.19.0",
+    "eslint-config-prettier": "^2.1.1",
+    "eslint-config-xo": "^0.18.2",
+    "eslint-plugin-babel": "^4.1.1",
+    "gh-pages": "^1.0.0",
     "jest-cli": "^18.1.0",
+    "prettier": "^1.4.2",
     "rimraf": "2.4.3",
     "winston": "^2.3.1"
   },
   "dependencies": {
-    "babel-eslint": "^7.1.1",
-    "babel-runtime": "^6.22.0"
+    "body-parser": "^1.17.2",
+    "composable-middleware": "^0.3.0",
+    "express-request-id": "^1.4.0",
+    "find-package-json": "^1.0.0"
   },
   "jest": {
     "testEnvironment": "node",

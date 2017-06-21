@@ -1,4 +1,3 @@
-import Https from './https';
-import Network from './network';
+import HTTPS from './https'
 
-module.exports = { Https, Network }
+module.exports = { HTTPS }
