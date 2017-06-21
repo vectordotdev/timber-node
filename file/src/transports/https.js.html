@@ -42,6 +42,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_server_response.js~HTTPServerResponse.html">HTTPServerResponse</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-expressMiddleware">expressMiddleware</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">transports</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html">HTTPS</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-attach">attach</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -56,11 +57,6 @@ const CONTENT_TYPE = &apos;application/json&apos;
 const USER_AGENT = `Timber Node HTTPS Stream/${require(&apos;../../package.json&apos;)
   .version}`
 const PORT = 443
-
-// For debugging purposes, writes to /timber.log
-// import fs from &apos;fs&apos;;
-// import path from &apos;path&apos;;
-// var logger = fs.createWriteStream(&apos;timber.log&apos;, { flags: &apos;a&apos; });
 
 /**
  * A highly efficient stream for sending logs to Timber via HTTPS. It uses batches,
@@ -91,6 +87,7 @@ class HTTPS extends Writable {
     super({ objectMode: true, highWaterMark })
     debug(&apos;Initializing HTTPS transport stream&apos;)
 
+    this.acceptsObject = true
     this.apiKey = apiKey
     this.hostName = hostName
     this.path = path

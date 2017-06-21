@@ -42,6 +42,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_server_response.js~HTTPServerResponse.html">HTTPServerResponse</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-expressMiddleware">expressMiddleware</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">transports</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html">HTTPS</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-attach">attach</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -84,6 +85,12 @@ const userConfig = finder(projectPath).next().value.timber
  *
  * __Note:__ inline overrides will override any options you have set
  * in your `package.json` file.
+ *
+ * @param {String} metadata_delimiter - delimiter between log message and log data (@metadata by default)
+ * @param {boolean} append_metadata - append @metadata { ... } to all logs (on by default)
+ * @param {Writable} debug_logger - a writeable stream for internal debug messages to be sent to (disabled when underined)
+ * @param {boolean} capture_request_body - whether the http request body data will be captured (off by default)
+ * @param {boolean} capture_request_body - whether the http response body data will be captured (off by default)
  */
 const config = {
   metadata_delimiter: &apos;@metadata&apos;,

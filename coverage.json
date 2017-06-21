@@ -1,7 +1,7 @@
 {
-  "coverage": "39.58%",
-  "expectCount": 48,
-  "actualCount": 19,
+  "coverage": "40%",
+  "expectCount": 50,
+  "actualCount": 20,
   "files": {
     "src/context.js": {
       "expectCount": 1,
@@ -26,16 +26,17 @@
       ]
     },
     "src/transports/https.js": {
-      "expectCount": 9,
+      "expectCount": 10,
       "actualCount": 2,
       "undocumentLines": [
+        40,
+        41,
         45,
-        49,
+        42,
         46,
-        50,
-        55,
-        47,
-        48
+        51,
+        43,
+        44
       ]
     },
     "src/events/http_server_request.js": {
@@ -69,6 +70,11 @@
     "src/log.js": {
       "expectCount": 7,
       "actualCount": 7,
+      "undocumentLines": []
+    },
+    "src/utils/attach.js": {
+      "expectCount": 1,
+      "actualCount": 1,
       "undocumentLines": []
     },
     "src/config.js": {

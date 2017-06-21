@@ -42,6 +42,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "timber/src/utils/attach.js~attach",
+    "function/index.html#static-function-attach",
+    "<span>attach</span> <span class=\"search-result-import-path\">timber/src/utils/attach.js</span>",
+    "function"
+  ],
+  [
     "timber/src/config.js~config",
     "variable/index.html#static-variable-config",
     "<span>config</span> <span class=\"search-result-import-path\">timber/src/config.js</span>",
@@ -396,12 +402,6 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/connect.js",
-    "file/src/connect.js.html",
-    "src/connect.js",
-    "file"
-  ],
-  [
     "src/console.js",
     "file/src/console.js.html",
     "src/console.js",
@@ -666,6 +666,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/transports/https.js~https#acceptsobject",
+    "class/src/transports/https.js~HTTPS.html#instance-member-acceptsObject",
+    "src/transports/https.js~HTTPS#acceptsObject",
+    "member"
+  ],
+  [
     "src/transports/https.js~https#apikey",
     "class/src/transports/https.js~HTTPS.html#instance-member-apiKey",
     "src/transports/https.js~HTTPS#apiKey",
@@ -717,6 +723,12 @@ window.esdocSearchIndex = [
     "src/transports/index.js",
     "file/src/transports/index.js.html",
     "src/transports/index.js",
+    "file"
+  ],
+  [
+    "src/utils/attach.js",
+    "file/src/utils/attach.js.html",
+    "src/utils/attach.js",
     "file"
   ],
   [

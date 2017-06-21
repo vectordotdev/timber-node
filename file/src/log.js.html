@@ -42,6 +42,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_server_response.js~HTTPServerResponse.html">HTTPServerResponse</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-expressMiddleware">expressMiddleware</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">transports</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html">HTTPS</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-attach">attach</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -62,8 +63,7 @@ class Log {
    */
   constructor(message, context = {}) {
     // Throw an error if no message is provided
-    if (!message)
-      throw new Error(&apos;You must supply a message when creating a log&apos;)
+    if (!message) throw new Error(&apos;You must supply a message when creating a log&apos;)
 
     /**
      * Reference to original log message
