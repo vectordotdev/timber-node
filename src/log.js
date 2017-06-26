@@ -13,7 +13,8 @@ class Log {
    */
   constructor(message, context = {}) {
     // Throw an error if no message is provided
-    if (!message) throw new Error('You must supply a message when creating a log')
+    if (!message)
+      throw new Error('You must supply a message when creating a log')
 
     /**
      * Reference to original log message
@@ -59,12 +60,19 @@ class Log {
    * i.e. `Log message @metadata { ... }`
    */
   format({ withMetadata = true } = {}) {
+    const { dt, ...rest } = this.data
+
     let message = this.raw.endsWith('\n')
       ? this.raw.substring(0, this.raw.length - 1)
       : this.raw
 
+    if (config.timestamp_prefix) {
+      message = `${dt.toISOString()} ${message}`
+    }
+
     if (withMetadata) {
-      message += ` ${config.metadata_delimiter} ${JSON.stringify(this.data)}`
+      const data = config.timestamp_prefix ? rest : { dt, ...rest }
+      message += ` ${config.metadata_delimiter} ${JSON.stringify(data)}`
     }
 
     return `${message}\n`
