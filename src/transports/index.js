@@ -1,3 +1,4 @@
 import HTTPS from './https'
+import Winston from './winston'
 
-module.exports = { HTTPS }
+module.exports = { HTTPS, Winston }
