@@ -6,8 +6,6 @@ import attach from '../utils/attach'
 /**
  * The Timber Winston transport allows you to seamlessly install
  * Timber in your apps that use winston as the logger.
- *
- *
  */
 class WinstonTransport extends winston.Transport {
   /**
