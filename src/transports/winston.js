@@ -35,16 +35,9 @@ class WinstonTransport extends winston.Transport {
     // Create a structured log object out of the log message
     const structuredLog = new Log(msg, { level })
 
-    // If custom metadata was provided with the log,
-    // append it to our log's metadata as a custom context object.
+    // If custom metadata was provided with the log, append it
     if (Object.keys(meta).length) {
-      structuredLog.append({
-        context: {
-          custom: {
-            winston: meta
-          }
-        }
-      })
+      structuredLog.append({ meta })
     }
 
     // Write our structured log to the timber https stream
