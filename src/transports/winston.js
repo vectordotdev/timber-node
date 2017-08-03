@@ -1,7 +1,6 @@
 import winston from 'winston'
 import HTTPS from './https'
-import attach from '../utils/attach'
-
+import Log from '../log'
 
 /**
  * The Timber Winston transport allows you to seamlessly install
@@ -22,11 +21,8 @@ class WinstonTransport extends winston.Transport {
     this.name = 'timberWinston'
     this.level = options.level || 'info'
 
-    // Create the HTTPS stream to timber's ingestion api
-    const transport = new HTTPS(apiKey)
-
-    // attach https transport to winston transport
-    attach([transport], process.stdout)
+    // Create a new timber https stream
+    this.stream = new HTTPS(apiKey)
   }
 
   /**
@@ -36,6 +32,23 @@ class WinstonTransport extends winston.Transport {
    * @param {function} [callback] - Winston's success callback
    */
   log = (level, msg, meta, callback) => {
+    // Create a structured log object out of the log message
+    const structuredLog = new Log(msg, { level })
+
+    // If custom metadata was provided with the log,
+    // append it to our log's metadata as a custom context object.
+    if (Object.keys(meta).length) {
+      structuredLog.append({
+        context: {
+          custom: {
+            winston: meta
+          }
+        }
+      })
+    }
+
+    // Write our structured log to the timber https stream
+    this.stream.write(structuredLog.data)
     callback(null, true)
   }
 }
