@@ -1,5 +1,6 @@
 import { Writable } from 'stream'
 import Log from '../log'
+import errors from '../data/errors'
 import debug from './debug'
 
 /**
@@ -14,7 +15,7 @@ const attach = (transports, toStream, { applyBackPressure = false } = {}) => {
   // Ensure all the streams are Writable
   for (let i = 0; i < transports.length; i++) {
     if (!(transports[i] instanceof Writable)) {
-      throw new Error('stream must be of type Writable')
+      throw new Error(errors.attach.notWritable)
     }
   }
 
