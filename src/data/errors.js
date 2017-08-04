@@ -3,7 +3,7 @@ export default {
     winston: {
       apiKey: `You cannot set up the timber winston transport without an apiKey.
 Use: winston.add(timber.transports.Winston, { apiKey: 'your-api-ley' })`,
-    }
+    },
   },
   log: {
     noMessage: 'You must supply a message when creating a log',
@@ -14,4 +14,4 @@ Use: winston.add(timber.transports.Winston, { apiKey: 'your-api-ley' })`,
   attach: {
     notWritable: 'Stream must be of type Writable',
   },
-};
+}
