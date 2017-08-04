@@ -1,5 +1,6 @@
 import schema from './schema'
 import config from './config'
+import errors from './data/errors'
 
 /**
  * Transforms a log message or object into a rich structured format
@@ -14,7 +15,7 @@ class Log {
   constructor(message, context = {}) {
     // Throw an error if no message is provided
     if (!message)
-      throw new Error('You must supply a message when creating a log')
+      throw new Error(errors.log.noMessage)
 
     /**
      * Reference to original log message
