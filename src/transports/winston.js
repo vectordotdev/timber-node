@@ -1,6 +1,7 @@
 import winston from 'winston'
 import HTTPS from './https'
 import Log from '../log'
+import errors from '../data/errors'
 
 /**
  * The Timber Winston transport allows you to seamlessly install
@@ -13,7 +14,7 @@ class WinstonTransport extends winston.Transport {
    */
   constructor({ apiKey, ...options } = {}) {
     if (!apiKey) {
-      throw new Error('You cannot set up the timber winston transport without an apiKey')
+      throw new Error(errors.transports.winston.apiKey)
     }
 
     super(options)
@@ -31,7 +32,7 @@ class WinstonTransport extends winston.Transport {
    * @param {Object} [meta] - Additional metadata for the log message
    * @param {function} [callback] - Winston's success callback
    */
-  log = (level, msg, meta, callback) => {
+  log = (level, msg, { event, ...meta }, callback) => {
     // Create a structured log object out of the log message
     const structuredLog = new Log(msg, { level })
 
