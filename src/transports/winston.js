@@ -1,7 +1,8 @@
 import winston from 'winston'
-import HTTPS from './https'
 import Log from '../log'
+import events from '../events'
 import errors from '../data/errors'
+import HTTPS from './https'
 
 /**
  * The Timber Winston transport allows you to seamlessly install
@@ -39,6 +40,17 @@ class WinstonTransport extends winston.Transport {
     // If custom metadata was provided with the log, append it
     if (Object.keys(meta).length) {
       structuredLog.append({ meta })
+    }
+
+    // If the event key exists, append a custom event
+    if (event) {
+      for (const eventName in event) {
+        if (!event[eventName]) continue
+        structuredLog
+          .append({
+            event: new events.Custom({ type: eventName, data: event[eventName] })
+          })
+      }
     }
 
     // Write our structured log to the timber https stream
