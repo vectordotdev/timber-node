@@ -1,11 +1,13 @@
 import Event from '../event'
 
 /**
- * The HTTP server request event tracks incoming HTTP requests to your HTTP server.
+ * The HTTP request event tracks incoming and outgoing
+ * HTTP requests to your server.
  */
-class HTTPServerRequest extends Event {
+class HTTPRequest extends Event {
   /**
    * @param {String} [body] - the body of the request
+   * @param {String} [direction] - incoming or outgoing
    * @param {Array} [headers] - the headers of the request
    * @param {String} host - the server's hostname
    * @param {String} method - `CONNECT` `DELETE` `GET` `HEAD` `OPTIONS` `PATCH` `POST` `PUT` `TRACE`
@@ -18,6 +20,7 @@ class HTTPServerRequest extends Event {
   constructor(
     {
       body,
+      direction,
       headers,
       host,
       method,
@@ -35,6 +38,7 @@ class HTTPServerRequest extends Event {
 
     // bind context attributes to the class
     this.body = body
+    this.direction = direction
     this.headers = headers
     this.host = host
     this.method = method
@@ -48,4 +52,4 @@ class HTTPServerRequest extends Event {
   message = () => `Started ${this.method} "${this.path}"`
 }
 
-export default HTTPServerRequest
+export default HTTPRequest

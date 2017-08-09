@@ -1,9 +1,9 @@
 import Custom from './custom'
-import http_server_request from './http_server_request'
-import http_server_response from './http_server_response'
+import HTTPRequest from './http_request'
+import HTTPResponse from './http_response'
 
-export default {
+export {
   Custom,
-  http_server_request,
-  http_server_response,
+  HTTPRequest,
+  HTTPResponse,
 }

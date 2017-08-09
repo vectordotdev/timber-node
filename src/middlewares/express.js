@@ -4,8 +4,7 @@ import addRequestId from 'express-request-id'
 import bodyParser from 'body-parser'
 import config from '../config'
 import HTTP from '../contexts/http'
-import HTTPServerRequest from '../events/http_server_request'
-import HTTPServerResponse from '../events/http_server_response'
+import { HTTPRequest, HTTPResponse } from '../events'
 import Log from '../log'
 
 /**
@@ -65,7 +64,8 @@ const expressMiddleware = compose(
       },
     }
 
-    const http_server_request = new HTTPServerRequest({
+    const http_server_request = new HTTPRequest({
+      direction: 'incoming',
       body,
       host,
       path,
@@ -89,7 +89,8 @@ const expressMiddleware = compose(
       // send the response body if the capture_response_body flag is true (off by default)
       body = config.capture_response_body ? JSON.stringify(resBody) : undefined
 
-      const http_server_response = new HTTPServerResponse({
+      const http_server_response = new HTTPResponse({
+        direction: 'outgoing',
         request_id,
         time_ms,
         status,
