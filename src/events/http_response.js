@@ -3,15 +3,16 @@ import Event from '../event'
 /**
  * The HTTP server request event tracks incoming HTTP requests to your HTTP server.
  */
-class HTTPServerResponse extends Event {
+class HTTPResponse extends Event {
   /**
    * @param {String} [body] - the body of the request
+   * @param {String} [direction] - incoming or outgoing
    * @param {Array} [headers] - the headers of the request
    * @param {String} [request_id] - the uuid of the request
    * @param {String} status - the HTTP status code
    * @param {String} time_ms - the total duration of the request in milliseconds
    */
-  constructor({ body, headers, request_id, status, time_ms } = {}) {
+  constructor({ body, direction, headers, request_id, status, time_ms } = {}) {
     super()
 
     // check for required attributes
@@ -19,6 +20,7 @@ class HTTPServerResponse extends Event {
 
     // bind context attributes to the class
     this.body = body
+    this.direction = direction
     this.headers = headers
     this.request_id = request_id
     this.status = status
@@ -38,4 +40,4 @@ class HTTPServerResponse extends Event {
   }
 }
 
-export default HTTPServerResponse
+export default HTTPResponse

@@ -1,6 +1,6 @@
 import winston from 'winston'
 import Log from '../log'
-import events from '../events'
+import { Custom } from '../events'
 import errors from '../data/errors'
 import HTTPS from './https'
 
@@ -46,10 +46,9 @@ class WinstonTransport extends winston.Transport {
     if (event) {
       for (const eventName in event) {
         if (!event[eventName]) continue
-        structuredLog
-          .append({
-            event: new events.Custom({ type: eventName, data: event[eventName] })
-          })
+        structuredLog.append({
+          event: new Custom({ type: eventName, data: event[eventName] }),
+        })
       }
     }
 
