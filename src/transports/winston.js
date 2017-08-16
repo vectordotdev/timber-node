@@ -13,7 +13,7 @@ class WinstonTransport extends winston.Transport {
    * @param {Object} [options] - Configuration options for the transport
    * @param {string} [options.apiKey] - Timber API Key
    */
-  constructor({ apiKey, ...options } = {}) {
+  constructor({ apiKey, hostName, ...options } = {}) {
     if (!apiKey) {
       throw new Error(errors.transports.winston.apiKey)
     }
@@ -24,7 +24,7 @@ class WinstonTransport extends winston.Transport {
     this.level = options.level || 'info'
 
     // Create a new timber https stream
-    this.stream = new HTTPS(apiKey)
+    this.stream = new HTTPS(apiKey, { hostName })
   }
 
   /**
