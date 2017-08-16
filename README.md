@@ -127,6 +127,38 @@ app.get('/', function (req, res) {
 
 </p></details>
 
+<details><summary><strong>Winston transport</strong></summary><p>
+
+If you're using winston, you can use the timber transport to send all of winston's logs to timber.io
+
+```js
+const winston = require('winston')
+const timber = require('timber')
+
+winston.add(timber.transports.Winston, { apiKey: 'your-timber-api-key' })
+
+winston.log('info', 'Sample log message');
+
+// Output:
+// => Sample log message @metadata {"level": "info", ... }
+
+// You can also send custom metadata with your logs
+winston.log('info', 'Log message with metadata', { user: 'username' })
+
+// Output:
+// => Log message with metadata @metadata {"level": "info", meta: { user: 'username' }}, ... }
+
+// Or you can log a custom event
+winston.log('info', 'Log message with event', { custom_event_name: { ... }, ... })
+
+// Output:
+// => Log message with event @metadata {"level": "info", event: { custom_event_name: { ... } }}, ... }
+```
+
+---
+
+</p></details>
+
 <details><summary><strong>Attaching to a custom stream</strong></summary><p>
 
 In most applications, you're going to want to attach the timber transport to `stdout` and `stderr`. This is why we supply the convenient `timber.install(transport)` function. However, it's possible to attach the transport to _any_ writeable stream using the `timber.attach()` function!
