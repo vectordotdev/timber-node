@@ -6,6 +6,7 @@ import config from '../config'
 import HTTP from '../contexts/http'
 import { HTTPRequest, HTTPResponse } from '../events'
 import Log from '../log'
+import Logger from '../logger'
 
 /**
  * The express middleware takes care of automatically logging
@@ -64,7 +65,7 @@ const expressMiddleware = compose(
       },
     }
 
-    const http_server_request = new HTTPRequest({
+    const http_request = new HTTPRequest({
       direction: 'incoming',
       body,
       host,
@@ -74,8 +75,8 @@ const expressMiddleware = compose(
       method,
     })
 
-    // add the http_server_request event to the metadata object
-    metadata.event = { server_side_app: { http_server_request } }
+    // add the http_request event to the metadata object
+    metadata.event = { http_request }
 
     // add an event to get  triggered when the request finishes
     // this event will send the http_client_response event to timber
@@ -89,7 +90,7 @@ const expressMiddleware = compose(
       // send the response body if the capture_response_body flag is true (off by default)
       body = config.capture_response_body ? JSON.stringify(resBody) : undefined
 
-      const http_server_response = new HTTPResponse({
+      const http_response = new HTTPResponse({
         direction: 'outgoing',
         request_id,
         time_ms,
@@ -97,15 +98,17 @@ const expressMiddleware = compose(
         body,
       })
 
-      // add the http_server_response event to the metadata object
-      metadata.event = { server_side_app: { http_server_response } }
+      // add the http_response event to the metadata object
+      metadata.event = { http_response }
 
       // log the http response with metadata
-      console.info(new Log(http_server_response.message(), metadata))
+      // console.info(new Log(http_response.message(), metadata))
+      Logger(http_response.message(), metadata)
     })
 
     // log the http request with metadata
-    console.info(new Log(http_server_request.message(), metadata))
+    // console.info(new Log(http_request.message(), metadata))
+    Logger(http_request.message(), metadata)
     next()
   }
 )
