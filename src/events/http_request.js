@@ -49,7 +49,9 @@ class HTTPRequest extends Event {
     this.scheme = scheme
   }
 
-  message = () => `Started ${this.method} "${this.path}"`
+  message() {
+    return `Started ${this.method} "${this.path}"`
+  }
 }
 
 export default HTTPRequest
