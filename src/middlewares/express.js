@@ -5,8 +5,7 @@ import bodyParser from 'body-parser'
 import config from '../config'
 import HTTP from '../contexts/http'
 import { HTTPRequest, HTTPResponse } from '../events'
-import Log from '../log'
-import Logger from '../logger'
+import log from '../logger'
 
 /**
  * The express middleware takes care of automatically logging
@@ -102,13 +101,11 @@ const expressMiddleware = compose(
       metadata.event = { http_response }
 
       // log the http response with metadata
-      // console.info(new Log(http_response.message(), metadata))
-      Logger(http_response.message(), metadata)
+      log(http_response.message(), metadata)
     })
 
     // log the http request with metadata
-    // console.info(new Log(http_request.message(), metadata))
-    Logger(http_request.message(), metadata)
+    log(http_request.message(), metadata)
     next()
   }
 )

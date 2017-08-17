@@ -1,5 +1,5 @@
 import { Writable } from 'stream'
-import Log from '../log'
+import Augment from '../utils/augment'
 import errors from '../data/errors'
 import debug from './debug'
 
@@ -25,7 +25,7 @@ const attach = (transports, toStream, { applyBackPressure = false } = {}) => {
   debug(`attaching ${transports.length} transports to stream`)
 
   toStream.write = (message, encoding, fd) => {
-    const log = message instanceof Log ? message : new Log(message)
+    const log = message instanceof Augment ? message : new Augment(message)
 
     for (let i = 0; i < transports.length; i++) {
       const transport = transports[i]

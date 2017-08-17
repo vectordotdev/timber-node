@@ -1,12 +1,12 @@
+import Augment from './utils/augment'
 import config from './config'
-import Log from './log'
 
 const loggers = {
   console: {
     detect: () => config.logger.constructor.name === 'Console',
     handler: (message, metadata) => {
       if (metadata) {
-        return config.logger.log(new Log(message, metadata))
+        return config.logger.log(new Augment(message, metadata))
       }
       return config.logger.log(message)
     },
