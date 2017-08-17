@@ -6,7 +6,6 @@ import middlewares from './middlewares'
 import transports from './transports'
 import events from './events'
 import contexts from './contexts'
-import log from './log'
 import logger from './logger'
 import './console'
 
@@ -16,7 +15,6 @@ module.exports = {
   install,
   middlewares,
   transports,
-  log,
   logger,
   events,
   contexts,

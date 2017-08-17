@@ -1,5 +1,5 @@
 import winston from 'winston'
-import Log from '../log'
+import Augment from '../utils/augment'
 import { Custom } from '../events'
 import errors from '../data/errors'
 import HTTPS from './https'
@@ -35,7 +35,7 @@ class WinstonTransport extends winston.Transport {
    */
   log = (level, msg, { event, ...meta }, callback) => {
     // Create a structured log object out of the log message
-    const structuredLog = new Log(msg, { level })
+    const structuredLog = new Augment(msg, { level })
 
     // If custom metadata was provided with the log, append it
     if (Object.keys(meta).length) {

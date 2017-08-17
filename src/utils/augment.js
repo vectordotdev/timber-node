@@ -1,13 +1,13 @@
-import schema from './schema'
-import config from './config'
-import errors from './data/errors'
+import schema from '../schema'
+import config from '../config'
+import errors from '../data/errors'
 
 /**
  * Transforms a log message or object into a rich structured format
  * that timber expects, ex 'log message' @timber.io {"dt": "…", "level": "info", "context": {…}}
  * see https://github.com/timberio/log-event-json-schema for specs
  */
-class Log {
+class Augment {
   /**
    * @param {String} message - the log message before transforming
    * @param {Object} [context] - context to be attached to message
@@ -79,4 +79,4 @@ class Log {
   }
 }
 
-export default Log
+export default Augment

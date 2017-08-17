@@ -1,5 +1,5 @@
 import util from 'util'
-import Log from './log'
+import Augment from './utils/augment'
 import config from './config'
 
 /**
@@ -14,9 +14,9 @@ import config from './config'
  * @param {String} level - `info` `warn` `error` `debug` `fatal`
  */
 const transformConsoleLog = ({ args, level }) => {
-  const log = args[0] instanceof Log
+  const log = args[0] instanceof Augment
     ? args[0]
-    : new Log(`${util.format.apply(null, args)}\n`)
+    : new Augment(`${util.format.apply(null, args)}\n`)
   log.setLevel(level)
   return log.format({ withMetadata: config.append_metadata })
 }
