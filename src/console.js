@@ -14,16 +14,21 @@ import config from './config'
  * @param {String} level - `info` `warn` `error` `debug` `fatal`
  */
 const transformConsoleLog = ({ args, level }) => {
-  // Allow custom metadata logging
+  // Allow custom metadata and event logging
   // https://github.com/timberio/timber-node/issues/41
   if (
     args.length === 2 &&
     typeof args[0] === 'string' &&
-    typeof args[1] === 'object' &&
-    args[1].meta &&
-    typeof args[1].meta === 'object'
+    typeof args[1] === 'object'
   ) {
-    return new Augment(args[0], { level, meta: { ...args[1].meta } }).format()
+    if (args[1].meta && typeof args[1].meta === 'object') {
+      return new Augment(args[0], { level, meta: { ...args[1].meta } }).format()
+    } else if (args[1].event && typeof args[1].event === 'object') {
+      return new Augment(args[0], {
+        level,
+        event: { custom: { ...args[1].event } },
+      }).format()
+    }
   }
   const log = args[0] instanceof Augment
     ? args[0]
