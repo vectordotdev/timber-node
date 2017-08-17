@@ -4,11 +4,11 @@ import config from './config'
 const loggers = {
   console: {
     detect: () => config.logger.constructor.name === 'Console',
-    handler: (message, metadata) => {
+    handler: (level, message, metadata) => {
       if (metadata) {
-        return config.logger.log(new Augment(message, metadata))
+        return config.logger[level](new Augment(message, metadata))
       }
-      return config.logger.log(message)
+      return config.logger[level](message)
     },
   },
   winston: {
@@ -16,7 +16,8 @@ const loggers = {
       config.logger.Container &&
       config.logger.Logger &&
       config.logger.Transport,
-    handler: (message, metadata = {}) => config.logger.log('info', message, metadata),
+    handler: (level, message, metadata = {}) =>
+      config.logger.log(level, message, metadata),
   },
 }
 
