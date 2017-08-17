@@ -5,7 +5,7 @@ import bodyParser from 'body-parser'
 import config from '../config'
 import HTTP from '../contexts/http'
 import { HTTPRequest, HTTPResponse } from '../events'
-import log from '../logger'
+import log from '../log'
 
 /**
  * The express middleware takes care of automatically logging
