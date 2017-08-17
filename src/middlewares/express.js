@@ -101,11 +101,11 @@ const expressMiddleware = compose(
       metadata.event = { http_response }
 
       // log the http response with metadata
-      log(http_response.message(), metadata)
+      log('info', http_response.message(), metadata)
     })
 
     // log the http request with metadata
-    log(http_request.message(), metadata)
+    log('info', http_request.message(), metadata)
     next()
   }
 )
