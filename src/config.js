@@ -44,6 +44,7 @@ const userConfig = finder(projectPath).next().value.timber
  * @param {boolean} capture_request_body - whether the http response body data will be captured (off by default)
  */
 const config = {
+  logger: console,
   metadata_delimiter: '@metadata',
   append_metadata: true,
   debug_logger: undefined,
