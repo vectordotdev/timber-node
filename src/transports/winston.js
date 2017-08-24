@@ -10,7 +10,7 @@ import errors from '../data/errors'
 class WinstonTransport extends winston.Transport {
   /**
    * @param {Object} [options] - Configuration options for the transport
-   * @param {string} [options.apiKey] - Timber API Key
+   * @param {string} [options.stream] - Stream to write to
    */
   constructor({ stream, ...options } = {}) {
     if (!stream) {
