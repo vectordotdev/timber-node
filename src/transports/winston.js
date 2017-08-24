@@ -2,7 +2,6 @@ import winston from 'winston'
 import Augment from '../utils/augment'
 import { Custom } from '../events'
 import errors from '../data/errors'
-import HTTPS from './https'
 
 /**
  * The Timber Winston transport allows you to seamlessly install
@@ -13,9 +12,9 @@ class WinstonTransport extends winston.Transport {
    * @param {Object} [options] - Configuration options for the transport
    * @param {string} [options.apiKey] - Timber API Key
    */
-  constructor({ apiKey, hostName, ...options } = {}) {
-    if (!apiKey) {
-      throw new Error(errors.transports.winston.apiKey)
+  constructor({ stream, ...options } = {}) {
+    if (!stream) {
+      throw new Error(errors.transports.winston.stream)
     }
 
     super(options)
@@ -23,8 +22,8 @@ class WinstonTransport extends winston.Transport {
     this.name = 'timberWinston'
     this.level = options.level || 'info'
 
-    // Create a new timber https stream
-    this.stream = new HTTPS(apiKey, { hostName })
+    // Attach the provided stream
+    this.stream = stream
   }
 
   /**

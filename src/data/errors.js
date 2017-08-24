@@ -1,8 +1,8 @@
 export default {
   transports: {
     winston: {
-      apiKey: `You cannot set up the timber winston transport without an apiKey.
-Use: winston.add(timber.transports.Winston, { apiKey: 'your-api-ley' })`,
+      stream: `You must provide a stream to the timber winston transport.
+Use: winston.add(timber.transports.Winston, { stream: new timber.transports.HTTPS('api-key') })`,
     },
   },
   log: {
