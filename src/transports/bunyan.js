@@ -1,7 +1,14 @@
+import bunyan from 'bunyan'
 import { Writable } from 'stream'
 import { Custom } from '../events'
 import Augment from '../utils/augment'
 import errors from '../data/errors'
+
+// const levels = {
+//   10: 'trace',
+//   20: 'debug',
+//   30: 'info',
+// }
 
 /**
  * The Timber Bunyan transport allows you to seamlessly install
@@ -32,7 +39,13 @@ class BunyanTransport extends Writable {
    * @param {Object} [meta] - Additional metadata for the log message
    * @param {function} [callback] - Bunyan's success callback
    */
-  _write = (level, msg, { event, ...meta }, callback) => {
+  _write(chunk, encoding, next) {
+    // Parse the JSON object
+    const data = JSON.parse(chunk.toString())
+    const { msg, metadata: { event, ...meta } } = data
+    // Convert the level integer into a string representation
+    const level = bunyan.nameFromLevel[data.level]
+
     // Create a structured log object out of the log message
     const structuredLog = new Augment(msg, { level })
 
@@ -53,9 +66,8 @@ class BunyanTransport extends Writable {
 
     // Write our structured log to the timber https stream
     this.stream.write(structuredLog.data)
-    callback(null, true)
+    next()
   }
 }
 
 export default BunyanTransport
-
