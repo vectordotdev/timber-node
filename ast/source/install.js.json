@@ -1,28 +1,28 @@
 {
   "type": "File",
   "start": 0,
-  "end": 441,
+  "end": 474,
   "loc": {
     "start": {
       "line": 1,
       "column": 0
     },
     "end": {
-      "line": 17,
+      "line": 18,
       "column": 0
     }
   },
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 441,
+    "end": 474,
     "loc": {
       "start": {
         "line": 1,
         "column": 0
       },
       "end": {
-        "line": 17,
+        "line": 18,
         "column": 0
       }
     },
@@ -94,7 +94,76 @@
             "rawValue": "./utils/attach",
             "raw": "'./utils/attach'"
           },
-          "value": "./utils/attach",
+          "value": "./utils/attach"
+        }
+      },
+      {
+        "type": "ImportDeclaration",
+        "start": 36,
+        "end": 70,
+        "loc": {
+          "start": {
+            "line": 2,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 34
+          }
+        },
+        "specifiers": [
+          {
+            "type": "ImportDefaultSpecifier",
+            "start": 43,
+            "end": 49,
+            "loc": {
+              "start": {
+                "line": 2,
+                "column": 7
+              },
+              "end": {
+                "line": 2,
+                "column": 13
+              }
+            },
+            "local": {
+              "type": "Identifier",
+              "start": 43,
+              "end": 49,
+              "loc": {
+                "start": {
+                  "line": 2,
+                  "column": 7
+                },
+                "end": {
+                  "line": 2,
+                  "column": 13
+                },
+                "identifierName": "errors"
+              },
+              "name": "errors"
+            }
+          }
+        ],
+        "source": {
+          "type": "StringLiteral",
+          "start": 55,
+          "end": 70,
+          "loc": {
+            "start": {
+              "line": 2,
+              "column": 19
+            },
+            "end": {
+              "line": 2,
+              "column": 34
+            }
+          },
+          "extra": {
+            "rawValue": "./data/errors",
+            "raw": "'./data/errors'"
+          },
+          "value": "./data/errors",
           "leadingComments": null,
           "trailingComments": null
         },
@@ -102,15 +171,15 @@
           {
             "type": "CommentBlock",
             "value": "*\n * Installs the timber logger to route all stdout logs to the provided stream\n *\n * @param {Stream} transport - the stream that all logs will go through\n ",
-            "start": 37,
-            "end": 197,
+            "start": 72,
+            "end": 232,
             "loc": {
               "start": {
-                "line": 3,
+                "line": 4,
                 "column": 0
               },
               "end": {
-                "line": 7,
+                "line": 8,
                 "column": 3
               }
             }
@@ -119,29 +188,29 @@
       },
       {
         "type": "Identifier",
-        "start": 198,
-        "end": 416,
+        "start": 233,
+        "end": 449,
         "loc": {
           "start": {
-            "line": 8,
+            "line": 9,
             "column": 0
           },
           "end": {
-            "line": 14,
+            "line": 15,
             "column": 1
           }
         },
         "id": {
           "type": "Identifier",
-          "start": 207,
-          "end": 214,
+          "start": 242,
+          "end": 249,
           "loc": {
             "start": {
-              "line": 8,
+              "line": 9,
               "column": 9
             },
             "end": {
-              "line": 8,
+              "line": 9,
               "column": 16
             },
             "identifierName": "install"
@@ -155,15 +224,15 @@
         "params": [
           {
             "type": "Identifier",
-            "start": 215,
-            "end": 224,
+            "start": 250,
+            "end": 259,
             "loc": {
               "start": {
-                "line": 8,
+                "line": 9,
                 "column": 17
               },
               "end": {
-                "line": 8,
+                "line": 9,
                 "column": 26
               },
               "identifierName": "transport"
@@ -173,44 +242,44 @@
         ],
         "body": {
           "type": "BlockStatement",
-          "start": 226,
-          "end": 416,
+          "start": 261,
+          "end": 449,
           "loc": {
             "start": {
-              "line": 8,
+              "line": 9,
               "column": 28
             },
             "end": {
-              "line": 14,
+              "line": 15,
               "column": 1
             }
           },
           "body": [
             {
               "type": "IfStatement",
-              "start": 230,
-              "end": 287,
+              "start": 265,
+              "end": 320,
               "loc": {
                 "start": {
-                  "line": 9,
+                  "line": 10,
                   "column": 2
                 },
                 "end": {
-                  "line": 9,
-                  "column": 59
+                  "line": 10,
+                  "column": 57
                 }
               },
               "test": {
                 "type": "UnaryExpression",
-                "start": 234,
-                "end": 244,
+                "start": 269,
+                "end": 279,
                 "loc": {
                   "start": {
-                    "line": 9,
+                    "line": 10,
                     "column": 6
                   },
                   "end": {
-                    "line": 9,
+                    "line": 10,
                     "column": 16
                   }
                 },
@@ -218,15 +287,15 @@
                 "prefix": true,
                 "argument": {
                   "type": "Identifier",
-                  "start": 235,
-                  "end": 244,
+                  "start": 270,
+                  "end": 279,
                   "loc": {
                     "start": {
-                      "line": 9,
+                      "line": 10,
                       "column": 7
                     },
                     "end": {
-                      "line": 9,
+                      "line": 10,
                       "column": 16
                     },
                     "identifierName": "transport"
@@ -239,43 +308,43 @@
               },
               "consequent": {
                 "type": "ThrowStatement",
-                "start": 246,
-                "end": 287,
+                "start": 281,
+                "end": 320,
                 "loc": {
                   "start": {
-                    "line": 9,
+                    "line": 10,
                     "column": 18
                   },
                   "end": {
-                    "line": 9,
-                    "column": 59
+                    "line": 10,
+                    "column": 57
                   }
                 },
                 "argument": {
                   "type": "CallExpression",
-                  "start": 252,
-                  "end": 287,
+                  "start": 287,
+                  "end": 320,
                   "loc": {
                     "start": {
-                      "line": 9,
+                      "line": 10,
                       "column": 24
                     },
                     "end": {
-                      "line": 9,
-                      "column": 59
+                      "line": 10,
+                      "column": 57
                     }
                   },
                   "callee": {
                     "type": "Identifier",
-                    "start": 252,
-                    "end": 257,
+                    "start": 287,
+                    "end": 292,
                     "loc": {
                       "start": {
-                        "line": 9,
+                        "line": 10,
                         "column": 24
                       },
                       "end": {
-                        "line": 9,
+                        "line": 10,
                         "column": 29
                       },
                       "identifierName": "Error"
@@ -284,24 +353,87 @@
                   },
                   "arguments": [
                     {
-                      "type": "StringLiteral",
-                      "start": 258,
-                      "end": 286,
+                      "type": "MemberExpression",
+                      "start": 293,
+                      "end": 319,
                       "loc": {
                         "start": {
-                          "line": 9,
+                          "line": 10,
                           "column": 30
                         },
                         "end": {
-                          "line": 9,
-                          "column": 58
+                          "line": 10,
+                          "column": 56
                         }
                       },
-                      "extra": {
-                        "rawValue": "No transport was provided.",
-                        "raw": "'No transport was provided.'"
+                      "object": {
+                        "type": "MemberExpression",
+                        "start": 293,
+                        "end": 307,
+                        "loc": {
+                          "start": {
+                            "line": 10,
+                            "column": 30
+                          },
+                          "end": {
+                            "line": 10,
+                            "column": 44
+                          }
+                        },
+                        "object": {
+                          "type": "Identifier",
+                          "start": 293,
+                          "end": 299,
+                          "loc": {
+                            "start": {
+                              "line": 10,
+                              "column": 30
+                            },
+                            "end": {
+                              "line": 10,
+                              "column": 36
+                            },
+                            "identifierName": "errors"
+                          },
+                          "name": "errors"
+                        },
+                        "property": {
+                          "type": "Identifier",
+                          "start": 300,
+                          "end": 307,
+                          "loc": {
+                            "start": {
+                              "line": 10,
+                              "column": 37
+                            },
+                            "end": {
+                              "line": 10,
+                              "column": 44
+                            },
+                            "identifierName": "install"
+                          },
+                          "name": "install"
+                        },
+                        "computed": false
                       },
-                      "value": "No transport was provided."
+                      "property": {
+                        "type": "Identifier",
+                        "start": 308,
+                        "end": 319,
+                        "loc": {
+                          "start": {
+                            "line": 10,
+                            "column": 45
+                          },
+                          "end": {
+                            "line": 10,
+                            "column": 56
+                          },
+                          "identifierName": "noTransport"
+                        },
+                        "name": "noTransport"
+                      },
+                      "computed": false
                     }
                   ],
                   "trailingComments": null
@@ -313,15 +445,15 @@
                 {
                   "type": "CommentLine",
                   "value": " attach our transport stream to stdout/stderr",
-                  "start": 291,
-                  "end": 338,
+                  "start": 324,
+                  "end": 371,
                   "loc": {
                     "start": {
-                      "line": 11,
+                      "line": 12,
                       "column": 2
                     },
                     "end": {
-                      "line": 11,
+                      "line": 12,
                       "column": 49
                     }
                   }
@@ -330,43 +462,43 @@
             },
             {
               "type": "ExpressionStatement",
-              "start": 341,
-              "end": 376,
+              "start": 374,
+              "end": 409,
               "loc": {
                 "start": {
-                  "line": 12,
+                  "line": 13,
                   "column": 2
                 },
                 "end": {
-                  "line": 12,
+                  "line": 13,
                   "column": 37
                 }
               },
               "expression": {
                 "type": "CallExpression",
-                "start": 341,
-                "end": 376,
+                "start": 374,
+                "end": 409,
                 "loc": {
                   "start": {
-                    "line": 12,
+                    "line": 13,
                     "column": 2
                   },
                   "end": {
-                    "line": 12,
+                    "line": 13,
                     "column": 37
                   }
                 },
                 "callee": {
                   "type": "Identifier",
-                  "start": 341,
-                  "end": 347,
+                  "start": 374,
+                  "end": 380,
                   "loc": {
                     "start": {
-                      "line": 12,
+                      "line": 13,
                       "column": 2
                     },
                     "end": {
-                      "line": 12,
+                      "line": 13,
                       "column": 8
                     },
                     "identifierName": "attach"
@@ -377,30 +509,30 @@
                 "arguments": [
                   {
                     "type": "ArrayExpression",
-                    "start": 348,
-                    "end": 359,
+                    "start": 381,
+                    "end": 392,
                     "loc": {
                       "start": {
-                        "line": 12,
+                        "line": 13,
                         "column": 9
                       },
                       "end": {
-                        "line": 12,
+                        "line": 13,
                         "column": 20
                       }
                     },
                     "elements": [
                       {
                         "type": "Identifier",
-                        "start": 349,
-                        "end": 358,
+                        "start": 382,
+                        "end": 391,
                         "loc": {
                           "start": {
-                            "line": 12,
+                            "line": 13,
                             "column": 10
                           },
                           "end": {
-                            "line": 12,
+                            "line": 13,
                             "column": 19
                           },
                           "identifierName": "transport"
@@ -411,29 +543,29 @@
                   },
                   {
                     "type": "MemberExpression",
-                    "start": 361,
-                    "end": 375,
+                    "start": 394,
+                    "end": 408,
                     "loc": {
                       "start": {
-                        "line": 12,
+                        "line": 13,
                         "column": 22
                       },
                       "end": {
-                        "line": 12,
+                        "line": 13,
                         "column": 36
                       }
                     },
                     "object": {
                       "type": "Identifier",
-                      "start": 361,
-                      "end": 368,
+                      "start": 394,
+                      "end": 401,
                       "loc": {
                         "start": {
-                          "line": 12,
+                          "line": 13,
                           "column": 22
                         },
                         "end": {
-                          "line": 12,
+                          "line": 13,
                           "column": 29
                         },
                         "identifierName": "process"
@@ -442,15 +574,15 @@
                     },
                     "property": {
                       "type": "Identifier",
-                      "start": 369,
-                      "end": 375,
+                      "start": 402,
+                      "end": 408,
                       "loc": {
                         "start": {
-                          "line": 12,
+                          "line": 13,
                           "column": 30
                         },
                         "end": {
-                          "line": 12,
+                          "line": 13,
                           "column": 36
                         },
                         "identifierName": "stdout"
@@ -466,15 +598,15 @@
                 {
                   "type": "CommentLine",
                   "value": " attach our transport stream to stdout/stderr",
-                  "start": 291,
-                  "end": 338,
+                  "start": 324,
+                  "end": 371,
                   "loc": {
                     "start": {
-                      "line": 11,
+                      "line": 12,
                       "column": 2
                     },
                     "end": {
-                      "line": 11,
+                      "line": 12,
                       "column": 49
                     }
                   }
@@ -483,43 +615,43 @@
             },
             {
               "type": "ExpressionStatement",
-              "start": 379,
-              "end": 414,
+              "start": 412,
+              "end": 447,
               "loc": {
                 "start": {
-                  "line": 13,
+                  "line": 14,
                   "column": 2
                 },
                 "end": {
-                  "line": 13,
+                  "line": 14,
                   "column": 37
                 }
               },
               "expression": {
                 "type": "CallExpression",
-                "start": 379,
-                "end": 414,
+                "start": 412,
+                "end": 447,
                 "loc": {
                   "start": {
-                    "line": 13,
+                    "line": 14,
                     "column": 2
                   },
                   "end": {
-                    "line": 13,
+                    "line": 14,
                     "column": 37
                   }
                 },
                 "callee": {
                   "type": "Identifier",
-                  "start": 379,
-                  "end": 385,
+                  "start": 412,
+                  "end": 418,
                   "loc": {
                     "start": {
-                      "line": 13,
+                      "line": 14,
                       "column": 2
                     },
                     "end": {
-                      "line": 13,
+                      "line": 14,
                       "column": 8
                     },
                     "identifierName": "attach"
@@ -529,30 +661,30 @@
                 "arguments": [
                   {
                     "type": "ArrayExpression",
-                    "start": 386,
-                    "end": 397,
+                    "start": 419,
+                    "end": 430,
                     "loc": {
                       "start": {
-                        "line": 13,
+                        "line": 14,
                         "column": 9
                       },
                       "end": {
-                        "line": 13,
+                        "line": 14,
                         "column": 20
                       }
                     },
                     "elements": [
                       {
                         "type": "Identifier",
-                        "start": 387,
-                        "end": 396,
+                        "start": 420,
+                        "end": 429,
                         "loc": {
                           "start": {
-                            "line": 13,
+                            "line": 14,
                             "column": 10
                           },
                           "end": {
-                            "line": 13,
+                            "line": 14,
                             "column": 19
                           },
                           "identifierName": "transport"
@@ -563,29 +695,29 @@
                   },
                   {
                     "type": "MemberExpression",
-                    "start": 399,
-                    "end": 413,
+                    "start": 432,
+                    "end": 446,
                     "loc": {
                       "start": {
-                        "line": 13,
+                        "line": 14,
                         "column": 22
                       },
                       "end": {
-                        "line": 13,
+                        "line": 14,
                         "column": 36
                       }
                     },
                     "object": {
                       "type": "Identifier",
-                      "start": 399,
-                      "end": 406,
+                      "start": 432,
+                      "end": 439,
                       "loc": {
                         "start": {
-                          "line": 13,
+                          "line": 14,
                           "column": 22
                         },
                         "end": {
-                          "line": 13,
+                          "line": 14,
                           "column": 29
                         },
                         "identifierName": "process"
@@ -594,15 +726,15 @@
                     },
                     "property": {
                       "type": "Identifier",
-                      "start": 407,
-                      "end": 413,
+                      "start": 440,
+                      "end": 446,
                       "loc": {
                         "start": {
-                          "line": 13,
+                          "line": 14,
                           "column": 30
                         },
                         "end": {
-                          "line": 13,
+                          "line": 14,
                           "column": 36
                         },
                         "identifierName": "stderr"
@@ -623,29 +755,29 @@
       },
       {
         "type": "Identifier",
-        "start": 418,
-        "end": 440,
+        "start": 451,
+        "end": 473,
         "loc": {
           "start": {
-            "line": 16,
+            "line": 17,
             "column": 0
           },
           "end": {
-            "line": 16,
+            "line": 17,
             "column": 22
           }
         },
         "declaration": {
           "type": "Identifier",
-          "start": 433,
-          "end": 440,
+          "start": 466,
+          "end": 473,
           "loc": {
             "start": {
-              "line": 16,
+              "line": 17,
               "column": 15
             },
             "end": {
-              "line": 16,
+              "line": 17,
               "column": 22
             },
             "identifierName": "install"
@@ -658,43 +790,43 @@
       },
       {
         "type": "ExportDefaultDeclaration",
-        "start": 418,
-        "end": 440,
+        "start": 451,
+        "end": 473,
         "loc": {
           "start": {
-            "line": 16,
+            "line": 17,
             "column": 0
           },
           "end": {
-            "line": 16,
+            "line": 17,
             "column": 22
           }
         },
         "declaration": {
           "type": "FunctionDeclaration",
-          "start": 198,
-          "end": 416,
+          "start": 233,
+          "end": 449,
           "loc": {
             "start": {
-              "line": 8,
+              "line": 9,
               "column": 0
             },
             "end": {
-              "line": 14,
+              "line": 15,
               "column": 1
             }
           },
           "id": {
             "type": "Identifier",
-            "start": 207,
-            "end": 214,
+            "start": 242,
+            "end": 249,
             "loc": {
               "start": {
-                "line": 8,
+                "line": 9,
                 "column": 9
               },
               "end": {
-                "line": 8,
+                "line": 9,
                 "column": 16
               },
               "identifierName": "install"
@@ -708,15 +840,15 @@
           "params": [
             {
               "type": "Identifier",
-              "start": 215,
-              "end": 224,
+              "start": 250,
+              "end": 259,
               "loc": {
                 "start": {
-                  "line": 8,
+                  "line": 9,
                   "column": 17
                 },
                 "end": {
-                  "line": 8,
+                  "line": 9,
                   "column": 26
                 },
                 "identifierName": "transport"
@@ -726,44 +858,44 @@
           ],
           "body": {
             "type": "BlockStatement",
-            "start": 226,
-            "end": 416,
+            "start": 261,
+            "end": 449,
             "loc": {
               "start": {
-                "line": 8,
+                "line": 9,
                 "column": 28
               },
               "end": {
-                "line": 14,
+                "line": 15,
                 "column": 1
               }
             },
             "body": [
               {
                 "type": "IfStatement",
-                "start": 230,
-                "end": 287,
+                "start": 265,
+                "end": 320,
                 "loc": {
                   "start": {
-                    "line": 9,
+                    "line": 10,
                     "column": 2
                   },
                   "end": {
-                    "line": 9,
-                    "column": 59
+                    "line": 10,
+                    "column": 57
                   }
                 },
                 "test": {
                   "type": "UnaryExpression",
-                  "start": 234,
-                  "end": 244,
+                  "start": 269,
+                  "end": 279,
                   "loc": {
                     "start": {
-                      "line": 9,
+                      "line": 10,
                       "column": 6
                     },
                     "end": {
-                      "line": 9,
+                      "line": 10,
                       "column": 16
                     }
                   },
@@ -771,15 +903,15 @@
                   "prefix": true,
                   "argument": {
                     "type": "Identifier",
-                    "start": 235,
-                    "end": 244,
+                    "start": 270,
+                    "end": 279,
                     "loc": {
                       "start": {
-                        "line": 9,
+                        "line": 10,
                         "column": 7
                       },
                       "end": {
-                        "line": 9,
+                        "line": 10,
                         "column": 16
                       },
                       "identifierName": "transport"
@@ -792,43 +924,43 @@
                 },
                 "consequent": {
                   "type": "ThrowStatement",
-                  "start": 246,
-                  "end": 287,
+                  "start": 281,
+                  "end": 320,
                   "loc": {
                     "start": {
-                      "line": 9,
+                      "line": 10,
                       "column": 18
                     },
                     "end": {
-                      "line": 9,
-                      "column": 59
+                      "line": 10,
+                      "column": 57
                     }
                   },
                   "argument": {
                     "type": "CallExpression",
-                    "start": 252,
-                    "end": 287,
+                    "start": 287,
+                    "end": 320,
                     "loc": {
                       "start": {
-                        "line": 9,
+                        "line": 10,
                         "column": 24
                       },
                       "end": {
-                        "line": 9,
-                        "column": 59
+                        "line": 10,
+                        "column": 57
                       }
                     },
                     "callee": {
                       "type": "Identifier",
-                      "start": 252,
-                      "end": 257,
+                      "start": 287,
+                      "end": 292,
                       "loc": {
                         "start": {
-                          "line": 9,
+                          "line": 10,
                           "column": 24
                         },
                         "end": {
-                          "line": 9,
+                          "line": 10,
                           "column": 29
                         },
                         "identifierName": "Error"
@@ -837,24 +969,87 @@
                     },
                     "arguments": [
                       {
-                        "type": "StringLiteral",
-                        "start": 258,
-                        "end": 286,
+                        "type": "MemberExpression",
+                        "start": 293,
+                        "end": 319,
                         "loc": {
                           "start": {
-                            "line": 9,
+                            "line": 10,
                             "column": 30
                           },
                           "end": {
-                            "line": 9,
-                            "column": 58
+                            "line": 10,
+                            "column": 56
                           }
                         },
-                        "extra": {
-                          "rawValue": "No transport was provided.",
-                          "raw": "'No transport was provided.'"
+                        "object": {
+                          "type": "MemberExpression",
+                          "start": 293,
+                          "end": 307,
+                          "loc": {
+                            "start": {
+                              "line": 10,
+                              "column": 30
+                            },
+                            "end": {
+                              "line": 10,
+                              "column": 44
+                            }
+                          },
+                          "object": {
+                            "type": "Identifier",
+                            "start": 293,
+                            "end": 299,
+                            "loc": {
+                              "start": {
+                                "line": 10,
+                                "column": 30
+                              },
+                              "end": {
+                                "line": 10,
+                                "column": 36
+                              },
+                              "identifierName": "errors"
+                            },
+                            "name": "errors"
+                          },
+                          "property": {
+                            "type": "Identifier",
+                            "start": 300,
+                            "end": 307,
+                            "loc": {
+                              "start": {
+                                "line": 10,
+                                "column": 37
+                              },
+                              "end": {
+                                "line": 10,
+                                "column": 44
+                              },
+                              "identifierName": "install"
+                            },
+                            "name": "install"
+                          },
+                          "computed": false
                         },
-                        "value": "No transport was provided."
+                        "property": {
+                          "type": "Identifier",
+                          "start": 308,
+                          "end": 319,
+                          "loc": {
+                            "start": {
+                              "line": 10,
+                              "column": 45
+                            },
+                            "end": {
+                              "line": 10,
+                              "column": 56
+                            },
+                            "identifierName": "noTransport"
+                          },
+                          "name": "noTransport"
+                        },
+                        "computed": false
                       }
                     ],
                     "trailingComments": null
@@ -866,15 +1061,15 @@
                   {
                     "type": "CommentLine",
                     "value": " attach our transport stream to stdout/stderr",
-                    "start": 291,
-                    "end": 338,
+                    "start": 324,
+                    "end": 371,
                     "loc": {
                       "start": {
-                        "line": 11,
+                        "line": 12,
                         "column": 2
                       },
                       "end": {
-                        "line": 11,
+                        "line": 12,
                         "column": 49
                       }
                     }
@@ -883,43 +1078,43 @@
               },
               {
                 "type": "ExpressionStatement",
-                "start": 341,
-                "end": 376,
+                "start": 374,
+                "end": 409,
                 "loc": {
                   "start": {
-                    "line": 12,
+                    "line": 13,
                     "column": 2
                   },
                   "end": {
-                    "line": 12,
+                    "line": 13,
                     "column": 37
                   }
                 },
                 "expression": {
                   "type": "CallExpression",
-                  "start": 341,
-                  "end": 376,
+                  "start": 374,
+                  "end": 409,
                   "loc": {
                     "start": {
-                      "line": 12,
+                      "line": 13,
                       "column": 2
                     },
                     "end": {
-                      "line": 12,
+                      "line": 13,
                       "column": 37
                     }
                   },
                   "callee": {
                     "type": "Identifier",
-                    "start": 341,
-                    "end": 347,
+                    "start": 374,
+                    "end": 380,
                     "loc": {
                       "start": {
-                        "line": 12,
+                        "line": 13,
                         "column": 2
                       },
                       "end": {
-                        "line": 12,
+                        "line": 13,
                         "column": 8
                       },
                       "identifierName": "attach"
@@ -930,30 +1125,30 @@
                   "arguments": [
                     {
                       "type": "ArrayExpression",
-                      "start": 348,
-                      "end": 359,
+                      "start": 381,
+                      "end": 392,
                       "loc": {
                         "start": {
-                          "line": 12,
+                          "line": 13,
                           "column": 9
                         },
                         "end": {
-                          "line": 12,
+                          "line": 13,
                           "column": 20
                         }
                       },
                       "elements": [
                         {
                           "type": "Identifier",
-                          "start": 349,
-                          "end": 358,
+                          "start": 382,
+                          "end": 391,
                           "loc": {
                             "start": {
-                              "line": 12,
+                              "line": 13,
                               "column": 10
                             },
                             "end": {
-                              "line": 12,
+                              "line": 13,
                               "column": 19
                             },
                             "identifierName": "transport"
@@ -964,29 +1159,29 @@
                     },
                     {
                       "type": "MemberExpression",
-                      "start": 361,
-                      "end": 375,
+                      "start": 394,
+                      "end": 408,
                       "loc": {
                         "start": {
-                          "line": 12,
+                          "line": 13,
                           "column": 22
                         },
                         "end": {
-                          "line": 12,
+                          "line": 13,
                           "column": 36
                         }
                       },
                       "object": {
                         "type": "Identifier",
-                        "start": 361,
-                        "end": 368,
+                        "start": 394,
+                        "end": 401,
                         "loc": {
                           "start": {
-                            "line": 12,
+                            "line": 13,
                             "column": 22
                           },
                           "end": {
-                            "line": 12,
+                            "line": 13,
                             "column": 29
                           },
                           "identifierName": "process"
@@ -995,15 +1190,15 @@
                       },
                       "property": {
                         "type": "Identifier",
-                        "start": 369,
-                        "end": 375,
+                        "start": 402,
+                        "end": 408,
                         "loc": {
                           "start": {
-                            "line": 12,
+                            "line": 13,
                             "column": 30
                           },
                           "end": {
-                            "line": 12,
+                            "line": 13,
                             "column": 36
                           },
                           "identifierName": "stdout"
@@ -1019,15 +1214,15 @@
                   {
                     "type": "CommentLine",
                     "value": " attach our transport stream to stdout/stderr",
-                    "start": 291,
-                    "end": 338,
+                    "start": 324,
+                    "end": 371,
                     "loc": {
                       "start": {
-                        "line": 11,
+                        "line": 12,
                         "column": 2
                       },
                       "end": {
-                        "line": 11,
+                        "line": 12,
                         "column": 49
                       }
                     }
@@ -1036,43 +1231,43 @@
               },
               {
                 "type": "ExpressionStatement",
-                "start": 379,
-                "end": 414,
+                "start": 412,
+                "end": 447,
                 "loc": {
                   "start": {
-                    "line": 13,
+                    "line": 14,
                     "column": 2
                   },
                   "end": {
-                    "line": 13,
+                    "line": 14,
                     "column": 37
                   }
                 },
                 "expression": {
                   "type": "CallExpression",
-                  "start": 379,
-                  "end": 414,
+                  "start": 412,
+                  "end": 447,
                   "loc": {
                     "start": {
-                      "line": 13,
+                      "line": 14,
                       "column": 2
                     },
                     "end": {
-                      "line": 13,
+                      "line": 14,
                       "column": 37
                     }
                   },
                   "callee": {
                     "type": "Identifier",
-                    "start": 379,
-                    "end": 385,
+                    "start": 412,
+                    "end": 418,
                     "loc": {
                       "start": {
-                        "line": 13,
+                        "line": 14,
                         "column": 2
                       },
                       "end": {
-                        "line": 13,
+                        "line": 14,
                         "column": 8
                       },
                       "identifierName": "attach"
@@ -1082,30 +1277,30 @@
                   "arguments": [
                     {
                       "type": "ArrayExpression",
-                      "start": 386,
-                      "end": 397,
+                      "start": 419,
+                      "end": 430,
                       "loc": {
                         "start": {
-                          "line": 13,
+                          "line": 14,
                           "column": 9
                         },
                         "end": {
-                          "line": 13,
+                          "line": 14,
                           "column": 20
                         }
                       },
                       "elements": [
                         {
                           "type": "Identifier",
-                          "start": 387,
-                          "end": 396,
+                          "start": 420,
+                          "end": 429,
                           "loc": {
                             "start": {
-                              "line": 13,
+                              "line": 14,
                               "column": 10
                             },
                             "end": {
-                              "line": 13,
+                              "line": 14,
                               "column": 19
                             },
                             "identifierName": "transport"
@@ -1116,29 +1311,29 @@
                     },
                     {
                       "type": "MemberExpression",
-                      "start": 399,
-                      "end": 413,
+                      "start": 432,
+                      "end": 446,
                       "loc": {
                         "start": {
-                          "line": 13,
+                          "line": 14,
                           "column": 22
                         },
                         "end": {
-                          "line": 13,
+                          "line": 14,
                           "column": 36
                         }
                       },
                       "object": {
                         "type": "Identifier",
-                        "start": 399,
-                        "end": 406,
+                        "start": 432,
+                        "end": 439,
                         "loc": {
                           "start": {
-                            "line": 13,
+                            "line": 14,
                             "column": 22
                           },
                           "end": {
-                            "line": 13,
+                            "line": 14,
                             "column": 29
                           },
                           "identifierName": "process"
@@ -1147,15 +1342,15 @@
                       },
                       "property": {
                         "type": "Identifier",
-                        "start": 407,
-                        "end": 413,
+                        "start": 440,
+                        "end": 446,
                         "loc": {
                           "start": {
-                            "line": 13,
+                            "line": 14,
                             "column": 30
                           },
                           "end": {
-                            "line": 13,
+                            "line": 14,
                             "column": 36
                           },
                           "identifierName": "stderr"
@@ -1174,15 +1369,15 @@
             {
               "type": "CommentBlock",
               "value": "*\n * Installs the timber logger to route all stdout logs to the provided stream\n *\n * @param {Stream} transport - the stream that all logs will go through\n ",
-              "start": 37,
-              "end": 197,
+              "start": 72,
+              "end": 232,
               "loc": {
                 "start": {
-                  "line": 3,
+                  "line": 4,
                   "column": 0
                 },
                 "end": {
-                  "line": 7,
+                  "line": 8,
                   "column": 3
                 }
               }
@@ -1198,15 +1393,15 @@
     {
       "type": "CommentBlock",
       "value": "*\n * Installs the timber logger to route all stdout logs to the provided stream\n *\n * @param {Stream} transport - the stream that all logs will go through\n ",
-      "start": 37,
-      "end": 197,
+      "start": 72,
+      "end": 232,
       "loc": {
         "start": {
-          "line": 3,
+          "line": 4,
           "column": 0
         },
         "end": {
-          "line": 7,
+          "line": 8,
           "column": 3
         }
       }
@@ -1214,15 +1409,15 @@
     {
       "type": "CommentLine",
       "value": " attach our transport stream to stdout/stderr",
-      "start": 291,
-      "end": 338,
+      "start": 324,
+      "end": 371,
       "loc": {
         "start": {
-          "line": 11,
+          "line": 12,
           "column": 2
         },
         "end": {
-          "line": 11,
+          "line": 12,
           "column": 49
         }
       }
@@ -1337,17 +1532,124 @@
       }
     },
     {
-      "type": "CommentBlock",
-      "value": "*\n * Installs the timber logger to route all stdout logs to the provided stream\n *\n * @param {Stream} transport - the stream that all logs will go through\n ",
-      "start": 37,
-      "end": 197,
+      "type": {
+        "label": "import",
+        "keyword": "import",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "import",
+      "start": 36,
+      "end": 42,
       "loc": {
         "start": {
-          "line": 3,
+          "line": 2,
           "column": 0
         },
         "end": {
-          "line": 7,
+          "line": 2,
+          "column": 6
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "errors",
+      "start": 43,
+      "end": 49,
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 7
+        },
+        "end": {
+          "line": 2,
+          "column": 13
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "from",
+      "start": 50,
+      "end": 54,
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 14
+        },
+        "end": {
+          "line": 2,
+          "column": 18
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "string",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "./data/errors",
+      "start": 55,
+      "end": 70,
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 19
+        },
+        "end": {
+          "line": 2,
+          "column": 34
+        }
+      }
+    },
+    {
+      "type": "CommentBlock",
+      "value": "*\n * Installs the timber logger to route all stdout logs to the provided stream\n *\n * @param {Stream} transport - the stream that all logs will go through\n ",
+      "start": 72,
+      "end": 232,
+      "loc": {
+        "start": {
+          "line": 4,
+          "column": 0
+        },
+        "end": {
+          "line": 8,
           "column": 3
         }
       }
@@ -1366,15 +1668,15 @@
         "binop": null
       },
       "value": "function",
-      "start": 198,
-      "end": 206,
+      "start": 233,
+      "end": 241,
       "loc": {
         "start": {
-          "line": 8,
+          "line": 9,
           "column": 0
         },
         "end": {
-          "line": 8,
+          "line": 9,
           "column": 8
         }
       }
@@ -1392,15 +1694,15 @@
         "binop": null
       },
       "value": "install",
-      "start": 207,
-      "end": 214,
+      "start": 242,
+      "end": 249,
       "loc": {
         "start": {
-          "line": 8,
+          "line": 9,
           "column": 9
         },
         "end": {
-          "line": 8,
+          "line": 9,
           "column": 16
         }
       }
@@ -1417,15 +1719,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 214,
-      "end": 215,
+      "start": 249,
+      "end": 250,
       "loc": {
         "start": {
-          "line": 8,
+          "line": 9,
           "column": 16
         },
         "end": {
-          "line": 8,
+          "line": 9,
           "column": 17
         }
       }
@@ -1443,15 +1745,15 @@
         "binop": null
       },
       "value": "transport",
-      "start": 215,
-      "end": 224,
+      "start": 250,
+      "end": 259,
       "loc": {
         "start": {
-          "line": 8,
+          "line": 9,
           "column": 17
         },
         "end": {
-          "line": 8,
+          "line": 9,
           "column": 26
         }
       }
@@ -1468,15 +1770,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 224,
-      "end": 225,
+      "start": 259,
+      "end": 260,
       "loc": {
         "start": {
-          "line": 8,
+          "line": 9,
           "column": 26
         },
         "end": {
-          "line": 8,
+          "line": 9,
           "column": 27
         }
       }
@@ -1493,15 +1795,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 226,
-      "end": 227,
+      "start": 261,
+      "end": 262,
       "loc": {
         "start": {
-          "line": 8,
+          "line": 9,
           "column": 28
         },
         "end": {
-          "line": 8,
+          "line": 9,
           "column": 29
         }
       }
@@ -1521,15 +1823,15 @@
         "updateContext": null
       },
       "value": "if",
-      "start": 230,
-      "end": 232,
+      "start": 265,
+      "end": 267,
       "loc": {
         "start": {
-          "line": 9,
+          "line": 10,
           "column": 2
         },
         "end": {
-          "line": 9,
+          "line": 10,
           "column": 4
         }
       }
@@ -1546,15 +1848,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 233,
-      "end": 234,
+      "start": 268,
+      "end": 269,
       "loc": {
         "start": {
-          "line": 9,
+          "line": 10,
           "column": 5
         },
         "end": {
-          "line": 9,
+          "line": 10,
           "column": 6
         }
       }
@@ -1573,15 +1875,15 @@
         "updateContext": null
       },
       "value": "!",
-      "start": 234,
-      "end": 235,
+      "start": 269,
+      "end": 270,
       "loc": {
         "start": {
-          "line": 9,
+          "line": 10,
           "column": 6
         },
         "end": {
-          "line": 9,
+          "line": 10,
           "column": 7
         }
       }
@@ -1599,15 +1901,15 @@
         "binop": null
       },
       "value": "transport",
-      "start": 235,
-      "end": 244,
+      "start": 270,
+      "end": 279,
       "loc": {
         "start": {
-          "line": 9,
+          "line": 10,
           "column": 7
         },
         "end": {
-          "line": 9,
+          "line": 10,
           "column": 16
         }
       }
@@ -1624,15 +1926,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 244,
-      "end": 245,
+      "start": 279,
+      "end": 280,
       "loc": {
         "start": {
-          "line": 9,
+          "line": 10,
           "column": 16
         },
         "end": {
-          "line": 9,
+          "line": 10,
           "column": 17
         }
       }
@@ -1652,15 +1954,15 @@
         "updateContext": null
       },
       "value": "throw",
-      "start": 246,
-      "end": 251,
+      "start": 281,
+      "end": 286,
       "loc": {
         "start": {
-          "line": 9,
+          "line": 10,
           "column": 18
         },
         "end": {
-          "line": 9,
+          "line": 10,
           "column": 23
         }
       }
@@ -1678,15 +1980,15 @@
         "binop": null
       },
       "value": "Error",
-      "start": 252,
-      "end": 257,
+      "start": 287,
+      "end": 292,
       "loc": {
         "start": {
-          "line": 9,
+          "line": 10,
           "column": 24
         },
         "end": {
-          "line": 9,
+          "line": 10,
           "column": 29
         }
       }
@@ -1703,24 +2005,50 @@
         "postfix": false,
         "binop": null
       },
-      "start": 257,
-      "end": 258,
+      "start": 292,
+      "end": 293,
       "loc": {
         "start": {
-          "line": 9,
+          "line": 10,
           "column": 29
         },
         "end": {
-          "line": 9,
+          "line": 10,
           "column": 30
         }
       }
     },
     {
       "type": {
-        "label": "string",
+        "label": "name",
         "beforeExpr": false,
         "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "errors",
+      "start": 293,
+      "end": 299,
+      "loc": {
+        "start": {
+          "line": 10,
+          "column": 30
+        },
+        "end": {
+          "line": 10,
+          "column": 36
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ".",
+        "beforeExpr": false,
+        "startsExpr": false,
         "rightAssociative": false,
         "isLoop": false,
         "isAssign": false,
@@ -1729,17 +2057,94 @@
         "binop": null,
         "updateContext": null
       },
-      "value": "No transport was provided.",
-      "start": 258,
-      "end": 286,
+      "start": 299,
+      "end": 300,
       "loc": {
         "start": {
-          "line": 9,
-          "column": 30
+          "line": 10,
+          "column": 36
         },
         "end": {
-          "line": 9,
-          "column": 58
+          "line": 10,
+          "column": 37
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "install",
+      "start": 300,
+      "end": 307,
+      "loc": {
+        "start": {
+          "line": 10,
+          "column": 37
+        },
+        "end": {
+          "line": 10,
+          "column": 44
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ".",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 307,
+      "end": 308,
+      "loc": {
+        "start": {
+          "line": 10,
+          "column": 44
+        },
+        "end": {
+          "line": 10,
+          "column": 45
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "noTransport",
+      "start": 308,
+      "end": 319,
+      "loc": {
+        "start": {
+          "line": 10,
+          "column": 45
+        },
+        "end": {
+          "line": 10,
+          "column": 56
         }
       }
     },
@@ -1755,31 +2160,31 @@
         "postfix": false,
         "binop": null
       },
-      "start": 286,
-      "end": 287,
+      "start": 319,
+      "end": 320,
       "loc": {
         "start": {
-          "line": 9,
-          "column": 58
+          "line": 10,
+          "column": 56
         },
         "end": {
-          "line": 9,
-          "column": 59
+          "line": 10,
+          "column": 57
         }
       }
     },
     {
       "type": "CommentLine",
       "value": " attach our transport stream to stdout/stderr",
-      "start": 291,
-      "end": 338,
+      "start": 324,
+      "end": 371,
       "loc": {
         "start": {
-          "line": 11,
+          "line": 12,
           "column": 2
         },
         "end": {
-          "line": 11,
+          "line": 12,
           "column": 49
         }
       }
@@ -1797,15 +2202,15 @@
         "binop": null
       },
       "value": "attach",
-      "start": 341,
-      "end": 347,
+      "start": 374,
+      "end": 380,
       "loc": {
         "start": {
-          "line": 12,
+          "line": 13,
           "column": 2
         },
         "end": {
-          "line": 12,
+          "line": 13,
           "column": 8
         }
       }
@@ -1822,15 +2227,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 347,
-      "end": 348,
+      "start": 380,
+      "end": 381,
       "loc": {
         "start": {
-          "line": 12,
+          "line": 13,
           "column": 8
         },
         "end": {
-          "line": 12,
+          "line": 13,
           "column": 9
         }
       }
@@ -1848,15 +2253,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 348,
-      "end": 349,
+      "start": 381,
+      "end": 382,
       "loc": {
         "start": {
-          "line": 12,
+          "line": 13,
           "column": 9
         },
         "end": {
-          "line": 12,
+          "line": 13,
           "column": 10
         }
       }
@@ -1874,15 +2279,15 @@
         "binop": null
       },
       "value": "transport",
-      "start": 349,
-      "end": 358,
+      "start": 382,
+      "end": 391,
       "loc": {
         "start": {
-          "line": 12,
+          "line": 13,
           "column": 10
         },
         "end": {
-          "line": 12,
+          "line": 13,
           "column": 19
         }
       }
@@ -1900,15 +2305,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 358,
-      "end": 359,
+      "start": 391,
+      "end": 392,
       "loc": {
         "start": {
-          "line": 12,
+          "line": 13,
           "column": 19
         },
         "end": {
-          "line": 12,
+          "line": 13,
           "column": 20
         }
       }
@@ -1926,15 +2331,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 359,
-      "end": 360,
+      "start": 392,
+      "end": 393,
       "loc": {
         "start": {
-          "line": 12,
+          "line": 13,
           "column": 20
         },
         "end": {
-          "line": 12,
+          "line": 13,
           "column": 21
         }
       }
@@ -1952,15 +2357,15 @@
         "binop": null
       },
       "value": "process",
-      "start": 361,
-      "end": 368,
+      "start": 394,
+      "end": 401,
       "loc": {
         "start": {
-          "line": 12,
+          "line": 13,
           "column": 22
         },
         "end": {
-          "line": 12,
+          "line": 13,
           "column": 29
         }
       }
@@ -1978,15 +2383,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 368,
-      "end": 369,
+      "start": 401,
+      "end": 402,
       "loc": {
         "start": {
-          "line": 12,
+          "line": 13,
           "column": 29
         },
         "end": {
-          "line": 12,
+          "line": 13,
           "column": 30
         }
       }
@@ -2004,15 +2409,15 @@
         "binop": null
       },
       "value": "stdout",
-      "start": 369,
-      "end": 375,
+      "start": 402,
+      "end": 408,
       "loc": {
         "start": {
-          "line": 12,
+          "line": 13,
           "column": 30
         },
         "end": {
-          "line": 12,
+          "line": 13,
           "column": 36
         }
       }
@@ -2029,15 +2434,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 375,
-      "end": 376,
+      "start": 408,
+      "end": 409,
       "loc": {
         "start": {
-          "line": 12,
+          "line": 13,
           "column": 36
         },
         "end": {
-          "line": 12,
+          "line": 13,
           "column": 37
         }
       }
@@ -2055,15 +2460,15 @@
         "binop": null
       },
       "value": "attach",
-      "start": 379,
-      "end": 385,
+      "start": 412,
+      "end": 418,
       "loc": {
         "start": {
-          "line": 13,
+          "line": 14,
           "column": 2
         },
         "end": {
-          "line": 13,
+          "line": 14,
           "column": 8
         }
       }
@@ -2080,15 +2485,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 385,
-      "end": 386,
+      "start": 418,
+      "end": 419,
       "loc": {
         "start": {
-          "line": 13,
+          "line": 14,
           "column": 8
         },
         "end": {
-          "line": 13,
+          "line": 14,
           "column": 9
         }
       }
@@ -2106,15 +2511,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 386,
-      "end": 387,
+      "start": 419,
+      "end": 420,
       "loc": {
         "start": {
-          "line": 13,
+          "line": 14,
           "column": 9
         },
         "end": {
-          "line": 13,
+          "line": 14,
           "column": 10
         }
       }
@@ -2132,15 +2537,15 @@
         "binop": null
       },
       "value": "transport",
-      "start": 387,
-      "end": 396,
+      "start": 420,
+      "end": 429,
       "loc": {
         "start": {
-          "line": 13,
+          "line": 14,
           "column": 10
         },
         "end": {
-          "line": 13,
+          "line": 14,
           "column": 19
         }
       }
@@ -2158,15 +2563,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 396,
-      "end": 397,
+      "start": 429,
+      "end": 430,
       "loc": {
         "start": {
-          "line": 13,
+          "line": 14,
           "column": 19
         },
         "end": {
-          "line": 13,
+          "line": 14,
           "column": 20
         }
       }
@@ -2184,15 +2589,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 397,
-      "end": 398,
+      "start": 430,
+      "end": 431,
       "loc": {
         "start": {
-          "line": 13,
+          "line": 14,
           "column": 20
         },
         "end": {
-          "line": 13,
+          "line": 14,
           "column": 21
         }
       }
@@ -2210,15 +2615,15 @@
         "binop": null
       },
       "value": "process",
-      "start": 399,
-      "end": 406,
+      "start": 432,
+      "end": 439,
       "loc": {
         "start": {
-          "line": 13,
+          "line": 14,
           "column": 22
         },
         "end": {
-          "line": 13,
+          "line": 14,
           "column": 29
         }
       }
@@ -2236,15 +2641,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 406,
-      "end": 407,
+      "start": 439,
+      "end": 440,
       "loc": {
         "start": {
-          "line": 13,
+          "line": 14,
           "column": 29
         },
         "end": {
-          "line": 13,
+          "line": 14,
           "column": 30
         }
       }
@@ -2262,15 +2667,15 @@
         "binop": null
       },
       "value": "stderr",
-      "start": 407,
-      "end": 413,
+      "start": 440,
+      "end": 446,
       "loc": {
         "start": {
-          "line": 13,
+          "line": 14,
           "column": 30
         },
         "end": {
-          "line": 13,
+          "line": 14,
           "column": 36
         }
       }
@@ -2287,15 +2692,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 413,
-      "end": 414,
+      "start": 446,
+      "end": 447,
       "loc": {
         "start": {
-          "line": 13,
+          "line": 14,
           "column": 36
         },
         "end": {
-          "line": 13,
+          "line": 14,
           "column": 37
         }
       }
@@ -2312,15 +2717,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 415,
-      "end": 416,
+      "start": 448,
+      "end": 449,
       "loc": {
         "start": {
-          "line": 14,
+          "line": 15,
           "column": 0
         },
         "end": {
-          "line": 14,
+          "line": 15,
           "column": 1
         }
       }
@@ -2340,15 +2745,15 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 418,
-      "end": 424,
+      "start": 451,
+      "end": 457,
       "loc": {
         "start": {
-          "line": 16,
+          "line": 17,
           "column": 0
         },
         "end": {
-          "line": 16,
+          "line": 17,
           "column": 6
         }
       }
@@ -2368,15 +2773,15 @@
         "updateContext": null
       },
       "value": "default",
-      "start": 425,
-      "end": 432,
+      "start": 458,
+      "end": 465,
       "loc": {
         "start": {
-          "line": 16,
+          "line": 17,
           "column": 7
         },
         "end": {
-          "line": 16,
+          "line": 17,
           "column": 14
         }
       }
@@ -2394,15 +2799,15 @@
         "binop": null
       },
       "value": "install",
-      "start": 433,
-      "end": 440,
+      "start": 466,
+      "end": 473,
       "loc": {
         "start": {
-          "line": 16,
+          "line": 17,
           "column": 15
         },
         "end": {
-          "line": 16,
+          "line": 17,
           "column": 22
         }
       }
@@ -2420,15 +2825,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 441,
-      "end": 441,
+      "start": 474,
+      "end": 474,
       "loc": {
         "start": {
-          "line": 17,
+          "line": 18,
           "column": 0
         },
         "end": {
-          "line": 17,
+          "line": 18,
           "column": 0
         }
       }

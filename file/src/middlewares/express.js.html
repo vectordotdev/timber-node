@@ -34,15 +34,19 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/context.js~Context.html">Context</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/event.js~Event.html">Event</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/log.js~Log.html">Log</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-install">install</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-log">log</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-config">config</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">contexts</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/contexts/http.js~HTTP.html">HTTP</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">events</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_server_request.js~HTTPServerRequest.html">HTTPServerRequest</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_server_response.js~HTTPServerResponse.html">HTTPServerResponse</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">events</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/custom.js~Custom.html">Custom</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_request.js~HTTPRequest.html">HTTPRequest</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_response.js~HTTPResponse.html">HTTPResponse</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-expressMiddleware">expressMiddleware</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">transports</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html">HTTPS</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-attach">attach</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">transports</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/bunyan.js~BunyanTransport.html">BunyanTransport</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html">HTTPS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/winston.js~WinstonTransport.html">WinstonTransport</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/augment.js~Augment.html">Augment</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-attach">attach</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -54,9 +58,8 @@ import addRequestId from &apos;express-request-id&apos;
 import bodyParser from &apos;body-parser&apos;
 import config from &apos;../config&apos;
 import HTTP from &apos;../contexts/http&apos;
-import HTTPServerRequest from &apos;../events/http_server_request&apos;
-import HTTPServerResponse from &apos;../events/http_server_response&apos;
-import Log from &apos;../log&apos;
+import { HTTPRequest, HTTPResponse } from &apos;../events&apos;
+import log from &apos;../log&apos;
 
 /**
  * The express middleware takes care of automatically logging
@@ -115,7 +118,8 @@ const expressMiddleware = compose(
       },
     }
 
-    const http_server_request = new HTTPServerRequest({
+    const http_request = new HTTPRequest({
+      direction: &apos;incoming&apos;,
       body,
       host,
       path,
@@ -124,8 +128,8 @@ const expressMiddleware = compose(
       method,
     })
 
-    // add the http_server_request event to the metadata object
-    metadata.event = { server_side_app: { http_server_request } }
+    // add the http_request event to the metadata object
+    metadata.event = { http_request }
 
     // add an event to get  triggered when the request finishes
     // this event will send the http_client_response event to timber
@@ -139,22 +143,23 @@ const expressMiddleware = compose(
       // send the response body if the capture_response_body flag is true (off by default)
       body = config.capture_response_body ? JSON.stringify(resBody) : undefined
 
-      const http_server_response = new HTTPServerResponse({
+      const http_response = new HTTPResponse({
+        direction: &apos;outgoing&apos;,
         request_id,
         time_ms,
         status,
         body,
       })
 
-      // add the http_server_response event to the metadata object
-      metadata.event = { server_side_app: { http_server_response } }
+      // add the http_response event to the metadata object
+      metadata.event = { http_response }
 
       // log the http response with metadata
-      console.info(new Log(http_server_response.message(), metadata))
+      log(&apos;info&apos;, http_response.message(), metadata)
     })
 
     // log the http request with metadata
-    console.info(new Log(http_server_request.message(), metadata))
+    log(&apos;info&apos;, http_request.message(), metadata)
     next()
   }
 )

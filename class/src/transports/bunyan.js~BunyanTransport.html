@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">HTTP | API Document</title>
+  <title data-ice="title">BunyanTransport | API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -52,23 +52,23 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import HTTP from &apos;<span><a href="file/src/contexts/http.js.html#lineNumber7">timber/src/contexts/http.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import BunyanTransport from &apos;<span><a href="file/src/transports/bunyan.js.html#lineNumber11">timber/src/transports/bunyan.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/contexts/http.js.html#lineNumber7">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/transports/bunyan.js.html#lineNumber11">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
-  <h1 data-ice="name">HTTP</h1>
+  <h1 data-ice="name">BunyanTransport</h1>
 
   
 
   
   
-  <div class="flat-list" data-ice="extendsChain"><h4>Extends:</h4><div><span><a href="class/src/context.js~Context.html">Context</a></span> &#x2192; HTTP</div></div>
+  <div class="flat-list" data-ice="extendsChain"><h4>Extends:</h4><div><span>stream~Writable</span> &#x2192; BunyanTransport</div></div>
   
   
   
@@ -78,8 +78,8 @@
 
   
   
-  <div class="description" data-ice="description"><p>The HTTP context adds data about the current HTTP request being processed
-to your logs.This allows you to tail and filter by this data.</p>
+  <div class="description" data-ice="description"><p>The Timber Bunyan transport allows you to seamlessly install
+Timber in your apps that use bunyan as the logger.</p>
 </div>
   
 
@@ -92,40 +92,7 @@ to your logs.This allows you to tail and filter by this data.</p>
   
 </div>
 
-<div data-ice="staticMemberSummary"><h2>Static Member Summary</h2><table class="summary" data-ice="summary">
-  <thead><tr><td data-ice="title" colspan="3">Static Public Members</td></tr></thead>
-  <tbody>
-  
-  <tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      <span data-ice="static">static</span>
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/contexts/http.js~HTTP.html#static-member-keyspace">keyspace</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-</tbody>
-</table>
-</div>
+
 
 <div data-ice="constructorSummary"><h2>Constructor Summary</h2><table class="summary" data-ice="summary">
   <thead><tr><td data-ice="title" colspan="3">Public Constructor</td></tr></thead>
@@ -144,7 +111,7 @@ to your logs.This allows you to tail and filter by this data.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/contexts/http.js~HTTP.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(objectPattern: {&quot;method&quot;: <span>*</span>, &quot;path&quot;: <span>*</span>, &quot;remote_addr&quot;: <span>*</span>, &quot;request_id&quot;: <span>*</span>})</span>
+          <span data-ice="name"><span><a href="class/src/transports/bunyan.js~BunyanTransport.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(options: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
         </p>
       </div>
       <div>
@@ -178,7 +145,7 @@ to your logs.This allows you to tail and filter by this data.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/contexts/http.js~HTTP.html#instance-member-method">method</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/transports/bunyan.js~BunyanTransport.html#instance-member-level">level</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -205,7 +172,7 @@ to your logs.This allows you to tail and filter by this data.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/contexts/http.js~HTTP.html#instance-member-path">path</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/transports/bunyan.js~BunyanTransport.html#instance-member-name">name</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
@@ -232,34 +199,7 @@ to your logs.This allows you to tail and filter by this data.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/contexts/http.js~HTTP.html#instance-member-remote_addr">remote_addr</a></span></span><span data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/contexts/http.js~HTTP.html#instance-member-request_id">request_id</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/transports/bunyan.js~BunyanTransport.html#instance-member-stream">stream</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -280,52 +220,7 @@ to your logs.This allows you to tail and filter by this data.</p>
 
 
 
-<div data-ice="staticMemberDetails"><h2 data-ice="title">Static Public Members</h2>
 
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="static-member-keyspace">
-    <span class="access" data-ice="access">public</span>
-    <span data-ice="static">static</span>
-    
-    
-    
-    
-    <span data-ice="name">keyspace</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/contexts/http.js.html#lineNumber8">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-</div>
 
 <div data-ice="constructorDetails"><h2 data-ice="title">Public Constructors</h2>
 
@@ -337,11 +232,11 @@ to your logs.This allows you to tail and filter by this data.</p>
     
     
     
-    <span data-ice="name">constructor</span><span data-ice="signature">(objectPattern: {&quot;method&quot;: <span>*</span>, &quot;path&quot;: <span>*</span>, &quot;remote_addr&quot;: <span>*</span>, &quot;request_id&quot;: <span>*</span>})</span>
+    <span data-ice="name">constructor</span><span data-ice="signature">(options: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/contexts/http.js.html#lineNumber10">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/transports/bunyan.js.html#lineNumber16">source</a></span></span>
     </span>
   </h3>
 
@@ -361,11 +256,18 @@ to your logs.This allows you to tail and filter by this data.</p>
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">objectPattern</td>
-      <td data-ice="type">{&quot;method&quot;: <span>*</span>, &quot;path&quot;: <span>*</span>, &quot;remote_addr&quot;: <span>*</span>, &quot;request_id&quot;: <span>*</span>}</td>
-      <td data-ice="appendix"><ul><li>optional</li>
-<li>default: {}</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="name" data-depth="0">options</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>Configuration options for the transport</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="1">
+      <td data-ice="name" data-depth="1">options.stream</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>Stream to write to</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -393,18 +295,18 @@ to your logs.This allows you to tail and filter by this data.</p>
 <div data-ice="memberDetails"><h2 data-ice="title">Public Members</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-method">
+  <h3 data-ice="anchor" id="instance-member-level">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">method</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">level</span><span data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/contexts/http.js.html#lineNumber17">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/transports/bunyan.js.html#lineNumber24">source</a></span></span>
     </span>
   </h3>
 
@@ -436,18 +338,18 @@ to your logs.This allows you to tail and filter by this data.</p>
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-path">
+  <h3 data-ice="anchor" id="instance-member-name">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">path</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">name</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/contexts/http.js.html#lineNumber18">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/transports/bunyan.js.html#lineNumber23">source</a></span></span>
     </span>
   </h3>
 
@@ -479,61 +381,18 @@ to your logs.This allows you to tail and filter by this data.</p>
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-remote_addr">
+  <h3 data-ice="anchor" id="instance-member-stream">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">remote_addr</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">stream</span><span data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/contexts/http.js.html#lineNumber19">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-request_id">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">request_id</span><span data-ice="signature">: <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/contexts/http.js.html#lineNumber20">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/transports/bunyan.js.html#lineNumber27">source</a></span></span>
     </span>
   </h3>
 

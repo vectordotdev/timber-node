@@ -1,12 +1,33 @@
 {
-  "coverage": "40%",
-  "expectCount": 50,
-  "actualCount": 20,
+  "coverage": "40.29%",
+  "expectCount": 67,
+  "actualCount": 27,
   "files": {
+    "src/utils/augment.js": {
+      "expectCount": 7,
+      "actualCount": 7,
+      "undocumentLines": []
+    },
+    "src/transports/bunyan.js": {
+      "expectCount": 5,
+      "actualCount": 2,
+      "undocumentLines": [
+        24,
+        23,
+        27
+      ]
+    },
     "src/context.js": {
       "expectCount": 1,
       "actualCount": 1,
       "undocumentLines": []
+    },
+    "src/events/custom.js": {
+      "expectCount": 3,
+      "actualCount": 2,
+      "undocumentLines": [
+        18
+      ]
     },
     "src/event.js": {
       "expectCount": 1,
@@ -25,6 +46,36 @@
         20
       ]
     },
+    "src/events/http_request.js": {
+      "expectCount": 13,
+      "actualCount": 2,
+      "undocumentLines": [
+        40,
+        41,
+        42,
+        43,
+        52,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "src/events/http_response.js": {
+      "expectCount": 9,
+      "actualCount": 2,
+      "undocumentLines": [
+        22,
+        23,
+        24,
+        30,
+        25,
+        26,
+        27
+      ]
+    },
     "src/transports/https.js": {
       "expectCount": 10,
       "actualCount": 2,
@@ -39,38 +90,14 @@
         44
       ]
     },
-    "src/events/http_server_request.js": {
-      "expectCount": 12,
-      "actualCount": 2,
+    "src/transports/winston.js": {
+      "expectCount": 6,
+      "actualCount": 3,
       "undocumentLines": [
-        37,
-        38,
-        39,
-        48,
-        40,
-        41,
-        42,
-        43,
-        44,
-        45
-      ]
-    },
-    "src/events/http_server_response.js": {
-      "expectCount": 8,
-      "actualCount": 2,
-      "undocumentLines": [
-        21,
-        22,
-        28,
         23,
-        24,
-        25
+        22,
+        26
       ]
-    },
-    "src/log.js": {
-      "expectCount": 7,
-      "actualCount": 7,
-      "undocumentLines": []
     },
     "src/utils/attach.js": {
       "expectCount": 1,
@@ -91,6 +118,13 @@
       "expectCount": 1,
       "actualCount": 1,
       "undocumentLines": []
+    },
+    "src/log.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        30
+      ]
     }
   }
 }

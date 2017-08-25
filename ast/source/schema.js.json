@@ -1,7 +1,7 @@
 {
   "type": "File",
   "start": 0,
-  "end": 265,
+  "end": 266,
   "loc": {
     "start": {
       "line": 1,
@@ -15,7 +15,7 @@
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 265,
+    "end": 266,
     "loc": {
       "start": {
         "line": 1,
@@ -31,7 +31,7 @@
       {
         "type": "ExportDefaultDeclaration",
         "start": 130,
-        "end": 264,
+        "end": 265,
         "loc": {
           "start": {
             "line": 4,
@@ -45,7 +45,7 @@
         "declaration": {
           "type": "ObjectExpression",
           "start": 145,
-          "end": 264,
+          "end": 265,
           "loc": {
             "start": {
               "line": 4,
@@ -60,7 +60,7 @@
             {
               "type": "ObjectProperty",
               "start": 149,
-              "end": 246,
+              "end": 247,
               "loc": {
                 "start": {
                   "line": 5,
@@ -68,7 +68,7 @@
                 },
                 "end": {
                   "line": 6,
-                  "column": 88
+                  "column": 89
                 }
               },
               "method": false,
@@ -95,7 +95,7 @@
               "value": {
                 "type": "StringLiteral",
                 "start": 162,
-                "end": 246,
+                "end": 247,
                 "loc": {
                   "start": {
                     "line": 6,
@@ -103,21 +103,21 @@
                   },
                   "end": {
                     "line": 6,
-                    "column": 88
+                    "column": 89
                   }
                 },
                 "extra": {
-                  "rawValue": "https://raw.githubusercontent.com/timberio/log-event-json-schema/1.2.3/schema.json",
-                  "raw": "'https://raw.githubusercontent.com/timberio/log-event-json-schema/1.2.3/schema.json'"
+                  "rawValue": "https://raw.githubusercontent.com/timberio/log-event-json-schema/v3.1.1/schema.json",
+                  "raw": "'https://raw.githubusercontent.com/timberio/log-event-json-schema/v3.1.1/schema.json'"
                 },
-                "value": "https://raw.githubusercontent.com/timberio/log-event-json-schema/1.2.3/schema.json"
+                "value": "https://raw.githubusercontent.com/timberio/log-event-json-schema/v3.1.1/schema.json"
               },
               "leadingComments": null
             },
             {
               "type": "ObjectProperty",
-              "start": 250,
-              "end": 261,
+              "start": 251,
+              "end": 262,
               "loc": {
                 "start": {
                   "line": 7,
@@ -133,8 +133,8 @@
               "computed": false,
               "key": {
                 "type": "Identifier",
-                "start": 250,
-                "end": 257,
+                "start": 251,
+                "end": 258,
                 "loc": {
                   "start": {
                     "line": 7,
@@ -150,8 +150,8 @@
               },
               "value": {
                 "type": "StringLiteral",
-                "start": 259,
-                "end": 261,
+                "start": 260,
+                "end": 262,
                 "loc": {
                   "start": {
                     "line": 7,
@@ -457,9 +457,9 @@
         "binop": null,
         "updateContext": null
       },
-      "value": "https://raw.githubusercontent.com/timberio/log-event-json-schema/1.2.3/schema.json",
+      "value": "https://raw.githubusercontent.com/timberio/log-event-json-schema/v3.1.1/schema.json",
       "start": 162,
-      "end": 246,
+      "end": 247,
       "loc": {
         "start": {
           "line": 6,
@@ -467,7 +467,7 @@
         },
         "end": {
           "line": 6,
-          "column": 88
+          "column": 89
         }
       }
     },
@@ -484,16 +484,16 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 246,
-      "end": 247,
+      "start": 247,
+      "end": 248,
       "loc": {
         "start": {
           "line": 6,
-          "column": 88
+          "column": 89
         },
         "end": {
           "line": 6,
-          "column": 89
+          "column": 90
         }
       }
     },
@@ -510,8 +510,8 @@
         "binop": null
       },
       "value": "message",
-      "start": 250,
-      "end": 257,
+      "start": 251,
+      "end": 258,
       "loc": {
         "start": {
           "line": 7,
@@ -536,8 +536,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 257,
-      "end": 258,
+      "start": 258,
+      "end": 259,
       "loc": {
         "start": {
           "line": 7,
@@ -563,8 +563,8 @@
         "updateContext": null
       },
       "value": "",
-      "start": 259,
-      "end": 261,
+      "start": 260,
+      "end": 262,
       "loc": {
         "start": {
           "line": 7,
@@ -589,8 +589,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 261,
-      "end": 262,
+      "start": 262,
+      "end": 263,
       "loc": {
         "start": {
           "line": 7,
@@ -614,8 +614,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 263,
-      "end": 264,
+      "start": 264,
+      "end": 265,
       "loc": {
         "start": {
           "line": 8,
@@ -640,8 +640,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 265,
-      "end": 265,
+      "start": 266,
+      "end": 266,
       "loc": {
         "start": {
           "line": 9,

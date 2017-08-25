@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">HTTPS | API Document</title>
+  <title data-ice="title">HTTPResponse | API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -52,23 +52,23 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import HTTPS from &apos;<span><a href="file/src/transports/https.js.html#lineNumber17">timber/src/transports/https.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import HTTPResponse from &apos;<span><a href="file/src/events/http_response.js.html#lineNumber6">timber/src/events/http_response.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/transports/https.js.html#lineNumber17">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/events/http_response.js.html#lineNumber6">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
-  <h1 data-ice="name">HTTPS</h1>
+  <h1 data-ice="name">HTTPResponse</h1>
 
   
 
   
   
-  <div class="flat-list" data-ice="extendsChain"><h4>Extends:</h4><div><span>stream~Writable</span> &#x2192; HTTPS</div></div>
+  <div class="flat-list" data-ice="extendsChain"><h4>Extends:</h4><div><span><a href="class/src/event.js~Event.html">Event</a></span> &#x2192; HTTPResponse</div></div>
   
   
   
@@ -78,10 +78,7 @@
 
   
   
-  <div class="description" data-ice="description"><p>A highly efficient stream for sending logs to Timber via HTTPS. It uses batches,
-keep-alive connections (and in the future maybe msgpack) to deliver logs with high-throughput
-and little overhead. It also implements the Stream.Writable interface so that it can be treated
-like a stream. This is beneficial when using something like Morgan, where you can pass a custom stream.</p>
+  <div class="description" data-ice="description"><p>The HTTP server request event tracks incoming HTTP requests to your HTTP server.</p>
 </div>
   
 
@@ -113,7 +110,7 @@ like a stream. This is beneficial when using something like Morgan, where you ca
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(apiKey: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, options: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+          <span data-ice="name"><span><a href="class/src/events/http_response.js~HTTPResponse.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(body: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, direction: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, headers: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, request_id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, status: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, time_ms: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>)</span>
         </p>
       </div>
       <div>
@@ -147,7 +144,7 @@ like a stream. This is beneficial when using something like Morgan, where you ca
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html#instance-member-acceptsObject">acceptsObject</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+          <span data-ice="name"><span><a href="class/src/events/http_response.js~HTTPResponse.html#instance-member-body">body</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -174,7 +171,7 @@ like a stream. This is beneficial when using something like Morgan, where you ca
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html#instance-member-apiKey">apiKey</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/events/http_response.js~HTTPResponse.html#instance-member-direction">direction</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -201,7 +198,7 @@ like a stream. This is beneficial when using something like Morgan, where you ca
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html#instance-member-flushInterval">flushInterval</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/events/http_response.js~HTTPResponse.html#instance-member-headers">headers</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -228,7 +225,7 @@ like a stream. This is beneficial when using something like Morgan, where you ca
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html#instance-member-hostName">hostName</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/events/http_response.js~HTTPResponse.html#instance-member-request_id">request_id</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -255,7 +252,7 @@ like a stream. This is beneficial when using something like Morgan, where you ca
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html#instance-member-httpsAgent">httpsAgent</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/events/http_response.js~HTTPResponse.html#instance-member-status">status</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -282,7 +279,7 @@ like a stream. This is beneficial when using something like Morgan, where you ca
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html#instance-member-httpsClient">httpsClient</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/events/http_response.js~HTTPResponse.html#instance-member-time_ms">time_ms</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -296,7 +293,14 @@ like a stream. This is beneficial when using something like Morgan, where you ca
       
     </td>
   </tr>
-<tr data-ice="target">
+</tbody>
+</table>
+</div>
+<div data-ice="methodSummary"><h2>Method Summary</h2><table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3">Public Methods</td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
     <td>
       <span class="access" data-ice="access">public</span>
       
@@ -309,34 +313,7 @@ like a stream. This is beneficial when using something like Morgan, where you ca
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html#instance-member-path">path</a></span></span><span data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html#instance-member-port">port</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/events/http_response.js~HTTPResponse.html#instance-method-message">message</a></span></span><span data-ice="signature">(): <span>*</span></span>
         </p>
       </div>
       <div>
@@ -358,7 +335,6 @@ like a stream. This is beneficial when using something like Morgan, where you ca
 
 
 
-
 <div data-ice="constructorDetails"><h2 data-ice="title">Public Constructors</h2>
 
 <div class="detail" data-ice="detail">
@@ -369,11 +345,11 @@ like a stream. This is beneficial when using something like Morgan, where you ca
     
     
     
-    <span data-ice="name">constructor</span><span data-ice="signature">(apiKey: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, options: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+    <span data-ice="name">constructor</span><span data-ice="signature">(body: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, direction: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, headers: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, request_id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, status: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, time_ms: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/transports/https.js.html#lineNumber24">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/events/http_response.js.html#lineNumber15">source</a></span></span>
     </span>
   </h3>
 
@@ -393,32 +369,45 @@ like a stream. This is beneficial when using something like Morgan, where you ca
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">apiKey</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><p>Timber API Key</p>
+      <td data-ice="name" data-depth="0">body</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>the body of the request</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">options</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+      <td data-ice="name" data-depth="0">direction</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li></ul></td>
-      <td data-ice="description"><p>Various options to adjust the stream behavior.</p>
+      <td data-ice="description"><p>incoming or outgoing</p>
 </td>
     </tr>
-<tr data-ice="property" data-depth="1">
-      <td data-ice="name" data-depth="1">options.flushInterval</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
-      <td data-ice="appendix"><ul><li>optional</li>
-<li>default: 1000</li></ul></td>
-      <td data-ice="description"><p>How often, in milliseconds, the messages written to the stream should be delivered to Timber.</p>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">headers</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>the headers of the request</p>
 </td>
     </tr>
-<tr data-ice="property" data-depth="1">
-      <td data-ice="name" data-depth="1">options.httpsAgent</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">request_id</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li></ul></td>
-      <td data-ice="description"><p>Your own custom https.Agent. We use agents to maintain connection pools and keep the connections alive. This avoids the initial connection overhead every time we want to communicate with Timber. See https.Agent for options.</p>
+      <td data-ice="description"><p>the uuid of the request</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">status</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>the HTTP status code</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">time_ms</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>the total duration of the request in milliseconds</p>
 </td>
     </tr>
 </tbody>
@@ -447,18 +436,18 @@ like a stream. This is beneficial when using something like Morgan, where you ca
 <div data-ice="memberDetails"><h2 data-ice="title">Public Members</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-acceptsObject">
+  <h3 data-ice="anchor" id="instance-member-body">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">acceptsObject</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+    <span data-ice="name">body</span><span data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/transports/https.js.html#lineNumber40">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/events/http_response.js.html#lineNumber22">source</a></span></span>
     </span>
   </h3>
 
@@ -490,18 +479,18 @@ like a stream. This is beneficial when using something like Morgan, where you ca
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-apiKey">
+  <h3 data-ice="anchor" id="instance-member-direction">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">apiKey</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">direction</span><span data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/transports/https.js.html#lineNumber41">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/events/http_response.js.html#lineNumber23">source</a></span></span>
     </span>
   </h3>
 
@@ -533,18 +522,18 @@ like a stream. This is beneficial when using something like Morgan, where you ca
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-flushInterval">
+  <h3 data-ice="anchor" id="instance-member-headers">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">flushInterval</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">headers</span><span data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/transports/https.js.html#lineNumber45">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/events/http_response.js.html#lineNumber24">source</a></span></span>
     </span>
   </h3>
 
@@ -576,18 +565,18 @@ like a stream. This is beneficial when using something like Morgan, where you ca
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-hostName">
+  <h3 data-ice="anchor" id="instance-member-request_id">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">hostName</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">request_id</span><span data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/transports/https.js.html#lineNumber42">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/events/http_response.js.html#lineNumber25">source</a></span></span>
     </span>
   </h3>
 
@@ -619,18 +608,18 @@ like a stream. This is beneficial when using something like Morgan, where you ca
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-httpsAgent">
+  <h3 data-ice="anchor" id="instance-member-status">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">httpsAgent</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">status</span><span data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/transports/https.js.html#lineNumber46">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/events/http_response.js.html#lineNumber26">source</a></span></span>
     </span>
   </h3>
 
@@ -662,18 +651,18 @@ like a stream. This is beneficial when using something like Morgan, where you ca
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-httpsClient">
+  <h3 data-ice="anchor" id="instance-member-time_ms">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">httpsClient</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">time_ms</span><span data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/transports/https.js.html#lineNumber51">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/events/http_response.js.html#lineNumber27">source</a></span></span>
     </span>
   </h3>
 
@@ -704,19 +693,22 @@ like a stream. This is beneficial when using something like Morgan, where you ca
   
   
 </div>
+</div>
+<div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
+
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-path">
+  <h3 data-ice="anchor" id="instance-method-message">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">path</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">message</span><span data-ice="signature">(): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/transports/https.js.html#lineNumber43">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/events/http_response.js.html#lineNumber30">source</a></span></span>
     </span>
   </h3>
 
@@ -730,50 +722,19 @@ like a stream. This is beneficial when using something like Morgan, where you ca
   <div data-ice="properties">
 </div>
 
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
 </div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-port">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">port</span><span data-ice="signature">: <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/transports/https.js.html#lineNumber44">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
+  </div>
 
   
 
@@ -791,7 +752,6 @@ like a stream. This is beneficial when using something like Morgan, where you ca
   
 </div>
 </div>
-
 </div>
 
 <footer class="footer">

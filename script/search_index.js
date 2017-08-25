@@ -1,8 +1,26 @@
 window.esdocSearchIndex = [
   [
+    "timber/src/utils/augment.js~augment",
+    "class/src/utils/augment.js~Augment.html",
+    "<span>Augment</span> <span class=\"search-result-import-path\">timber/src/utils/augment.js</span>",
+    "class"
+  ],
+  [
+    "timber/src/transports/bunyan.js~bunyantransport",
+    "class/src/transports/bunyan.js~BunyanTransport.html",
+    "<span>BunyanTransport</span> <span class=\"search-result-import-path\">timber/src/transports/bunyan.js</span>",
+    "class"
+  ],
+  [
     "timber/src/context.js~context",
     "class/src/context.js~Context.html",
     "<span>Context</span> <span class=\"search-result-import-path\">timber/src/context.js</span>",
+    "class"
+  ],
+  [
+    "timber/src/events/custom.js~custom",
+    "class/src/events/custom.js~Custom.html",
+    "<span>Custom</span> <span class=\"search-result-import-path\">timber/src/events/custom.js</span>",
     "class"
   ],
   [
@@ -18,27 +36,27 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "timber/src/events/http_request.js~httprequest",
+    "class/src/events/http_request.js~HTTPRequest.html",
+    "<span>HTTPRequest</span> <span class=\"search-result-import-path\">timber/src/events/http_request.js</span>",
+    "class"
+  ],
+  [
+    "timber/src/events/http_response.js~httpresponse",
+    "class/src/events/http_response.js~HTTPResponse.html",
+    "<span>HTTPResponse</span> <span class=\"search-result-import-path\">timber/src/events/http_response.js</span>",
+    "class"
+  ],
+  [
     "timber/src/transports/https.js~https",
     "class/src/transports/https.js~HTTPS.html",
     "<span>HTTPS</span> <span class=\"search-result-import-path\">timber/src/transports/https.js</span>",
     "class"
   ],
   [
-    "timber/src/events/http_server_request.js~httpserverrequest",
-    "class/src/events/http_server_request.js~HTTPServerRequest.html",
-    "<span>HTTPServerRequest</span> <span class=\"search-result-import-path\">timber/src/events/http_server_request.js</span>",
-    "class"
-  ],
-  [
-    "timber/src/events/http_server_response.js~httpserverresponse",
-    "class/src/events/http_server_response.js~HTTPServerResponse.html",
-    "<span>HTTPServerResponse</span> <span class=\"search-result-import-path\">timber/src/events/http_server_response.js</span>",
-    "class"
-  ],
-  [
-    "timber/src/log.js~log",
-    "class/src/log.js~Log.html",
-    "<span>Log</span> <span class=\"search-result-import-path\">timber/src/log.js</span>",
+    "timber/src/transports/winston.js~winstontransport",
+    "class/src/transports/winston.js~WinstonTransport.html",
+    "<span>WinstonTransport</span> <span class=\"search-result-import-path\">timber/src/transports/winston.js</span>",
     "class"
   ],
   [
@@ -63,6 +81,12 @@ window.esdocSearchIndex = [
     "timber/src/install.js~install",
     "function/index.html#static-function-install",
     "<span>install</span> <span class=\"search-result-import-path\">timber/src/install.js</span>",
+    "function"
+  ],
+  [
+    "timber/src/log.js~log",
+    "function/index.html#static-function-log",
+    "<span>log</span> <span class=\"search-result-import-path\">timber/src/log.js</span>",
     "function"
   ],
   [
@@ -456,130 +480,178 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "src/contexts/index.js",
+    "file/src/contexts/index.js.html",
+    "src/contexts/index.js",
+    "file"
+  ],
+  [
+    "src/data/errors.js",
+    "file/src/data/errors.js.html",
+    "src/data/errors.js",
+    "file"
+  ],
+  [
     "src/event.js",
     "file/src/event.js.html",
     "src/event.js",
     "file"
   ],
   [
-    "src/events/http_server_request.js",
-    "file/src/events/http_server_request.js.html",
-    "src/events/http_server_request.js",
+    "src/events/custom.js",
+    "file/src/events/custom.js.html",
+    "src/events/custom.js",
     "file"
   ],
   [
-    "src/events/http_server_request.js~httpserverrequest#body",
-    "class/src/events/http_server_request.js~HTTPServerRequest.html#instance-member-body",
-    "src/events/http_server_request.js~HTTPServerRequest#body",
-    "member"
-  ],
-  [
-    "src/events/http_server_request.js~httpserverrequest#constructor",
-    "class/src/events/http_server_request.js~HTTPServerRequest.html#instance-constructor-constructor",
-    "src/events/http_server_request.js~HTTPServerRequest#constructor",
+    "src/events/custom.js~custom#constructor",
+    "class/src/events/custom.js~Custom.html#instance-constructor-constructor",
+    "src/events/custom.js~Custom#constructor",
     "method"
   ],
   [
-    "src/events/http_server_request.js~httpserverrequest#headers",
-    "class/src/events/http_server_request.js~HTTPServerRequest.html#instance-member-headers",
-    "src/events/http_server_request.js~HTTPServerRequest#headers",
+    "src/events/custom.js~custom#custom",
+    "class/src/events/custom.js~Custom.html#instance-member-custom",
+    "src/events/custom.js~Custom#custom",
     "member"
   ],
   [
-    "src/events/http_server_request.js~httpserverrequest#host",
-    "class/src/events/http_server_request.js~HTTPServerRequest.html#instance-member-host",
-    "src/events/http_server_request.js~HTTPServerRequest#host",
-    "member"
-  ],
-  [
-    "src/events/http_server_request.js~httpserverrequest#message",
-    "class/src/events/http_server_request.js~HTTPServerRequest.html#instance-member-message",
-    "src/events/http_server_request.js~HTTPServerRequest#message",
-    "member"
-  ],
-  [
-    "src/events/http_server_request.js~httpserverrequest#method",
-    "class/src/events/http_server_request.js~HTTPServerRequest.html#instance-member-method",
-    "src/events/http_server_request.js~HTTPServerRequest#method",
-    "member"
-  ],
-  [
-    "src/events/http_server_request.js~httpserverrequest#path",
-    "class/src/events/http_server_request.js~HTTPServerRequest.html#instance-member-path",
-    "src/events/http_server_request.js~HTTPServerRequest#path",
-    "member"
-  ],
-  [
-    "src/events/http_server_request.js~httpserverrequest#port",
-    "class/src/events/http_server_request.js~HTTPServerRequest.html#instance-member-port",
-    "src/events/http_server_request.js~HTTPServerRequest#port",
-    "member"
-  ],
-  [
-    "src/events/http_server_request.js~httpserverrequest#query_string",
-    "class/src/events/http_server_request.js~HTTPServerRequest.html#instance-member-query_string",
-    "src/events/http_server_request.js~HTTPServerRequest#query_string",
-    "member"
-  ],
-  [
-    "src/events/http_server_request.js~httpserverrequest#request_id",
-    "class/src/events/http_server_request.js~HTTPServerRequest.html#instance-member-request_id",
-    "src/events/http_server_request.js~HTTPServerRequest#request_id",
-    "member"
-  ],
-  [
-    "src/events/http_server_request.js~httpserverrequest#scheme",
-    "class/src/events/http_server_request.js~HTTPServerRequest.html#instance-member-scheme",
-    "src/events/http_server_request.js~HTTPServerRequest#scheme",
-    "member"
-  ],
-  [
-    "src/events/http_server_response.js",
-    "file/src/events/http_server_response.js.html",
-    "src/events/http_server_response.js",
+    "src/events/http_request.js",
+    "file/src/events/http_request.js.html",
+    "src/events/http_request.js",
     "file"
   ],
   [
-    "src/events/http_server_response.js~httpserverresponse#body",
-    "class/src/events/http_server_response.js~HTTPServerResponse.html#instance-member-body",
-    "src/events/http_server_response.js~HTTPServerResponse#body",
+    "src/events/http_request.js~httprequest#body",
+    "class/src/events/http_request.js~HTTPRequest.html#instance-member-body",
+    "src/events/http_request.js~HTTPRequest#body",
     "member"
   ],
   [
-    "src/events/http_server_response.js~httpserverresponse#constructor",
-    "class/src/events/http_server_response.js~HTTPServerResponse.html#instance-constructor-constructor",
-    "src/events/http_server_response.js~HTTPServerResponse#constructor",
+    "src/events/http_request.js~httprequest#constructor",
+    "class/src/events/http_request.js~HTTPRequest.html#instance-constructor-constructor",
+    "src/events/http_request.js~HTTPRequest#constructor",
     "method"
   ],
   [
-    "src/events/http_server_response.js~httpserverresponse#headers",
-    "class/src/events/http_server_response.js~HTTPServerResponse.html#instance-member-headers",
-    "src/events/http_server_response.js~HTTPServerResponse#headers",
+    "src/events/http_request.js~httprequest#direction",
+    "class/src/events/http_request.js~HTTPRequest.html#instance-member-direction",
+    "src/events/http_request.js~HTTPRequest#direction",
     "member"
   ],
   [
-    "src/events/http_server_response.js~httpserverresponse#message",
-    "class/src/events/http_server_response.js~HTTPServerResponse.html#instance-method-message",
-    "src/events/http_server_response.js~HTTPServerResponse#message",
+    "src/events/http_request.js~httprequest#headers",
+    "class/src/events/http_request.js~HTTPRequest.html#instance-member-headers",
+    "src/events/http_request.js~HTTPRequest#headers",
+    "member"
+  ],
+  [
+    "src/events/http_request.js~httprequest#host",
+    "class/src/events/http_request.js~HTTPRequest.html#instance-member-host",
+    "src/events/http_request.js~HTTPRequest#host",
+    "member"
+  ],
+  [
+    "src/events/http_request.js~httprequest#message",
+    "class/src/events/http_request.js~HTTPRequest.html#instance-method-message",
+    "src/events/http_request.js~HTTPRequest#message",
     "method"
   ],
   [
-    "src/events/http_server_response.js~httpserverresponse#request_id",
-    "class/src/events/http_server_response.js~HTTPServerResponse.html#instance-member-request_id",
-    "src/events/http_server_response.js~HTTPServerResponse#request_id",
+    "src/events/http_request.js~httprequest#method",
+    "class/src/events/http_request.js~HTTPRequest.html#instance-member-method",
+    "src/events/http_request.js~HTTPRequest#method",
     "member"
   ],
   [
-    "src/events/http_server_response.js~httpserverresponse#status",
-    "class/src/events/http_server_response.js~HTTPServerResponse.html#instance-member-status",
-    "src/events/http_server_response.js~HTTPServerResponse#status",
+    "src/events/http_request.js~httprequest#path",
+    "class/src/events/http_request.js~HTTPRequest.html#instance-member-path",
+    "src/events/http_request.js~HTTPRequest#path",
     "member"
   ],
   [
-    "src/events/http_server_response.js~httpserverresponse#time_ms",
-    "class/src/events/http_server_response.js~HTTPServerResponse.html#instance-member-time_ms",
-    "src/events/http_server_response.js~HTTPServerResponse#time_ms",
+    "src/events/http_request.js~httprequest#port",
+    "class/src/events/http_request.js~HTTPRequest.html#instance-member-port",
+    "src/events/http_request.js~HTTPRequest#port",
     "member"
+  ],
+  [
+    "src/events/http_request.js~httprequest#query_string",
+    "class/src/events/http_request.js~HTTPRequest.html#instance-member-query_string",
+    "src/events/http_request.js~HTTPRequest#query_string",
+    "member"
+  ],
+  [
+    "src/events/http_request.js~httprequest#request_id",
+    "class/src/events/http_request.js~HTTPRequest.html#instance-member-request_id",
+    "src/events/http_request.js~HTTPRequest#request_id",
+    "member"
+  ],
+  [
+    "src/events/http_request.js~httprequest#scheme",
+    "class/src/events/http_request.js~HTTPRequest.html#instance-member-scheme",
+    "src/events/http_request.js~HTTPRequest#scheme",
+    "member"
+  ],
+  [
+    "src/events/http_response.js",
+    "file/src/events/http_response.js.html",
+    "src/events/http_response.js",
+    "file"
+  ],
+  [
+    "src/events/http_response.js~httpresponse#body",
+    "class/src/events/http_response.js~HTTPResponse.html#instance-member-body",
+    "src/events/http_response.js~HTTPResponse#body",
+    "member"
+  ],
+  [
+    "src/events/http_response.js~httpresponse#constructor",
+    "class/src/events/http_response.js~HTTPResponse.html#instance-constructor-constructor",
+    "src/events/http_response.js~HTTPResponse#constructor",
+    "method"
+  ],
+  [
+    "src/events/http_response.js~httpresponse#direction",
+    "class/src/events/http_response.js~HTTPResponse.html#instance-member-direction",
+    "src/events/http_response.js~HTTPResponse#direction",
+    "member"
+  ],
+  [
+    "src/events/http_response.js~httpresponse#headers",
+    "class/src/events/http_response.js~HTTPResponse.html#instance-member-headers",
+    "src/events/http_response.js~HTTPResponse#headers",
+    "member"
+  ],
+  [
+    "src/events/http_response.js~httpresponse#message",
+    "class/src/events/http_response.js~HTTPResponse.html#instance-method-message",
+    "src/events/http_response.js~HTTPResponse#message",
+    "method"
+  ],
+  [
+    "src/events/http_response.js~httpresponse#request_id",
+    "class/src/events/http_response.js~HTTPResponse.html#instance-member-request_id",
+    "src/events/http_response.js~HTTPResponse#request_id",
+    "member"
+  ],
+  [
+    "src/events/http_response.js~httpresponse#status",
+    "class/src/events/http_response.js~HTTPResponse.html#instance-member-status",
+    "src/events/http_response.js~HTTPResponse#status",
+    "member"
+  ],
+  [
+    "src/events/http_response.js~httpresponse#time_ms",
+    "class/src/events/http_response.js~HTTPResponse.html#instance-member-time_ms",
+    "src/events/http_response.js~HTTPResponse#time_ms",
+    "member"
+  ],
+  [
+    "src/events/index.js",
+    "file/src/events/index.js.html",
+    "src/events/index.js",
+    "file"
   ],
   [
     "src/index.js",
@@ -598,42 +670,6 @@ window.esdocSearchIndex = [
     "file/src/log.js.html",
     "src/log.js",
     "file"
-  ],
-  [
-    "src/log.js~log#append",
-    "class/src/log.js~Log.html#instance-method-append",
-    "src/log.js~Log#append",
-    "method"
-  ],
-  [
-    "src/log.js~log#constructor",
-    "class/src/log.js~Log.html#instance-constructor-constructor",
-    "src/log.js~Log#constructor",
-    "method"
-  ],
-  [
-    "src/log.js~log#data",
-    "class/src/log.js~Log.html#instance-member-data",
-    "src/log.js~Log#data",
-    "member"
-  ],
-  [
-    "src/log.js~log#format",
-    "class/src/log.js~Log.html#instance-method-format",
-    "src/log.js~Log#format",
-    "method"
-  ],
-  [
-    "src/log.js~log#raw",
-    "class/src/log.js~Log.html#instance-member-raw",
-    "src/log.js~Log#raw",
-    "member"
-  ],
-  [
-    "src/log.js~log#setlevel",
-    "class/src/log.js~Log.html#instance-method-setLevel",
-    "src/log.js~Log#setLevel",
-    "method"
   ],
   [
     "src/middlewares/express.js",
@@ -658,6 +694,36 @@ window.esdocSearchIndex = [
     "file/src/schema.js.html",
     "src/schema.js",
     "file"
+  ],
+  [
+    "src/transports/bunyan.js",
+    "file/src/transports/bunyan.js.html",
+    "src/transports/bunyan.js",
+    "file"
+  ],
+  [
+    "src/transports/bunyan.js~bunyantransport#constructor",
+    "class/src/transports/bunyan.js~BunyanTransport.html#instance-constructor-constructor",
+    "src/transports/bunyan.js~BunyanTransport#constructor",
+    "method"
+  ],
+  [
+    "src/transports/bunyan.js~bunyantransport#level",
+    "class/src/transports/bunyan.js~BunyanTransport.html#instance-member-level",
+    "src/transports/bunyan.js~BunyanTransport#level",
+    "member"
+  ],
+  [
+    "src/transports/bunyan.js~bunyantransport#name",
+    "class/src/transports/bunyan.js~BunyanTransport.html#instance-member-name",
+    "src/transports/bunyan.js~BunyanTransport#name",
+    "member"
+  ],
+  [
+    "src/transports/bunyan.js~bunyantransport#stream",
+    "class/src/transports/bunyan.js~BunyanTransport.html#instance-member-stream",
+    "src/transports/bunyan.js~BunyanTransport#stream",
+    "member"
   ],
   [
     "src/transports/https.js",
@@ -726,10 +792,88 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/transports/winston.js",
+    "file/src/transports/winston.js.html",
+    "src/transports/winston.js",
+    "file"
+  ],
+  [
+    "src/transports/winston.js~winstontransport#constructor",
+    "class/src/transports/winston.js~WinstonTransport.html#instance-constructor-constructor",
+    "src/transports/winston.js~WinstonTransport#constructor",
+    "method"
+  ],
+  [
+    "src/transports/winston.js~winstontransport#level",
+    "class/src/transports/winston.js~WinstonTransport.html#instance-member-level",
+    "src/transports/winston.js~WinstonTransport#level",
+    "member"
+  ],
+  [
+    "src/transports/winston.js~winstontransport#log",
+    "class/src/transports/winston.js~WinstonTransport.html#instance-member-log",
+    "src/transports/winston.js~WinstonTransport#log",
+    "member"
+  ],
+  [
+    "src/transports/winston.js~winstontransport#name",
+    "class/src/transports/winston.js~WinstonTransport.html#instance-member-name",
+    "src/transports/winston.js~WinstonTransport#name",
+    "member"
+  ],
+  [
+    "src/transports/winston.js~winstontransport#stream",
+    "class/src/transports/winston.js~WinstonTransport.html#instance-member-stream",
+    "src/transports/winston.js~WinstonTransport#stream",
+    "member"
+  ],
+  [
     "src/utils/attach.js",
     "file/src/utils/attach.js.html",
     "src/utils/attach.js",
     "file"
+  ],
+  [
+    "src/utils/augment.js",
+    "file/src/utils/augment.js.html",
+    "src/utils/augment.js",
+    "file"
+  ],
+  [
+    "src/utils/augment.js~augment#append",
+    "class/src/utils/augment.js~Augment.html#instance-method-append",
+    "src/utils/augment.js~Augment#append",
+    "method"
+  ],
+  [
+    "src/utils/augment.js~augment#constructor",
+    "class/src/utils/augment.js~Augment.html#instance-constructor-constructor",
+    "src/utils/augment.js~Augment#constructor",
+    "method"
+  ],
+  [
+    "src/utils/augment.js~augment#data",
+    "class/src/utils/augment.js~Augment.html#instance-member-data",
+    "src/utils/augment.js~Augment#data",
+    "member"
+  ],
+  [
+    "src/utils/augment.js~augment#format",
+    "class/src/utils/augment.js~Augment.html#instance-method-format",
+    "src/utils/augment.js~Augment#format",
+    "method"
+  ],
+  [
+    "src/utils/augment.js~augment#raw",
+    "class/src/utils/augment.js~Augment.html#instance-member-raw",
+    "src/utils/augment.js~Augment#raw",
+    "member"
+  ],
+  [
+    "src/utils/augment.js~augment#setlevel",
+    "class/src/utils/augment.js~Augment.html#instance-method-setLevel",
+    "src/utils/augment.js~Augment#setLevel",
+    "method"
   ],
   [
     "src/utils/debug.js",

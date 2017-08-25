@@ -3,7 +3,7 @@
     "__docId__": 0,
     "kind": "file",
     "name": "src/config.js",
-    "content": "import path from 'path'\nimport finder from 'find-package-json'\n\nconst filename = (require.main && require.main.filename) || __dirname\nconst projectPath = path.dirname(filename)\nconst userConfig = finder(projectPath).next().value.timber\n\n/**\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *   \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n *\n * @param {String} metadata_delimiter - delimiter between log message and log data (@metadata by default)\n * @param {boolean} append_metadata - append @metadata { ... } to all logs (on by default)\n * @param {Writable} debug_logger - a writeable stream for internal debug messages to be sent to (disabled when underined)\n * @param {boolean} capture_request_body - whether the http request body data will be captured (off by default)\n * @param {boolean} capture_request_body - whether the http response body data will be captured (off by default)\n */\nconst config = {\n  metadata_delimiter: '@metadata',\n  append_metadata: true,\n  debug_logger: undefined,\n  capture_request_body: false,\n  capture_response_body: false,\n  ...userConfig,\n}\n\nexport default config\n",
+    "content": "import path from 'path'\nimport finder from 'find-package-json'\n\nconst filename = (require.main && require.main.filename) || __dirname\nconst projectPath = path.dirname(filename)\nconst userConfig = finder(projectPath).next().value.timber\n\n/**\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *   \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n *\n * @param {String} metadata_delimiter - delimiter between log message and log data (@metadata by default)\n * @param {boolean} append_metadata - append @metadata { ... } to all logs (on by default)\n * @param {Writable} debug_logger - a writeable stream for internal debug messages to be sent to (disabled when undefined)\n * @param {boolean} timestamp_prefix - When `true`, log output should be prefixed with a timestamp in ISO 8601 format (off by default)\n * @param {boolean} capture_request_body - whether the http request body data will be captured (off by default)\n * @param {boolean} capture_request_body - whether the http response body data will be captured (off by default)\n */\nconst config = {\n  logger: console,\n  metadata_delimiter: '@metadata',\n  append_metadata: true,\n  debug_logger: undefined,\n  timestamp_prefix: false,\n  capture_request_body: false,\n  capture_response_body: false,\n  ...userConfig,\n}\n\nexport default config\n",
     "static": true,
     "longname": "src/config.js",
     "access": null,
@@ -100,7 +100,7 @@
     "importPath": "timber/src/config.js",
     "importStyle": "config",
     "description": "The configuration options here are use throughout the timber library.\nAny of the values can be changed in two different ways:\n\n## Using your package.json\n\nTo configure timber from your `package.json`, simply add a `timber`\nobject at the root level containing your desired overrides:\n\n```json\n\"timber\": {\n  \"capture_request_body\": true,\n  \"capture_response_body\": true\n},\n```\n\n__Note:__ you cannot set the `debug_logger` option from the `package.json`.\nThis is because you must set it as a writeable stream.\n\n## Using inline overrides\n\nYou can also configure timber by overriding the config options inline:\n\n```js\nconst timber = require('timber');\ntimber.config.debug_logger = process.stdout;\n```\n\n__Note:__ inline overrides will override any options you have set\nin your `package.json` file.",
-    "lineNumber": 45,
+    "lineNumber": 46,
     "params": [
       {
         "nullable": null,
@@ -130,7 +130,17 @@
         "spread": false,
         "optional": false,
         "name": "debug_logger",
-        "description": "a writeable stream for internal debug messages to be sent to (disabled when underined)"
+        "description": "a writeable stream for internal debug messages to be sent to (disabled when undefined)"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "timestamp_prefix",
+        "description": "When `true`, log output should be prefixed with a timestamp in ISO 8601 format (off by default)"
       },
       {
         "nullable": null,
@@ -155,7 +165,7 @@
     ],
     "type": {
       "types": [
-        "{\"metadata_delimiter\": string, \"append_metadata\": boolean, \"debug_logger\": *, \"capture_request_body\": *, \"capture_response_body\": *, ...userConfig: Object}"
+        "{\"logger\": *, \"metadata_delimiter\": string, \"append_metadata\": boolean, \"debug_logger\": *, \"timestamp_prefix\": *, \"capture_request_body\": *, \"capture_response_body\": *, ...userConfig: Object}"
       ]
     }
   },
@@ -163,7 +173,7 @@
     "__docId__": 5,
     "kind": "file",
     "name": "src/console.js",
-    "content": "import util from 'util'\nimport Log from './log'\nimport config from './config'\n\n/**\n * Transforms an ordinary console.log message into a structured Log object\n * It also allows you to pass a Log object directly to a console.log function\n * It will automatically detect whether or not you are passing a structured\n * log into the console before attempting to transform it.\n *\n * This is also what is responsible for assigning the correct level to the log\n *\n * @param {Array} args - argument list passed to console\n * @param {String} level - `info` `warn` `error` `debug` `fatal`\n */\nconst transformConsoleLog = ({ args, level }) => {\n  const log = args[0] instanceof Log\n    ? args[0]\n    : new Log(`${util.format.apply(null, args)}\\n`)\n  log.setLevel(level)\n  return log.format({ withMetadata: config.append_metadata })\n}\n\nconsole.info = (...args) => {\n  process.stdout.write(transformConsoleLog({ args, level: 'info' }))\n}\n\nconsole.log = (...args) => {\n  process.stdout.write(transformConsoleLog({ args, level: 'info' }))\n}\n\nconsole.warn = (...args) => {\n  process.stdout.write(transformConsoleLog({ args, level: 'warn' }))\n}\n\nconsole.error = (...args) => {\n  process.stderr.write(transformConsoleLog({ args, level: 'error' }))\n}\n\nexport default console\n",
+    "content": "import util from 'util'\nimport Augment from './utils/augment'\nimport config from './config'\n\n/**\n * Transforms an ordinary console.log message into a structured Log object\n * It also allows you to pass a Log object directly to a console.log function\n * It will automatically detect whether or not you are passing a structured\n * log into the console before attempting to transform it.\n *\n * This is also what is responsible for assigning the correct level to the log\n *\n * @param {Array} args - argument list passed to console\n * @param {String} level - `info` `warn` `error` `debug` `fatal`\n */\nconst transformConsoleLog = ({ args, level }) => {\n  // Allow custom metadata and event logging\n  // https://github.com/timberio/timber-node/issues/41\n  if (\n    args.length === 2 &&\n    typeof args[0] === 'string' &&\n    typeof args[1] === 'object'\n  ) {\n    if (args[1].meta && typeof args[1].meta === 'object') {\n      return new Augment(args[0], { level, meta: { ...args[1].meta } }).format()\n    } else if (args[1].event && typeof args[1].event === 'object') {\n      return new Augment(args[0], {\n        level,\n        event: { custom: { ...args[1].event } },\n      }).format()\n    }\n  }\n  const log = args[0] instanceof Augment\n    ? args[0]\n    : new Augment(`${util.format.apply(null, args)}\\n`)\n  log.setLevel(level)\n  return log.format({ withMetadata: config.append_metadata })\n}\n\nconsole.info = (...args) => {\n  process.stdout.write(transformConsoleLog({ args, level: 'info' }))\n}\n\nconsole.log = (...args) => {\n  process.stdout.write(transformConsoleLog({ args, level: 'info' }))\n}\n\nconsole.warn = (...args) => {\n  process.stdout.write(transformConsoleLog({ args, level: 'warn' }))\n}\n\nconsole.error = (...args) => {\n  process.stderr.write(transformConsoleLog({ args, level: 'error' }))\n}\n\nexport default console\n",
     "static": true,
     "longname": "src/console.js",
     "access": null,
@@ -442,6 +452,28 @@
   {
     "__docId__": 18,
     "kind": "file",
+    "name": "src/contexts/index.js",
+    "content": "import http from './http'\n\nexport default {\n  http,\n}\n",
+    "static": true,
+    "longname": "src/contexts/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 19,
+    "kind": "file",
+    "name": "src/data/errors.js",
+    "content": "export default {\n  transports: {\n    winston: {\n      stream: `You must provide a stream to the timber winston transport.\nUse: winston.add(timber.transports.Winston, { stream: new timber.transports.HTTPS('api-key') })`,\n    },\n  },\n  log: {\n    noMessage: 'You must supply a message when creating a log',\n  },\n  install: {\n    noTransport: 'No transport was provided.',\n  },\n  attach: {\n    notWritable: 'Stream must be of type Writable',\n  },\n}\n",
+    "static": true,
+    "longname": "src/data/errors.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 20,
+    "kind": "file",
     "name": "src/event.js",
     "content": "/**\n * This is the base class for all event types\n */\nclass Event {\n  /**\n   * required checks for the existence of the given attributes.\n   * If any of the values provided are undefined, an error will be thrown\n   *\n   * @private\n   * @param {object} attributes - key/value pair of required attributes\n   */\n  required(attributes) {\n    for (const attribute in attributes) {\n      if (!attributes[attribute] && attributes[attribute] !== 0) {\n        throw new Error(`${attribute} is required`)\n      }\n    }\n  }\n}\n\nexport default Event\n",
     "static": true,
@@ -451,7 +483,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 19,
+    "__docId__": 21,
     "kind": "class",
     "name": "Event",
     "memberof": "src/event.js",
@@ -466,7 +498,7 @@
     "interface": false
   },
   {
-    "__docId__": 20,
+    "__docId__": 22,
     "kind": "method",
     "name": "required",
     "memberof": "src/event.js~Event",
@@ -491,28 +523,28 @@
     ]
   },
   {
-    "__docId__": 21,
+    "__docId__": 23,
     "kind": "file",
-    "name": "src/events/http_server_request.js",
-    "content": "import Event from '../event'\n\n/**\n * The HTTP server request event tracks incoming HTTP requests to your HTTP server.\n */\nclass HTTPServerRequest extends Event {\n  /**\n   * @param {String} [body] - the body of the request\n   * @param {Array} [headers] - the headers of the request\n   * @param {String} host - the server's hostname\n   * @param {String} method - `CONNECT` `DELETE` `GET` `HEAD` `OPTIONS` `PATCH` `POST` `PUT` `TRACE`\n   * @param {String} [path] - the path of the request\n   * @param {Number} [port] - the port of the request\n   * @param {String} [query_string] - the query parameters present on the url\n   * @param {String} [request_id] - the uuid attached to the request\n   * @param {String} scheme - `HTTP` or `HTTPS`\n   */\n  constructor(\n    {\n      body,\n      headers,\n      host,\n      method,\n      path,\n      port,\n      query_string,\n      request_id,\n      scheme,\n    } = {}\n  ) {\n    super()\n\n    // check for required attributes\n    this.required({ host, method, scheme })\n\n    // bind context attributes to the class\n    this.body = body\n    this.headers = headers\n    this.host = host\n    this.method = method\n    this.path = path\n    this.port = port\n    this.query_string = query_string\n    this.request_id = request_id\n    this.scheme = scheme\n  }\n\n  message = () => `Started ${this.method} \"${this.path}\"`\n}\n\nexport default HTTPServerRequest\n",
+    "name": "src/events/custom.js",
+    "content": "import Event from '../event'\n\n/**\n * The Custom event allows you to past arbitrary events to timber.\n */\nclass Custom extends Event {\n  /**\n   * @param {String} [type] - This is the type of your event. It should be something unique       and unchanging. It will be used to identify this event.\n   * @param {Array} [data] - An object containing the event data\n   */\n  constructor({ type, data } = {}) {\n    super()\n\n    // check for required attributes\n    this.required({ type })\n\n    // bind context attributes to the class\n    this.custom = { [type]: data }\n  }\n}\n\nexport default Custom\n",
     "static": true,
-    "longname": "src/events/http_server_request.js",
+    "longname": "src/events/custom.js",
     "access": null,
     "description": null,
     "lineNumber": 1
   },
   {
-    "__docId__": 22,
+    "__docId__": 24,
     "kind": "class",
-    "name": "HTTPServerRequest",
-    "memberof": "src/events/http_server_request.js",
+    "name": "Custom",
+    "memberof": "src/events/custom.js",
     "static": true,
-    "longname": "src/events/http_server_request.js~HTTPServerRequest",
+    "longname": "src/events/custom.js~Custom",
     "access": null,
     "export": true,
-    "importPath": "timber/src/events/http_server_request.js",
-    "importStyle": "HTTPServerRequest",
-    "description": "The HTTP server request event tracks incoming HTTP requests to your HTTP server.",
+    "importPath": "timber/src/events/custom.js",
+    "importStyle": "Custom",
+    "description": "The Custom event allows you to past arbitrary events to timber.",
     "lineNumber": 6,
     "interface": false,
     "extends": [
@@ -520,17 +552,104 @@
     ]
   },
   {
-    "__docId__": 23,
+    "__docId__": 25,
     "kind": "constructor",
     "name": "constructor",
-    "memberof": "src/events/http_server_request.js~HTTPServerRequest",
+    "memberof": "src/events/custom.js~Custom",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "src/events/http_server_request.js~HTTPServerRequest#constructor",
+    "longname": "src/events/custom.js~Custom#constructor",
     "access": null,
     "description": "",
+    "lineNumber": 11,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "type",
+        "description": "This is the type of your event. It should be something unique       and unchanging. It will be used to identify this event."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "data",
+        "description": "An object containing the event data"
+      }
+    ]
+  },
+  {
+    "__docId__": 26,
+    "kind": "member",
+    "name": "custom",
+    "memberof": "src/events/custom.js~Custom",
+    "static": false,
+    "longname": "src/events/custom.js~Custom#custom",
+    "access": null,
+    "description": null,
     "lineNumber": 18,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "{\"type\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 27,
+    "kind": "file",
+    "name": "src/events/http_request.js",
+    "content": "import Event from '../event'\n\n/**\n * The HTTP request event tracks incoming and outgoing\n * HTTP requests to your server.\n */\nclass HTTPRequest extends Event {\n  /**\n   * @param {String} [body] - the body of the request\n   * @param {String} [direction] - incoming or outgoing\n   * @param {Array} [headers] - the headers of the request\n   * @param {String} host - the server's hostname\n   * @param {String} method - `CONNECT` `DELETE` `GET` `HEAD` `OPTIONS` `PATCH` `POST` `PUT` `TRACE`\n   * @param {String} [path] - the path of the request\n   * @param {Number} [port] - the port of the request\n   * @param {String} [query_string] - the query parameters present on the url\n   * @param {String} [request_id] - the uuid attached to the request\n   * @param {String} scheme - `HTTP` or `HTTPS`\n   */\n  constructor(\n    {\n      body,\n      direction,\n      headers,\n      host,\n      method,\n      path,\n      port,\n      query_string,\n      request_id,\n      scheme,\n    } = {}\n  ) {\n    super()\n\n    // check for required attributes\n    this.required({ host, method, scheme })\n\n    // bind context attributes to the class\n    this.body = body\n    this.direction = direction\n    this.headers = headers\n    this.host = host\n    this.method = method\n    this.path = path\n    this.port = port\n    this.query_string = query_string\n    this.request_id = request_id\n    this.scheme = scheme\n  }\n\n  message() {\n    return `Started ${this.method} \"${this.path}\"`\n  }\n}\n\nexport default HTTPRequest\n",
+    "static": true,
+    "longname": "src/events/http_request.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 28,
+    "kind": "class",
+    "name": "HTTPRequest",
+    "memberof": "src/events/http_request.js",
+    "static": true,
+    "longname": "src/events/http_request.js~HTTPRequest",
+    "access": null,
+    "export": true,
+    "importPath": "timber/src/events/http_request.js",
+    "importStyle": "HTTPRequest",
+    "description": "The HTTP request event tracks incoming and outgoing\nHTTP requests to your server.",
+    "lineNumber": 7,
+    "interface": false,
+    "extends": [
+      "src/event.js~Event"
+    ]
+  },
+  {
+    "__docId__": 29,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/events/http_request.js~HTTPRequest",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/events/http_request.js~HTTPRequest#constructor",
+    "access": null,
+    "description": "",
+    "lineNumber": 20,
     "params": [
       {
         "nullable": null,
@@ -541,6 +660,16 @@
         "optional": true,
         "name": "body",
         "description": "the body of the request"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "direction",
+        "description": "incoming or outgoing"
       },
       {
         "nullable": null,
@@ -625,81 +754,12 @@
     ]
   },
   {
-    "__docId__": 24,
+    "__docId__": 30,
     "kind": "member",
     "name": "body",
-    "memberof": "src/events/http_server_request.js~HTTPServerRequest",
+    "memberof": "src/events/http_request.js~HTTPRequest",
     "static": false,
-    "longname": "src/events/http_server_request.js~HTTPServerRequest#body",
-    "access": null,
-    "description": null,
-    "lineNumber": 37,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 25,
-    "kind": "member",
-    "name": "headers",
-    "memberof": "src/events/http_server_request.js~HTTPServerRequest",
-    "static": false,
-    "longname": "src/events/http_server_request.js~HTTPServerRequest#headers",
-    "access": null,
-    "description": null,
-    "lineNumber": 38,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 26,
-    "kind": "member",
-    "name": "host",
-    "memberof": "src/events/http_server_request.js~HTTPServerRequest",
-    "static": false,
-    "longname": "src/events/http_server_request.js~HTTPServerRequest#host",
-    "access": null,
-    "description": null,
-    "lineNumber": 39,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 27,
-    "kind": "member",
-    "name": "method",
-    "memberof": "src/events/http_server_request.js~HTTPServerRequest",
-    "static": false,
-    "longname": "src/events/http_server_request.js~HTTPServerRequest#method",
+    "longname": "src/events/http_request.js~HTTPRequest#body",
     "access": null,
     "description": null,
     "lineNumber": 40,
@@ -717,12 +777,12 @@
     }
   },
   {
-    "__docId__": 28,
+    "__docId__": 31,
     "kind": "member",
-    "name": "path",
-    "memberof": "src/events/http_server_request.js~HTTPServerRequest",
+    "name": "direction",
+    "memberof": "src/events/http_request.js~HTTPRequest",
     "static": false,
-    "longname": "src/events/http_server_request.js~HTTPServerRequest#path",
+    "longname": "src/events/http_request.js~HTTPRequest#direction",
     "access": null,
     "description": null,
     "lineNumber": 41,
@@ -740,12 +800,12 @@
     }
   },
   {
-    "__docId__": 29,
+    "__docId__": 32,
     "kind": "member",
-    "name": "port",
-    "memberof": "src/events/http_server_request.js~HTTPServerRequest",
+    "name": "headers",
+    "memberof": "src/events/http_request.js~HTTPRequest",
     "static": false,
-    "longname": "src/events/http_server_request.js~HTTPServerRequest#port",
+    "longname": "src/events/http_request.js~HTTPRequest#headers",
     "access": null,
     "description": null,
     "lineNumber": 42,
@@ -763,12 +823,12 @@
     }
   },
   {
-    "__docId__": 30,
+    "__docId__": 33,
     "kind": "member",
-    "name": "query_string",
-    "memberof": "src/events/http_server_request.js~HTTPServerRequest",
+    "name": "host",
+    "memberof": "src/events/http_request.js~HTTPRequest",
     "static": false,
-    "longname": "src/events/http_server_request.js~HTTPServerRequest#query_string",
+    "longname": "src/events/http_request.js~HTTPRequest#host",
     "access": null,
     "description": null,
     "lineNumber": 43,
@@ -786,12 +846,12 @@
     }
   },
   {
-    "__docId__": 31,
+    "__docId__": 34,
     "kind": "member",
-    "name": "request_id",
-    "memberof": "src/events/http_server_request.js~HTTPServerRequest",
+    "name": "method",
+    "memberof": "src/events/http_request.js~HTTPRequest",
     "static": false,
-    "longname": "src/events/http_server_request.js~HTTPServerRequest#request_id",
+    "longname": "src/events/http_request.js~HTTPRequest#method",
     "access": null,
     "description": null,
     "lineNumber": 44,
@@ -809,12 +869,12 @@
     }
   },
   {
-    "__docId__": 32,
+    "__docId__": 35,
     "kind": "member",
-    "name": "scheme",
-    "memberof": "src/events/http_server_request.js~HTTPServerRequest",
+    "name": "path",
+    "memberof": "src/events/http_request.js~HTTPRequest",
     "static": false,
-    "longname": "src/events/http_server_request.js~HTTPServerRequest#scheme",
+    "longname": "src/events/http_request.js~HTTPRequest#path",
     "access": null,
     "description": null,
     "lineNumber": 45,
@@ -832,12 +892,58 @@
     }
   },
   {
-    "__docId__": 33,
+    "__docId__": 36,
     "kind": "member",
-    "name": "message",
-    "memberof": "src/events/http_server_request.js~HTTPServerRequest",
+    "name": "port",
+    "memberof": "src/events/http_request.js~HTTPRequest",
     "static": false,
-    "longname": "src/events/http_server_request.js~HTTPServerRequest#message",
+    "longname": "src/events/http_request.js~HTTPRequest#port",
+    "access": null,
+    "description": null,
+    "lineNumber": 46,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 37,
+    "kind": "member",
+    "name": "query_string",
+    "memberof": "src/events/http_request.js~HTTPRequest",
+    "static": false,
+    "longname": "src/events/http_request.js~HTTPRequest#query_string",
+    "access": null,
+    "description": null,
+    "lineNumber": 47,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 38,
+    "kind": "member",
+    "name": "request_id",
+    "memberof": "src/events/http_request.js~HTTPRequest",
+    "static": false,
+    "longname": "src/events/http_request.js~HTTPRequest#request_id",
     "access": null,
     "description": null,
     "lineNumber": 48,
@@ -855,27 +961,76 @@
     }
   },
   {
-    "__docId__": 34,
+    "__docId__": 39,
+    "kind": "member",
+    "name": "scheme",
+    "memberof": "src/events/http_request.js~HTTPRequest",
+    "static": false,
+    "longname": "src/events/http_request.js~HTTPRequest#scheme",
+    "access": null,
+    "description": null,
+    "lineNumber": 49,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 40,
+    "kind": "method",
+    "name": "message",
+    "memberof": "src/events/http_request.js~HTTPRequest",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/events/http_request.js~HTTPRequest#message",
+    "access": null,
+    "description": null,
+    "lineNumber": 52,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [],
+    "return": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 41,
     "kind": "file",
-    "name": "src/events/http_server_response.js",
-    "content": "import Event from '../event'\n\n/**\n * The HTTP server request event tracks incoming HTTP requests to your HTTP server.\n */\nclass HTTPServerResponse extends Event {\n  /**\n   * @param {String} [body] - the body of the request\n   * @param {Array} [headers] - the headers of the request\n   * @param {String} [request_id] - the uuid of the request\n   * @param {String} status - the HTTP status code\n   * @param {String} time_ms - the total duration of the request in milliseconds\n   */\n  constructor({ body, headers, request_id, status, time_ms } = {}) {\n    super()\n\n    // check for required attributes\n    this.required({ status, time_ms })\n\n    // bind context attributes to the class\n    this.body = body\n    this.headers = headers\n    this.request_id = request_id\n    this.status = status\n    this.time_ms = time_ms\n  }\n\n  message() {\n    const parts = ['Outgoing HTTP response']\n\n    if (this.service_name) {\n      parts.push(`from ${this.service_name}`)\n    }\n\n    parts.push(`${this.status} in ${this.time_ms}ms`)\n\n    return parts.join(' ')\n  }\n}\n\nexport default HTTPServerResponse\n",
+    "name": "src/events/http_response.js",
+    "content": "import Event from '../event'\n\n/**\n * The HTTP server request event tracks incoming HTTP requests to your HTTP server.\n */\nclass HTTPResponse extends Event {\n  /**\n   * @param {String} [body] - the body of the request\n   * @param {String} [direction] - incoming or outgoing\n   * @param {Array} [headers] - the headers of the request\n   * @param {String} [request_id] - the uuid of the request\n   * @param {String} status - the HTTP status code\n   * @param {String} time_ms - the total duration of the request in milliseconds\n   */\n  constructor({ body, direction, headers, request_id, status, time_ms } = {}) {\n    super()\n\n    // check for required attributes\n    this.required({ status, time_ms })\n\n    // bind context attributes to the class\n    this.body = body\n    this.direction = direction\n    this.headers = headers\n    this.request_id = request_id\n    this.status = status\n    this.time_ms = time_ms\n  }\n\n  message() {\n    const parts = ['Outgoing HTTP response']\n\n    if (this.service_name) {\n      parts.push(`from ${this.service_name}`)\n    }\n\n    parts.push(`${this.status} in ${this.time_ms}ms`)\n\n    return parts.join(' ')\n  }\n}\n\nexport default HTTPResponse\n",
     "static": true,
-    "longname": "src/events/http_server_response.js",
+    "longname": "src/events/http_response.js",
     "access": null,
     "description": null,
     "lineNumber": 1
   },
   {
-    "__docId__": 35,
+    "__docId__": 42,
     "kind": "class",
-    "name": "HTTPServerResponse",
-    "memberof": "src/events/http_server_response.js",
+    "name": "HTTPResponse",
+    "memberof": "src/events/http_response.js",
     "static": true,
-    "longname": "src/events/http_server_response.js~HTTPServerResponse",
+    "longname": "src/events/http_response.js~HTTPResponse",
     "access": null,
     "export": true,
-    "importPath": "timber/src/events/http_server_response.js",
-    "importStyle": "HTTPServerResponse",
+    "importPath": "timber/src/events/http_response.js",
+    "importStyle": "HTTPResponse",
     "description": "The HTTP server request event tracks incoming HTTP requests to your HTTP server.",
     "lineNumber": 6,
     "interface": false,
@@ -884,17 +1039,17 @@
     ]
   },
   {
-    "__docId__": 36,
+    "__docId__": 43,
     "kind": "constructor",
     "name": "constructor",
-    "memberof": "src/events/http_server_response.js~HTTPServerResponse",
+    "memberof": "src/events/http_response.js~HTTPResponse",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "src/events/http_server_response.js~HTTPServerResponse#constructor",
+    "longname": "src/events/http_response.js~HTTPResponse#constructor",
     "access": null,
     "description": "",
-    "lineNumber": 14,
+    "lineNumber": 15,
     "params": [
       {
         "nullable": null,
@@ -905,6 +1060,16 @@
         "optional": true,
         "name": "body",
         "description": "the body of the request"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "direction",
+        "description": "incoming or outgoing"
       },
       {
         "nullable": null,
@@ -949,35 +1114,12 @@
     ]
   },
   {
-    "__docId__": 37,
+    "__docId__": 44,
     "kind": "member",
     "name": "body",
-    "memberof": "src/events/http_server_response.js~HTTPServerResponse",
+    "memberof": "src/events/http_response.js~HTTPResponse",
     "static": false,
-    "longname": "src/events/http_server_response.js~HTTPServerResponse#body",
-    "access": null,
-    "description": null,
-    "lineNumber": 21,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 38,
-    "kind": "member",
-    "name": "headers",
-    "memberof": "src/events/http_server_response.js~HTTPServerResponse",
-    "static": false,
-    "longname": "src/events/http_server_response.js~HTTPServerResponse#headers",
+    "longname": "src/events/http_response.js~HTTPResponse#body",
     "access": null,
     "description": null,
     "lineNumber": 22,
@@ -995,12 +1137,12 @@
     }
   },
   {
-    "__docId__": 39,
+    "__docId__": 45,
     "kind": "member",
-    "name": "request_id",
-    "memberof": "src/events/http_server_response.js~HTTPServerResponse",
+    "name": "direction",
+    "memberof": "src/events/http_response.js~HTTPResponse",
     "static": false,
-    "longname": "src/events/http_server_response.js~HTTPServerResponse#request_id",
+    "longname": "src/events/http_response.js~HTTPResponse#direction",
     "access": null,
     "description": null,
     "lineNumber": 23,
@@ -1018,12 +1160,12 @@
     }
   },
   {
-    "__docId__": 40,
+    "__docId__": 46,
     "kind": "member",
-    "name": "status",
-    "memberof": "src/events/http_server_response.js~HTTPServerResponse",
+    "name": "headers",
+    "memberof": "src/events/http_response.js~HTTPResponse",
     "static": false,
-    "longname": "src/events/http_server_response.js~HTTPServerResponse#status",
+    "longname": "src/events/http_response.js~HTTPResponse#headers",
     "access": null,
     "description": null,
     "lineNumber": 24,
@@ -1041,12 +1183,12 @@
     }
   },
   {
-    "__docId__": 41,
+    "__docId__": 47,
     "kind": "member",
-    "name": "time_ms",
-    "memberof": "src/events/http_server_response.js~HTTPServerResponse",
+    "name": "request_id",
+    "memberof": "src/events/http_response.js~HTTPResponse",
     "static": false,
-    "longname": "src/events/http_server_response.js~HTTPServerResponse#time_ms",
+    "longname": "src/events/http_response.js~HTTPResponse#request_id",
     "access": null,
     "description": null,
     "lineNumber": 25,
@@ -1064,17 +1206,63 @@
     }
   },
   {
-    "__docId__": 42,
+    "__docId__": 48,
+    "kind": "member",
+    "name": "status",
+    "memberof": "src/events/http_response.js~HTTPResponse",
+    "static": false,
+    "longname": "src/events/http_response.js~HTTPResponse#status",
+    "access": null,
+    "description": null,
+    "lineNumber": 26,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 49,
+    "kind": "member",
+    "name": "time_ms",
+    "memberof": "src/events/http_response.js~HTTPResponse",
+    "static": false,
+    "longname": "src/events/http_response.js~HTTPResponse#time_ms",
+    "access": null,
+    "description": null,
+    "lineNumber": 27,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 50,
     "kind": "method",
     "name": "message",
-    "memberof": "src/events/http_server_response.js~HTTPServerResponse",
+    "memberof": "src/events/http_response.js~HTTPResponse",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "src/events/http_server_response.js~HTTPServerResponse#message",
+    "longname": "src/events/http_response.js~HTTPResponse#message",
     "access": null,
     "description": null,
-    "lineNumber": 28,
+    "lineNumber": 30,
     "undocument": true,
     "unknown": [
       {
@@ -1090,10 +1278,21 @@
     }
   },
   {
-    "__docId__": 43,
+    "__docId__": 51,
+    "kind": "file",
+    "name": "src/events/index.js",
+    "content": "import Custom from './custom'\nimport HTTPRequest from './http_request'\nimport HTTPResponse from './http_response'\n\nexport {\n  Custom,\n  HTTPRequest,\n  HTTPResponse,\n}\n",
+    "static": true,
+    "longname": "src/events/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 52,
     "kind": "file",
     "name": "src/index.js",
-    "content": "// This is the main file that gets referenced by node\nimport attach from './utils/attach'\nimport config from './config'\nimport install from './install'\nimport middlewares from './middlewares'\nimport transports from './transports'\nimport log from './log'\nimport './console'\n\nmodule.exports = {\n  attach,\n  config,\n  install,\n  middlewares,\n  transports,\n  log,\n}\n",
+    "content": "// This is the main file that gets referenced by node\nimport attach from './utils/attach'\nimport config from './config'\nimport install from './install'\nimport middlewares from './middlewares'\nimport transports from './transports'\nimport events from './events'\nimport contexts from './contexts'\nimport log from './log'\nimport './console'\n\nmodule.exports = {\n  attach,\n  config,\n  install,\n  middlewares,\n  transports,\n  log,\n  events,\n  contexts,\n}\n",
     "static": true,
     "longname": "src/index.js",
     "access": null,
@@ -1101,10 +1300,10 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 44,
+    "__docId__": 53,
     "kind": "file",
     "name": "src/install.js",
-    "content": "import attach from './utils/attach'\n\n/**\n * Installs the timber logger to route all stdout logs to the provided stream\n *\n * @param {Stream} transport - the stream that all logs will go through\n */\nfunction install(transport) {\n  if (!transport) throw Error('No transport was provided.')\n\n  // attach our transport stream to stdout/stderr\n  attach([transport], process.stdout)\n  attach([transport], process.stderr)\n}\n\nexport default install\n",
+    "content": "import attach from './utils/attach'\nimport errors from './data/errors'\n\n/**\n * Installs the timber logger to route all stdout logs to the provided stream\n *\n * @param {Stream} transport - the stream that all logs will go through\n */\nfunction install(transport) {\n  if (!transport) throw Error(errors.install.noTransport)\n\n  // attach our transport stream to stdout/stderr\n  attach([transport], process.stdout)\n  attach([transport], process.stderr)\n}\n\nexport default install\n",
     "static": true,
     "longname": "src/install.js",
     "access": null,
@@ -1112,7 +1311,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 45,
+    "__docId__": 54,
     "kind": "function",
     "name": "install",
     "memberof": "src/install.js",
@@ -1125,7 +1324,7 @@
     "importPath": "timber/src/install.js",
     "importStyle": "install",
     "description": "Installs the timber logger to route all stdout logs to the provided stream",
-    "lineNumber": 8,
+    "lineNumber": 9,
     "params": [
       {
         "nullable": null,
@@ -1140,10 +1339,10 @@
     ]
   },
   {
-    "__docId__": 46,
+    "__docId__": 55,
     "kind": "file",
     "name": "src/log.js",
-    "content": "import schema from './schema'\nimport config from './config'\n\n/**\n * Transforms a log message or object into a rich structured format\n * that timber expects, ex 'log message' @timber.io {\"dt\": \"…\", \"level\": \"info\", \"context\": {…}}\n * see https://github.com/timberio/log-event-json-schema for specs\n */\nclass Log {\n  /**\n   * @param {String} message - the log message before transforming\n   * @param {Object} [context] - context to be attached to message\n   */\n  constructor(message, context = {}) {\n    // Throw an error if no message is provided\n    if (!message) throw new Error('You must supply a message when creating a log')\n\n    /**\n     * Reference to original log message\n     * @type {String}\n     */\n    this.raw = message\n\n    /**\n     * Structured log data\n     * @type {Date}\n     */\n    this.data = {\n      ...schema,\n      message,\n      dt: new Date(),\n      ...context,\n    }\n  }\n\n  /**\n   * Appends data to the end of the structured log object\n   *\n   * @param {Object} data\n   */\n  append(data) {\n    this.data = {\n      ...this.data,\n      ...data,\n    }\n  }\n\n  /**\n   * Convenience function for setting the log level\n   *\n   * @param {String} level - `info` `warn` `error` `debug`\n   */\n  setLevel(level) {\n    this.append({ level })\n  }\n\n  /**\n   * Transforms the structured log into a string\n   * i.e. `Log message @metadata { ... }`\n   */\n  format({ withMetadata = true } = {}) {\n    let message = this.raw.endsWith('\\n')\n      ? this.raw.substring(0, this.raw.length - 1)\n      : this.raw\n\n    if (withMetadata) {\n      message += ` ${config.metadata_delimiter} ${JSON.stringify(this.data)}`\n    }\n\n    return `${message}\\n`\n  }\n}\n\nexport default Log\n",
+    "content": "import Augment from './utils/augment'\nimport config from './config'\n\nconst loggers = {\n  console: {\n    detect: () => config.logger.constructor.name === 'Console',\n    handler: (level, message, metadata) => {\n      if (metadata) {\n        return config.logger[level](new Augment(message, metadata))\n      }\n      return config.logger[level](message)\n    },\n  },\n  winston: {\n    detect: () =>\n      config.logger.Container &&\n      config.logger.Logger &&\n      config.logger.Transport,\n    handler: (level, message, metadata = {}) =>\n      config.logger.log(level, message, metadata),\n  },\n  bunyan: {\n    detect: () => config.logger.constructor.name === 'Logger',\n    handler: (level, message, metadata) => {\n      config.logger[level]({ metadata }, message)\n    },\n  },\n}\n\nconst log = (...args) => {\n  // Iterate through the loggers object to detect\n  // which logger is set in the timber config.\n  for (const name in loggers) {\n    // If we successfully detected the logger...\n    if (loggers[name].detect()) {\n      // Pass the provded arguments to the logger\n      return loggers[name].handler(...args)\n    }\n  }\n}\n\nexport default log\n",
     "static": true,
     "longname": "src/log.js",
     "access": null,
@@ -1151,128 +1350,18 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 47,
-    "kind": "class",
-    "name": "Log",
+    "__docId__": 56,
+    "kind": "variable",
+    "name": "loggers",
     "memberof": "src/log.js",
     "static": true,
-    "longname": "src/log.js~Log",
+    "longname": "src/log.js~loggers",
     "access": null,
-    "export": true,
+    "export": false,
     "importPath": "timber/src/log.js",
-    "importStyle": "Log",
-    "description": "Transforms a log message or object into a rich structured format\nthat timber expects, ex 'log message' @timber.io {\"dt\": \"…\", \"level\": \"info\", \"context\": {…}}\nsee https://github.com/timberio/log-event-json-schema for specs",
-    "lineNumber": 9,
-    "interface": false
-  },
-  {
-    "__docId__": 48,
-    "kind": "constructor",
-    "name": "constructor",
-    "memberof": "src/log.js~Log",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/log.js~Log#constructor",
-    "access": null,
-    "description": "",
-    "lineNumber": 14,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "String"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "message",
-        "description": "the log message before transforming"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "Object"
-        ],
-        "spread": false,
-        "optional": true,
-        "name": "context",
-        "description": "context to be attached to message"
-      }
-    ]
-  },
-  {
-    "__docId__": 49,
-    "kind": "member",
-    "name": "raw",
-    "memberof": "src/log.js~Log",
-    "static": false,
-    "longname": "src/log.js~Log#raw",
-    "access": null,
-    "description": "Reference to original log message",
-    "lineNumber": 22,
-    "type": {
-      "nullable": null,
-      "types": [
-        "String"
-      ],
-      "spread": false,
-      "description": null
-    }
-  },
-  {
-    "__docId__": 50,
-    "kind": "member",
-    "name": "data",
-    "memberof": "src/log.js~Log",
-    "static": false,
-    "longname": "src/log.js~Log#data",
-    "access": null,
-    "description": "Structured log data",
-    "lineNumber": 28,
-    "type": {
-      "nullable": null,
-      "types": [
-        "Date"
-      ],
-      "spread": false,
-      "description": null
-    }
-  },
-  {
-    "__docId__": 51,
-    "kind": "method",
-    "name": "append",
-    "memberof": "src/log.js~Log",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/log.js~Log#append",
-    "access": null,
-    "description": "Appends data to the end of the structured log object",
-    "lineNumber": 41,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "Object"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "data",
-        "description": ""
-      }
-    ]
-  },
-  {
-    "__docId__": 52,
-    "kind": "member",
-    "name": "data",
-    "memberof": "src/log.js~Log",
-    "static": false,
-    "longname": "src/log.js~Log#data",
-    "access": null,
+    "importStyle": null,
     "description": null,
-    "lineNumber": 42,
+    "lineNumber": 4,
     "undocument": true,
     "unknown": [
       {
@@ -1282,69 +1371,52 @@
     ],
     "type": {
       "types": [
-        "{...undefined: Object, ...data: Object}"
+        "{\"console\": *, \"winston\": *, \"bunyan\": *}"
       ]
     }
   },
   {
-    "__docId__": 53,
-    "kind": "method",
-    "name": "setLevel",
-    "memberof": "src/log.js~Log",
+    "__docId__": 57,
+    "kind": "function",
+    "name": "log",
+    "memberof": "src/log.js",
     "generator": false,
     "async": false,
-    "static": false,
-    "longname": "src/log.js~Log#setLevel",
+    "static": true,
+    "longname": "src/log.js~log",
     "access": null,
-    "description": "Convenience function for setting the log level",
-    "lineNumber": 53,
-    "params": [
+    "export": true,
+    "importPath": "timber/src/log.js",
+    "importStyle": "log",
+    "description": null,
+    "lineNumber": 30,
+    "undocument": true,
+    "unknown": [
       {
-        "nullable": null,
-        "types": [
-          "String"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "level",
-        "description": "`info` `warn` `error` `debug`"
+        "tagName": "@_undocument",
+        "tagValue": ""
       }
-    ]
-  },
-  {
-    "__docId__": 54,
-    "kind": "method",
-    "name": "format",
-    "memberof": "src/log.js~Log",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/log.js~Log#format",
-    "access": null,
-    "description": "Transforms the structured log into a string\ni.e. `Log message @metadata { ... }`",
-    "lineNumber": 61,
+    ],
     "params": [
       {
-        "name": "objectPattern",
-        "optional": true,
+        "name": "args",
         "types": [
-          "{\"withMetadata\": *}"
+          "...*"
         ],
-        "defaultRaw": {},
-        "defaultValue": "{}"
+        "spread": true
       }
     ],
     "return": {
       "types": [
-        "string"
+        "*"
       ]
     }
   },
   {
-    "__docId__": 55,
+    "__docId__": 58,
     "kind": "file",
     "name": "src/middlewares/express.js",
-    "content": "// import transform from '../transform'\nimport compose from 'composable-middleware'\nimport addRequestId from 'express-request-id'\nimport bodyParser from 'body-parser'\nimport config from '../config'\nimport HTTP from '../contexts/http'\nimport HTTPServerRequest from '../events/http_server_request'\nimport HTTPServerResponse from '../events/http_server_response'\nimport Log from '../log'\n\n/**\n * The express middleware takes care of automatically logging\n * each http event with the appropriate context events attached.\n *\n * This middleware is composed of three separate middlewares:\n * - `addRequestId` automatically attaches a unique uuid to every request\n * - `bodyParser` allows parsing of JSON encoded request bodies\n * - `expressMiddleware` automatically logs http events to timber\n *\n * @param {object} req - the request object\n * @param {object} res - the response object\n * @param {function} next - the next middleware to run\n*/\nconst expressMiddleware = compose(\n  addRequestId(),\n  bodyParser.json(),\n  (req, res, next) => {\n    // save a reference of the start time so that we can determine\n    // the amount of time each http request takes\n    req.start_time = new Date().getTime()\n\n    // destructure the request object for ease of use\n    const {\n      headers: { host, ...headers },\n      method,\n      id: request_id,\n      path,\n      protocol: scheme,\n      body: reqBody,\n      connection,\n    } = req\n\n    // determine the ip address of the client\n    // https://stackoverflow.com/a/10849772\n    const remote_addr = headers['x-forwarded-for'] || connection.remoteAddress\n\n    // send the request body if the capture_request_body flag is true (off by default)\n    // and the request body is not empty\n    let body = config.capture_request_body && Object.keys(reqBody).length > 0\n      ? JSON.stringify(reqBody)\n      : undefined\n\n    // create the HTTP context item\n    const http = new HTTP({\n      method,\n      path,\n      request_id,\n      remote_addr,\n    })\n\n    // add the http context information to the metadata object\n    const metadata = {\n      context: {\n        http,\n      },\n    }\n\n    const http_server_request = new HTTPServerRequest({\n      body,\n      host,\n      path,\n      request_id,\n      scheme,\n      method,\n    })\n\n    // add the http_server_request event to the metadata object\n    metadata.event = { server_side_app: { http_server_request } }\n\n    // add an event to get  triggered when the request finishes\n    // this event will send the http_client_response event to timber\n    req.on('end', () => {\n      // destructure the response object for ease of use\n      const { body: resBody, statusCode: status } = res\n\n      // calculate the duration of the http request\n      const time_ms = new Date().getTime() - req.start_time\n\n      // send the response body if the capture_response_body flag is true (off by default)\n      body = config.capture_response_body ? JSON.stringify(resBody) : undefined\n\n      const http_server_response = new HTTPServerResponse({\n        request_id,\n        time_ms,\n        status,\n        body,\n      })\n\n      // add the http_server_response event to the metadata object\n      metadata.event = { server_side_app: { http_server_response } }\n\n      // log the http response with metadata\n      console.info(new Log(http_server_response.message(), metadata))\n    })\n\n    // log the http request with metadata\n    console.info(new Log(http_server_request.message(), metadata))\n    next()\n  }\n)\n\nexport default expressMiddleware\n",
+    "content": "// import transform from '../transform'\nimport compose from 'composable-middleware'\nimport addRequestId from 'express-request-id'\nimport bodyParser from 'body-parser'\nimport config from '../config'\nimport HTTP from '../contexts/http'\nimport { HTTPRequest, HTTPResponse } from '../events'\nimport log from '../log'\n\n/**\n * The express middleware takes care of automatically logging\n * each http event with the appropriate context events attached.\n *\n * This middleware is composed of three separate middlewares:\n * - `addRequestId` automatically attaches a unique uuid to every request\n * - `bodyParser` allows parsing of JSON encoded request bodies\n * - `expressMiddleware` automatically logs http events to timber\n *\n * @param {object} req - the request object\n * @param {object} res - the response object\n * @param {function} next - the next middleware to run\n*/\nconst expressMiddleware = compose(\n  addRequestId(),\n  bodyParser.json(),\n  (req, res, next) => {\n    // save a reference of the start time so that we can determine\n    // the amount of time each http request takes\n    req.start_time = new Date().getTime()\n\n    // destructure the request object for ease of use\n    const {\n      headers: { host, ...headers },\n      method,\n      id: request_id,\n      path,\n      protocol: scheme,\n      body: reqBody,\n      connection,\n    } = req\n\n    // determine the ip address of the client\n    // https://stackoverflow.com/a/10849772\n    const remote_addr = headers['x-forwarded-for'] || connection.remoteAddress\n\n    // send the request body if the capture_request_body flag is true (off by default)\n    // and the request body is not empty\n    let body = config.capture_request_body && Object.keys(reqBody).length > 0\n      ? JSON.stringify(reqBody)\n      : undefined\n\n    // create the HTTP context item\n    const http = new HTTP({\n      method,\n      path,\n      request_id,\n      remote_addr,\n    })\n\n    // add the http context information to the metadata object\n    const metadata = {\n      context: {\n        http,\n      },\n    }\n\n    const http_request = new HTTPRequest({\n      direction: 'incoming',\n      body,\n      host,\n      path,\n      request_id,\n      scheme,\n      method,\n    })\n\n    // add the http_request event to the metadata object\n    metadata.event = { http_request }\n\n    // add an event to get  triggered when the request finishes\n    // this event will send the http_client_response event to timber\n    req.on('end', () => {\n      // destructure the response object for ease of use\n      const { body: resBody, statusCode: status } = res\n\n      // calculate the duration of the http request\n      const time_ms = new Date().getTime() - req.start_time\n\n      // send the response body if the capture_response_body flag is true (off by default)\n      body = config.capture_response_body ? JSON.stringify(resBody) : undefined\n\n      const http_response = new HTTPResponse({\n        direction: 'outgoing',\n        request_id,\n        time_ms,\n        status,\n        body,\n      })\n\n      // add the http_response event to the metadata object\n      metadata.event = { http_response }\n\n      // log the http response with metadata\n      log('info', http_response.message(), metadata)\n    })\n\n    // log the http request with metadata\n    log('info', http_request.message(), metadata)\n    next()\n  }\n)\n\nexport default expressMiddleware\n",
     "static": true,
     "longname": "src/middlewares/express.js",
     "access": null,
@@ -1352,7 +1424,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 56,
+    "__docId__": 59,
     "kind": "variable",
     "name": "expressMiddleware",
     "memberof": "src/middlewares/express.js",
@@ -1363,7 +1435,7 @@
     "importPath": "timber/src/middlewares/express.js",
     "importStyle": "expressMiddleware",
     "description": "The express middleware takes care of automatically logging\neach http event with the appropriate context events attached.\n\nThis middleware is composed of three separate middlewares:\n- `addRequestId` automatically attaches a unique uuid to every request\n- `bodyParser` allows parsing of JSON encoded request bodies\n- `expressMiddleware` automatically logs http events to timber",
-    "lineNumber": 24,
+    "lineNumber": 23,
     "params": [
       {
         "nullable": null,
@@ -1403,7 +1475,7 @@
     }
   },
   {
-    "__docId__": 57,
+    "__docId__": 60,
     "kind": "file",
     "name": "src/middlewares/index.js",
     "content": "import express from './express'\nimport koa from './koa'\n\nexport default { express, koa }\n",
@@ -1414,7 +1486,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 58,
+    "__docId__": 61,
     "kind": "file",
     "name": "src/middlewares/koa.js",
     "content": "",
@@ -1425,10 +1497,10 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 59,
+    "__docId__": 62,
     "kind": "file",
     "name": "src/schema.js",
-    "content": "// look into https://github.com/jquense/yup or\n// http://epoberezkin.github.io/ajv/#performancefor schema normalization/coercion\n\nexport default {\n  $schema:\n    'https://raw.githubusercontent.com/timberio/log-event-json-schema/1.2.3/schema.json',\n  message: '',\n}\n",
+    "content": "// look into https://github.com/jquense/yup or\n// http://epoberezkin.github.io/ajv/#performancefor schema normalization/coercion\n\nexport default {\n  $schema:\n    'https://raw.githubusercontent.com/timberio/log-event-json-schema/v3.1.1/schema.json',\n  message: '',\n}\n",
     "static": true,
     "longname": "src/schema.js",
     "access": null,
@@ -1436,7 +1508,186 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 60,
+    "__docId__": 63,
+    "kind": "file",
+    "name": "src/transports/bunyan.js",
+    "content": "import bunyan from 'bunyan'\nimport { Writable } from 'stream'\nimport { Custom } from '../events'\nimport Augment from '../utils/augment'\nimport errors from '../data/errors'\n\n/**\n * The Timber Bunyan transport allows you to seamlessly install\n * Timber in your apps that use bunyan as the logger.\n */\nclass BunyanTransport extends Writable {\n  /**\n   * @param {Object} [options] - Configuration options for the transport\n   * @param {string} [options.stream] - Stream to write to\n   */\n  constructor({ stream, ...options } = {}) {\n    if (!stream) {\n      throw new Error(errors.transports.bunyan.stream)\n    }\n\n    super(options)\n\n    this.name = 'timberBunyan'\n    this.level = options.level || 'info'\n\n    // Attach the provided stream\n    this.stream = stream\n  }\n\n  /**\n   * @param {buffer|string} [chunk] - The chunk to be written. Will always be a buffer unless the decodeStrings option was set to false or the stream is operating in object mode.\n   * @param {string} [encoding] - If the chunk is a string, then encoding is the character encoding of that string. If chunk is a Buffer, or if the stream is operating in object mode, encoding may be ignored.\n   * @param {function} [next] - Call this function (optionally with an error argument) when processing is complete for the supplied chunk.\n   */\n  _write(chunk, encoding, next) {\n    // Parse the JSON object\n    const data = JSON.parse(chunk.toString())\n    const { msg, metadata: { event, ...meta } } = data\n    // Convert the level integer into a string representation\n    const level = bunyan.nameFromLevel[data.level]\n\n    // Create a structured log object out of the log message\n    const structuredLog = new Augment(msg, { level })\n\n    // If custom metadata was provided with the log, append it\n    if (Object.keys(meta).length) {\n      structuredLog.append({ meta })\n    }\n\n    // If the event key exists, append a custom event\n    if (event) {\n      for (const eventName in event) {\n        if (!event[eventName]) continue\n        structuredLog.append({\n          event: new Custom({ type: eventName, data: event[eventName] }),\n        })\n      }\n    }\n\n    // Write our structured log to the timber https stream\n    this.stream.write(structuredLog.data)\n    next()\n  }\n}\n\nexport default BunyanTransport\n",
+    "static": true,
+    "longname": "src/transports/bunyan.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 64,
+    "kind": "class",
+    "name": "BunyanTransport",
+    "memberof": "src/transports/bunyan.js",
+    "static": true,
+    "longname": "src/transports/bunyan.js~BunyanTransport",
+    "access": null,
+    "export": true,
+    "importPath": "timber/src/transports/bunyan.js",
+    "importStyle": "BunyanTransport",
+    "description": "The Timber Bunyan transport allows you to seamlessly install\nTimber in your apps that use bunyan as the logger.",
+    "lineNumber": 11,
+    "interface": false,
+    "extends": [
+      "stream~Writable"
+    ]
+  },
+  {
+    "__docId__": 65,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/transports/bunyan.js~BunyanTransport",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/transports/bunyan.js~BunyanTransport#constructor",
+    "access": null,
+    "description": "",
+    "lineNumber": 16,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options",
+        "description": "Configuration options for the transport"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.stream",
+        "description": "Stream to write to"
+      }
+    ]
+  },
+  {
+    "__docId__": 66,
+    "kind": "member",
+    "name": "name",
+    "memberof": "src/transports/bunyan.js~BunyanTransport",
+    "static": false,
+    "longname": "src/transports/bunyan.js~BunyanTransport#name",
+    "access": null,
+    "description": null,
+    "lineNumber": 23,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 67,
+    "kind": "member",
+    "name": "level",
+    "memberof": "src/transports/bunyan.js~BunyanTransport",
+    "static": false,
+    "longname": "src/transports/bunyan.js~BunyanTransport#level",
+    "access": null,
+    "description": null,
+    "lineNumber": 24,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 68,
+    "kind": "member",
+    "name": "stream",
+    "memberof": "src/transports/bunyan.js~BunyanTransport",
+    "static": false,
+    "longname": "src/transports/bunyan.js~BunyanTransport#stream",
+    "access": null,
+    "description": null,
+    "lineNumber": 27,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 69,
+    "kind": "method",
+    "name": "_write",
+    "memberof": "src/transports/bunyan.js~BunyanTransport",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/transports/bunyan.js~BunyanTransport#_write",
+    "access": null,
+    "description": "",
+    "lineNumber": 35,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "buffer",
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "chunk",
+        "description": "The chunk to be written. Will always be a buffer unless the decodeStrings option was set to false or the stream is operating in object mode."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "encoding",
+        "description": "If the chunk is a string, then encoding is the character encoding of that string. If chunk is a Buffer, or if the stream is operating in object mode, encoding may be ignored."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "next",
+        "description": "Call this function (optionally with an error argument) when processing is complete for the supplied chunk."
+      }
+    ]
+  },
+  {
+    "__docId__": 70,
     "kind": "file",
     "name": "src/transports/https.js",
     "content": "import https from 'https'\nimport { Writable } from 'stream'\nimport debug from '../utils/debug'\nconst HOSTNAME = 'logs.timber.io'\nconst PATH = '/frames'\nconst CONTENT_TYPE = 'application/json'\nconst USER_AGENT = `Timber Node HTTPS Stream/${require('../../package.json')\n  .version}`\nconst PORT = 443\n\n/**\n * A highly efficient stream for sending logs to Timber via HTTPS. It uses batches,\n * keep-alive connections (and in the future maybe msgpack) to deliver logs with high-throughput\n * and little overhead. It also implements the Stream.Writable interface so that it can be treated\n * like a stream. This is beneficial when using something like Morgan, where you can pass a custom stream.\n */\nclass HTTPS extends Writable {\n  /**\n   * @param {string} apiKey - Timber API Key\n   * @param {Object} [options] - Various options to adjust the stream behavior.\n   * @param {string} [options.flushInterval=1000] - How often, in milliseconds, the messages written to the stream should be delivered to Timber.\n   * @param {string} [options.httpsAgent] - Your own custom https.Agent. We use agents to maintain connection pools and keep the connections alive. This avoids the initial connection overhead every time we want to communicate with Timber. See https.Agent for options.\n   */\n  constructor(\n    apiKey,\n    {\n      flushInterval = 1000,\n      highWaterMark = 5000,\n      httpsAgent,\n      httpsClient,\n      hostName = HOSTNAME,\n      path = PATH,\n      port = PORT,\n    } = {}\n  ) {\n    // Ensure we use object mode and set a default highWaterMark\n    super({ objectMode: true, highWaterMark })\n    debug('Initializing HTTPS transport stream')\n\n    this.acceptsObject = true\n    this.apiKey = apiKey\n    this.hostName = hostName\n    this.path = path\n    this.port = port\n    this.flushInterval = flushInterval\n    this.httpsAgent =\n      httpsAgent ||\n      new https.Agent({\n        maxSockets: 5,\n      })\n    this.httpsClient = httpsClient || https\n\n    // Cork the stream so we can utilize the internal Buffer. We do *not* want to\n    // send a request for every message. The _flusher will take care of flushing the stream\n    // on an interval.\n    this.cork()\n\n    // In the event the _flusher is not fast enough, we need to monitor the buffer size.\n    // If it fills before the next flush event, we should immediately flush.\n\n    if (flushInterval !== undefined && flushInterval > 0) {\n      debug('Starting stream flusher')\n      this._startFlusher()\n    }\n  }\n\n  /**\n   * _writev is a Stream.Writeable methods that, if present, will write multiple chunks of\n   * data off of the buffer. Defining it means we do not need to define _write.\n   */\n  _writev(chunks, next) {\n    debug(`Sending ${chunks.length} log to stream`)\n    const messages = chunks.map(chunk => chunk.chunk)\n    const body = JSON.stringify(messages)\n    const options = {\n      headers: {\n        'Content-Type': CONTENT_TYPE,\n        'User-Agent': USER_AGENT,\n      },\n      agent: this.httpsAgent,\n      auth: this.apiKey,\n      hostname: this.hostName,\n      port: this.port,\n      path: this.path,\n      method: 'POST',\n    }\n\n    // Add debug outputs for every possible request event\n    // This should help debugging network related issues\n    debug(`Instantiating req object`)\n    const req = this.httpsClient.request(options, res => {\n      debug(`${this.hostName} responded with ${res.statusCode}`)\n      res.on('aborted', () => debug('Response event: aborted'))\n      res.on('close', () => debug('Response event: close'))\n    })\n\n    req.on('abort', () => debug('Request event: abort'))\n    req.on('aborted', () => debug('Request event: aborted'))\n    req.on('connect', () => debug('Request event: connect'))\n    req.on('continue', () => debug('Request event: continue'))\n    req.on('response', () => debug('Request event: response'))\n    req.on('socket', sock => {\n      debug('Request event: socket')\n      sock.on('close', () => debug('Socket event: close'))\n      sock.on('connect', () => debug('Socket event: connect'))\n      sock.on('data', () => sock.end())\n      sock.on('drain', () => debug('Socket event: drain'))\n      sock.on('end', () => debug('Socket event: end'))\n      sock.on('error', () => debug('Socket event: error'))\n      sock.on('lookup', () => debug('Socket event: lookup'))\n      sock.on('drain', () => debug('Socket event: drain'))\n    })\n    req.on('upgrade', () => debug('Request event: upgrade'))\n\n    req.write(body)\n    req.end()\n    next()\n  }\n\n  _write(chunk, encoding, next) {\n    this._writev([{ chunk, encoding }], next)\n  }\n\n  /**\n   * Expressive function to flush the buffer contents. uncork flushes the buffer and write\n   * the contents. Cork allows us to continue buffering the messages until the next flush.\n   */\n  _flush() {\n    // nextTick is recommended here to allow batching of write calls I think\n    process.nextTick(() => {\n      this.uncork()\n      this.cork()\n    })\n  }\n\n  /**\n   * Interval to call _flush continuously. This ensures log lines get sent on this.flushInterval\n   * intervals.\n   */\n  _startFlusher() {\n    setInterval(() => this._flush(), this.flushInterval)\n  }\n}\n\nexport default HTTPS\n",
@@ -1447,7 +1698,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 61,
+    "__docId__": 71,
     "kind": "variable",
     "name": "HOSTNAME",
     "memberof": "src/transports/https.js",
@@ -1473,7 +1724,7 @@
     }
   },
   {
-    "__docId__": 62,
+    "__docId__": 72,
     "kind": "variable",
     "name": "PATH",
     "memberof": "src/transports/https.js",
@@ -1499,7 +1750,7 @@
     }
   },
   {
-    "__docId__": 63,
+    "__docId__": 73,
     "kind": "variable",
     "name": "CONTENT_TYPE",
     "memberof": "src/transports/https.js",
@@ -1525,7 +1776,7 @@
     }
   },
   {
-    "__docId__": 64,
+    "__docId__": 74,
     "kind": "variable",
     "name": "USER_AGENT",
     "memberof": "src/transports/https.js",
@@ -1551,7 +1802,7 @@
     }
   },
   {
-    "__docId__": 65,
+    "__docId__": 75,
     "kind": "variable",
     "name": "PORT",
     "memberof": "src/transports/https.js",
@@ -1577,7 +1828,7 @@
     }
   },
   {
-    "__docId__": 66,
+    "__docId__": 76,
     "kind": "class",
     "name": "HTTPS",
     "memberof": "src/transports/https.js",
@@ -1595,7 +1846,7 @@
     ]
   },
   {
-    "__docId__": 67,
+    "__docId__": 77,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1652,7 +1903,7 @@
     ]
   },
   {
-    "__docId__": 68,
+    "__docId__": 78,
     "kind": "member",
     "name": "acceptsObject",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1675,7 +1926,7 @@
     }
   },
   {
-    "__docId__": 69,
+    "__docId__": 79,
     "kind": "member",
     "name": "apiKey",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1698,7 +1949,7 @@
     }
   },
   {
-    "__docId__": 70,
+    "__docId__": 80,
     "kind": "member",
     "name": "hostName",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1721,7 +1972,7 @@
     }
   },
   {
-    "__docId__": 71,
+    "__docId__": 81,
     "kind": "member",
     "name": "path",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1744,7 +1995,7 @@
     }
   },
   {
-    "__docId__": 72,
+    "__docId__": 82,
     "kind": "member",
     "name": "port",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1767,7 +2018,7 @@
     }
   },
   {
-    "__docId__": 73,
+    "__docId__": 83,
     "kind": "member",
     "name": "flushInterval",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1790,7 +2041,7 @@
     }
   },
   {
-    "__docId__": 74,
+    "__docId__": 84,
     "kind": "member",
     "name": "httpsAgent",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1813,7 +2064,7 @@
     }
   },
   {
-    "__docId__": 75,
+    "__docId__": 85,
     "kind": "member",
     "name": "httpsClient",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1836,7 +2087,7 @@
     }
   },
   {
-    "__docId__": 76,
+    "__docId__": 86,
     "kind": "method",
     "name": "_writev",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1863,7 +2114,7 @@
     ]
   },
   {
-    "__docId__": 77,
+    "__docId__": 87,
     "kind": "method",
     "name": "_write",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1903,7 +2154,7 @@
     ]
   },
   {
-    "__docId__": 78,
+    "__docId__": 88,
     "kind": "method",
     "name": "_flush",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1917,7 +2168,7 @@
     "params": []
   },
   {
-    "__docId__": 79,
+    "__docId__": 89,
     "kind": "method",
     "name": "_startFlusher",
     "memberof": "src/transports/https.js~HTTPS",
@@ -1931,10 +2182,10 @@
     "params": []
   },
   {
-    "__docId__": 80,
+    "__docId__": 90,
     "kind": "file",
     "name": "src/transports/index.js",
-    "content": "import HTTPS from './https'\n\nmodule.exports = { HTTPS }\n",
+    "content": "import HTTPS from './https'\nimport Winston from './winston'\nimport Bunyan from './bunyan'\n\nmodule.exports = { HTTPS, Winston, Bunyan }\n",
     "static": true,
     "longname": "src/transports/index.js",
     "access": null,
@@ -1942,10 +2193,201 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 81,
+    "__docId__": 91,
+    "kind": "file",
+    "name": "src/transports/winston.js",
+    "content": "import winston from 'winston'\nimport Augment from '../utils/augment'\nimport { Custom } from '../events'\nimport errors from '../data/errors'\n\n/**\n * The Timber Winston transport allows you to seamlessly install\n * Timber in your apps that use winston as the logger.\n */\nclass WinstonTransport extends winston.Transport {\n  /**\n   * @param {Object} [options] - Configuration options for the transport\n   * @param {string} [options.stream] - Stream to write to\n   */\n  constructor({ stream, ...options } = {}) {\n    if (!stream) {\n      throw new Error(errors.transports.winston.stream)\n    }\n\n    super(options)\n\n    this.name = 'timberWinston'\n    this.level = options.level || 'info'\n\n    // Attach the provided stream\n    this.stream = stream\n  }\n\n  /**\n   * @param {string} [level] - Level of the log (info, warn, error)\n   * @param {string} [msg] - The log message\n   * @param {Object} [meta] - Additional metadata for the log message\n   * @param {function} [callback] - Winston's success callback\n   */\n  log = (level, msg, { event, ...meta }, callback) => {\n    // Create a structured log object out of the log message\n    const structuredLog = new Augment(msg, { level })\n\n    // If custom metadata was provided with the log, append it\n    if (Object.keys(meta).length) {\n      structuredLog.append({ meta })\n    }\n\n    // If the event key exists, append a custom event\n    if (event) {\n      for (const eventName in event) {\n        if (!event[eventName]) continue\n        structuredLog.append({\n          event: new Custom({ type: eventName, data: event[eventName] }),\n        })\n      }\n    }\n\n    // Write our structured log to the timber https stream\n    this.stream.write(structuredLog.data)\n    callback(null, true)\n  }\n}\n\nexport default WinstonTransport\n",
+    "static": true,
+    "longname": "src/transports/winston.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 92,
+    "kind": "class",
+    "name": "WinstonTransport",
+    "memberof": "src/transports/winston.js",
+    "static": true,
+    "longname": "src/transports/winston.js~WinstonTransport",
+    "access": null,
+    "export": true,
+    "importPath": "timber/src/transports/winston.js",
+    "importStyle": "WinstonTransport",
+    "description": "The Timber Winston transport allows you to seamlessly install\nTimber in your apps that use winston as the logger.",
+    "lineNumber": 10,
+    "interface": false,
+    "extends": [
+      "winston~winston.Transport"
+    ]
+  },
+  {
+    "__docId__": 93,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/transports/winston.js~WinstonTransport",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/transports/winston.js~WinstonTransport#constructor",
+    "access": null,
+    "description": "",
+    "lineNumber": 15,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options",
+        "description": "Configuration options for the transport"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.stream",
+        "description": "Stream to write to"
+      }
+    ]
+  },
+  {
+    "__docId__": 94,
+    "kind": "member",
+    "name": "name",
+    "memberof": "src/transports/winston.js~WinstonTransport",
+    "static": false,
+    "longname": "src/transports/winston.js~WinstonTransport#name",
+    "access": null,
+    "description": null,
+    "lineNumber": 22,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 95,
+    "kind": "member",
+    "name": "level",
+    "memberof": "src/transports/winston.js~WinstonTransport",
+    "static": false,
+    "longname": "src/transports/winston.js~WinstonTransport#level",
+    "access": null,
+    "description": null,
+    "lineNumber": 23,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 96,
+    "kind": "member",
+    "name": "stream",
+    "memberof": "src/transports/winston.js~WinstonTransport",
+    "static": false,
+    "longname": "src/transports/winston.js~WinstonTransport#stream",
+    "access": null,
+    "description": null,
+    "lineNumber": 26,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 97,
+    "kind": "member",
+    "name": "log",
+    "memberof": "src/transports/winston.js~WinstonTransport",
+    "static": false,
+    "longname": "src/transports/winston.js~WinstonTransport#log",
+    "access": null,
+    "description": "",
+    "lineNumber": 35,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "level",
+        "description": "Level of the log (info, warn, error)"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "msg",
+        "description": "The log message"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "meta",
+        "description": "Additional metadata for the log message"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "callback",
+        "description": "Winston's success callback"
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 98,
     "kind": "file",
     "name": "src/utils/attach.js",
-    "content": "import { Writable } from 'stream'\nimport Log from '../log'\nimport debug from './debug'\n\n/**\n * Attaches a transport stream to a writeable stream.\n *\n * @param {Array} transports - array of transports to attach to the stream\n * @param {Writable} toStream - the stream your transport will attach to\n * @param {Object} options - configuration options\n * @param {boolean} options.applyBackPressure\n */\nconst attach = (transports, toStream, { applyBackPressure = false } = {}) => {\n  // Ensure all the streams are Writable\n  for (let i = 0; i < transports.length; i++) {\n    if (!(transports[i] instanceof Writable)) {\n      throw new Error('stream must be of type Writable')\n    }\n  }\n\n  // Store refs to standard logging utilities\n  const originalWrite = toStream.write\n\n  debug(`attaching ${transports.length} transports to stream`)\n\n  toStream.write = (message, encoding, fd) => {\n    const log = message instanceof Log ? message : new Log(message)\n\n    for (let i = 0; i < transports.length; i++) {\n      const transport = transports[i]\n\n      // It's possible to pass the source stream as a transport,\n      // (i.e. if you want to have stdout logs output to stdout while using a transport)\n      // for this reason we need to check if the transport is identical\n      // to the source stream before writing to it, otherwise we'll cause a stack overflow.\n      const written = transport === toStream\n        ? // this condition preserves the ability to write to the original stream\n          originalWrite.apply(transport, [log.data.message])\n        : // and this writes to a separate transport stream\n          transport.write(\n            transport.acceptsObject ? log.data : log.data.message,\n            encoding,\n            fd\n          )\n\n      if (!written && applyBackPressure) {\n        transport.once('drain', () => transport.write(...arguments))\n      }\n    }\n  }\n\n  return {\n    detach: () => {\n      toStream.write = originalWrite\n    },\n  }\n}\n\nexport default attach\n",
+    "content": "import { Writable } from 'stream'\nimport Augment from '../utils/augment'\nimport errors from '../data/errors'\nimport debug from './debug'\n\n/**\n * Attaches a transport stream to a writeable stream.\n *\n * @param {Array} transports - array of transports to attach to the stream\n * @param {Writable} toStream - the stream your transport will attach to\n * @param {Object} options - configuration options\n * @param {boolean} options.applyBackPressure\n */\nconst attach = (transports, toStream, { applyBackPressure = false } = {}) => {\n  // Ensure all the streams are Writable\n  for (let i = 0; i < transports.length; i++) {\n    if (!(transports[i] instanceof Writable)) {\n      throw new Error(errors.attach.notWritable)\n    }\n  }\n\n  // Store refs to standard logging utilities\n  const originalWrite = toStream.write\n\n  debug(`attaching ${transports.length} transports to stream`)\n\n  toStream.write = (message, encoding, fd) => {\n    const log = message instanceof Augment ? message : new Augment(message)\n\n    for (let i = 0; i < transports.length; i++) {\n      const transport = transports[i]\n\n      // It's possible to pass the source stream as a transport,\n      // (i.e. if you want to have stdout logs output to stdout while using a transport)\n      // for this reason we need to check if the transport is identical\n      // to the source stream before writing to it, otherwise we'll cause a stack overflow.\n      const written = transport === toStream\n        ? // this condition preserves the ability to write to the original stream\n          originalWrite.apply(transport, [log.data.message])\n        : // and this writes to a separate transport stream\n          transport.write(\n            transport.acceptsObject ? log.data : log.data.message,\n            encoding,\n            fd\n          )\n\n      if (!written && applyBackPressure) {\n        transport.once('drain', () => transport.write(...arguments))\n      }\n    }\n  }\n\n  return {\n    detach: () => {\n      toStream.write = originalWrite\n    },\n  }\n}\n\nexport default attach\n",
     "static": true,
     "longname": "src/utils/attach.js",
     "access": null,
@@ -1953,7 +2395,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 82,
+    "__docId__": 99,
     "kind": "function",
     "name": "attach",
     "memberof": "src/utils/attach.js",
@@ -1966,7 +2408,7 @@
     "importPath": "timber/src/utils/attach.js",
     "importStyle": "attach",
     "description": "Attaches a transport stream to a writeable stream.",
-    "lineNumber": 13,
+    "lineNumber": 14,
     "params": [
       {
         "nullable": null,
@@ -2016,7 +2458,208 @@
     }
   },
   {
-    "__docId__": 83,
+    "__docId__": 100,
+    "kind": "file",
+    "name": "src/utils/augment.js",
+    "content": "import schema from '../schema'\nimport config from '../config'\nimport errors from '../data/errors'\n\n/**\n * Transforms a log message or object into a rich structured format\n * that timber expects, ex 'log message' @timber.io {\"dt\": \"…\", \"level\": \"info\", \"context\": {…}}\n * see https://github.com/timberio/log-event-json-schema for specs\n */\nclass Augment {\n  /**\n   * @param {String} message - the log message before transforming\n   * @param {Object} [context] - context to be attached to message\n   */\n  constructor(message, context = {}) {\n    // Throw an error if no message is provided\n    if (!message) throw new Error(errors.log.noMessage)\n\n    /**\n     * Reference to original log message\n     * @type {String}\n     */\n    this.raw = message\n\n    /**\n     * Structured log data\n     * @type {Date}\n     */\n    this.data = {\n      ...schema,\n      message,\n      dt: new Date(),\n      ...context,\n    }\n  }\n\n  /**\n   * Appends data to the end of the structured log object\n   *\n   * @param {Object} data\n   */\n  append(data) {\n    this.data = {\n      ...this.data,\n      ...data,\n    }\n  }\n\n  /**\n   * Convenience function for setting the log level\n   *\n   * @param {String} level - `info` `warn` `error` `debug`\n   */\n  setLevel(level) {\n    this.append({ level })\n  }\n\n  /**\n   * Transforms the structured log into a string\n   * i.e. `Log message @metadata { ... }`\n   */\n  format({ withMetadata = true } = {}) {\n    const { dt, ...rest } = this.data\n\n    let message = this.raw.endsWith('\\n')\n      ? this.raw.substring(0, this.raw.length - 1)\n      : this.raw\n\n    if (config.timestamp_prefix) {\n      message = `${dt.toISOString()} ${message}`\n    }\n\n    if (withMetadata) {\n      const data = config.timestamp_prefix ? rest : { dt, ...rest }\n      message += ` ${config.metadata_delimiter} ${JSON.stringify(data)}`\n    }\n\n    return `${message}\\n`\n  }\n}\n\nexport default Augment\n",
+    "static": true,
+    "longname": "src/utils/augment.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 101,
+    "kind": "class",
+    "name": "Augment",
+    "memberof": "src/utils/augment.js",
+    "static": true,
+    "longname": "src/utils/augment.js~Augment",
+    "access": null,
+    "export": true,
+    "importPath": "timber/src/utils/augment.js",
+    "importStyle": "Augment",
+    "description": "Transforms a log message or object into a rich structured format\nthat timber expects, ex 'log message' @timber.io {\"dt\": \"…\", \"level\": \"info\", \"context\": {…}}\nsee https://github.com/timberio/log-event-json-schema for specs",
+    "lineNumber": 10,
+    "interface": false
+  },
+  {
+    "__docId__": 102,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/utils/augment.js~Augment",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/utils/augment.js~Augment#constructor",
+    "access": null,
+    "description": "",
+    "lineNumber": 15,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "message",
+        "description": "the log message before transforming"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "context",
+        "description": "context to be attached to message"
+      }
+    ]
+  },
+  {
+    "__docId__": 103,
+    "kind": "member",
+    "name": "raw",
+    "memberof": "src/utils/augment.js~Augment",
+    "static": false,
+    "longname": "src/utils/augment.js~Augment#raw",
+    "access": null,
+    "description": "Reference to original log message",
+    "lineNumber": 23,
+    "type": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 104,
+    "kind": "member",
+    "name": "data",
+    "memberof": "src/utils/augment.js~Augment",
+    "static": false,
+    "longname": "src/utils/augment.js~Augment#data",
+    "access": null,
+    "description": "Structured log data",
+    "lineNumber": 29,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Date"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 105,
+    "kind": "method",
+    "name": "append",
+    "memberof": "src/utils/augment.js~Augment",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/utils/augment.js~Augment#append",
+    "access": null,
+    "description": "Appends data to the end of the structured log object",
+    "lineNumber": 42,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 106,
+    "kind": "member",
+    "name": "data",
+    "memberof": "src/utils/augment.js~Augment",
+    "static": false,
+    "longname": "src/utils/augment.js~Augment#data",
+    "access": null,
+    "description": null,
+    "lineNumber": 43,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "{...undefined: Object, ...data: Object}"
+      ]
+    }
+  },
+  {
+    "__docId__": 107,
+    "kind": "method",
+    "name": "setLevel",
+    "memberof": "src/utils/augment.js~Augment",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/utils/augment.js~Augment#setLevel",
+    "access": null,
+    "description": "Convenience function for setting the log level",
+    "lineNumber": 54,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "level",
+        "description": "`info` `warn` `error` `debug`"
+      }
+    ]
+  },
+  {
+    "__docId__": 108,
+    "kind": "method",
+    "name": "format",
+    "memberof": "src/utils/augment.js~Augment",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/utils/augment.js~Augment#format",
+    "access": null,
+    "description": "Transforms the structured log into a string\ni.e. `Log message @metadata { ... }`",
+    "lineNumber": 62,
+    "params": [
+      {
+        "name": "objectPattern",
+        "optional": true,
+        "types": [
+          "{\"withMetadata\": *}"
+        ],
+        "defaultRaw": {},
+        "defaultValue": "{}"
+      }
+    ],
+    "return": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 109,
     "kind": "file",
     "name": "src/utils/debug.js",
     "content": "import util from 'util'\nimport config from '../config'\n\n/**\n * Convenience function for retrieving a reference to\n * the debug_logger stream.\n *\n * @private\n */\nexport const debug_logger = () => config.debug_logger\n\n/**\n * Generate a timestamp string to use in debug lines\n *\n * @private\n */\nconst timestamp = () => new Date().toISOString()\n\n/**\n * Convenience function for logging debug messages\n * to the configured debug_logger\n *\n * This works much like the builtin console.log function,\n * accepting any amount of mixed arguments and concatenating\n * them into a single string to be sent to the debug_logger stream\n *\n * @private\n * @param {...*} args\n */\nconst debug = (...args) => {\n  if (debug_logger()) {\n    debug_logger().write(`[${timestamp()}]: ${util.format.apply(null, args)}\\n`)\n  }\n}\n\nexport default debug\n",
@@ -2027,7 +2670,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 84,
+    "__docId__": 110,
     "kind": "function",
     "name": "debug_logger",
     "memberof": "src/utils/debug.js",
@@ -2044,7 +2687,7 @@
     "params": []
   },
   {
-    "__docId__": 85,
+    "__docId__": 111,
     "kind": "function",
     "name": "timestamp",
     "memberof": "src/utils/debug.js",
@@ -2061,7 +2704,7 @@
     "params": []
   },
   {
-    "__docId__": 86,
+    "__docId__": 112,
     "kind": "function",
     "name": "debug",
     "memberof": "src/utils/debug.js",
@@ -2089,7 +2732,7 @@
     ]
   },
   {
-    "__docId__": 88,
+    "__docId__": 114,
     "kind": "external",
     "name": "Infinity",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
@@ -2101,7 +2744,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 89,
+    "__docId__": 115,
     "kind": "external",
     "name": "NaN",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
@@ -2113,7 +2756,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 90,
+    "__docId__": 116,
     "kind": "external",
     "name": "undefined",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
@@ -2125,7 +2768,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 91,
+    "__docId__": 117,
     "kind": "external",
     "name": "null",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
@@ -2137,7 +2780,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 92,
+    "__docId__": 118,
     "kind": "external",
     "name": "Object",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
@@ -2149,7 +2792,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 93,
+    "__docId__": 119,
     "kind": "external",
     "name": "object",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
@@ -2161,7 +2804,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 94,
+    "__docId__": 120,
     "kind": "external",
     "name": "Function",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
@@ -2173,7 +2816,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 95,
+    "__docId__": 121,
     "kind": "external",
     "name": "function",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
@@ -2185,7 +2828,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 96,
+    "__docId__": 122,
     "kind": "external",
     "name": "Boolean",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
@@ -2197,7 +2840,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 97,
+    "__docId__": 123,
     "kind": "external",
     "name": "boolean",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
@@ -2209,7 +2852,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 98,
+    "__docId__": 124,
     "kind": "external",
     "name": "Symbol",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
@@ -2221,7 +2864,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 99,
+    "__docId__": 125,
     "kind": "external",
     "name": "Error",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
@@ -2233,7 +2876,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 100,
+    "__docId__": 126,
     "kind": "external",
     "name": "EvalError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
@@ -2245,7 +2888,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 101,
+    "__docId__": 127,
     "kind": "external",
     "name": "InternalError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
@@ -2257,7 +2900,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 102,
+    "__docId__": 128,
     "kind": "external",
     "name": "RangeError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
@@ -2269,7 +2912,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 103,
+    "__docId__": 129,
     "kind": "external",
     "name": "ReferenceError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
@@ -2281,7 +2924,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 104,
+    "__docId__": 130,
     "kind": "external",
     "name": "SyntaxError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
@@ -2293,7 +2936,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 105,
+    "__docId__": 131,
     "kind": "external",
     "name": "TypeError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
@@ -2305,7 +2948,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 106,
+    "__docId__": 132,
     "kind": "external",
     "name": "URIError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
@@ -2317,7 +2960,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 107,
+    "__docId__": 133,
     "kind": "external",
     "name": "Number",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
@@ -2329,7 +2972,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 108,
+    "__docId__": 134,
     "kind": "external",
     "name": "number",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
@@ -2341,7 +2984,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 109,
+    "__docId__": 135,
     "kind": "external",
     "name": "Date",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
@@ -2353,7 +2996,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 110,
+    "__docId__": 136,
     "kind": "external",
     "name": "String",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
@@ -2365,7 +3008,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 111,
+    "__docId__": 137,
     "kind": "external",
     "name": "string",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
@@ -2377,7 +3020,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 112,
+    "__docId__": 138,
     "kind": "external",
     "name": "RegExp",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
@@ -2389,7 +3032,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 113,
+    "__docId__": 139,
     "kind": "external",
     "name": "Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
@@ -2401,7 +3044,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 114,
+    "__docId__": 140,
     "kind": "external",
     "name": "Int8Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
@@ -2413,7 +3056,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 115,
+    "__docId__": 141,
     "kind": "external",
     "name": "Uint8Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
@@ -2425,7 +3068,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 116,
+    "__docId__": 142,
     "kind": "external",
     "name": "Uint8ClampedArray",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
@@ -2437,7 +3080,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 117,
+    "__docId__": 143,
     "kind": "external",
     "name": "Int16Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
@@ -2449,7 +3092,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 118,
+    "__docId__": 144,
     "kind": "external",
     "name": "Uint16Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
@@ -2461,7 +3104,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 119,
+    "__docId__": 145,
     "kind": "external",
     "name": "Int32Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
@@ -2473,7 +3116,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 120,
+    "__docId__": 146,
     "kind": "external",
     "name": "Uint32Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
@@ -2485,7 +3128,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 121,
+    "__docId__": 147,
     "kind": "external",
     "name": "Float32Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
@@ -2497,7 +3140,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 122,
+    "__docId__": 148,
     "kind": "external",
     "name": "Float64Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
@@ -2509,7 +3152,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 123,
+    "__docId__": 149,
     "kind": "external",
     "name": "Map",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
@@ -2521,7 +3164,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 124,
+    "__docId__": 150,
     "kind": "external",
     "name": "Set",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
@@ -2533,7 +3176,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 125,
+    "__docId__": 151,
     "kind": "external",
     "name": "WeakMap",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
@@ -2545,7 +3188,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 126,
+    "__docId__": 152,
     "kind": "external",
     "name": "WeakSet",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
@@ -2557,7 +3200,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 127,
+    "__docId__": 153,
     "kind": "external",
     "name": "ArrayBuffer",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
@@ -2569,7 +3212,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 128,
+    "__docId__": 154,
     "kind": "external",
     "name": "DataView",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
@@ -2581,7 +3224,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 129,
+    "__docId__": 155,
     "kind": "external",
     "name": "JSON",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
@@ -2593,7 +3236,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 130,
+    "__docId__": 156,
     "kind": "external",
     "name": "Promise",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
@@ -2605,7 +3248,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 131,
+    "__docId__": 157,
     "kind": "external",
     "name": "Generator",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
@@ -2617,7 +3260,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 132,
+    "__docId__": 158,
     "kind": "external",
     "name": "GeneratorFunction",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
@@ -2629,7 +3272,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 133,
+    "__docId__": 159,
     "kind": "external",
     "name": "Reflect",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
@@ -2641,7 +3284,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 134,
+    "__docId__": 160,
     "kind": "external",
     "name": "Proxy",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
@@ -2654,7 +3297,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 136,
+    "__docId__": 162,
     "kind": "external",
     "name": "CanvasRenderingContext2D",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
@@ -2666,7 +3309,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 137,
+    "__docId__": 163,
     "kind": "external",
     "name": "DocumentFragment",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
@@ -2678,7 +3321,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 138,
+    "__docId__": 164,
     "kind": "external",
     "name": "Element",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
@@ -2690,7 +3333,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 139,
+    "__docId__": 165,
     "kind": "external",
     "name": "Event",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
@@ -2702,7 +3345,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 140,
+    "__docId__": 166,
     "kind": "external",
     "name": "Node",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
@@ -2714,7 +3357,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 141,
+    "__docId__": 167,
     "kind": "external",
     "name": "NodeList",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
@@ -2726,7 +3369,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 142,
+    "__docId__": 168,
     "kind": "external",
     "name": "XMLHttpRequest",
     "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
@@ -2738,7 +3381,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 143,
+    "__docId__": 169,
     "kind": "external",
     "name": "AudioContext",
     "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
