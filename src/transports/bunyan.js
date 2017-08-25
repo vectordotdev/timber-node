@@ -28,10 +28,9 @@ class BunyanTransport extends Writable {
   }
 
   /**
-   * @param {string} [level] - Level of the log (info, warn, error)
-   * @param {string} [msg] - The log message
-   * @param {Object} [meta] - Additional metadata for the log message
-   * @param {function} [callback] - Bunyan's success callback
+   * @param {buffer|string} [chunk] - The chunk to be written. Will always be a buffer unless the decodeStrings option was set to false or the stream is operating in object mode.
+   * @param {string} [encoding] - If the chunk is a string, then encoding is the character encoding of that string. If chunk is a Buffer, or if the stream is operating in object mode, encoding may be ignored.
+   * @param {function} [next] - Call this function (optionally with an error argument) when processing is complete for the supplied chunk.
    */
   _write(chunk, encoding, next) {
     // Parse the JSON object
