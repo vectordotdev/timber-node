@@ -4,12 +4,6 @@ import { Custom } from '../events'
 import Augment from '../utils/augment'
 import errors from '../data/errors'
 
-// const levels = {
-//   10: 'trace',
-//   20: 'debug',
-//   30: 'info',
-// }
-
 /**
  * The Timber Bunyan transport allows you to seamlessly install
  * Timber in your apps that use bunyan as the logger.
