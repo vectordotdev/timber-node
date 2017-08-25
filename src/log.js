@@ -19,6 +19,12 @@ const loggers = {
     handler: (level, message, metadata = {}) =>
       config.logger.log(level, message, metadata),
   },
+  bunyan: {
+    detect: () => config.logger.constructor.name === 'Logger',
+    handler: (level, message, metadata) => {
+      config.logger[level]({ metadata }, message)
+    },
+  },
 }
 
 const log = (...args) => {
