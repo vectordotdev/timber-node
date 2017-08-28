@@ -127,17 +127,19 @@ app.get('/', function (req, res) {
 
 </p></details>
 
-<details><summary><strong>Winston transport</strong></summary><p>
+<details><summary><strong>Logging with Winston</strong></summary><p>
 
-If you're using winston, you can use the timber transport to send all of winston's logs to timber.io
+If you're using [winston](https://github.com/winstonjs/winston), you can use the winston transport to send all of winston's logs to timber.io
 
 ```js
 const winston = require('winston')
 const timber = require('timber')
 
+const stream = new timber.transports.HTTPS('your-api-key')
+
 winston.add(timber.transports.Winston, { apiKey: 'your-timber-api-key' })
 
-winston.log('info', 'Sample log message');
+winston.log('info', 'Sample log message')
 
 // Output:
 // => Sample log message @metadata {"level": "info", ... }
@@ -150,6 +152,43 @@ winston.log('info', 'Log message with metadata', { user: 'username' })
 
 // Or you can log a custom event
 winston.log('info', 'Log message with event', { custom_event_name: { ... }, ... })
+
+// Output:
+// => Log message with event @metadata {"level": "info", event: { custom_event_name: { ... } }}, ... }
+```
+
+---
+
+</p></details>
+
+<details><summary><strong>Logging with Bunyan</strong></summary><p>
+
+If you're using [bunyan](https://github.com/trentm/node-bunyan), you can use the bunyan transport to send all of bunyan's logs to timber.io
+
+```js
+const bunyan = require('bunyan')
+const timber = require('timber')
+
+const stream = new timber.transports.HTTPS('your-api-key')
+
+const log = bunyan.createLogger({
+  name: 'Timber Logger',
+  stream: new timber.transports.Bunyan({ stream })
+})
+
+log.info('Sample log message')
+
+// Output:
+// => Sample log message @metadata {"level": "info", ... }
+
+// You can also send custom metadata with your logs
+log.info({ user: 'username' }, 'Log message with metadata')
+
+// Output:
+// => Log message with metadata @metadata {"level": "info", meta: { user: 'username' }}, ... }
+
+// Or you can log a custom event
+log.info({ custom_event_name: { ... }, ... }, 'Log message with event')
 
 // Output:
 // => Log message with event @metadata {"level": "info", event: { custom_event_name: { ... } }}, ... }
