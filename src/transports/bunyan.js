@@ -35,7 +35,7 @@ class BunyanTransport extends Writable {
   _write(chunk, encoding, next) {
     // Parse the JSON object
     const data = JSON.parse(chunk.toString())
-    const { msg, metadata: { event, ...meta } } = data
+    const { msg, event, meta } = data
     // Convert the level integer into a string representation
     const level = bunyan.nameFromLevel[data.level]
 
@@ -43,7 +43,7 @@ class BunyanTransport extends Writable {
     const structuredLog = new Augment(msg, { level })
 
     // If custom metadata was provided with the log, append it
-    if (Object.keys(meta).length) {
+    if (meta && Object.keys(meta).length) {
       structuredLog.append({ meta })
     }
 
