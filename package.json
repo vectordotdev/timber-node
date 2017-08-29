@@ -32,7 +32,7 @@
     "cover": "jest --coverage",
     "coveralls": "npm run compile && npm test && cat ./coverage/lcov.info |  ./node_modules/coveralls/bin/coveralls.js",
     "postcoveralls": "rimraf coverage",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "postpublish": "git push origin master --follow-tags",
     "deploy": "git pull --rebase origin master && git push origin master",
     "deploy:docs": "gh-pages -d docs"
