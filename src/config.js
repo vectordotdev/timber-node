@@ -42,6 +42,7 @@ const userConfig = finder(projectPath).next().value.timber
  * @param {boolean} timestamp_prefix - When `true`, log output should be prefixed with a timestamp in ISO 8601 format (off by default)
  * @param {boolean} capture_request_body - whether the http request body data will be captured (off by default)
  * @param {boolean} capture_request_body - whether the http response body data will be captured (off by default)
+ * @param {boolean} combine_http_events - If true, HTTPRequest and HTTPResponse events will be combined in a single log message (off by defaut)
  */
 const config = {
   logger: console,
@@ -51,6 +52,7 @@ const config = {
   timestamp_prefix: false,
   capture_request_body: false,
   capture_response_body: false,
+  combine_http_events: false,
   ...userConfig,
 }
 

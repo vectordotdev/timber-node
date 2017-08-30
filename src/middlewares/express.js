@@ -97,15 +97,26 @@ const expressMiddleware = compose(
         body,
       })
 
+      // If we're combining http events, append the request event
+      if (config.combine_http_events) {
+        http_response.request = http_request
+      }
+
       // add the http_response event to the metadata object
       metadata.event = { http_response }
 
+      const message = config.combine_http_events
+        ? `${method} ${host}${path} - ${status} in ${time_ms}ms`
+        : http_response.message()
+
       // log the http response with metadata
-      log('info', http_response.message(), metadata)
+      log('info', message, metadata)
     })
 
-    // log the http request with metadata
-    log('info', http_request.message(), metadata)
+    // If we're not combining http events, log the http request
+    if (!config.combine_http_events) {
+      log('info', http_request.message(), metadata)
+    }
     next()
   }
 )
