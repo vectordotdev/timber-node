@@ -89,6 +89,23 @@ console.error("My log message")
 // => My log message @metadata {"level": "error", "context": {...}}
 ```
 
+Timber patches over the default `console.log` functions to provide an easy way to attach custom metadata or events to a log line. To take advantage of it, use the following structure when logging:
+
+```js
+console.log("My Log Message", { meta: { ... } });
+```
+
+This works will all console log levels (`console.log`, `console.info`, `console.warn`, and `console.error`).
+
+Logging custom events are just as easy:
+
+
+```js
+console.log("My Log Message with a custom event", { event: { custom_event_name: { ... } } });
+```
+
+Just like metadata, custom events can be attached to any console log level.
+
 ---
 
 </p></details>
@@ -143,18 +160,38 @@ winston.log('info', 'Sample log message')
 
 // Output:
 // => Sample log message @metadata {"level": "info", ... }
+```
 
-// You can also send custom metadata with your logs
+When you pass a metadata object to winston, timber will automatically augment your log line with it:
+
+```js
 winston.log('info', 'Log message with metadata', { user: 'username' })
 
 // Output:
-// => Log message with metadata @metadata {"level": "info", meta: { user: 'username' }}, ... }
+// => Log message with metadata @metadata {"level": "info", meta: { user: 'username' }, ... }
+```
 
-// Or you can log a custom event
-winston.log('info', 'Log message with event', { custom_event_name: { ... }, ... })
+You can augment your log with a custom event by providing an `event` key at the root of your metadata object:
+
+```js
+winston.log('info', 'Log message with event', { event: custom_event_name: { ... } })
 
 // Output:
-// => Log message with event @metadata {"level": "info", event: { custom_event_name: { ... } }}, ... }
+// => Log message with event @metadata {"level": "info", event: { custom_event_name: { ... } }, ... }
+```
+
+Adding custom context is just as easily done by adding the `context` key to the root of your metadata object:
+
+```js
+winston.log('info', 'Log message with event', { context: { ... } })
+
+// Output:
+// => Log message with event @metadata {"level": "info", context: { ... }, ... }
+```
+If you're using the timber express middleware, you'll most likely want to configure it to use winston as the logger. This can be done by setting the `logger` config attribute to `winston`:
+
+```js
+timber.config.logger = winston
 ```
 
 ---
@@ -180,18 +217,39 @@ log.info('Sample log message')
 
 // Output:
 // => Sample log message @metadata {"level": "info", ... }
+```
 
-// You can also send custom metadata with your logs
+If you want to augment you log with custom metadata, simply add an object as the first argument:
+
+```js
 log.info({ user: 'username' }, 'Log message with metadata')
 
 // Output:
 // => Log message with metadata @metadata {"level": "info", meta: { user: 'username' }}, ... }
+```
 
-// Or you can log a custom event
-log.info({ custom_event_name: { ... }, ... }, 'Log message with event')
+You can augment your log with a custom event by providing an `event` key at the root of your metadata object:
+
+```js
+log.info({ event: { custom_event_name: { ... } } }, 'Log message with event')
 
 // Output:
-// => Log message with event @metadata {"level": "info", event: { custom_event_name: { ... } }}, ... }
+// => Log message with event @metadata {"level": "info", event: { custom_event_name: { ... } }, ... }
+```
+
+Adding custom context is just as easily done by adding the `context` key to the root of your metadata object:
+
+```js
+log.info({ context: { ... } }, 'Log message with event')
+
+// Output:
+// => Log message with event @metadata {"level": "info", context: { ... }, ... }
+```
+
+If you're using the timber express middleware, you'll most likely want to configure it to use winston as the logger. This can be done by setting the `logger` config attribute to the bunyan logger you created:
+
+```js
+timber.config.logger = log 
 ```
 
 ---
