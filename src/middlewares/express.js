@@ -77,24 +77,6 @@ const expressMiddleware = compose(
     // add the http_request event to the metadata object
     metadata.event = { http_request }
 
-    // Semi-hacky solution for capturing response bodies.
-    // Unlike the request body, there's no built-in way to capture
-    // the response body in express. This is because express streams
-    // the response directly to the client without saving a reference
-    // of the data. The following block intercepts json data before
-    // sending it to the client by patching the res.json method.
-    if (config.capture_response_body) {
-      const json = res.json
-      res.json = body => {
-        // Save a reference of the json body
-        res.body = body
-
-        // Restore the original json method and pass the body to it
-        res.json = json
-        res.json(body)
-      }
-    }
-
     // add an event to get  triggered when the request finishes
     // this event will send the http_client_response event to timber
     req.on('end', () => {
