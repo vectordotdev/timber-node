@@ -84,9 +84,11 @@ class WinstonTransport extends winston.Transport {
    * @param {string} [level] - Level of the log (info, warn, error)
    * @param {string} [msg] - The log message
    * @param {Object} [meta] - Additional metadata for the log message
+   * @param {Object} [meta.event] - Event object to augment the log with
+   * @param {Object} [meta.context] - Context object to augment the log with
    * @param {function} [callback] - Winston&apos;s success callback
    */
-  log = (level, msg, { event, ...meta }, callback) =&gt; {
+  log = (level, msg, { event, context, ...meta }, callback) =&gt; {
     // Create a structured log object out of the log message
     const structuredLog = new Augment(msg, { level })
 
@@ -103,6 +105,13 @@ class WinstonTransport extends winston.Transport {
           event: new Custom({ type: eventName, data: event[eventName] }),
         })
       }
+    }
+
+    // If a context object was provided with the log, append it
+    if (context) {
+      structuredLog.append({
+        context,
+      })
     }
 
     // Write our structured log to the timber https stream

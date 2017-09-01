@@ -76,7 +76,7 @@ const loggers = {
   bunyan: {
     detect: () =&gt; config.logger.constructor.name === &apos;Logger&apos;,
     handler: (level, message, metadata) =&gt; {
-      config.logger[level]({ metadata }, message)
+      config.logger[level](metadata, message)
     },
   },
 }

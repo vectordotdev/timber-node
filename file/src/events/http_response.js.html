@@ -62,11 +62,14 @@ class HTTPResponse extends Event {
    * @param {String} [body] - the body of the request
    * @param {String} [direction] - incoming or outgoing
    * @param {Array} [headers] - the headers of the request
+   * @param {Object} [request] - the request object (only set if combine_http_events is true)
    * @param {String} [request_id] - the uuid of the request
    * @param {String} status - the HTTP status code
    * @param {String} time_ms - the total duration of the request in milliseconds
    */
-  constructor({ body, direction, headers, request_id, status, time_ms } = {}) {
+  constructor(
+    { body, direction, headers, request, request_id, status, time_ms } = {}
+  ) {
     super()
 
     // check for required attributes
@@ -76,6 +79,7 @@ class HTTPResponse extends Event {
     this.body = body
     this.direction = direction
     this.headers = headers
+    this.request = request
     this.request_id = request_id
     this.status = status
     this.time_ms = time_ms

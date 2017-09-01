@@ -89,7 +89,7 @@ class BunyanTransport extends Writable {
   _write(chunk, encoding, next) {
     // Parse the JSON object
     const data = JSON.parse(chunk.toString())
-    const { msg, metadata: { event, ...meta } } = data
+    const { msg, event, context, ...meta } = data
     // Convert the level integer into a string representation
     const level = bunyan.nameFromLevel[data.level]
 
@@ -97,7 +97,7 @@ class BunyanTransport extends Writable {
     const structuredLog = new Augment(msg, { level })
 
     // If custom metadata was provided with the log, append it
-    if (Object.keys(meta).length) {
+    if (meta &amp;&amp; Object.keys(meta).length) {
       structuredLog.append({ meta })
     }
 
@@ -109,6 +109,13 @@ class BunyanTransport extends Writable {
           event: new Custom({ type: eventName, data: event[eventName] }),
         })
       }
+    }
+
+    // If a context object was provided with the log, append it
+    if (context) {
+      structuredLog.append({
+        context,
+      })
     }
 
     // Write our structured log to the timber https stream

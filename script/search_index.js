@@ -630,6 +630,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/events/http_response.js~httpresponse#request",
+    "class/src/events/http_response.js~HTTPResponse.html#instance-member-request",
+    "src/events/http_response.js~HTTPResponse#request",
+    "member"
+  ],
+  [
     "src/events/http_response.js~httpresponse#request_id",
     "class/src/events/http_response.js~HTTPResponse.html#instance-member-request_id",
     "src/events/http_response.js~HTTPResponse#request_id",

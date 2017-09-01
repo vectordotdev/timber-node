@@ -1,6 +1,6 @@
 {
-  "coverage": "40.29%",
-  "expectCount": 67,
+  "coverage": "39.7%",
+  "expectCount": 68,
   "actualCount": 27,
   "files": {
     "src/utils/augment.js": {
@@ -64,16 +64,17 @@
       ]
     },
     "src/events/http_response.js": {
-      "expectCount": 9,
+      "expectCount": 10,
       "actualCount": 2,
       "undocumentLines": [
-        22,
-        23,
-        24,
-        30,
         25,
         26,
-        27
+        27,
+        34,
+        28,
+        29,
+        30,
+        31
       ]
     },
     "src/transports/https.js": {
