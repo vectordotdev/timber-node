@@ -30,6 +30,7 @@
     "build": "npm run clean && babel -d dist src",
     "build:docs": "esdoc",
     "test": "jest --coverage",
+    "test:watch": "jest --watch",
     "cover": "jest --coverage",
     "coveralls": "npm run compile && npm test && cat ./coverage/lcov.info |  ./node_modules/coveralls/bin/coveralls.js",
     "postcoveralls": "rimraf coverage",
@@ -84,7 +85,6 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "collectCoverage": true,
     "collectCoverageFrom": [
       "src/**/*.js"
     ]
