@@ -74,19 +74,19 @@ No special API, Timber works directly with `console.log`:
 ```js
 console.log("My log message")
 
-// => My log message @metadata {"level": "info", "context": {...}}
+// => My log message @metadata {"level": "info", ... }
 
 console.info("My log message")
 
-// => My log message @metadata {"level": "info", "context": {...}}
+// => My log message @metadata {"level": "info", ... }
 
 console.warn("My log message")
 
-// => My log message @metadata {"level": "warn", "context": {...}}
+// => My log message @metadata {"level": "warn", ... }
 
 console.error("My log message")
 
-// => My log message @metadata {"level": "error", "context": {...}}
+// => My log message @metadata {"level": "error", ... }
 ```
 
 Timber patches over the default `console.log` functions to provide an easy way to attach custom metadata or events to a log line. To take advantage of it, use the following structure when logging:
@@ -95,7 +95,7 @@ Timber patches over the default `console.log` functions to provide an easy way t
 console.log("My Log Message", { meta: { ... } });
 ```
 
-This works will all console log levels (`console.log`, `console.info`, `console.warn`, and `console.error`).
+This works with all console log levels (`console.log`, `console.info`, `console.warn`, and `console.error`).
 
 Logging custom events are just as easy:
 
