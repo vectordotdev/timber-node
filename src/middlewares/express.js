@@ -77,9 +77,16 @@ const expressMiddleware = compose(
     // add the http_request event to the metadata object
     metadata.event = { http_request }
 
-    // add an event to get  triggered when the request finishes
-    // this event will send the http_client_response event to timber
-    req.on('end', () => {
+
+    // Override the response end event
+    // This event will send the http_client_response event to timber
+    // If combine_http_events is true, this will be the only log generated
+    const end = res.end
+    res.end = (chunk, encoding) => {
+      // Emit the original res.end event
+      res.end = end
+      res.end(chunk, encoding)
+
       // destructure the response object for ease of use
       const { body: resBody, statusCode: status } = res
 
@@ -111,7 +118,7 @@ const expressMiddleware = compose(
 
       // log the http response with metadata
       log('info', message, metadata)
-    })
+    }
 
     // If we're not combining http events, log the http request
     if (!config.combine_http_events) {
