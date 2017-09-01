@@ -219,7 +219,7 @@ log.info('Sample log message')
 // => Sample log message @metadata {"level": "info", ... }
 ```
 
-If you want to augment you log with custom metadata, simply add an object as the first argument:
+If you want to augment your log with custom metadata, simply add an object as the first argument:
 
 ```js
 log.info({ user: 'username' }, 'Log message with metadata')
