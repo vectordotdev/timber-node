@@ -246,7 +246,7 @@ log.info({ context: { ... } }, 'Log message with event')
 // => Log message with event @metadata {"level": "info", context: { ... }, ... }
 ```
 
-If you're using the timber express middleware, you'll most likely want to configure it to use winston as the logger. This can be done by setting the `logger` config attribute to the bunyan logger you created:
+If you're using the timber express middleware, you'll most likely want to configure it to use bunyan as the logger. This can be done by setting the `logger` config attribute to the bunyan logger you created:
 
 ```js
 timber.config.logger = log 
