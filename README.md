@@ -152,9 +152,13 @@ If you're using [winston](https://github.com/winstonjs/winston), you can use the
 const winston = require('winston')
 const timber = require('timber')
 
-const stream = new timber.transports.HTTPS('your-api-key')
+const transport = new timber.transports.HTTPS('your-api-key')
+timber.install(transport)
 
-winston.add(timber.transports.Winston, { apiKey: 'your-timber-api-key' })
+winston.remove(winston.transports.Console)
+winston.add(winston.transports.Console, {
+  formatter: timber.formatters.Winston
+})
 
 winston.log('info', 'Sample log message')
 
@@ -206,12 +210,13 @@ If you're using [bunyan](https://github.com/trentm/node-bunyan), you can use the
 const bunyan = require('bunyan')
 const timber = require('timber')
 
-const stream = new timber.transports.HTTPS('your-api-key')
+const winston = require('winston')
+const timber = require('timber')
 
-const log = bunyan.createLogger({
-  name: 'Timber Logger',
-  stream: new timber.transports.Bunyan({ stream })
-})
+const transport = new timber.transports.HTTPS('your-api-key')
+timber.install(transport)
+
+const log = bunyan.createLogger({ name: 'Timber Logger' })
 
 log.info('Sample log message')
 
@@ -268,16 +273,10 @@ timber.attach([transport], process.stdout)
 timber.attach([transport], process.stderr)
 // => This sends all logs from stdout directly to Timber
 
-// By default, those transports are "hijacking" the output of the original stream
-// If you want to send logs to timber and also preserve their output in stdout:
-timber.attach([transport, process.stdout], process.stdout)
-timber.attach([transport, process.stderr], process.stderr)
-// => This sends all logs from stdout to Timber and stdout
-
 // You can attach multiple unique transport streams to each stream:
 const file_transport = fs.createWriteStream("./output.log", {flags: "a"})
 timber.attach([transport, file_transport], process.stdout)
-// => This sends all logs from stdout to Timber and a custom log file
+// => This sends all logs from stdout to Timber, stdout, and a custom log file
 ```
 
 ---
