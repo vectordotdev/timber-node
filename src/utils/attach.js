@@ -1,6 +1,8 @@
 import { Writable } from 'stream'
 import Augment from '../utils/augment'
+import { stripMetadata } from '../utils/metadata'
 import errors from '../data/errors'
+import config from '../config'
 import debug from './debug'
 
 /**
@@ -30,24 +32,24 @@ const attach = (transports, toStream, { applyBackPressure = false } = {}) => {
     for (let i = 0; i < transports.length; i++) {
       const transport = transports[i]
 
-      // It's possible to pass the source stream as a transport,
-      // (i.e. if you want to have stdout logs output to stdout while using a transport)
-      // for this reason we need to check if the transport is identical
-      // to the source stream before writing to it, otherwise we'll cause a stack overflow.
-      const written = transport === toStream
-        ? // this condition preserves the ability to write to the original stream
-          originalWrite.apply(transport, [log.data.message])
-        : // and this writes to a separate transport stream
-          transport.write(
-            transport.acceptsObject ? log.data : log.data.message,
-            encoding,
-            fd
-          )
+      const written = transport.write(
+        transport.acceptsObject ? log.data : log.data.message,
+        encoding,
+        fd
+      )
 
       if (!written && applyBackPressure) {
         transport.once('drain', () => transport.write(...arguments))
       }
     }
+
+    // When writing the log to the original stream,
+    // strip the metadata if we're not in production
+    originalWrite.apply(toStream, [
+      process.env.NODE_ENV === 'production'
+        ? log.data.message
+        : stripMetadata(log.data.message),
+    ])
   }
 
   return {
