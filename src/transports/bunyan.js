@@ -13,7 +13,7 @@ class BunyanTransport extends Writable {
    * @param {Object} [options] - Configuration options for the transport
    * @param {string} [options.stream] - Stream to write to
    */
-  constructor({ stream, ...options } = {}) {
+  constructor({ stream = process.stdout, ...options } = {}) {
     if (!stream) {
       throw new Error(errors.transports.bunyan.stream)
     }
@@ -65,7 +65,7 @@ class BunyanTransport extends Writable {
     }
 
     // Write our structured log to the timber https stream
-    this.stream.write(structuredLog.data)
+    this.stream.write(structuredLog.format())
     next()
   }
 }
