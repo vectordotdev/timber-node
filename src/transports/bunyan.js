@@ -35,7 +35,7 @@ class BunyanTransport extends Writable {
   _write(chunk, encoding, next) {
     // Parse the JSON object
     const data = JSON.parse(chunk.toString())
-    const { msg, event, context, ...meta } = data
+    const { msg, event, context, meta } = data
     // Convert the level integer into a string representation
     const level = bunyan.nameFromLevel[data.level]
 
