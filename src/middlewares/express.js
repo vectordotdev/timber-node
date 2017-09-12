@@ -2,7 +2,6 @@
 import compose from 'composable-middleware'
 import addRequestId from 'express-request-id'
 import bodyParser from 'body-parser'
-import config from '../config'
 import HTTP from '../contexts/http'
 import { HTTPRequest, HTTPResponse } from '../events'
 import log from '../log'
@@ -16,11 +15,11 @@ import log from '../log'
  * - `bodyParser` allows parsing of JSON encoded request bodies
  * - `expressMiddleware` automatically logs http events to timber
  *
- * @param {object} req - the request object
- * @param {object} res - the response object
- * @param {function} next - the next middleware to run
+ * @param {object} [options] - configuration options
+ * @param {boolean} [options.capture_request_body] - whether the http request body data will be captured (off by default)
+ * @param {boolean} [options.combine_http_events] - If true, HTTPRequest and HTTPResponse events will be combined in a single log message (off by defaut)
 */
-const expressMiddleware = compose(
+const expressMiddleware = ({ ...options }) => compose(
   addRequestId(),
   bodyParser.json(),
   (req, res, next) => {
@@ -45,7 +44,7 @@ const expressMiddleware = compose(
 
     // send the request body if the capture_request_body flag is true (off by default)
     // and the request body is not empty
-    let body = config.capture_request_body && Object.keys(reqBody).length > 0
+    let body = options.capture_request_body && Object.keys(reqBody).length > 0
       ? JSON.stringify(reqBody)
       : undefined
 
@@ -94,7 +93,7 @@ const expressMiddleware = compose(
       const time_ms = new Date().getTime() - req.start_time
 
       // send the response body if the capture_response_body flag is true (off by default)
-      body = config.capture_response_body ? JSON.stringify(resBody) : undefined
+      body = options.capture_response_body ? JSON.stringify(resBody) : undefined
 
       const http_response = new HTTPResponse({
         direction: 'outgoing',
@@ -105,14 +104,14 @@ const expressMiddleware = compose(
       })
 
       // If we're combining http events, append the request event
-      if (config.combine_http_events) {
+      if (options.combine_http_events) {
         http_response.request = http_request
       }
 
       // add the http_response event to the metadata object
       metadata.event = { http_response }
 
-      const message = config.combine_http_events
+      const message = options.combine_http_events
         ? `${method} ${host}${path} - ${status} in ${time_ms}ms`
         : http_response.message()
 
@@ -121,7 +120,7 @@ const expressMiddleware = compose(
     }
 
     // If we're not combining http events, log the http request
-    if (!config.combine_http_events) {
+    if (!options.combine_http_events) {
       log('info', http_request.message(), metadata)
     }
     next()
