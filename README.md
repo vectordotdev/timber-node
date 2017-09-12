@@ -129,7 +129,7 @@ timber.install(transport);
 const app = express()
 
 // attach the timber middleware
-app.use(timber.middlewares.express)
+app.use(timber.middlewares.express())
 
 app.get('/', function (req, res) {
   res.send('hello, world!')
@@ -139,6 +139,8 @@ app.get('/', function (req, res) {
 // => Started GET "/" @metadata {"level": "error", "context": {...}}
 // => Outgoing HTTP response 200 in 2ms @metadata {"level": "error", "context": {...}}
 ```
+
+The express middleware accepts a single argument for configuration options. To learn more about the available options, [visit the express integration docs](https://timber.io/docs/languages/node/integrations/express#configuration)
 
 ---
 
