@@ -41,12 +41,13 @@
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">events</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/custom.js~Custom.html">Custom</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_request.js~HTTPRequest.html">HTTPRequest</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_response.js~HTTPResponse.html">HTTPResponse</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-expressMiddleware">expressMiddleware</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">formatters</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-WinstonFormatter">WinstonFormatter</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-expressMiddleware">expressMiddleware</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">transports</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/bunyan.js~BunyanTransport.html">BunyanTransport</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html">HTTPS</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/winston.js~WinstonTransport.html">WinstonTransport</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/augment.js~Augment.html">Augment</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-attach">attach</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-stripMetadata">stripMetadata</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -56,10 +57,10 @@
 import compose from &apos;composable-middleware&apos;
 import addRequestId from &apos;express-request-id&apos;
 import bodyParser from &apos;body-parser&apos;
-import config from &apos;../config&apos;
 import HTTP from &apos;../contexts/http&apos;
 import { HTTPRequest, HTTPResponse } from &apos;../events&apos;
 import log from &apos;../log&apos;
+import config from &apos;../config&apos;
 
 /**
  * The express middleware takes care of automatically logging
@@ -70,110 +71,124 @@ import log from &apos;../log&apos;
  * - `bodyParser` allows parsing of JSON encoded request bodies
  * - `expressMiddleware` automatically logs http events to timber
  *
- * @param {object} req - the request object
- * @param {object} res - the response object
- * @param {function} next - the next middleware to run
+ * @param {object} [options] - An object with configuration options
+ * @param {object} [options.logger] - A custom logger to log http events to (usually either: console, winston, or bunyan)
+ * @param {boolean} [options.capture_request_body] - Whether the http request body data will be captured (off by default)
+ * @param {boolean} [options.combine_http_events] - If true, HTTPRequest and HTTPResponse events will be combined in a single log message (off by defaut)
 */
-const expressMiddleware = compose(
-  addRequestId(),
-  bodyParser.json(),
-  (req, res, next) =&gt; {
-    // save a reference of the start time so that we can determine
-    // the amount of time each http request takes
-    req.start_time = new Date().getTime()
+const expressMiddleware = ({ ...options }) =&gt; {
+  // If a custom logger was provided, use it to log http events
+  if (options.logger) {
+    config.logger = options.logger
+  }
+  return compose(
+    addRequestId(),
+    bodyParser.json(),
+    (req, res, next) =&gt; {
+      // save a reference of the start time so that we can determine
+      // the amount of time each http request takes
+      req.start_time = new Date().getTime()
 
-    // destructure the request object for ease of use
-    const {
-      headers: { host, ...headers },
-      method,
-      id: request_id,
-      path,
-      protocol: scheme,
-      body: reqBody,
-      connection,
-    } = req
+      // destructure the request object for ease of use
+      const {
+        headers: { host, ...headers },
+        method,
+        id: request_id,
+        path,
+        protocol: scheme,
+        body: reqBody,
+        connection,
+      } = req
 
-    // determine the ip address of the client
-    // https://stackoverflow.com/a/10849772
-    const remote_addr = headers[&apos;x-forwarded-for&apos;] || connection.remoteAddress
+      // determine the ip address of the client
+      // https://stackoverflow.com/a/10849772
+      const remote_addr = headers[&apos;x-forwarded-for&apos;] || connection.remoteAddress
 
-    // send the request body if the capture_request_body flag is true (off by default)
-    // and the request body is not empty
-    let body = config.capture_request_body &amp;&amp; Object.keys(reqBody).length &gt; 0
-      ? JSON.stringify(reqBody)
-      : undefined
+      // send the request body if the capture_request_body flag is true (off by default)
+      // and the request body is not empty
+      let body = options.capture_request_body &amp;&amp; Object.keys(reqBody).length &gt; 0
+        ? JSON.stringify(reqBody)
+        : undefined
 
-    // create the HTTP context item
-    const http = new HTTP({
-      method,
-      path,
-      request_id,
-      remote_addr,
-    })
-
-    // add the http context information to the metadata object
-    const metadata = {
-      context: {
-        http,
-      },
-    }
-
-    const http_request = new HTTPRequest({
-      direction: &apos;incoming&apos;,
-      body,
-      host,
-      path,
-      request_id,
-      scheme,
-      method,
-    })
-
-    // add the http_request event to the metadata object
-    metadata.event = { http_request }
-
-    // add an event to get  triggered when the request finishes
-    // this event will send the http_client_response event to timber
-    req.on(&apos;end&apos;, () =&gt; {
-      // destructure the response object for ease of use
-      const { body: resBody, statusCode: status } = res
-
-      // calculate the duration of the http request
-      const time_ms = new Date().getTime() - req.start_time
-
-      // send the response body if the capture_response_body flag is true (off by default)
-      body = config.capture_response_body ? JSON.stringify(resBody) : undefined
-
-      const http_response = new HTTPResponse({
-        direction: &apos;outgoing&apos;,
+      // create the HTTP context item
+      const http = new HTTP({
+        method,
+        path,
         request_id,
-        time_ms,
-        status,
-        body,
+        remote_addr,
       })
 
-      // If we&apos;re combining http events, append the request event
-      if (config.combine_http_events) {
-        http_response.request = http_request
+      // add the http context information to the metadata object
+      const metadata = {
+        context: {
+          http,
+        },
       }
 
-      // add the http_response event to the metadata object
-      metadata.event = { http_response }
+      const http_request = new HTTPRequest({
+        direction: &apos;incoming&apos;,
+        body,
+        host,
+        path,
+        request_id,
+        scheme,
+        method,
+      })
 
-      const message = config.combine_http_events
-        ? `${method} ${host}${path} - ${status} in ${time_ms}ms`
-        : http_response.message()
+      // add the http_request event to the metadata object
+      metadata.event = { http_request }
 
-      // log the http response with metadata
-      log(&apos;info&apos;, message, metadata)
-    })
 
-    // If we&apos;re not combining http events, log the http request
-    if (!config.combine_http_events) {
-      log(&apos;info&apos;, http_request.message(), metadata)
+      // Override the response end event
+      // This event will send the http_client_response event to timber
+      // If combine_http_events is true, this will be the only log generated
+      const end = res.end
+      res.end = (chunk, encoding) =&gt; {
+        // Emit the original res.end event
+        res.end = end
+        res.end(chunk, encoding)
+
+        // destructure the response object for ease of use
+        const { body: resBody, statusCode: status } = res
+
+        // calculate the duration of the http request
+        const time_ms = new Date().getTime() - req.start_time
+
+        // send the response body if the capture_response_body flag is true (off by default)
+        body = options.capture_response_body ? JSON.stringify(resBody) : undefined
+
+        const http_response = new HTTPResponse({
+          direction: &apos;outgoing&apos;,
+          request_id,
+          time_ms,
+          status,
+          body,
+        })
+
+        // If we&apos;re combining http events, append the request event
+        if (options.combine_http_events) {
+          http_response.request = http_request
+        }
+
+        // add the http_response event to the metadata object
+        metadata.event = { http_response }
+
+        const message = options.combine_http_events
+          ? `${method} ${host}${path} - ${status} in ${time_ms}ms`
+          : http_response.message()
+
+        // log the http response with metadata
+        log(&apos;info&apos;, message, metadata)
+      }
+
+      // If we&apos;re not combining http events, log the http request
+      if (!options.combine_http_events) {
+        log(&apos;info&apos;, http_request.message(), metadata)
+      }
+      next()
     }
-    next()
-  }
-)
+  )
+}
 
 export default expressMiddleware
 </code></pre>

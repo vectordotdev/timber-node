@@ -41,12 +41,13 @@
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">events</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/custom.js~Custom.html">Custom</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_request.js~HTTPRequest.html">HTTPRequest</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_response.js~HTTPResponse.html">HTTPResponse</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-expressMiddleware">expressMiddleware</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">formatters</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-WinstonFormatter">WinstonFormatter</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-expressMiddleware">expressMiddleware</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">transports</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/bunyan.js~BunyanTransport.html">BunyanTransport</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html">HTTPS</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/winston.js~WinstonTransport.html">WinstonTransport</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/augment.js~Augment.html">Augment</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-attach">attach</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-stripMetadata">stripMetadata</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -94,8 +95,6 @@ const userConfig = finder(projectPath).next().value.timber
  * @param {boolean} append_metadata - append @metadata { ... } to all logs (on by default)
  * @param {Writable} debug_logger - a writeable stream for internal debug messages to be sent to (disabled when undefined)
  * @param {boolean} timestamp_prefix - When `true`, log output should be prefixed with a timestamp in ISO 8601 format (off by default)
- * @param {boolean} capture_request_body - whether the http request body data will be captured (off by default)
- * @param {boolean} combine_http_events - If true, HTTPRequest and HTTPResponse events will be combined in a single log message (off by defaut)
  */
 const config = {
   logger: console,
@@ -103,8 +102,6 @@ const config = {
   append_metadata: true,
   debug_logger: undefined,
   timestamp_prefix: false,
-  capture_request_body: false,
-  combine_http_events: false,
   ...userConfig,
 }
 

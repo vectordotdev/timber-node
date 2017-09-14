@@ -1,7 +1,7 @@
 {
-  "coverage": "39.7%",
-  "expectCount": 68,
-  "actualCount": 27,
+  "coverage": "37.5%",
+  "expectCount": 64,
+  "actualCount": 24,
   "files": {
     "src/utils/augment.js": {
       "expectCount": 7,
@@ -91,13 +91,11 @@
         44
       ]
     },
-    "src/transports/winston.js": {
-      "expectCount": 6,
-      "actualCount": 3,
+    "src/formatters/winston.js": {
+      "expectCount": 1,
+      "actualCount": 0,
       "undocumentLines": [
-        23,
-        22,
-        26
+        6
       ]
     },
     "src/utils/attach.js": {
@@ -125,6 +123,13 @@
       "actualCount": 0,
       "undocumentLines": [
         30
+      ]
+    },
+    "src/utils/metadata.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        1
       ]
     }
   }

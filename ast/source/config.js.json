@@ -1,28 +1,28 @@
 {
   "type": "File",
   "start": 0,
-  "end": 2083,
+  "end": 1766,
   "loc": {
     "start": {
       "line": 1,
       "column": 0
     },
     "end": {
-      "line": 58,
+      "line": 54,
       "column": 0
     }
   },
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 2083,
+    "end": 1766,
     "loc": {
       "start": {
         "line": 1,
         "column": 0
       },
       "end": {
-        "line": 58,
+        "line": 54,
         "column": 0
       }
     },
@@ -758,16 +758,16 @@
         "trailingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *   \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n *\n * @param {String} metadata_delimiter - delimiter between log message and log data (@metadata by default)\n * @param {boolean} append_metadata - append @metadata { ... } to all logs (on by default)\n * @param {Writable} debug_logger - a writeable stream for internal debug messages to be sent to (disabled when undefined)\n * @param {boolean} timestamp_prefix - When `true`, log output should be prefixed with a timestamp in ISO 8601 format (off by default)\n * @param {boolean} capture_request_body - whether the http request body data will be captured (off by default)\n * @param {boolean} combine_http_events - If true, HTTPRequest and HTTPResponse events will be combined in a single log message (off by defaut)\n ",
+            "value": "*\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *   \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n *\n * @param {String} metadata_delimiter - delimiter between log message and log data (@metadata by default)\n * @param {boolean} append_metadata - append @metadata { ... } to all logs (on by default)\n * @param {Writable} debug_logger - a writeable stream for internal debug messages to be sent to (disabled when undefined)\n * @param {boolean} timestamp_prefix - When `true`, log output should be prefixed with a timestamp in ISO 8601 format (off by default)\n ",
             "start": 237,
-            "end": 1829,
+            "end": 1573,
             "loc": {
               "start": {
                 "line": 8,
                 "column": 0
               },
               "end": {
-                "line": 45,
+                "line": 43,
                 "column": 3
               }
             }
@@ -776,44 +776,44 @@
       },
       {
         "type": "Identifier",
-        "start": 1830,
-        "end": 2059,
+        "start": 1574,
+        "end": 1742,
         "loc": {
           "start": {
-            "line": 46,
+            "line": 44,
             "column": 0
           },
           "end": {
-            "line": 55,
+            "line": 51,
             "column": 1
           }
         },
         "declarations": [
           {
             "type": "VariableDeclarator",
-            "start": 1836,
-            "end": 2059,
+            "start": 1580,
+            "end": 1742,
             "loc": {
               "start": {
-                "line": 46,
+                "line": 44,
                 "column": 6
               },
               "end": {
-                "line": 55,
+                "line": 51,
                 "column": 1
               }
             },
             "id": {
               "type": "Identifier",
-              "start": 1836,
-              "end": 1842,
+              "start": 1580,
+              "end": 1586,
               "loc": {
                 "start": {
-                  "line": 46,
+                  "line": 44,
                   "column": 6
                 },
                 "end": {
-                  "line": 46,
+                  "line": 44,
                   "column": 12
                 },
                 "identifierName": "config"
@@ -823,30 +823,30 @@
             },
             "init": {
               "type": "ObjectExpression",
-              "start": 1845,
-              "end": 2059,
+              "start": 1589,
+              "end": 1742,
               "loc": {
                 "start": {
-                  "line": 46,
+                  "line": 44,
                   "column": 15
                 },
                 "end": {
-                  "line": 55,
+                  "line": 51,
                   "column": 1
                 }
               },
               "properties": [
                 {
                   "type": "ObjectProperty",
-                  "start": 1849,
-                  "end": 1864,
+                  "start": 1593,
+                  "end": 1608,
                   "loc": {
                     "start": {
-                      "line": 47,
+                      "line": 45,
                       "column": 2
                     },
                     "end": {
-                      "line": 47,
+                      "line": 45,
                       "column": 17
                     }
                   },
@@ -855,15 +855,15 @@
                   "computed": false,
                   "key": {
                     "type": "Identifier",
-                    "start": 1849,
-                    "end": 1855,
+                    "start": 1593,
+                    "end": 1599,
                     "loc": {
                       "start": {
-                        "line": 47,
+                        "line": 45,
                         "column": 2
                       },
                       "end": {
-                        "line": 47,
+                        "line": 45,
                         "column": 8
                       },
                       "identifierName": "logger"
@@ -872,15 +872,15 @@
                   },
                   "value": {
                     "type": "Identifier",
-                    "start": 1857,
-                    "end": 1864,
+                    "start": 1601,
+                    "end": 1608,
                     "loc": {
                       "start": {
-                        "line": 47,
+                        "line": 45,
                         "column": 10
                       },
                       "end": {
-                        "line": 47,
+                        "line": 45,
                         "column": 17
                       },
                       "identifierName": "console"
@@ -890,15 +890,15 @@
                 },
                 {
                   "type": "ObjectProperty",
-                  "start": 1868,
-                  "end": 1899,
+                  "start": 1612,
+                  "end": 1643,
                   "loc": {
                     "start": {
-                      "line": 48,
+                      "line": 46,
                       "column": 2
                     },
                     "end": {
-                      "line": 48,
+                      "line": 46,
                       "column": 33
                     }
                   },
@@ -907,15 +907,15 @@
                   "computed": false,
                   "key": {
                     "type": "Identifier",
-                    "start": 1868,
-                    "end": 1886,
+                    "start": 1612,
+                    "end": 1630,
                     "loc": {
                       "start": {
-                        "line": 48,
+                        "line": 46,
                         "column": 2
                       },
                       "end": {
-                        "line": 48,
+                        "line": 46,
                         "column": 20
                       },
                       "identifierName": "metadata_delimiter"
@@ -924,15 +924,15 @@
                   },
                   "value": {
                     "type": "StringLiteral",
-                    "start": 1888,
-                    "end": 1899,
+                    "start": 1632,
+                    "end": 1643,
                     "loc": {
                       "start": {
-                        "line": 48,
+                        "line": 46,
                         "column": 22
                       },
                       "end": {
-                        "line": 48,
+                        "line": 46,
                         "column": 33
                       }
                     },
@@ -945,15 +945,15 @@
                 },
                 {
                   "type": "ObjectProperty",
-                  "start": 1903,
-                  "end": 1924,
+                  "start": 1647,
+                  "end": 1668,
                   "loc": {
                     "start": {
-                      "line": 49,
+                      "line": 47,
                       "column": 2
                     },
                     "end": {
-                      "line": 49,
+                      "line": 47,
                       "column": 23
                     }
                   },
@@ -962,15 +962,15 @@
                   "computed": false,
                   "key": {
                     "type": "Identifier",
-                    "start": 1903,
-                    "end": 1918,
+                    "start": 1647,
+                    "end": 1662,
                     "loc": {
                       "start": {
-                        "line": 49,
+                        "line": 47,
                         "column": 2
                       },
                       "end": {
-                        "line": 49,
+                        "line": 47,
                         "column": 17
                       },
                       "identifierName": "append_metadata"
@@ -979,15 +979,15 @@
                   },
                   "value": {
                     "type": "BooleanLiteral",
-                    "start": 1920,
-                    "end": 1924,
+                    "start": 1664,
+                    "end": 1668,
                     "loc": {
                       "start": {
-                        "line": 49,
+                        "line": 47,
                         "column": 19
                       },
                       "end": {
-                        "line": 49,
+                        "line": 47,
                         "column": 23
                       }
                     },
@@ -996,15 +996,15 @@
                 },
                 {
                   "type": "ObjectProperty",
-                  "start": 1928,
-                  "end": 1951,
+                  "start": 1672,
+                  "end": 1695,
                   "loc": {
                     "start": {
-                      "line": 50,
+                      "line": 48,
                       "column": 2
                     },
                     "end": {
-                      "line": 50,
+                      "line": 48,
                       "column": 25
                     }
                   },
@@ -1013,15 +1013,15 @@
                   "computed": false,
                   "key": {
                     "type": "Identifier",
-                    "start": 1928,
-                    "end": 1940,
+                    "start": 1672,
+                    "end": 1684,
                     "loc": {
                       "start": {
-                        "line": 50,
+                        "line": 48,
                         "column": 2
                       },
                       "end": {
-                        "line": 50,
+                        "line": 48,
                         "column": 14
                       },
                       "identifierName": "debug_logger"
@@ -1030,15 +1030,15 @@
                   },
                   "value": {
                     "type": "Identifier",
-                    "start": 1942,
-                    "end": 1951,
+                    "start": 1686,
+                    "end": 1695,
                     "loc": {
                       "start": {
-                        "line": 50,
+                        "line": 48,
                         "column": 16
                       },
                       "end": {
-                        "line": 50,
+                        "line": 48,
                         "column": 25
                       },
                       "identifierName": "undefined"
@@ -1048,15 +1048,15 @@
                 },
                 {
                   "type": "ObjectProperty",
-                  "start": 1955,
-                  "end": 1978,
+                  "start": 1699,
+                  "end": 1722,
                   "loc": {
                     "start": {
-                      "line": 51,
+                      "line": 49,
                       "column": 2
                     },
                     "end": {
-                      "line": 51,
+                      "line": 49,
                       "column": 25
                     }
                   },
@@ -1065,15 +1065,15 @@
                   "computed": false,
                   "key": {
                     "type": "Identifier",
-                    "start": 1955,
-                    "end": 1971,
+                    "start": 1699,
+                    "end": 1715,
                     "loc": {
                       "start": {
-                        "line": 51,
+                        "line": 49,
                         "column": 2
                       },
                       "end": {
-                        "line": 51,
+                        "line": 49,
                         "column": 18
                       },
                       "identifierName": "timestamp_prefix"
@@ -1082,15 +1082,15 @@
                   },
                   "value": {
                     "type": "BooleanLiteral",
-                    "start": 1973,
-                    "end": 1978,
+                    "start": 1717,
+                    "end": 1722,
                     "loc": {
                       "start": {
-                        "line": 51,
+                        "line": 49,
                         "column": 20
                       },
                       "end": {
-                        "line": 51,
+                        "line": 49,
                         "column": 25
                       }
                     },
@@ -1098,132 +1098,30 @@
                   }
                 },
                 {
-                  "type": "ObjectProperty",
-                  "start": 1982,
-                  "end": 2009,
-                  "loc": {
-                    "start": {
-                      "line": 52,
-                      "column": 2
-                    },
-                    "end": {
-                      "line": 52,
-                      "column": 29
-                    }
-                  },
-                  "method": false,
-                  "shorthand": false,
-                  "computed": false,
-                  "key": {
-                    "type": "Identifier",
-                    "start": 1982,
-                    "end": 2002,
-                    "loc": {
-                      "start": {
-                        "line": 52,
-                        "column": 2
-                      },
-                      "end": {
-                        "line": 52,
-                        "column": 22
-                      },
-                      "identifierName": "capture_request_body"
-                    },
-                    "name": "capture_request_body"
-                  },
-                  "value": {
-                    "type": "BooleanLiteral",
-                    "start": 2004,
-                    "end": 2009,
-                    "loc": {
-                      "start": {
-                        "line": 52,
-                        "column": 24
-                      },
-                      "end": {
-                        "line": 52,
-                        "column": 29
-                      }
-                    },
-                    "value": false
-                  }
-                },
-                {
-                  "type": "ObjectProperty",
-                  "start": 2013,
-                  "end": 2039,
-                  "loc": {
-                    "start": {
-                      "line": 53,
-                      "column": 2
-                    },
-                    "end": {
-                      "line": 53,
-                      "column": 28
-                    }
-                  },
-                  "method": false,
-                  "shorthand": false,
-                  "computed": false,
-                  "key": {
-                    "type": "Identifier",
-                    "start": 2013,
-                    "end": 2032,
-                    "loc": {
-                      "start": {
-                        "line": 53,
-                        "column": 2
-                      },
-                      "end": {
-                        "line": 53,
-                        "column": 21
-                      },
-                      "identifierName": "combine_http_events"
-                    },
-                    "name": "combine_http_events"
-                  },
-                  "value": {
-                    "type": "BooleanLiteral",
-                    "start": 2034,
-                    "end": 2039,
-                    "loc": {
-                      "start": {
-                        "line": 53,
-                        "column": 23
-                      },
-                      "end": {
-                        "line": 53,
-                        "column": 28
-                      }
-                    },
-                    "value": false
-                  }
-                },
-                {
                   "type": "SpreadProperty",
-                  "start": 2043,
-                  "end": 2056,
+                  "start": 1726,
+                  "end": 1739,
                   "loc": {
                     "start": {
-                      "line": 54,
+                      "line": 50,
                       "column": 2
                     },
                     "end": {
-                      "line": 54,
+                      "line": 50,
                       "column": 15
                     }
                   },
                   "argument": {
                     "type": "Identifier",
-                    "start": 2046,
-                    "end": 2056,
+                    "start": 1729,
+                    "end": 1739,
                     "loc": {
                       "start": {
-                        "line": 54,
+                        "line": 50,
                         "column": 5
                       },
                       "end": {
-                        "line": 54,
+                        "line": 50,
                         "column": 15
                       },
                       "identifierName": "userConfig"
@@ -1243,29 +1141,29 @@
       },
       {
         "type": "Identifier",
-        "start": 2061,
-        "end": 2082,
+        "start": 1744,
+        "end": 1765,
         "loc": {
           "start": {
-            "line": 57,
+            "line": 53,
             "column": 0
           },
           "end": {
-            "line": 57,
+            "line": 53,
             "column": 21
           }
         },
         "declaration": {
           "type": "Identifier",
-          "start": 2076,
-          "end": 2082,
+          "start": 1759,
+          "end": 1765,
           "loc": {
             "start": {
-              "line": 57,
+              "line": 53,
               "column": 15
             },
             "end": {
-              "line": 57,
+              "line": 53,
               "column": 21
             },
             "identifierName": "config"
@@ -1278,58 +1176,58 @@
       },
       {
         "type": "ExportDefaultDeclaration",
-        "start": 2061,
-        "end": 2082,
+        "start": 1744,
+        "end": 1765,
         "loc": {
           "start": {
-            "line": 57,
+            "line": 53,
             "column": 0
           },
           "end": {
-            "line": 57,
+            "line": 53,
             "column": 21
           }
         },
         "declaration": {
           "type": "VariableDeclaration",
-          "start": 1830,
-          "end": 2059,
+          "start": 1574,
+          "end": 1742,
           "loc": {
             "start": {
-              "line": 46,
+              "line": 44,
               "column": 0
             },
             "end": {
-              "line": 55,
+              "line": 51,
               "column": 1
             }
           },
           "declarations": [
             {
               "type": "VariableDeclarator",
-              "start": 1836,
-              "end": 2059,
+              "start": 1580,
+              "end": 1742,
               "loc": {
                 "start": {
-                  "line": 46,
+                  "line": 44,
                   "column": 6
                 },
                 "end": {
-                  "line": 55,
+                  "line": 51,
                   "column": 1
                 }
               },
               "id": {
                 "type": "Identifier",
-                "start": 1836,
-                "end": 1842,
+                "start": 1580,
+                "end": 1586,
                 "loc": {
                   "start": {
-                    "line": 46,
+                    "line": 44,
                     "column": 6
                   },
                   "end": {
-                    "line": 46,
+                    "line": 44,
                     "column": 12
                   },
                   "identifierName": "config"
@@ -1339,30 +1237,30 @@
               },
               "init": {
                 "type": "ObjectExpression",
-                "start": 1845,
-                "end": 2059,
+                "start": 1589,
+                "end": 1742,
                 "loc": {
                   "start": {
-                    "line": 46,
+                    "line": 44,
                     "column": 15
                   },
                   "end": {
-                    "line": 55,
+                    "line": 51,
                     "column": 1
                   }
                 },
                 "properties": [
                   {
                     "type": "ObjectProperty",
-                    "start": 1849,
-                    "end": 1864,
+                    "start": 1593,
+                    "end": 1608,
                     "loc": {
                       "start": {
-                        "line": 47,
+                        "line": 45,
                         "column": 2
                       },
                       "end": {
-                        "line": 47,
+                        "line": 45,
                         "column": 17
                       }
                     },
@@ -1371,15 +1269,15 @@
                     "computed": false,
                     "key": {
                       "type": "Identifier",
-                      "start": 1849,
-                      "end": 1855,
+                      "start": 1593,
+                      "end": 1599,
                       "loc": {
                         "start": {
-                          "line": 47,
+                          "line": 45,
                           "column": 2
                         },
                         "end": {
-                          "line": 47,
+                          "line": 45,
                           "column": 8
                         },
                         "identifierName": "logger"
@@ -1388,15 +1286,15 @@
                     },
                     "value": {
                       "type": "Identifier",
-                      "start": 1857,
-                      "end": 1864,
+                      "start": 1601,
+                      "end": 1608,
                       "loc": {
                         "start": {
-                          "line": 47,
+                          "line": 45,
                           "column": 10
                         },
                         "end": {
-                          "line": 47,
+                          "line": 45,
                           "column": 17
                         },
                         "identifierName": "console"
@@ -1406,15 +1304,15 @@
                   },
                   {
                     "type": "ObjectProperty",
-                    "start": 1868,
-                    "end": 1899,
+                    "start": 1612,
+                    "end": 1643,
                     "loc": {
                       "start": {
-                        "line": 48,
+                        "line": 46,
                         "column": 2
                       },
                       "end": {
-                        "line": 48,
+                        "line": 46,
                         "column": 33
                       }
                     },
@@ -1423,15 +1321,15 @@
                     "computed": false,
                     "key": {
                       "type": "Identifier",
-                      "start": 1868,
-                      "end": 1886,
+                      "start": 1612,
+                      "end": 1630,
                       "loc": {
                         "start": {
-                          "line": 48,
+                          "line": 46,
                           "column": 2
                         },
                         "end": {
-                          "line": 48,
+                          "line": 46,
                           "column": 20
                         },
                         "identifierName": "metadata_delimiter"
@@ -1440,15 +1338,15 @@
                     },
                     "value": {
                       "type": "StringLiteral",
-                      "start": 1888,
-                      "end": 1899,
+                      "start": 1632,
+                      "end": 1643,
                       "loc": {
                         "start": {
-                          "line": 48,
+                          "line": 46,
                           "column": 22
                         },
                         "end": {
-                          "line": 48,
+                          "line": 46,
                           "column": 33
                         }
                       },
@@ -1461,15 +1359,15 @@
                   },
                   {
                     "type": "ObjectProperty",
-                    "start": 1903,
-                    "end": 1924,
+                    "start": 1647,
+                    "end": 1668,
                     "loc": {
                       "start": {
-                        "line": 49,
+                        "line": 47,
                         "column": 2
                       },
                       "end": {
-                        "line": 49,
+                        "line": 47,
                         "column": 23
                       }
                     },
@@ -1478,15 +1376,15 @@
                     "computed": false,
                     "key": {
                       "type": "Identifier",
-                      "start": 1903,
-                      "end": 1918,
+                      "start": 1647,
+                      "end": 1662,
                       "loc": {
                         "start": {
-                          "line": 49,
+                          "line": 47,
                           "column": 2
                         },
                         "end": {
-                          "line": 49,
+                          "line": 47,
                           "column": 17
                         },
                         "identifierName": "append_metadata"
@@ -1495,15 +1393,15 @@
                     },
                     "value": {
                       "type": "BooleanLiteral",
-                      "start": 1920,
-                      "end": 1924,
+                      "start": 1664,
+                      "end": 1668,
                       "loc": {
                         "start": {
-                          "line": 49,
+                          "line": 47,
                           "column": 19
                         },
                         "end": {
-                          "line": 49,
+                          "line": 47,
                           "column": 23
                         }
                       },
@@ -1512,15 +1410,15 @@
                   },
                   {
                     "type": "ObjectProperty",
-                    "start": 1928,
-                    "end": 1951,
+                    "start": 1672,
+                    "end": 1695,
                     "loc": {
                       "start": {
-                        "line": 50,
+                        "line": 48,
                         "column": 2
                       },
                       "end": {
-                        "line": 50,
+                        "line": 48,
                         "column": 25
                       }
                     },
@@ -1529,15 +1427,15 @@
                     "computed": false,
                     "key": {
                       "type": "Identifier",
-                      "start": 1928,
-                      "end": 1940,
+                      "start": 1672,
+                      "end": 1684,
                       "loc": {
                         "start": {
-                          "line": 50,
+                          "line": 48,
                           "column": 2
                         },
                         "end": {
-                          "line": 50,
+                          "line": 48,
                           "column": 14
                         },
                         "identifierName": "debug_logger"
@@ -1546,15 +1444,15 @@
                     },
                     "value": {
                       "type": "Identifier",
-                      "start": 1942,
-                      "end": 1951,
+                      "start": 1686,
+                      "end": 1695,
                       "loc": {
                         "start": {
-                          "line": 50,
+                          "line": 48,
                           "column": 16
                         },
                         "end": {
-                          "line": 50,
+                          "line": 48,
                           "column": 25
                         },
                         "identifierName": "undefined"
@@ -1564,15 +1462,15 @@
                   },
                   {
                     "type": "ObjectProperty",
-                    "start": 1955,
-                    "end": 1978,
+                    "start": 1699,
+                    "end": 1722,
                     "loc": {
                       "start": {
-                        "line": 51,
+                        "line": 49,
                         "column": 2
                       },
                       "end": {
-                        "line": 51,
+                        "line": 49,
                         "column": 25
                       }
                     },
@@ -1581,15 +1479,15 @@
                     "computed": false,
                     "key": {
                       "type": "Identifier",
-                      "start": 1955,
-                      "end": 1971,
+                      "start": 1699,
+                      "end": 1715,
                       "loc": {
                         "start": {
-                          "line": 51,
+                          "line": 49,
                           "column": 2
                         },
                         "end": {
-                          "line": 51,
+                          "line": 49,
                           "column": 18
                         },
                         "identifierName": "timestamp_prefix"
@@ -1598,15 +1496,15 @@
                     },
                     "value": {
                       "type": "BooleanLiteral",
-                      "start": 1973,
-                      "end": 1978,
+                      "start": 1717,
+                      "end": 1722,
                       "loc": {
                         "start": {
-                          "line": 51,
+                          "line": 49,
                           "column": 20
                         },
                         "end": {
-                          "line": 51,
+                          "line": 49,
                           "column": 25
                         }
                       },
@@ -1614,132 +1512,30 @@
                     }
                   },
                   {
-                    "type": "ObjectProperty",
-                    "start": 1982,
-                    "end": 2009,
-                    "loc": {
-                      "start": {
-                        "line": 52,
-                        "column": 2
-                      },
-                      "end": {
-                        "line": 52,
-                        "column": 29
-                      }
-                    },
-                    "method": false,
-                    "shorthand": false,
-                    "computed": false,
-                    "key": {
-                      "type": "Identifier",
-                      "start": 1982,
-                      "end": 2002,
-                      "loc": {
-                        "start": {
-                          "line": 52,
-                          "column": 2
-                        },
-                        "end": {
-                          "line": 52,
-                          "column": 22
-                        },
-                        "identifierName": "capture_request_body"
-                      },
-                      "name": "capture_request_body"
-                    },
-                    "value": {
-                      "type": "BooleanLiteral",
-                      "start": 2004,
-                      "end": 2009,
-                      "loc": {
-                        "start": {
-                          "line": 52,
-                          "column": 24
-                        },
-                        "end": {
-                          "line": 52,
-                          "column": 29
-                        }
-                      },
-                      "value": false
-                    }
-                  },
-                  {
-                    "type": "ObjectProperty",
-                    "start": 2013,
-                    "end": 2039,
-                    "loc": {
-                      "start": {
-                        "line": 53,
-                        "column": 2
-                      },
-                      "end": {
-                        "line": 53,
-                        "column": 28
-                      }
-                    },
-                    "method": false,
-                    "shorthand": false,
-                    "computed": false,
-                    "key": {
-                      "type": "Identifier",
-                      "start": 2013,
-                      "end": 2032,
-                      "loc": {
-                        "start": {
-                          "line": 53,
-                          "column": 2
-                        },
-                        "end": {
-                          "line": 53,
-                          "column": 21
-                        },
-                        "identifierName": "combine_http_events"
-                      },
-                      "name": "combine_http_events"
-                    },
-                    "value": {
-                      "type": "BooleanLiteral",
-                      "start": 2034,
-                      "end": 2039,
-                      "loc": {
-                        "start": {
-                          "line": 53,
-                          "column": 23
-                        },
-                        "end": {
-                          "line": 53,
-                          "column": 28
-                        }
-                      },
-                      "value": false
-                    }
-                  },
-                  {
                     "type": "SpreadProperty",
-                    "start": 2043,
-                    "end": 2056,
+                    "start": 1726,
+                    "end": 1739,
                     "loc": {
                       "start": {
-                        "line": 54,
+                        "line": 50,
                         "column": 2
                       },
                       "end": {
-                        "line": 54,
+                        "line": 50,
                         "column": 15
                       }
                     },
                     "argument": {
                       "type": "Identifier",
-                      "start": 2046,
-                      "end": 2056,
+                      "start": 1729,
+                      "end": 1739,
                       "loc": {
                         "start": {
-                          "line": 54,
+                          "line": 50,
                           "column": 5
                         },
                         "end": {
-                          "line": 54,
+                          "line": 50,
                           "column": 15
                         },
                         "identifierName": "userConfig"
@@ -1756,16 +1552,16 @@
           "leadingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *   \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n *\n * @param {String} metadata_delimiter - delimiter between log message and log data (@metadata by default)\n * @param {boolean} append_metadata - append @metadata { ... } to all logs (on by default)\n * @param {Writable} debug_logger - a writeable stream for internal debug messages to be sent to (disabled when undefined)\n * @param {boolean} timestamp_prefix - When `true`, log output should be prefixed with a timestamp in ISO 8601 format (off by default)\n * @param {boolean} capture_request_body - whether the http request body data will be captured (off by default)\n * @param {boolean} combine_http_events - If true, HTTPRequest and HTTPResponse events will be combined in a single log message (off by defaut)\n ",
+              "value": "*\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *   \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n *\n * @param {String} metadata_delimiter - delimiter between log message and log data (@metadata by default)\n * @param {boolean} append_metadata - append @metadata { ... } to all logs (on by default)\n * @param {Writable} debug_logger - a writeable stream for internal debug messages to be sent to (disabled when undefined)\n * @param {boolean} timestamp_prefix - When `true`, log output should be prefixed with a timestamp in ISO 8601 format (off by default)\n ",
               "start": 237,
-              "end": 1829,
+              "end": 1573,
               "loc": {
                 "start": {
                   "line": 8,
                   "column": 0
                 },
                 "end": {
-                  "line": 45,
+                  "line": 43,
                   "column": 3
                 }
               }
@@ -1780,16 +1576,16 @@
   "comments": [
     {
       "type": "CommentBlock",
-      "value": "*\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *   \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n *\n * @param {String} metadata_delimiter - delimiter between log message and log data (@metadata by default)\n * @param {boolean} append_metadata - append @metadata { ... } to all logs (on by default)\n * @param {Writable} debug_logger - a writeable stream for internal debug messages to be sent to (disabled when undefined)\n * @param {boolean} timestamp_prefix - When `true`, log output should be prefixed with a timestamp in ISO 8601 format (off by default)\n * @param {boolean} capture_request_body - whether the http request body data will be captured (off by default)\n * @param {boolean} combine_http_events - If true, HTTPRequest and HTTPResponse events will be combined in a single log message (off by defaut)\n ",
+      "value": "*\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *   \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n *\n * @param {String} metadata_delimiter - delimiter between log message and log data (@metadata by default)\n * @param {boolean} append_metadata - append @metadata { ... } to all logs (on by default)\n * @param {Writable} debug_logger - a writeable stream for internal debug messages to be sent to (disabled when undefined)\n * @param {boolean} timestamp_prefix - When `true`, log output should be prefixed with a timestamp in ISO 8601 format (off by default)\n ",
       "start": 237,
-      "end": 1829,
+      "end": 1573,
       "loc": {
         "start": {
           "line": 8,
           "column": 0
         },
         "end": {
-          "line": 45,
+          "line": 43,
           "column": 3
         }
       }
@@ -3055,16 +2851,16 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *   \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n *\n * @param {String} metadata_delimiter - delimiter between log message and log data (@metadata by default)\n * @param {boolean} append_metadata - append @metadata { ... } to all logs (on by default)\n * @param {Writable} debug_logger - a writeable stream for internal debug messages to be sent to (disabled when undefined)\n * @param {boolean} timestamp_prefix - When `true`, log output should be prefixed with a timestamp in ISO 8601 format (off by default)\n * @param {boolean} capture_request_body - whether the http request body data will be captured (off by default)\n * @param {boolean} combine_http_events - If true, HTTPRequest and HTTPResponse events will be combined in a single log message (off by defaut)\n ",
+      "value": "*\n * The configuration options here are use throughout the timber library.\n * Any of the values can be changed in two different ways:\n *\n * ## Using your package.json\n *\n * To configure timber from your `package.json`, simply add a `timber`\n * object at the root level containing your desired overrides:\n *\n * ```json\n * \"timber\": {\n *   \"capture_request_body\": true,\n *   \"capture_response_body\": true\n * },\n * ```\n *\n * __Note:__ you cannot set the `debug_logger` option from the `package.json`.\n * This is because you must set it as a writeable stream.\n *\n * ## Using inline overrides\n *\n * You can also configure timber by overriding the config options inline:\n *\n * ```js\n * const timber = require('timber');\n * timber.config.debug_logger = process.stdout;\n * ```\n *\n * __Note:__ inline overrides will override any options you have set\n * in your `package.json` file.\n *\n * @param {String} metadata_delimiter - delimiter between log message and log data (@metadata by default)\n * @param {boolean} append_metadata - append @metadata { ... } to all logs (on by default)\n * @param {Writable} debug_logger - a writeable stream for internal debug messages to be sent to (disabled when undefined)\n * @param {boolean} timestamp_prefix - When `true`, log output should be prefixed with a timestamp in ISO 8601 format (off by default)\n ",
       "start": 237,
-      "end": 1829,
+      "end": 1573,
       "loc": {
         "start": {
           "line": 8,
           "column": 0
         },
         "end": {
-          "line": 45,
+          "line": 43,
           "column": 3
         }
       }
@@ -3084,15 +2880,15 @@
         "updateContext": null
       },
       "value": "const",
-      "start": 1830,
-      "end": 1835,
+      "start": 1574,
+      "end": 1579,
       "loc": {
         "start": {
-          "line": 46,
+          "line": 44,
           "column": 0
         },
         "end": {
-          "line": 46,
+          "line": 44,
           "column": 5
         }
       }
@@ -3110,15 +2906,15 @@
         "binop": null
       },
       "value": "config",
-      "start": 1836,
-      "end": 1842,
+      "start": 1580,
+      "end": 1586,
       "loc": {
         "start": {
-          "line": 46,
+          "line": 44,
           "column": 6
         },
         "end": {
-          "line": 46,
+          "line": 44,
           "column": 12
         }
       }
@@ -3137,15 +2933,15 @@
         "updateContext": null
       },
       "value": "=",
-      "start": 1843,
-      "end": 1844,
+      "start": 1587,
+      "end": 1588,
       "loc": {
         "start": {
-          "line": 46,
+          "line": 44,
           "column": 13
         },
         "end": {
-          "line": 46,
+          "line": 44,
           "column": 14
         }
       }
@@ -3162,15 +2958,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1845,
-      "end": 1846,
+      "start": 1589,
+      "end": 1590,
       "loc": {
         "start": {
-          "line": 46,
+          "line": 44,
           "column": 15
         },
         "end": {
-          "line": 46,
+          "line": 44,
           "column": 16
         }
       }
@@ -3188,15 +2984,15 @@
         "binop": null
       },
       "value": "logger",
-      "start": 1849,
-      "end": 1855,
+      "start": 1593,
+      "end": 1599,
       "loc": {
         "start": {
-          "line": 47,
+          "line": 45,
           "column": 2
         },
         "end": {
-          "line": 47,
+          "line": 45,
           "column": 8
         }
       }
@@ -3214,15 +3010,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1855,
-      "end": 1856,
+      "start": 1599,
+      "end": 1600,
       "loc": {
         "start": {
-          "line": 47,
+          "line": 45,
           "column": 8
         },
         "end": {
-          "line": 47,
+          "line": 45,
           "column": 9
         }
       }
@@ -3240,15 +3036,15 @@
         "binop": null
       },
       "value": "console",
-      "start": 1857,
-      "end": 1864,
+      "start": 1601,
+      "end": 1608,
       "loc": {
         "start": {
-          "line": 47,
+          "line": 45,
           "column": 10
         },
         "end": {
-          "line": 47,
+          "line": 45,
           "column": 17
         }
       }
@@ -3266,15 +3062,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1864,
-      "end": 1865,
+      "start": 1608,
+      "end": 1609,
       "loc": {
         "start": {
-          "line": 47,
+          "line": 45,
           "column": 17
         },
         "end": {
-          "line": 47,
+          "line": 45,
           "column": 18
         }
       }
@@ -3292,15 +3088,15 @@
         "binop": null
       },
       "value": "metadata_delimiter",
-      "start": 1868,
-      "end": 1886,
+      "start": 1612,
+      "end": 1630,
       "loc": {
         "start": {
-          "line": 48,
+          "line": 46,
           "column": 2
         },
         "end": {
-          "line": 48,
+          "line": 46,
           "column": 20
         }
       }
@@ -3318,15 +3114,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1886,
-      "end": 1887,
+      "start": 1630,
+      "end": 1631,
       "loc": {
         "start": {
-          "line": 48,
+          "line": 46,
           "column": 20
         },
         "end": {
-          "line": 48,
+          "line": 46,
           "column": 21
         }
       }
@@ -3345,15 +3141,15 @@
         "updateContext": null
       },
       "value": "@metadata",
-      "start": 1888,
-      "end": 1899,
+      "start": 1632,
+      "end": 1643,
       "loc": {
         "start": {
-          "line": 48,
+          "line": 46,
           "column": 22
         },
         "end": {
-          "line": 48,
+          "line": 46,
           "column": 33
         }
       }
@@ -3371,15 +3167,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1899,
-      "end": 1900,
+      "start": 1643,
+      "end": 1644,
       "loc": {
         "start": {
-          "line": 48,
+          "line": 46,
           "column": 33
         },
         "end": {
-          "line": 48,
+          "line": 46,
           "column": 34
         }
       }
@@ -3397,15 +3193,15 @@
         "binop": null
       },
       "value": "append_metadata",
-      "start": 1903,
-      "end": 1918,
+      "start": 1647,
+      "end": 1662,
       "loc": {
         "start": {
-          "line": 49,
+          "line": 47,
           "column": 2
         },
         "end": {
-          "line": 49,
+          "line": 47,
           "column": 17
         }
       }
@@ -3423,15 +3219,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1918,
-      "end": 1919,
+      "start": 1662,
+      "end": 1663,
       "loc": {
         "start": {
-          "line": 49,
+          "line": 47,
           "column": 17
         },
         "end": {
-          "line": 49,
+          "line": 47,
           "column": 18
         }
       }
@@ -3451,15 +3247,15 @@
         "updateContext": null
       },
       "value": "true",
-      "start": 1920,
-      "end": 1924,
+      "start": 1664,
+      "end": 1668,
       "loc": {
         "start": {
-          "line": 49,
+          "line": 47,
           "column": 19
         },
         "end": {
-          "line": 49,
+          "line": 47,
           "column": 23
         }
       }
@@ -3477,15 +3273,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1924,
-      "end": 1925,
+      "start": 1668,
+      "end": 1669,
       "loc": {
         "start": {
-          "line": 49,
+          "line": 47,
           "column": 23
         },
         "end": {
-          "line": 49,
+          "line": 47,
           "column": 24
         }
       }
@@ -3503,15 +3299,15 @@
         "binop": null
       },
       "value": "debug_logger",
-      "start": 1928,
-      "end": 1940,
+      "start": 1672,
+      "end": 1684,
       "loc": {
         "start": {
-          "line": 50,
+          "line": 48,
           "column": 2
         },
         "end": {
-          "line": 50,
+          "line": 48,
           "column": 14
         }
       }
@@ -3529,15 +3325,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1940,
-      "end": 1941,
+      "start": 1684,
+      "end": 1685,
       "loc": {
         "start": {
-          "line": 50,
+          "line": 48,
           "column": 14
         },
         "end": {
-          "line": 50,
+          "line": 48,
           "column": 15
         }
       }
@@ -3555,15 +3351,15 @@
         "binop": null
       },
       "value": "undefined",
-      "start": 1942,
-      "end": 1951,
+      "start": 1686,
+      "end": 1695,
       "loc": {
         "start": {
-          "line": 50,
+          "line": 48,
           "column": 16
         },
         "end": {
-          "line": 50,
+          "line": 48,
           "column": 25
         }
       }
@@ -3581,15 +3377,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1951,
-      "end": 1952,
+      "start": 1695,
+      "end": 1696,
       "loc": {
         "start": {
-          "line": 50,
+          "line": 48,
           "column": 25
         },
         "end": {
-          "line": 50,
+          "line": 48,
           "column": 26
         }
       }
@@ -3607,15 +3403,15 @@
         "binop": null
       },
       "value": "timestamp_prefix",
-      "start": 1955,
-      "end": 1971,
+      "start": 1699,
+      "end": 1715,
       "loc": {
         "start": {
-          "line": 51,
+          "line": 49,
           "column": 2
         },
         "end": {
-          "line": 51,
+          "line": 49,
           "column": 18
         }
       }
@@ -3633,15 +3429,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1971,
-      "end": 1972,
+      "start": 1715,
+      "end": 1716,
       "loc": {
         "start": {
-          "line": 51,
+          "line": 49,
           "column": 18
         },
         "end": {
-          "line": 51,
+          "line": 49,
           "column": 19
         }
       }
@@ -3661,15 +3457,15 @@
         "updateContext": null
       },
       "value": "false",
-      "start": 1973,
-      "end": 1978,
+      "start": 1717,
+      "end": 1722,
       "loc": {
         "start": {
-          "line": 51,
+          "line": 49,
           "column": 20
         },
         "end": {
-          "line": 51,
+          "line": 49,
           "column": 25
         }
       }
@@ -3687,228 +3483,16 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1978,
-      "end": 1979,
+      "start": 1722,
+      "end": 1723,
       "loc": {
         "start": {
-          "line": 51,
+          "line": 49,
           "column": 25
         },
         "end": {
-          "line": 51,
+          "line": 49,
           "column": 26
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "capture_request_body",
-      "start": 1982,
-      "end": 2002,
-      "loc": {
-        "start": {
-          "line": 52,
-          "column": 2
-        },
-        "end": {
-          "line": 52,
-          "column": 22
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ":",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "start": 2002,
-      "end": 2003,
-      "loc": {
-        "start": {
-          "line": 52,
-          "column": 22
-        },
-        "end": {
-          "line": 52,
-          "column": 23
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "false",
-        "keyword": "false",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "false",
-      "start": 2004,
-      "end": 2009,
-      "loc": {
-        "start": {
-          "line": 52,
-          "column": 24
-        },
-        "end": {
-          "line": 52,
-          "column": 29
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ",",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "start": 2009,
-      "end": 2010,
-      "loc": {
-        "start": {
-          "line": 52,
-          "column": 29
-        },
-        "end": {
-          "line": 52,
-          "column": 30
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "combine_http_events",
-      "start": 2013,
-      "end": 2032,
-      "loc": {
-        "start": {
-          "line": 53,
-          "column": 2
-        },
-        "end": {
-          "line": 53,
-          "column": 21
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ":",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "start": 2032,
-      "end": 2033,
-      "loc": {
-        "start": {
-          "line": 53,
-          "column": 21
-        },
-        "end": {
-          "line": 53,
-          "column": 22
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "false",
-        "keyword": "false",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "false",
-      "start": 2034,
-      "end": 2039,
-      "loc": {
-        "start": {
-          "line": 53,
-          "column": 23
-        },
-        "end": {
-          "line": 53,
-          "column": 28
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ",",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "start": 2039,
-      "end": 2040,
-      "loc": {
-        "start": {
-          "line": 53,
-          "column": 28
-        },
-        "end": {
-          "line": 53,
-          "column": 29
         }
       }
     },
@@ -3925,15 +3509,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2043,
-      "end": 2046,
+      "start": 1726,
+      "end": 1729,
       "loc": {
         "start": {
-          "line": 54,
+          "line": 50,
           "column": 2
         },
         "end": {
-          "line": 54,
+          "line": 50,
           "column": 5
         }
       }
@@ -3951,15 +3535,15 @@
         "binop": null
       },
       "value": "userConfig",
-      "start": 2046,
-      "end": 2056,
+      "start": 1729,
+      "end": 1739,
       "loc": {
         "start": {
-          "line": 54,
+          "line": 50,
           "column": 5
         },
         "end": {
-          "line": 54,
+          "line": 50,
           "column": 15
         }
       }
@@ -3977,15 +3561,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2056,
-      "end": 2057,
+      "start": 1739,
+      "end": 1740,
       "loc": {
         "start": {
-          "line": 54,
+          "line": 50,
           "column": 15
         },
         "end": {
-          "line": 54,
+          "line": 50,
           "column": 16
         }
       }
@@ -4002,15 +3586,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2058,
-      "end": 2059,
+      "start": 1741,
+      "end": 1742,
       "loc": {
         "start": {
-          "line": 55,
+          "line": 51,
           "column": 0
         },
         "end": {
-          "line": 55,
+          "line": 51,
           "column": 1
         }
       }
@@ -4030,15 +3614,15 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 2061,
-      "end": 2067,
+      "start": 1744,
+      "end": 1750,
       "loc": {
         "start": {
-          "line": 57,
+          "line": 53,
           "column": 0
         },
         "end": {
-          "line": 57,
+          "line": 53,
           "column": 6
         }
       }
@@ -4058,15 +3642,15 @@
         "updateContext": null
       },
       "value": "default",
-      "start": 2068,
-      "end": 2075,
+      "start": 1751,
+      "end": 1758,
       "loc": {
         "start": {
-          "line": 57,
+          "line": 53,
           "column": 7
         },
         "end": {
-          "line": 57,
+          "line": 53,
           "column": 14
         }
       }
@@ -4084,15 +3668,15 @@
         "binop": null
       },
       "value": "config",
-      "start": 2076,
-      "end": 2082,
+      "start": 1759,
+      "end": 1765,
       "loc": {
         "start": {
-          "line": 57,
+          "line": 53,
           "column": 15
         },
         "end": {
-          "line": 57,
+          "line": 53,
           "column": 21
         }
       }
@@ -4110,15 +3694,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2083,
-      "end": 2083,
+      "start": 1766,
+      "end": 1766,
       "loc": {
         "start": {
-          "line": 58,
+          "line": 54,
           "column": 0
         },
         "end": {
-          "line": 58,
+          "line": 54,
           "column": 0
         }
       }

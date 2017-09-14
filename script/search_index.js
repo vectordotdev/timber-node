@@ -54,10 +54,10 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "timber/src/transports/winston.js~winstontransport",
-    "class/src/transports/winston.js~WinstonTransport.html",
-    "<span>WinstonTransport</span> <span class=\"search-result-import-path\">timber/src/transports/winston.js</span>",
-    "class"
+    "timber/src/formatters/winston.js~winstonformatter",
+    "function/index.html#static-function-WinstonFormatter",
+    "<span>WinstonFormatter</span> <span class=\"search-result-import-path\">timber/src/formatters/winston.js</span>",
+    "function"
   ],
   [
     "timber/src/utils/attach.js~attach",
@@ -73,9 +73,9 @@ window.esdocSearchIndex = [
   ],
   [
     "timber/src/middlewares/express.js~expressmiddleware",
-    "variable/index.html#static-variable-expressMiddleware",
+    "function/index.html#static-function-expressMiddleware",
     "<span>expressMiddleware</span> <span class=\"search-result-import-path\">timber/src/middlewares/express.js</span>",
-    "variable"
+    "function"
   ],
   [
     "timber/src/install.js~install",
@@ -87,6 +87,12 @@ window.esdocSearchIndex = [
     "timber/src/log.js~log",
     "function/index.html#static-function-log",
     "<span>log</span> <span class=\"search-result-import-path\">timber/src/log.js</span>",
+    "function"
+  ],
+  [
+    "timber/src/utils/metadata.js~stripmetadata",
+    "function/index.html#static-function-stripMetadata",
+    "<span>stripMetadata</span> <span class=\"search-result-import-path\">timber/src/utils/metadata.js</span>",
     "function"
   ],
   [
@@ -660,6 +666,18 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/formatters/index.js",
+    "file/src/formatters/index.js.html",
+    "src/formatters/index.js",
+    "file"
+  ],
+  [
+    "src/formatters/winston.js",
+    "file/src/formatters/winston.js.html",
+    "src/formatters/winston.js",
+    "file"
+  ],
+  [
     "src/index.js",
     "file/src/index.js.html",
     "src/index.js",
@@ -798,42 +816,6 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/transports/winston.js",
-    "file/src/transports/winston.js.html",
-    "src/transports/winston.js",
-    "file"
-  ],
-  [
-    "src/transports/winston.js~winstontransport#constructor",
-    "class/src/transports/winston.js~WinstonTransport.html#instance-constructor-constructor",
-    "src/transports/winston.js~WinstonTransport#constructor",
-    "method"
-  ],
-  [
-    "src/transports/winston.js~winstontransport#level",
-    "class/src/transports/winston.js~WinstonTransport.html#instance-member-level",
-    "src/transports/winston.js~WinstonTransport#level",
-    "member"
-  ],
-  [
-    "src/transports/winston.js~winstontransport#log",
-    "class/src/transports/winston.js~WinstonTransport.html#instance-member-log",
-    "src/transports/winston.js~WinstonTransport#log",
-    "member"
-  ],
-  [
-    "src/transports/winston.js~winstontransport#name",
-    "class/src/transports/winston.js~WinstonTransport.html#instance-member-name",
-    "src/transports/winston.js~WinstonTransport#name",
-    "member"
-  ],
-  [
-    "src/transports/winston.js~winstontransport#stream",
-    "class/src/transports/winston.js~WinstonTransport.html#instance-member-stream",
-    "src/transports/winston.js~WinstonTransport#stream",
-    "member"
-  ],
-  [
     "src/utils/attach.js",
     "file/src/utils/attach.js.html",
     "src/utils/attach.js",
@@ -885,6 +867,12 @@ window.esdocSearchIndex = [
     "src/utils/debug.js",
     "file/src/utils/debug.js.html",
     "src/utils/debug.js",
+    "file"
+  ],
+  [
+    "src/utils/metadata.js",
+    "file/src/utils/metadata.js.html",
+    "src/utils/metadata.js",
     "file"
   ]
 ]

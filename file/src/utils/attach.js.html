@@ -41,12 +41,13 @@
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">events</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/custom.js~Custom.html">Custom</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_request.js~HTTPRequest.html">HTTPRequest</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/events/http_response.js~HTTPResponse.html">HTTPResponse</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-expressMiddleware">expressMiddleware</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">formatters</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-WinstonFormatter">WinstonFormatter</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">middlewares</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-expressMiddleware">expressMiddleware</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">transports</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/bunyan.js~BunyanTransport.html">BunyanTransport</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/https.js~HTTPS.html">HTTPS</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/transports/winston.js~WinstonTransport.html">WinstonTransport</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/augment.js~Augment.html">Augment</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-attach">attach</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-stripMetadata">stripMetadata</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -54,7 +55,9 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/utils/attach.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { Writable } from &apos;stream&apos;
 import Augment from &apos;../utils/augment&apos;
+import { stripMetadata } from &apos;../utils/metadata&apos;
 import errors from &apos;../data/errors&apos;
+import config from &apos;../config&apos;
 import debug from &apos;./debug&apos;
 
 /**
@@ -84,24 +87,24 @@ const attach = (transports, toStream, { applyBackPressure = false } = {}) =&gt; 
     for (let i = 0; i &lt; transports.length; i++) {
       const transport = transports[i]
 
-      // It&apos;s possible to pass the source stream as a transport,
-      // (i.e. if you want to have stdout logs output to stdout while using a transport)
-      // for this reason we need to check if the transport is identical
-      // to the source stream before writing to it, otherwise we&apos;ll cause a stack overflow.
-      const written = transport === toStream
-        ? // this condition preserves the ability to write to the original stream
-          originalWrite.apply(transport, [log.data.message])
-        : // and this writes to a separate transport stream
-          transport.write(
-            transport.acceptsObject ? log.data : log.data.message,
-            encoding,
-            fd
-          )
+      const written = transport.write(
+        transport.acceptsObject ? log.data : log.data.message,
+        encoding,
+        fd
+      )
 
       if (!written &amp;&amp; applyBackPressure) {
         transport.once(&apos;drain&apos;, () =&gt; transport.write(...arguments))
       }
     }
+
+    // When writing the log to the original stream,
+    // strip the metadata if we&apos;re not in production
+    originalWrite.apply(toStream, [
+      process.env.NODE_ENV === &apos;production&apos;
+        ? log.data.message
+        : stripMetadata(log.data.message),
+    ])
   }
 
   return {
