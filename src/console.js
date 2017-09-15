@@ -34,7 +34,7 @@ const transformConsoleLog = ({ args, level }) => {
     ? args[0]
     : new Augment(`${util.format.apply(null, args)}\n`)
   log.setLevel(level)
-  return log.format({ withMetadata: config.append_metadata })
+  return log.format()
 }
 
 console.info = (...args) => {

@@ -37,14 +37,14 @@ const userConfig = finder(projectPath).next().value.timber
  * in your `package.json` file.
  *
  * @param {String} metadata_delimiter - delimiter between log message and log data (@metadata by default)
- * @param {boolean} append_metadata - append @metadata { ... } to all logs (on by default)
+ * @param {boolean} append_metadata - append @metadata { ... } to all logs. If disabled, metadata will only be appended when `NODE_ENV === 'production'` (off by default)
  * @param {Writable} debug_logger - a writeable stream for internal debug messages to be sent to (disabled when undefined)
  * @param {boolean} timestamp_prefix - When `true`, log output should be prefixed with a timestamp in ISO 8601 format (off by default)
  */
 const config = {
   logger: console,
   metadata_delimiter: '@metadata',
-  append_metadata: true,
+  append_metadata: false,
   debug_logger: undefined,
   timestamp_prefix: false,
   ...userConfig,

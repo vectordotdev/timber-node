@@ -46,7 +46,7 @@ const attach = (transports, toStream, { applyBackPressure = false } = {}) => {
     // When writing the log to the original stream,
     // strip the metadata if we're not in production
     originalWrite.apply(toStream, [
-      process.env.NODE_ENV === 'production'
+      config.append_metadata || process.env.NODE_ENV === 'production'
         ? log.data.message
         : stripMetadata(log.data.message),
     ])
