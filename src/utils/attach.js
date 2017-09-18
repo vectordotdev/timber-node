@@ -52,6 +52,12 @@ const attach = (transports, toStream, { applyBackPressure = false } = {}) => {
     ])
   }
 
+  if (toStream === process.stdout) {
+    config._attached_stdout = true
+  } else if (toStream === process.stderr) {
+    config._attached_stderr = true
+  }
+
   return {
     detach: () => {
       toStream.write = originalWrite

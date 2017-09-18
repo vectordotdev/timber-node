@@ -42,6 +42,8 @@ const userConfig = finder(projectPath).next().value.timber
  * @param {boolean} timestamp_prefix - When `true`, log output should be prefixed with a timestamp in ISO 8601 format (off by default)
  */
 const config = {
+  _attached_stdout: false,
+  _attached_stderr: false,
   logger: console,
   metadata_delimiter: '@metadata',
   append_metadata: false,
