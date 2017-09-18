@@ -1,114 +1,133 @@
-# 🌲 Timber - Simple Node Structured Logging
+# 🌲 Timber - Great Node Logging Made Easy
 
 [![CircleCI](https://circleci.com/gh/timberio/timber-node.svg?style=svg)](https://circleci.com/gh/timberio/timber-node)
 [![Coverage Status](https://coveralls.io/repos/github/timberio/timber-node/badge.svg?branch=master)](https://coveralls.io/github/timberio/timber-node?branch=master)
 [![npm version](https://badge.fury.io/js/timber.svg)](https://badge.fury.io/js/timber)
 [![ISC License](https://img.shields.io/badge/license-ISC-ff69b4.svg)](LICENSE.md)
 
-* [Timber website](https://timber.io)
-* [Timber docs](https://timber.io/docs)
-* [Library docs](https://timberio.github.io/timber-node/)
-* [Support](mailto:support@timber.io)
+Timber for Node is great Node logging made easy. It requires no changes to your existing logging
+statements, it automatically enhances your logs with context and metadata, and it pairs with the
+[Timber console](#the-timber-console) to deliver a highly productive logging experience.
 
+1. [**Installation** - Simple setup](#installation)
+2. [**Usage** - Clean API. Works with `console`, winston, and bunyan.](#usage)
+3. [**Integrations** - Automatic context and metadata for your existing logs](#integrations)
+4. [**The Timber Console** - Beautiful, fast, and designed for developers](#the-timber-console)
+5. [**Get things done with your logs 💪**](#get-things-done-with-your-logs)
 
-## Overview
-
-Timber solves node structured logging so you don't have to. Go from raw text logs to rich
-structured events in seconds. Spend more time focusing on your app and less time
-focusing on logging.
-
-1. **Easy setup.** - `npm install --save timber`, [get setup in seconds](#installation).
-
-2. **Automatically structures yours logs.** - Third-party and in-app logs are all structured
-   in a consistent format. See [how it works](#how-it-works) below.
-
-3. **Seamlessly integrates with popular libraries and frameworks.** - Express, Winston, Morgan, etc. [Automatically captures user context, HTTP context, and event data.](#third-party-integrations)
-
-4. **Pairs with a modern structured-logging console.** - Designed specifically for structured data,
-   hosted, instantly usable, tail users, trace requests.
-   [Checkout the docs](https://timber.io/docs/app/tutorials/).
 
 ## Installation
 
 1. In your `shell` run `npm install --save timber`
 
-2. Add the following lines to your entry file
+2. In your entry file add:
 
-```js
-const timber = require('timber');
+    ```js
+    const timber = require('timber');
 
-// first we create a writeable stream that the logs will get sent to
-const transport = new timber.transports.HTTPS('your-timber-api-key');
+    const transport = new timber.transports.HTTPS('{{my-timber-api-key}}');
+    timber.install(transport);
+    ```
 
-// attach the stream to stdout
-timber.install(transport);
-```
+3. Optionally install middleware:
 
-## How it works
+    - Using [Express](https://github.com/expressjs/express)? ([learn more](https://timber.io/docs/languages/node/integrations/express)):
 
-For example, Timber turns this raw text log:
+      ```js
+      app.use(timber.middlewares.express())
+      ```
 
-```
-Sent 200 in 45.ms
-```
+4. Optionally integrate with your logger:
 
-Into a rich [`http_server_response` event](https://timber.io/docs/node/events-and-context/http-server-response-event/).
+    - Using [winston](https://github.com/winstonjs/winston)? ([learn more](https://timber.io/docs/languages/node/integrations/winston))
 
-```
-Sent 200 in 45.2ms @metadata {"dt": "2017-02-02T01:33:21.154345Z", "level": "info", "context": {"http": {"method": "GET", "host": "timber.io", "path": "/path", "request_id": "abcd1234"}}, "event": {"http_response": {"status": 200, "time_ms": 45.2}}}
-```
+      ```js
+      winston.remove(winston.transports.Console);
+      winston.add(winston.transports.Console, { formatter: timber.formatters.Winston });
+      ```
 
-Notice that instead of completely replacing your log messages,
-Timber _augments_ your logs with structured metadata. Turning them into
-[rich events with context](https://timber.io/docs/node/events-and-context) without sacrificing
-readability. And you have [complete control over which data is captured](#configuration).
+    - Using [bunyan](https://github.com/trentm/node-bunyan)? ([learn more](https://timber.io/docs/languages/node/integrations/bunyan))
 
+      ```js
+      const log = bunyan.createLogger({
+        name: 'Logger',
+        stream: timber.transports.Bunyan
+      });
+      ```
 
 
 ## Usage
 
 <details><summary><strong>Basic logging</strong></summary><p>
 
-No special API, Timber works directly with `console.log`:
+No special API, Timber works directly with your logger of choice:
 
 ```js
+// console
 console.log("My log message")
-
-// => My log message @metadata {"level": "info", ... }
-
 console.info("My log message")
-
-// => My log message @metadata {"level": "info", ... }
-
 console.warn("My log message")
-
-// => My log message @metadata {"level": "warn", ... }
-
 console.error("My log message")
 
-// => My log message @metadata {"level": "error", ... }
+// winston
+winston.info("My log message")
+winston.warn("My log message")
+// ...
+
+// bunyan
+logger.info("My log message")
+logger.warn("My log message")
+// ...
 ```
-
-Timber patches over the default `console.log` functions to provide an easy way to attach custom metadata or events to a log line. To take advantage of it, use the following structure when logging:
-
-```js
-console.log("My Log Message", { meta: { ... } });
-```
-
-This works with all console log levels (`console.log`, `console.info`, `console.warn`, and `console.error`).
-
-Logging custom events are just as easy:
-
-
-```js
-console.log("My Log Message with a custom event", { event: { custom_event_name: { ... } } });
-```
-
-Just like metadata, custom events can be attached to any console log level.
 
 ---
 
 </p></details>
+
+<details><summary><strong>Logging events (structured data)</strong></summary><p>
+
+Log structured data without sacrificing readability:
+
+```js
+// console
+console.warn("Payment rejected", {
+  event: {
+    payment_rejected: { customer_id: "abcd1234", amount: 100, reason: "Card expired" }
+  }
+});
+
+// winston
+winston.warn("Payment rejected", {
+  event: {
+    payment_rejected: { customer_id: "abcd1234", amount: 100, reason: "Card expired" }
+  }
+});
+
+// bunyan
+logger.warn({
+  event: {
+    payment_rejected: { customer_id: "abcd1234", amount: 100, reason: "Card expired" }
+  }
+}, "Payment rejected");
+```
+
+---
+
+</p></details>
+
+<details><summary><strong>Setting context</strong></summary><p>
+
+[Context](https://timber.io/docs/concepts/metadata-context-and-events) for node is coming soon!
+Because node does not have a concept of local storage, we're working to implement
+[continuation local storage](https://github.com/othiym23/node-continuation-local-storage).
+This will enable shared join data across your logs, allowing you to relate them.
+
+Star / watch this repo to be notified when this goes live!
+
+</p></details>
+
+
+## Configuration
 
 <details><summary><strong>Express middleware</strong></summary><p>
 
@@ -256,16 +275,18 @@ log.info({ context: { ... } }, 'Log message with event')
 If you're using the timber express middleware, you'll most likely want to configure it to use bunyan as the logger. This can be done by setting the `logger` config attribute to the bunyan logger you created:
 
 ```js
-timber.config.logger = log 
+timber.config.logger = log
 ```
 
 ---
 
 </p></details>
 
-<details><summary><strong>Attaching to a custom stream</strong></summary><p>
+<details><summary><strong>Attaching a custom stream</strong></summary><p>
 
-In most applications, you're going to want to attach the timber transport to `stdout` and `stderr`. This is why we supply the convenient `timber.install(transport)` function. However, it's possible to attach the transport to _any_ writeable stream using the `timber.attach()` function!
+By default, Timber makes attaching to `stdout` and `stderr` very easy through the convenient `timber.install(transport)` function.
+However, it's possible to attach the transport to _any_ [writeable stream](https://nodejs.org/api/stream.html#stream_writable_streams)
+using the `timber.attach()` function!
 
 ```js
 const transport = timber.transports.HTTPS('timber-api-key')
@@ -285,73 +306,46 @@ timber.attach([transport, file_transport], process.stdout)
 
 </p></details>
 
-<details><summary><strong>Custom events</strong></summary><p>
 
-Custom events are currently not supported in the current version of the Node library. We are planning to add support for them soon!
+## Integrations
 
----
+Timber integrates with popular frameworks and libraries to capture context and metadata you
+couldn't otherwise. This automatically augments logs produced by these libraries, making them
+[easier to search and use](#do-amazing-things-with-your-logs). Below is a list of libraries we
+support:
 
-</p></details>
+* Frameworks
+   * [**Express**](https://timber.io/docs/languages/node/integrations/express)
+* Loggers
+   * [**Bunyan**](https://timber.io/docs/languages/node/integrations/bunyan)
+   * [**Console**](https://timber.io/docs/languages/node/integrations/console)
+   * [**Winston**](https://timber.io/docs/languages/node/integrations/winston)
+* Platforms
+   * [**System / Server**](https://timber.io/docs/languages/node/integrations/system)
 
-<details><summary><strong>Custom contexts</strong></summary><p>
-
-Custom contexts are currently not supported in the current version of the Node library. We are planning to add support for them soon!
+...more coming soon! Make a request by [opening an issue](https://github.com/timberio/timber-node/issues/new)
 
 
-</p></details>
+## Get things done with your logs
+
+Logging features designed to help developers get more done:
+
+1. [**Powerful searching.** - Find what you need faster.](https://timber.io/docs/app/console/searching)
+2. [**Live tail users.** - Easily solve customer issues.](https://timber.io/docs/app/console/tail-a-user)
+3. [**Viw logs per HTTP request.** - See the full story without the noise.](https://timber.io/docs/app/console/trace-http-requests)
+4. [**Inspect HTTP request parameters.** - Quickly reproduce issues.](https://timber.io/docs/app/console/inspect-http-requests)
+5. [**Threshold based alerting.** - Know when things break.](https://timber.io/docs/app/alerts)
+6. ...and more! Checkout our [the Timber application docs](https://timber.io/docs/app)
 
 
-## Jibber-Jabber
+## The Timber Console
 
-<details><summary><strong>Which events and contexts does Timber capture for me?</strong></summary><p>
+[![Timber Console](http://files.timber.io/images/readme-interface7.gif)](https://timber.io/docs/app)
 
-Out of the box you get everything in the
-[`Timber::Events`](https://github.com/timberio/timber-node/src/events) namespace.
+[Learn more about our app.](https://timber.io/docs/app)
 
-We also add context to every log, everything in the
-[`Timber::Contexts`](https://github.com/timberio/timber-node/src/contexts)
-namespace. Context is structured data representing the current environment when the log line
-was written. It is included in every log line. Think of it like join data for your logs. It's
-how Timber is able to accomplished tailing users (`context.user.id:1`).
-
----
-
-</p></details>
-
-<details><summary><strong>Won't this increase the size of my log data?</strong></summary><p>
-
-Yes, but it's marginal compared to the benefits of having rich structured log data. A few
-of things to note:
-
-1. Timber generally _reduces_ the amount of logs your app generates, trading quality for quantity.
-   It does so by providing options to consolidate request / response logs, template logs, and
-   even silence logs that are not of value to you. (see [configuration](#configuration) for examples).
-2. Timber lets you pick exactly which events and contexts you want.
-   (see [configuration](#configuration) for examples)
-3. Your logging provider should be compressing your data and charging you accordingly. Log data
-   is notoriously repetitive, and the context Timber generates is repetitive.
-   Because of compression we've seen somes apps only incur a ~15% increase in data size.
-
-Finally, log what is useful to you. Quality over quantity certainly applies to logging.
-
----
-
-</p></details>
-
-<details><summary><strong>What about my current log statements?</strong></summary><p>
-
-They'll continue to work as expected. Timber adheres to the default `console` interface.
-Your previous logger calls will work as they always do. Just import the timber library to your project and you're good to go!
-
-In fact, traditional log statements for non-meaningful events, debug statements, etc, are
-encouraged. In cases where the data is meaningful, consider [logging a custom event](#usage).
-
----
-
-</p></details>
-
----
+## Your Moment of Zen
 
 <p align="center" style="background: #221f40;">
-<a href="http://github.com/timberio/timber-elixir"><img src="http://files.timber.io/images/ruby-library-readme-log-truth.png" height="947" /></a>
+<a href="https://timber.io"><img src="http://files.timber.io/images/readme-log-truth.png" height="947" /></a>
 </p>
