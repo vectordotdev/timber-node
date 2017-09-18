@@ -37,20 +37,29 @@ const transformConsoleLog = ({ args, level }) => {
   return log.format()
 }
 
-console.info = (...args) => {
-  process.stdout.write(transformConsoleLog({ args, level: 'info' }))
+const originalConsole = {
+  log: console.log,
+  info: console.info,
+  warn: console.warn,
+  error: console.error
 }
 
-console.log = (...args) => {
-  process.stdout.write(transformConsoleLog({ args, level: 'info' }))
-}
+console.log = (...args) =>
+  config._attached_stdout || config.append_metadata
+    ? process.stdout.write(transformConsoleLog({ args, level: 'info' }))
+    : originalConsole.log(...args)
 
-console.warn = (...args) => {
-  process.stdout.write(transformConsoleLog({ args, level: 'warn' }))
-}
+console.info = (...args) =>
+  config._attached_stdout || config.append_metadata
+    ? process.stdout.write(transformConsoleLog({ args, level: 'info' }))
+    : originalConsole.info(...args)
 
-console.error = (...args) => {
-  process.stderr.write(transformConsoleLog({ args, level: 'error' }))
-}
+console.warn = (...args) =>
+  config._attached_stdout || config.append_metadata
+    ? process.stdout.write(transformConsoleLog({ args, level: 'warn' }))
+    : originalConsole.warn(...args)
 
-export default console
+console.error = (...args) =>
+  config._attached_stderr || config.append_metadata
+    ? process.stderr.write(transformConsoleLog({ args, level: 'error' }))
+    : originalConsole.error(...args)
