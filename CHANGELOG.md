@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.0] - 2017-09-19
+
 ### Fixed
 
   - The built in `console` functions are no longer patched on import
@@ -15,4 +17,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
   - To append metadata without installing a transport, you must set `timber.config.append_metadata = true`
 
-[Unreleased]: https://github.com/timberio/timber-node/compare/v2.1.1...HEAD
+[Unreleased]: https://github.com/timberio/timber-node/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/timberio/timber-node/compare/v2.1.1...v3.0.0

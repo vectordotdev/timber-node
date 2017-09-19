@@ -1,6 +1,6 @@
 {
   "name": "timber",
-  "version": "2.1.1",
+  "version": "3.0.0",
   "description": "Timber.io node client.",
   "license": "ISC",
   "main": "dist/index.js",
