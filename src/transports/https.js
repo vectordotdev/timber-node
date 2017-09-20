@@ -94,6 +94,7 @@ class HTTPS extends Writable {
       res.on('close', () => debug('Response event: close'))
     })
 
+    req.on('error', (err) => debug('Error connecting to logs.timber.io:', err))
     req.on('abort', () => debug('Request event: abort'))
     req.on('aborted', () => debug('Request event: aborted'))
     req.on('connect', () => debug('Request event: connect'))
