@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+  - Winston timestamps are now preserved when using the formatter
+
 ## [3.0.1] - 2017-09-20
 
 ### Fixed
