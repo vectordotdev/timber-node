@@ -1,9 +1,13 @@
-import winston from 'winston'
 import Augment from '../utils/augment'
 import { Custom } from '../events'
-import errors from '../data/errors'
 
-const WinstonFormatter = ({ message, level, meta: metadata, timestamp }) => {
+const WinstonFormatter = ({
+  message: raw,
+  level,
+  meta: metadata,
+  timestamp,
+}) => {
+  const message = timestamp ? `${timestamp()} - ${raw}` : raw
   const structuredLog = new Augment(message, { level })
   const { event, context, ...meta } = metadata
 
