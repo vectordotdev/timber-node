@@ -60,22 +60,22 @@ class Augment {
    * i.e. `Log message @metadata { ... }`
    */
   format({ withMetadata = true } = {}) {
-    const { dt, ...rest } = this.data
+    const { dt, message, ...rest } = this.data
 
-    let message = this.raw.endsWith('\n')
+    let log = this.raw.endsWith('\n')
       ? this.raw.substring(0, this.raw.length - 1)
       : this.raw
 
     if (config.timestamp_prefix) {
-      message = `${dt.toISOString()} ${message}`
+      log = `${dt.toISOString()} ${log}`
     }
 
     if (withMetadata) {
       const data = config.timestamp_prefix ? rest : { dt, ...rest }
-      message += ` ${config.metadata_delimiter} ${JSON.stringify(data)}`
+      log += ` ${config.metadata_delimiter} ${JSON.stringify(data)}`
     }
 
-    return `${message}\n`
+    return `${log}\n`
   }
 }
 
