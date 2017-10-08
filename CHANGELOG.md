@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.3] - 2017-10-08
+
+### Changed
+
+  - HTTPS stream uses a text/plain content type instead of an application/json since it
+    receives strings.
+
 ## [3.0.2] - 2017-09-28
 
 ### Fixed
@@ -30,7 +37,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
   - To append metadata without installing a transport, you must set `timber.config.append_metadata = true`
 
-[Unreleased]: https://github.com/timberio/timber-node/compare/v3.0.2...HEAD
+[Unreleased]: https://github.com/timberio/timber-node/compare/v3.0.3...HEAD
+[3.0.3]: https://github.com/timberio/timber-node/compare/v3.0.2...v3.0.3
 [3.0.2]: https://github.com/timberio/timber-node/compare/v3.0.1...v3.0.2
 [3.0.1]: https://github.com/timberio/timber-node/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/timberio/timber-node/compare/v2.1.1...v3.0.0
