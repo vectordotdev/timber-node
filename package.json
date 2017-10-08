@@ -72,6 +72,7 @@
     "eslint-plugin-babel": "^4.1.1",
     "gh-pages": "^1.0.0",
     "jest-cli": "^20.0.4",
+    "node-mocks-http": "^1.6.5",
     "prettier": "^1.4.2",
     "rimraf": "2.4.3"
   },

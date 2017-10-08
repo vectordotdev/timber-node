@@ -3,7 +3,7 @@ import config from './config'
 
 const loggers = {
   console: {
-    detect: () => config.logger.constructor.name === 'Console',
+    detect: () => config.logger.constructor.name === 'Console' || config.logger.constructor.name === 'CustomConsole',
     handler: (level, message, metadata) => {
       if (metadata) {
         return config.logger[level](new Augment(message, metadata))
