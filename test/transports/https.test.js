@@ -38,9 +38,9 @@ class FakeHTTPSClient {
 }
 
 describe("HTTPS Stream", () => {
-  
+
   describe("initialization", () => {
-    
+
     it("sets the apiKey", () => {
       let httpsStream = new HTTPSStream('my_api_key', {});
       expect(httpsStream.apiKey).toBe('my_api_key');
@@ -87,7 +87,7 @@ describe("HTTPS Stream", () => {
       const messages = fakeRequest.writtenMessages;
 
       expect(messages.length).toBe(1);
-      expect(JSON.parse(messages[0])[0]).toBe('message 1');
+      expect(messages[0]).toBe('message 1');
       expect(fakeRequest.endCallCount).toBe(1);
     });
 
@@ -98,15 +98,14 @@ describe("HTTPS Stream", () => {
       httpsStream.write('message 2');
       httpsStream._flush();
       jest.runAllTicks();
-      
+
       expect(fakeHTTPSClient.requestCallCount).toBe(1);
 
       let fakeRequest = fakeHTTPSClient.fakeRequest;
       const messages = fakeRequest.writtenMessages;
 
       expect(messages.length).toBe(1);
-      expect(JSON.parse(messages[0])[0]).toBe('message 1');
-      expect(JSON.parse(messages[0])[1]).toBe('message 2');
+      expect(messages[0]).toBe('message 1\nmessage 2');
       expect(fakeRequest.endCallCount).toBe(1);
     });
 
@@ -115,7 +114,7 @@ describe("HTTPS Stream", () => {
     // it("throws a warning when the buffer is full", () => {});
     // it("does not crash when the /frames endpoint times out", () => {});
     // it("retries requests when backPressure is allowed", () => {});
-    
+
   });
 });
 

@@ -22,7 +22,7 @@ const userConfig = finder(projectPath).next().value.timber
  * ```
  *
  * __Note:__ you cannot set the `debug_logger` option from the `package.json`.
- * This is because you must set it as a writeable stream.
+ * This is because you must set it as a writeable stream. (see next section)
  *
  * ## Using inline overrides
  *
@@ -45,7 +45,7 @@ const config = {
   _attached_stdout: false,
   _attached_stderr: false,
   logger: console,
-  metadata_delimiter: '@metadata',
+  metadata_delimiter: '@metadata', // This should not be changed! The timber service only recognizes @metadata
   append_metadata: false,
   debug_logger: undefined,
   timestamp_prefix: false,

@@ -1,12 +1,6 @@
-import { Writable, Readable } from 'stream';
+import { TestWriteStream, TestReadStream } from './support/test_streams';
 import attach from '../src/utils/attach.js';
 import '../src/console';
-
-class TestWriteStream extends Writable {
-  constructor() { super({ objectMode: true }) }
-  _write(){}
-}
-class TestReadStream extends Readable {}
 
 describe('Console', () => {
   it('should patch console.log', () => {
