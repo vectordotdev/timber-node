@@ -3,7 +3,7 @@ import { Writable } from 'stream'
 import debug from '../utils/debug'
 const HOSTNAME = 'logs.timber.io'
 const PATH = '/frames'
-const CONTENT_TYPE = 'text/plain'
+const CONTENT_TYPE = 'application/json'
 const USER_AGENT = `Timber Node HTTPS Stream/${require('../../package.json')
   .version}`
 const PORT = 443
@@ -71,7 +71,7 @@ class HTTPS extends Writable {
   _writev(chunks, next) {
     debug(`Sending ${chunks.length} log to stream`)
     const messages = chunks.map(chunk => chunk.chunk)
-    const body = messages.join('\n')
+    const body = JSON.stringify(messages)
     const options = {
       headers: {
         'Content-Type': CONTENT_TYPE,
