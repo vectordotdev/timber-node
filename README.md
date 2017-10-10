@@ -18,42 +18,9 @@ statements, it automatically enhances your logs with context and metadata, and i
 
 ## Installation
 
-1. In your `shell` run `npm install --save timber`
+**[Signup at timber.io](https://app.timber.io) and follow the in-app instructions.**
 
-2. In your entry file add:
-
-    ```js
-    const timber = require('timber');
-
-    const transport = new timber.transports.HTTPS('{{my-timber-api-key}}');
-    timber.install(transport);
-    ```
-
-3. Optionally install middleware:
-
-    - Using [Express](https://github.com/expressjs/express)? ([learn more](https://timber.io/docs/languages/node/integrations/express)):
-
-      ```js
-      app.use(timber.middlewares.express())
-      ```
-
-4. Optionally integrate with your logger:
-
-    - Using [winston](https://github.com/winstonjs/winston)? ([learn more](https://timber.io/docs/languages/node/integrations/winston))
-
-      ```js
-      winston.remove(winston.transports.Console);
-      winston.add(winston.transports.Console, { formatter: timber.formatters.Winston });
-      ```
-
-    - Using [bunyan](https://github.com/trentm/node-bunyan)? ([learn more](https://timber.io/docs/languages/node/integrations/bunyan))
-
-      ```js
-      const log = bunyan.createLogger({
-        name: 'Logger',
-        stream: timber.transports.Bunyan
-      });
-      ```
+For those interested in manual instructions, see [the timber.io installation docs](https://timber.io/docs/languages/node/installation).
 
 
 ## Usage
@@ -332,6 +299,24 @@ Logging features designed to help developers get more done:
 
 1. [**Powerful searching.** - Find what you need faster.](https://timber.io/docs/app/console/searching)
 2. [**Live tail users.** - Easily solve customer issues.](https://timber.io/docs/app/console/tail-a-user)
+3. [**Viw logs per HTTP request.** - See the full story without the noise.](https://timber.io/docs/app/console/trace-http-requests)
+4. [**Inspect HTTP request parameters.** - Quickly reproduce issues.](https://timber.io/docs/app/console/inspect-http-requests)
+5. [**Threshold based alerting.** - Know when things break.](https://timber.io/docs/app/alerts)
+6. ...and more! Checkout our [the Timber application docs](https://timber.io/docs/app)
+
+
+## The Timber Console
+
+[![Timber Console](http://files.timber.io/images/readme-interface7.gif)](https://timber.io/docs/app)
+
+[Learn more about our app.](https://timber.io/docs/app)
+
+## Your Moment of Zen
+
+<p align="center" style="background: #221f40;">
+<a href="https://timber.io"><img src="http://files.timber.io/images/readme-log-truth.png" height="947" /></a>
+</p>
+ustomer issues.](https://timber.io/docs/app/console/tail-a-user)
 3. [**Viw logs per HTTP request.** - See the full story without the noise.](https://timber.io/docs/app/console/trace-http-requests)
 4. [**Inspect HTTP request parameters.** - Quickly reproduce issues.](https://timber.io/docs/app/console/inspect-http-requests)
 5. [**Threshold based alerting.** - Know when things break.](https://timber.io/docs/app/alerts)
