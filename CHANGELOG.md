@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+  - Fixes the key name used for HTTP context to use `http` instead of `http_context`.
+
 ## [3.1.0] - 2017-10-17
 
 ### Added

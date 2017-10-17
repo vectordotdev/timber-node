@@ -66,7 +66,7 @@ const expressMiddleware = ({ ...options }) => {
       // add the http context information to the metadata object
       const metadata = {
         context: {
-          http_context,
+          http: http_context,
         },
       }
 
