@@ -5,9 +5,27 @@
 [![npm version](https://badge.fury.io/js/timber.svg)](https://badge.fury.io/js/timber)
 [![ISC License](https://img.shields.io/badge/license-ISC-ff69b4.svg)](LICENSE.md)
 
-Timber for Node is great Node logging made easy. It requires no changes to your existing logging
-statements, it automatically enhances your logs with context and metadata, and it pairs with the
-[Timber console](#the-timber-console) to deliver a highly productive logging experience.
+Node logging has problems. The average node project has libraries logging to the
+`console`, internal logs using [winston](https://github.com/winstonjs/winston) or
+[bunyan](https://github.com/trentm/node-bunyan), and frameworks logging in their own format.
+The end result is usually this:
+
+```
+192.442.345.32 - - [Mon, 09 Oct 2017 23:23:37 GMT] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36"
+Log message from console.warn
+{"level":"debug","message":"Log message from winston"}
+```
+
+Timber solves this by normalizing and augmenting your logs with structured data, *regardless of
+the source*. This not only normalizes your logs, but captures additional useful metadata:
+
+```
+GET / HTTP/1.1 @metadata {"dt": "2017-10-08T23:23:37.234Z", "level": "info", "context": {"http": {"remote_addr": "192.442.345.32"}}, "event": {"http_request": {"method": "GET", "path": "/", "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36"}}}
+Log message from console.warn @metadata {"dt": "2017-10-08T23:23:37.234Z", "level": "warn"}
+Log message from winston @metadata {"dt": "2017-10-08T23:23:37.234Z", "level": "debug"}
+```
+
+Ah! Consistent, easy to use logs. To get started:
 
 1. [**Installation** - Simple setup](#installation)
 2. [**Usage** - Clean API. Works with `console`, winston, and bunyan.](#usage)

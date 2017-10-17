@@ -7,17 +7,17 @@ import transports from './transports'
 import formatters from './formatters'
 import events from './events'
 import contexts from './contexts'
-import log from './log'
+import LogEntry from './log_entry'
 import './console'
 
 module.exports = {
   attach,
   config,
+  contexts,
+  events,
+  formatters,
   install,
+  LogEntry,
   middlewares,
   transports,
-  formatters,
-  log,
-  events,
-  contexts,
 }

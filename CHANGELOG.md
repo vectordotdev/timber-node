@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+  - Exposes a new `LogEntry` class that can be used to build a structured log directly.
+
 ## [3.0.4] - 2017-10-08
 
 ### Changed

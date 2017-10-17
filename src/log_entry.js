@@ -1,13 +1,15 @@
-import schema from '../schema'
-import config from '../config'
-import errors from '../data/errors'
+import config from './config'
+import errors from './data/errors'
+
+const JSON_SCHEMA_URL = 'https://raw.githubusercontent.com/timberio/log-event-json-schema/v3.1.3/schema.json';
 
 /**
+ * This class is instantiated before
  * Transforms a log message or object into a rich structured format
  * that timber expects, ex 'log message' @timber.io {"dt": "…", "level": "info", "context": {…}}
  * see https://github.com/timberio/log-event-json-schema for specs
  */
-class Augment {
+class LogEntry {
   /**
    * @param {String} message - the log message before transforming
    * @param {Object} [context] - context to be attached to message
@@ -27,11 +29,21 @@ class Augment {
      * @type {Date}
      */
     this.data = {
-      ...schema,
-      message,
+      $schema: JSON_SCHEMA_URL,
       dt: new Date(),
+      message,
       ...context,
     }
+  }
+
+  /**
+   * Adds the to the log entry. A log entry can only contain a single
+   * event.
+   *
+   * @param {Event} event
+   */
+  addEvent(event) {
+    this.append({event: event})
   }
 
   /**
@@ -79,4 +91,4 @@ class Augment {
   }
 }
 
-export default Augment
+export default LogEntry
