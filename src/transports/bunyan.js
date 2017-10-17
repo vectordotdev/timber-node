@@ -1,8 +1,8 @@
 import bunyan from 'bunyan'
 import { Writable } from 'stream'
 import { Custom } from '../events'
-import Augment from '../utils/augment'
 import errors from '../data/errors'
+import LogEntry from '../log_entry'
 
 /**
  * The Timber Bunyan transport allows you to seamlessly install
@@ -40,7 +40,7 @@ class BunyanTransport extends Writable {
     const level = bunyan.nameFromLevel[data.level]
 
     // Create a structured log object out of the log message
-    const structuredLog = new Augment(msg, { level })
+    const structuredLog = new LogEntry(msg, { level })
 
     // If custom metadata was provided with the log, append it
     if (meta && Object.keys(meta).length) {

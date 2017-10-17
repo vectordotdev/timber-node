@@ -1,5 +1,5 @@
-import Augment from '../utils/augment'
 import { Custom } from '../events'
+import LogEntry from '../log_entry'
 
 const WinstonFormatter = ({
   message: raw,
@@ -8,7 +8,7 @@ const WinstonFormatter = ({
   timestamp,
 }) => {
   const message = timestamp ? `${timestamp()} - ${raw}` : raw
-  const structuredLog = new Augment(message, { level })
+  const structuredLog = new LogEntry(message, { level })
   const { event, context, ...meta } = metadata
 
   // If custom metadata was provided with the log, append it

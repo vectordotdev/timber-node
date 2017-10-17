@@ -1,9 +1,9 @@
 import { Writable } from 'stream'
-import Augment from '../utils/augment'
 import { stripMetadata } from '../utils/metadata'
 import errors from '../data/errors'
 import config from '../config'
 import debug from './debug'
+import LogEntry from '../log_entry'
 
 /**
  * Attaches a transport stream to a writeable stream.
@@ -27,7 +27,7 @@ const attach = (transports, toStream, { applyBackPressure = false } = {}) => {
   debug(`attaching ${transports.length} transports to stream`)
 
   toStream.write = (message, encoding, fd) => {
-    const log = message instanceof Augment ? message : new Augment(message)
+    const log = message instanceof LogEntry ? message : new LogEntry(message)
 
     for (let i = 0; i < transports.length; i++) {
       const transport = transports[i]

@@ -2,9 +2,9 @@
 import compose from 'composable-middleware'
 import addRequestId from 'express-request-id'
 import bodyParser from 'body-parser'
-import HTTP from '../contexts/http'
+import HTTPContext from '../contexts/http'
 import { HTTPRequest, HTTPResponse } from '../events'
-import log from '../log'
+import log from '../utils/log'
 import config from '../config'
 
 /**
@@ -56,7 +56,7 @@ const expressMiddleware = ({ ...options }) => {
         : undefined
 
       // create the HTTP context item
-      const http = new HTTP({
+      const http_context = new HTTPContext({
         method,
         path,
         request_id,
@@ -66,7 +66,7 @@ const expressMiddleware = ({ ...options }) => {
       // add the http context information to the metadata object
       const metadata = {
         context: {
-          http,
+          http_context,
         },
       }
 

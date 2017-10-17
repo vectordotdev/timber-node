@@ -4,8 +4,7 @@ import debug from '../utils/debug'
 const HOSTNAME = 'logs.timber.io'
 const PATH = '/frames'
 const CONTENT_TYPE = 'application/json'
-const USER_AGENT = `Timber Node HTTPS Stream/${require('../../package.json')
-  .version}`
+const USER_AGENT = `Timber Node HTTPS Stream/${require('../../package.json').version}`
 const PORT = 443
 
 /**

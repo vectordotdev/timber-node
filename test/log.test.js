@@ -1,18 +1,18 @@
-import Log from '../src/utils/augment';
+import LogEntry from '../src/log_entry';
 import config from '../src/config';
 
 describe('Log Transformer', () => {
   it('exports a function', () => {
-    expect(typeof Log).toBe('function');
+    expect(typeof LogEntry).toBe('function');
   });
 
   it('requires a message', () => {
-    expect(() => new Log()).toThrow();
+    expect(() => new LogEntry()).toThrow();
   });
 
   it('stores a data object', () => {
     const message = 'Test log line';
-    const log = new Log(message);
+    const log = new LogEntry(message);
 
     expect(typeof log.data).toBe('object');
     expect(log.data.message).toBe(message);
@@ -20,7 +20,7 @@ describe('Log Transformer', () => {
 
   it('append properly appends data values', () => {
     const message = 'Test log line';
-    const log = new Log(message);
+    const log = new LogEntry(message);
 
     log.append({ customAttribute: 'test' });
 
@@ -29,7 +29,7 @@ describe('Log Transformer', () => {
 
   it('append replaces existing data values', () => {
     const message = 'Test log line';
-    const log = new Log(message);
+    const log = new LogEntry(message);
 
     log.append({ level: 'error' });
     expect(log.data.level).toBe('error');
@@ -40,7 +40,7 @@ describe('Log Transformer', () => {
 
   it('setLevel properly sets the log level', () => {
     const message = 'Test log line';
-    const log = new Log(message);
+    const log = new LogEntry(message);
 
     expect(typeof log.setLevel).toBe('function');
 
@@ -51,7 +51,7 @@ describe('Log Transformer', () => {
 
   it('formats log properly', () => {
     const message = 'Test log line';
-    const log = new Log(message);
+    const log = new LogEntry(message);
     const regex = new RegExp(`${message} ${config.metadata_delimiter} {.*}`);
 
     expect(typeof log.format).toBe('function');
@@ -60,7 +60,7 @@ describe('Log Transformer', () => {
 
   it('format respects withMetadata option', () => {
     const message = 'Test log line';
-    const log = new Log(message);
+    const log = new LogEntry(message);
 
     expect(log.format({ withMetadata: false })).toBe(`${message}\n`);
   });
