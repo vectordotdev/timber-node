@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.1.1] - 2017-10-17
+
 ### Fixed
 
   - Fixes the key name used for HTTP context to use `http` instead of `http_context`.
@@ -53,7 +55,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
   - To append metadata without installing a transport, you must set `timber.config.append_metadata = true`
 
-[Unreleased]: https://github.com/timberio/timber-node/compare/v3.1.0...HEAD
+[Unreleased]: https://github.com/timberio/timber-node/compare/v3.1.1...HEAD
+[3.1.1]: https://github.com/timberio/timber-node/compare/v3.0.4...v3.1.1
 [3.1.0]: https://github.com/timberio/timber-node/compare/v3.0.4...v3.1.0
 [3.0.4]: https://github.com/timberio/timber-node/compare/v3.0.3...v3.0.4
 [3.0.3]: https://github.com/timberio/timber-node/compare/v3.0.2...v3.0.3
