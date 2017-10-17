@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.1.0] - 2017-10-17
+
 ### Added
 
   - Exposes a new `LogEntry` class that can be used to build a structured log directly.
@@ -47,7 +49,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
   - To append metadata without installing a transport, you must set `timber.config.append_metadata = true`
 
-[Unreleased]: https://github.com/timberio/timber-node/compare/v3.0.4...HEAD
+[Unreleased]: https://github.com/timberio/timber-node/compare/v3.1.0...HEAD
+[3.1.0]: https://github.com/timberio/timber-node/compare/v3.0.4...v3.1.0
 [3.0.4]: https://github.com/timberio/timber-node/compare/v3.0.3...v3.0.4
 [3.0.3]: https://github.com/timberio/timber-node/compare/v3.0.2...v3.0.3
 [3.0.2]: https://github.com/timberio/timber-node/compare/v3.0.1...v3.0.2
