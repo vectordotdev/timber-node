@@ -3,7 +3,8 @@ import finder from 'find-package-json'
 
 const filename = (require.main && require.main.filename) || __dirname
 const projectPath = path.dirname(filename)
-const userConfig = finder(projectPath).next().value.timber
+const packageJson = finder(projectPath).next().value;
+const userConfig = packageJson && packageJson.timber; 
 
 /**
  * The configuration options here are use throughout the timber library.
