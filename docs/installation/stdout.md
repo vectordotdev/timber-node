@@ -1,0 +1,41 @@
+# Node STDOUT Installation
+
+1. In your `shell`, *run*: <small style="float: right" class="platform-alt"><a href="/docs/platforms">prefer to integrate with your platform instead?</a></small>
+
+  ```shell
+  npm install --save timber
+  ```
+
+2. In your entry file, *add*:
+
+  ```js
+  const timber = require('timber');
+  
+  timber.config.append_metadata = true
+  ```
+
+3. Optionally install middleware:
+
+    - Using [Express](https://github.com/expressjs/express)? ([learn more](/docs/languages/node/integrations/express)):
+
+      ```js
+      app.use(timber.middlewares.express())
+      ```
+
+4. Optionally integrate with your logger:
+
+    - Using [winston](https://github.com/winstonjs/winston)? ([learn more](/docs/languages/node/integrations/winston))
+
+      ```js
+      winston.remove(winston.transports.Console);
+      winston.add(winston.transports.Console, { formatter: timber.formatters.Winston });
+      ```
+
+    - Using [bunyan](https://github.com/trentm/node-bunyan)? ([learn more](/docs/languages/node/integrations/bunyan))
+
+      ```js
+      const log = bunyan.createLogger({
+        name: 'Logger',
+        stream: timber.transports.Bunyan
+      });
+      ```
