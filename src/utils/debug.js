@@ -20,7 +20,7 @@ const timestamp = () => new Date().toISOString()
  * Convenience function for logging debug messages
  * to the configured debug_logger
  *
- * This works much like the builtin console.log function,
+ * This works much like the built in console.log function,
  * accepting any amount of mixed arguments and concatenating
  * them into a single string to be sent to the debug_logger stream
  *
@@ -29,7 +29,7 @@ const timestamp = () => new Date().toISOString()
  */
 const debug = (...args) => {
   if (debug_logger()) {
-    debug_logger().write(`[${timestamp()}]: ${util.format.apply(null, args)}\n`)
+    debug_logger().write(`[${timestamp()}][timber-debug]: ${util.format.apply(null, args)}\n`)
   }
 }
 

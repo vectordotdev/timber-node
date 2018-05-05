@@ -68,7 +68,7 @@ class HTTPS extends Writable {
    * data off of the buffer. Defining it means we do not need to define _write.
    */
   _writev(chunks, next) {
-    debug(`Sending ${chunks.length} log to stream`)
+    debug(`Sending ${chunks.length} logs to stream`)
     const messages = chunks.map(chunk => chunk.chunk)
     const body = JSON.stringify(messages)
     const options = {
