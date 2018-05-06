@@ -1,9 +1,9 @@
 import HTTPS from './https'
 import LogEntry from '../log_entry'
 import debug from '../utils/debug'
-// Look into https://github.com/winstonjs/winston-transport
-// https://github.com/avens19/winston-sumologic-transport/blob/master/src/winston-sumologic-transport.ts
 
+// Simple Winston transport that extends the HTTPS transport
+// Look into https://github.com/winstonjs/winston-transport
 class WinstonTransport extends HTTPS {
 	constructor (key, options) {
 		super(key, options);
