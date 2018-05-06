@@ -26,6 +26,8 @@ const attach = (transports, toStream, { applyBackPressure = false } = {}) => {
 
   debug(`attaching ${transports.length} transports to stream`)
 
+  // Override the target stream's write method to route through the transports
+  // before calling it with the associated arguments
   toStream.write = (message, encoding, fd) => {
     // Check if this is a Timber log entry or a message string
     const log = message instanceof LogEntry ? message : new LogEntry(message)

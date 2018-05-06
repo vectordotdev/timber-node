@@ -14,7 +14,7 @@ class LogEntry {
    * @param {String} message - the log message before transforming
    * @param {Object} [context] - context to be attached to message
    */
-  constructor(message, context = {}) {
+  constructor(message, context = {}, level) {
     // Throw an error if no message is provided
     if (!message) throw new Error(errors.log.noMessage)
 
@@ -32,6 +32,7 @@ class LogEntry {
       $schema: JSON_SCHEMA_URL,
       dt: new Date(),
       message,
+      level,
       ...context,
     }
   }

@@ -1,0 +1,1 @@
+Talk about catching errors, dealing with 500s, 404s, etc.
