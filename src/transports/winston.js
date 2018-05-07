@@ -8,7 +8,7 @@ class WinstonTransport extends HTTPS {
 	constructor (key, options) {
 		super(key, options);
 		this.name = 'Timber'
-		this.applyBackPressure = options.applyBackPressure
+		this.applyBackPressure = options && options.applyBackPressure
 	}
 
 	log (level, message, meta, callback) {
