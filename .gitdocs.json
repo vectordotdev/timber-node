@@ -2,7 +2,7 @@
   "name": "timber-node",
   "root": "docs/",
   "order": {
-    "/usage" 1,
+    "/usage": 1,
     "/best-practices": -1
   }
 }
