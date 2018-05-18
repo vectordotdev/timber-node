@@ -1,8 +1,4 @@
 {
-  "name": "timber-node",
-  "root": "docs/",
-  "order": {
-    "/usage": 1,
-    "/best-practices": -1
-  }
+  "name": "Timber Node",
+  "root": "docs/"
 }
