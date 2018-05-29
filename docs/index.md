@@ -1,5 +1,5 @@
 ---
-sidebar_prepend:
+items_prepend:
   - usage
   - best-practices
 ---
