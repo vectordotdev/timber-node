@@ -1,4 +1,4 @@
-Timber for Node ships with an integration for the standard JavaScript `console` functions. This integration allows you to either output standard logs or append logs with custom metadata or events using the builtin `console.log` functions. See [usage](/docs/languages/node/usage) for more details.
+Timber for Node ships with an integration for the standard JavaScript `console` functions. This integration allows you to either output standard logs or append logs with custom metadata or events using the builtin `console.log` functions. See [usage](../usage) for more details.
 
 
 ## Warning
@@ -9,4 +9,4 @@ You might be wondering by now that why can't we simply use console.log() for log
 
 ## Installation
 
-This integration is automatically setup when you install Timber. Please follow the instructions for [installing Timber](/docs/languages/node/installation) to use the console integration.
+This integration is automatically setup when you install Timber. Please follow the instructions for [installing Timber](../installation) to use the console integration.

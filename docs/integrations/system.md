@@ -2,13 +2,13 @@ The System / Server integration captures system level context upon initializatio
 
 |You'll Get|
 |:------|
-|<i>+</i>[System context](/docs/concepts/log-json-schema/contexts/system-context)|
+|<i>+</i>[System context](/concepts/log-event-json-schema/context/system)|
 
 
 ## What you can do
 
-1. [**Search your logs with this data**](/docs/app/console/searching) - `system.hostname:server123.myhost.com`
-2. [**Access this data by viewing a log's metadata & context**](/docs/app/console/view-metadata-and-context)
+1. [**Search your logs with this data**](/app/console-log-viewer/searching) - `system.hostname:server123.myhost.com`
+2. [**Access this data by viewing a log's metadata & context**](/app/console-log-viewer/view-a-logs-metadata-context)
 
 
 ## Installation

@@ -1,7 +1,7 @@
 # Custom Events
 
 
-Custom events allow you to extend beyond events already defined in [`timber.events`](https://timberio.github.io/timber-node/class/src/event.js~Event.html). If you aren't sure what an event is, please read the ["Metdata, Context, and Events" doc](/docs/concepts/metadata-context-and-events).
+Custom events allow you to extend beyond events already defined in [`timber.events`](https://timberio.github.io/timber-node/class/src/event.js~Event.html). If you aren't sure what an event is, please read the ["Metdata, Context, and Events" doc](/concepts/metadata-context-and-events).
 
 
 ## How to use it
@@ -29,10 +29,10 @@ logger.warn({
 }, "Payment rejected");
 ```
 
-1. [Search it](/docs/app/console/searching) with queries like: `type:payment_rejected` or `payment_rejected.amount:>100`
-2. [Alert on it](/docs/app/alerts) with threshold based alerts
-3. [Graph & visualize it](/docs/app/graphs)
-4. [View this event's data and context](/docs/app/console/view-metadata-and-context)
+1. [Search it](/app/console-log-viewer/searching) with queries like: `type:payment_rejected` or `payment_rejected.amount:>100`
+2. [Alert on it](/app/alerts) with threshold based alerts
+3. [Graph & visualize it](/app/graphs)
+4. [View this event's data and context](/app/console-log-viewer/view-a-logs-metadata-context)
 
 
 ## How it works

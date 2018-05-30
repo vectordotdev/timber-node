@@ -22,4 +22,4 @@ logger.warn("Warn message")
 logger.error("Error message")
 ```
 
-We encourage standard / traditional log messages for non-meaningful events. And because Timber [_augments_](/docs/concepts/structuring-through-augmentation) your logs with metadata, you don't have to worry about making every log structured!
+We encourage standard / traditional log messages for non-meaningful events. And because Timber [_augments_](/concepts/structuring-through-augmentation) your logs with metadata, you don't have to worry about making every log structured!

@@ -1,19 +1,19 @@
-The [Timber for Node](https://github.com/timberio/timber-node) [Express](http://expressjs.com) integration automatically outputs [augmented](/docs/concepts/structuring-through-augmentation) log lines for all HTTP events.
+The [Timber for Node](https://github.com/timberio/timber-node) [Express](http://expressjs.com) integration automatically outputs [augmented](/concepts/structuring-through-augmentation/) log lines for all HTTP events.
 
 |You'll Get|
 |:------|
-|<i>+</i>[HTTP request event](/docs/concepts/log-json-schema/events/http-request-event)|
-|<i>+</i>[HTTP response event](/docs/concepts/log-json-schema/events/http-response-event)|
+|<i>+</i>[HTTP request event](/concepts/log-event-json-schema/events/http-request)|
+|<i>+</i>[HTTP response event](/concepts/log-event-json-schema/events/http-response)|
 
 
 ## What you can do
 
-1. [**Trace HTTP requests**](/docs/app/console/trace-http-requests)
-2. [**Inspect HTTP requests & their parameters**](/docs/app/console/inspect-http-requests)
-3. [**Inspect Express logs and view their associated metadata**](/docs/app/console/view-metadata-and-context)
-4. [**Search on Express structured data**](/docs/app/console/searching)
-5. [**Alert on Express structured data**](/docs/app/alerts)
-6. [**Graph & visualize Express structured data**](/docs/app/graphs)
+1. [**Trace HTTP requests**](/app/console-log-viewer/trace-http-requests)
+2. [**Inspect HTTP requests & their parameters**](/app/console-log-viewer/inspect-http-requests)
+3. [**Inspect Express logs and view their associated metadata**](/app/console-log-viewer/view-a-logs-metadata-context)
+4. [**Search on Express structured data**](/app/console-log-viewer/searching)
+5. [**Alert on Express structured data**](/app/alerts)
+6. [**Graph & visualize Express structured data**](/app/graphs)
 
 
 ## Installation

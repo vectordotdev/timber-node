@@ -2,7 +2,7 @@ The [Timber for Node](https://github.com/timberio/timber-node) [Bunyan](https://
 
 ## Installation
 
-This integration is setup when you install Timber. Please follow the instructions for [installing Timber](/docs/languages/node/installation) to use this integration.
+This integration is setup when you install Timber. Please follow the instructions for [installing Timber](../installation) to use this integration.
 
 ## Example
 

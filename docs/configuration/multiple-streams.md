@@ -1,6 +1,6 @@
 # Logging To Multiple Streams
 
-If you followed the [standard install instructions](/docs/languages/node/installation), your application will send all logs from `stdout` and `stderr` to Timber. If you prefer to send your logs to multiple destinations Timber has built-in support for this. Using the `attach` function, you can attach multiple writable streams to `stout` and `stderr`.
+If you followed the [standard install instructions](../installation), your application will send all logs from `stdout` and `stderr` to Timber. If you prefer to send your logs to multiple destinations Timber has built-in support for this. Using the `attach` function, you can attach multiple writable streams to `stout` and `stderr`.
 
 **Note:** The `attach()` function is a replacement for `install()`. When manually attaching streams, you no longer need to use `install()`.
 
