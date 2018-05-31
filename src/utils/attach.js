@@ -26,9 +26,18 @@ const attach = (transports, toStream, { applyBackPressure = false } = {}) => {
 
   debug(`attaching ${transports.length} transports to stream`)
 
+  // Override the target stream's write method to route through the transports
+  // before calling it with the associated arguments
   toStream.write = (message, encoding, fd) => {
+    // Check if this is a Timber log entry or a message string
     const log = message instanceof LogEntry ? message : new LogEntry(message)
 
+    // Don't cause an infinite loop with debug lines
+    if (message.indexOf('[timber-debug]') !== -1) {
+      return originalWrite.apply(toStream, [log.data.message])
+    }
+
+    // Write the message to every supplied transport
     for (let i = 0; i < transports.length; i++) {
       const transport = transports[i]
 
@@ -45,6 +54,7 @@ const attach = (transports, toStream, { applyBackPressure = false } = {}) => {
 
     // When writing the log to the original stream,
     // strip the metadata if we're not in production
+    // this keeps logs cleaner during development
     originalWrite.apply(toStream, [
       config.append_metadata || process.env.NODE_ENV === 'production'
         ? log.data.message
