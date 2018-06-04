@@ -8,10 +8,10 @@ The [Timber for Node](https://github.com/timberio/timber-node) [Express](http://
 
 ## What you can do
 
-1. [**Trace HTTP requests**](/app/console-log-viewer/trace-http-requests)
-2. [**Inspect HTTP requests & their parameters**](/app/console-log-viewer/inspect-http-requests)
-3. [**Inspect Express logs and view their associated metadata**](/app/console-log-viewer/view-a-logs-metadata-and-context)
-4. [**Search on Express structured data**](/app/console-log-viewer/searching)
+1. [**Trace HTTP requests**](/app/console/trace-http-requests)
+2. [**Inspect HTTP requests & their parameters**](/app/console/inspect-http-requests)
+3. [**Inspect Express logs and view their associated metadata**](/app/console/view-a-logs-metadata-and-context)
+4. [**Search on Express structured data**](/app/console/searching)
 5. [**Alert on Express structured data**](/app/alerts)
 
 

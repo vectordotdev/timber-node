@@ -26,9 +26,9 @@ logger.warn({
 }, "Payment rejected");
 ```
 
-1. [Search it](/app/console-log-viewer/searching) with queries like: `type:payment_rejected` or `payment_rejected.amount:>100`
+1. [Search it](/app/console/searching) with queries like: `type:payment_rejected` or `payment_rejected.amount:>100`
 2. [Alert on it](/app/alerts) with threshold based alerts
-3. [View this event's data and context](/app/console-log-viewer/view-a-logs-metadata-and-context)
+3. [View this event's data and context](/app/console/view-a-logs-metadata-and-context)
 
 
 ## How it works

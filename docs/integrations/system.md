@@ -7,8 +7,8 @@ The System / Server integration captures system level context upon initializatio
 
 ## What you can do
 
-1. [**Search your logs with this data**](/app/console-log-viewer/searching) - `system.hostname:server123.myhost.com`
-2. [**Access this data by viewing a log's metadata & context**](/app/console-log-viewer/view-a-logs-metadata-and-context)
+1. [**Search your logs with this data**](/app/console/searching) - `system.hostname:server123.myhost.com`
+2. [**Access this data by viewing a log's metadata & context**](/app/console/view-a-logs-metadata-and-context)
 
 
 ## Installation
