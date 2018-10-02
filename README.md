@@ -322,25 +322,6 @@ Logging features designed to help developers get more done:
 5. [**Threshold based alerting.** - Know when things break.](https://timber.io/docs/app/alerts)
 6. ...and more! Checkout our [the Timber application docs](https://timber.io/docs/app)
 
-
-## The Timber Console
-
-[![Timber Console](http://files.timber.io/images/readme-interface7.gif)](https://timber.io/docs/app)
-
-[Learn more about our app.](https://timber.io/docs/app)
-
-## Your Moment of Zen
-
-<p align="center" style="background: #221f40;">
-<a href="https://timber.io"><img src="http://files.timber.io/images/readme-log-truth.png" height="947" /></a>
-</p>
-ustomer issues.](https://timber.io/docs/app/console/tail-a-user)
-3. [**Viw logs per HTTP request.** - See the full story without the noise.](https://timber.io/docs/app/console/trace-http-requests)
-4. [**Inspect HTTP request parameters.** - Quickly reproduce issues.](https://timber.io/docs/app/console/inspect-http-requests)
-5. [**Threshold based alerting.** - Know when things break.](https://timber.io/docs/app/alerts)
-6. ...and more! Checkout our [the Timber application docs](https://timber.io/docs/app)
-
-
 ## The Timber Console
 
 [![Timber Console](http://files.timber.io/images/readme-interface7.gif)](https://timber.io/docs/app)
