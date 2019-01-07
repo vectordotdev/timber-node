@@ -216,9 +216,6 @@ If you're using [bunyan](https://github.com/trentm/node-bunyan), you can use the
 const bunyan = require('bunyan')
 const timber = require('timber')
 
-const winston = require('winston')
-const timber = require('timber')
-
 const transport = new timber.transports.HTTPS('your-api-key')
 timber.install(transport)
 
