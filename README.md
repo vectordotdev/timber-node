@@ -219,7 +219,10 @@ const timber = require('timber')
 const transport = new timber.transports.HTTPS('your-api-key')
 timber.install(transport)
 
-const log = bunyan.createLogger({ name: 'Timber Logger' })
+const log = bunyan.createLogger({
+  name: 'Timber Logger',
+  stream: new timber.transports.Bunyan()
+});
 
 log.info('Sample log message')
 
