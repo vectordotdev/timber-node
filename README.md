@@ -184,7 +184,7 @@ winston.log('info', 'Log message with metadata', { user: 'username' })
 You can augment your log with a custom event by providing an `event` key at the root of your metadata object:
 
 ```js
-winston.log('info', 'Log message with event', { event: custom_event_name: { ... } })
+winston.log('info', 'Log message with event', { event: { custom_event_name: { ... } } })
 
 // Output:
 // => Log message with event @metadata {"level": "info", event: { custom_event_name: { ... } }, ... }
@@ -216,13 +216,13 @@ If you're using [bunyan](https://github.com/trentm/node-bunyan), you can use the
 const bunyan = require('bunyan')
 const timber = require('timber')
 
-const winston = require('winston')
-const timber = require('timber')
-
 const transport = new timber.transports.HTTPS('your-api-key')
 timber.install(transport)
 
-const log = bunyan.createLogger({ name: 'Timber Logger' })
+const log = bunyan.createLogger({
+  name: 'Timber Logger',
+  stream: new timber.transports.Bunyan()
+});
 
 log.info('Sample log message')
 
